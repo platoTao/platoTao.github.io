@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="目标检测," />
 
 
 
@@ -79,13 +79,26 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="心远地自偏">
-<meta property="og:url" content="www.platot.site/index.html">
+<meta name="description" content="#R-CNN 探究 ###前言在2012年,Alex Krizhevsky通过展示在ILSVRC使用卷积神经网络达到了较高的图片分类准确度，而重新激起了人们对CNNs的兴趣。在2012年ILSVRC的研讨会上，最核心的问题是：CNNs在ImageNet图片分类上的表现，如果推广到PASCAL YOC数据集上的目标检测任务上，其表现可以达到何种程度。Ross Girshick等人在2013年11月发">
+<meta name="keywords" content="目标检测">
+<meta property="og:type" content="article">
+<meta property="og:title" content="R-CNN探究">
+<meta property="og:url" content="www.platot.site/2018/05/01/R-CNN探究/index.html">
 <meta property="og:site_name" content="心远地自偏">
+<meta property="og:description" content="#R-CNN 探究 ###前言在2012年,Alex Krizhevsky通过展示在ILSVRC使用卷积神经网络达到了较高的图片分类准确度，而重新激起了人们对CNNs的兴趣。在2012年ILSVRC的研讨会上，最核心的问题是：CNNs在ImageNet图片分类上的表现，如果推广到PASCAL YOC数据集上的目标检测任务上，其表现可以达到何种程度。Ross Girshick等人在2013年11月发">
 <meta property="og:locale" content="Chinese">
+<meta property="og:image" content="https://github.com/platoTao/Image-Hosting/raw/master/RCNN/figure1.jpg">
+<meta property="og:image" content="https://github.com/platoTao/Image-Hosting/raw/master/RCNN/figure5.jpg">
+<meta property="og:image" content="https://github.com/platoTao/Image-Hosting/raw/master/RCNN/figure2.jpg">
+<meta property="og:image" content="https://github.com/platoTao/Image-Hosting/raw/master/RCNN/figure6.jpg">
+<meta property="og:image" content="https://github.com/platoTao/Image-Hosting/raw/master/RCNN/figure3.jpg">
+<meta property="og:image" content="https://github.com/platoTao/Image-Hosting/raw/master/RCNN/figure4.jpg">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/39471180-3f5b682e-4d74-11e8-9587-85adbfe801f1.jpg">
+<meta property="og:updated_time" content="2018-05-01T11:29:54.437Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="心远地自偏">
+<meta name="twitter:title" content="R-CNN探究">
+<meta name="twitter:description" content="#R-CNN 探究 ###前言在2012年,Alex Krizhevsky通过展示在ILSVRC使用卷积神经网络达到了较高的图片分类准确度，而重新激起了人们对CNNs的兴趣。在2012年ILSVRC的研讨会上，最核心的问题是：CNNs在ImageNet图片分类上的表现，如果推广到PASCAL YOC数据集上的目标检测任务上，其表现可以达到何种程度。Ross Girshick等人在2013年11月发">
+<meta name="twitter:image" content="https://github.com/platoTao/Image-Hosting/raw/master/RCNN/figure1.jpg">
 
 
 
@@ -115,13 +128,13 @@
 
 
 
-  <link rel="canonical" href="www.platot.site/"/>
+  <link rel="canonical" href="www.platot.site/2018/05/01/R-CNN探究/"/>
 
 
 
 
 
-  <title>心远地自偏</title>
+  <title>R-CNN探究 | 心远地自偏</title>
   
 
 
@@ -140,8 +153,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -214,9 +226,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -246,9 +258,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/05/01/R-CNN探究/" itemprop="url">R-CNN探究</a></h1>
+          <h1 class="post-title" itemprop="name headline">R-CNN探究</h1>
         
 
         <div class="post-meta">
@@ -298,9 +308,7 @@
       
 
       
-        
-          
-            <p>#<center>R-CNN 探究</center></p>
+        <p>#<center>R-CNN 探究</center></p>
 <p>###前言<br>在2012年,Alex Krizhevsky通过展示在<strong>ILSVRC</strong>使用卷积神经网络达到了较高的图片分类准确度，而重新激起了人们对CNNs的兴趣。在2012年<strong>ILSVRC</strong>的研讨会上，最核心的问题是：CNNs在<strong>ImageNet</strong>图片分类上的表现，如果推广到<strong>PASCAL YOC</strong>数据集上的目标检测任务上，其表现可以达到何种程度。<em>Ross Girshick</em>等人在2013年11月发表的这篇论文：</p>
 <p><a href="https://arxiv.org/abs/1311.2524" target="_blank" rel="noopener">Rich feature hierarchies for accurate object detection and semantic segmentation</a><br>，第一次展示了和传统的方法相比，如<strong>HOG-like feature</strong>，CNN可以在<strong>PASCAL YOC</strong>目标检测任务上有更佳的表现。这篇论文提出了两个重要的<strong>insight</strong>：</p>
 <ol>
@@ -369,8 +377,6 @@
 <li><a href="https://zhuanlan.zhihu.com/p/23006190" target="_blank" rel="noopener">RCNN- 将CNN引入目标检测的开山之作</a></li>
 </ol>
 
-          
-        
       
     </div>
     
@@ -385,14 +391,20 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/目标检测/" rel="tag"># 目标检测</a>
+          
+        </div>
+      
+
+      
+      
+      
 
       
 
       
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -402,10 +414,11 @@
   </article>
 
 
-    
-  </section>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -413,6 +426,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -618,6 +635,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
