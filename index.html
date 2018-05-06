@@ -7,7 +7,7 @@
 
 <html class="theme-next muse use-motion" lang="zh-Hans">
 <head>
-  <meta charset="UTF-8"/>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 <meta name="theme-color" content="#222">
@@ -121,7 +121,7 @@
 
 
 
-  <title>心远地自偏</title>
+  <title>心远地自偏</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -140,7 +140,7 @@
     
   
 
-  <div class="container sidebar-position-left 
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left 
   page-home">
     <div class="headband"></div>
 
@@ -734,7 +734,7 @@
 <h6 id="负样本"><a href="#负样本" class="headerlink" title="负样本"></a>负样本</h6><p>考察每一个候选框，如果和本类所有标定框的重叠都小于0.3，认定其为负样本</p>
 <h3 id="边界框回归-Bounding-box-regression"><a href="#边界框回归-Bounding-box-regression" class="headerlink" title="边界框回归(Bounding-box regression)"></a>边界框回归(Bounding-box regression)</h3><p>在特定类别的SVM对每一个候选区域打出分数后，我们再用特定类别的边线性脊回归器对每一候选区域再预测一个新的边界框，采用均方差损失函数，正则项为1000*L2范数。输入为Pool5的4096维特征向量，输出为xy方向的缩放和平移。</p>
 <h6 id="训练数据-2"><a href="#训练数据-2" class="headerlink" title="训练数据"></a>训练数据</h6><p>同类别判断，这里只使用IOU大于0.6的候选区域，这一超参数取得步骤同类别判断一样。</p>
-<h6 id="变换"><a href="#变换" class="headerlink" title="变换"></a>变换</h6><p>n个{ ( Pi,Gi ) },Pi是候选区域中心点的x，y坐标和其长宽（Px,Py,Pw,Ph），Gi则是真值的(Gx,Gy,Gw,Gh)。</p>
+<h6 id="变换"><a href="#变换" class="headerlink" title="变换"></a>变换</h6><p>n个{ ( $P_i,G_i$ ) },$P_i$是候选区域中心点的x，y坐标和其长宽（$P_x,P_y,P_w,P_h$），Gi则是真值的($G_x,G_y,G_w,G_h$)。</p>
 <p><img src="https://github.com/platoTao/Image-Hosting/raw/master/RCNN/figure3.jpg" alt="alt text"></p>
 <p>优化目标如下</p>
 <p><img src="https://github.com/platoTao/Image-Hosting/raw/master/RCNN/figure4.jpg" alt="alt text"></p>
@@ -1015,7 +1015,7 @@
   
 
 
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
 
 

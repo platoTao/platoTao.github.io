@@ -7,7 +7,7 @@
 
 <html class="theme-next muse use-motion" lang="zh-Hans">
 <head>
-  <meta charset="UTF-8"/>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 <meta name="theme-color" content="#222">
@@ -94,7 +94,7 @@
 <meta property="og:image" content="https://github.com/platoTao/Image-Hosting/raw/master/RCNN/figure3.jpg">
 <meta property="og:image" content="https://github.com/platoTao/Image-Hosting/raw/master/RCNN/figure4.jpg">
 <meta property="og:image" content="https://user-images.githubusercontent.com/23336589/39471180-3f5b682e-4d74-11e8-9587-85adbfe801f1.jpg">
-<meta property="og:updated_time" content="2018-05-04T06:34:28.492Z">
+<meta property="og:updated_time" content="2018-05-06T11:02:10.625Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="R-CNN探究">
 <meta name="twitter:description" content="R-CNN 探究前言在2012年,Alex Krizhevsky通过展示在ILSVRC使用卷积神经网络达到了较高的图片分类准确度，而重新激起了人们对CNNs的兴趣。在2012年ILSVRC的研讨会上，最核心的问题是：CNNs在ImageNet图片分类上的表现，如果推广到PASCAL YOC数据集上的目标检测任务上，其表现可以达到何种程度。Ross Girshick等人在2013年11月发表的这篇论">
@@ -134,7 +134,7 @@
 
 
 
-  <title>R-CNN探究 | 心远地自偏</title>
+  <title>R-CNN探究 | 心远地自偏</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -153,7 +153,7 @@
     
   
 
-  <div class="container sidebar-position-left page-post-detail">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -390,7 +390,7 @@
 <h6 id="负样本"><a href="#负样本" class="headerlink" title="负样本"></a>负样本</h6><p>考察每一个候选框，如果和本类所有标定框的重叠都小于0.3，认定其为负样本</p>
 <h3 id="边界框回归-Bounding-box-regression"><a href="#边界框回归-Bounding-box-regression" class="headerlink" title="边界框回归(Bounding-box regression)"></a>边界框回归(Bounding-box regression)</h3><p>在特定类别的SVM对每一个候选区域打出分数后，我们再用特定类别的边线性脊回归器对每一候选区域再预测一个新的边界框，采用均方差损失函数，正则项为1000*L2范数。输入为Pool5的4096维特征向量，输出为xy方向的缩放和平移。</p>
 <h6 id="训练数据-2"><a href="#训练数据-2" class="headerlink" title="训练数据"></a>训练数据</h6><p>同类别判断，这里只使用IOU大于0.6的候选区域，这一超参数取得步骤同类别判断一样。</p>
-<h6 id="变换"><a href="#变换" class="headerlink" title="变换"></a>变换</h6><p>n个{ ( Pi,Gi ) },Pi是候选区域中心点的x，y坐标和其长宽（Px,Py,Pw,Ph），Gi则是真值的(Gx,Gy,Gw,Gh)。</p>
+<h6 id="变换"><a href="#变换" class="headerlink" title="变换"></a>变换</h6><p>n个{ ( $P_i,G_i$ ) },$P_i$是候选区域中心点的x，y坐标和其长宽（$P_x,P_y,P_w,P_h$），Gi则是真值的($G_x,G_y,G_w,G_h$)。</p>
 <p><img src="https://github.com/platoTao/Image-Hosting/raw/master/RCNN/figure3.jpg" alt="alt text"></p>
 <p>优化目标如下</p>
 <p><img src="https://github.com/platoTao/Image-Hosting/raw/master/RCNN/figure4.jpg" alt="alt text"></p>
@@ -727,7 +727,7 @@
   
 
 
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
 
 
