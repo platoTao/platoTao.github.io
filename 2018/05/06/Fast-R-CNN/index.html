@@ -90,7 +90,7 @@
 <meta property="og:image" content="https://github.com/platoTao/Image-Hosting/raw/master/Fast%20R-CNN/Figure%201.jpg">
 <meta property="og:image" content="https://github.com/platoTao/Image-Hosting/raw/master/Fast%20R-CNN/Figure%202.jpg">
 <meta property="og:image" content="https://github.com/platoTao/Image-Hosting/raw/master/Fast%20R-CNN/Figure%203.jpg">
-<meta property="og:updated_time" content="2018-05-06T14:14:12.574Z">
+<meta property="og:updated_time" content="2018-05-07T02:12:56.249Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Fast R-CNN">
 <meta name="twitter:description" content="Fast R-CNN前言论文地址 2015年Ross Girshick基于R-CNN的工作提出来Fast R-CNN，使用很深的VGG16网络，训练速度是R-CNN的9倍，检测速度是其的213倍，而且在PASCAL VOC2012上达到了更高的准确度。与SPPnet相比，fast R-CNN训练VGG16网络比他快3倍，测试速度快10倍，并且更准确。 R-CNN具有显著的缺点:  训练过程是多级流">
@@ -387,11 +387,19 @@
 <h3 id="微调"><a href="#微调" class="headerlink" title="微调"></a>微调</h3><p>用反向传播训练所有网络权重是Fast R-CNN的重要能力。而SPPnet无法更新低于空间金字塔池化层的权重。==根本原因是当每个训练样本（即RoI）来自不同的图像时，通过SPP层的反向传播是非常低效的，这正是训练R-CNN和SPPnet网络的方法。低效的部分是因为每个RoI可能具有非常大的感受野，通常跨越整个输入图像。由于正向传播必须处理整个感受野，训练输入很大（通常是整个图像）。==</p>
 <p>作者提出了一种更有效的训练方法，利用训练期间的特征共享。在Fast RCNN训练中，随机梯度下降（SGD）小批量计算被分级采样，首先随机取样N张图片，然后每张图片取样 R / N 个RoIs 。关键的是，来自相同图像的RoI在向前和向后传播中共享计算和内存。<br>除了分层采样，Fast R-CNN使用一个精简的训练过程，一次微调中联合优化softmax分类器和bbox回归，而不是在三个独立的阶段训练softmax分类器，SVM和回归因子。</p>
 <h3 id="多任务损失"><a href="#多任务损失" class="headerlink" title="多任务损失"></a>多任务损失</h3><p>Fast R-CNN有两个输出。一个是对每个Roi的离散概率分布，$p = (p_0,p_1,…p_k)$,对K+1类。另一个是对K个类别都有的边界框回归的偏移量，$t^k = (t_x^k,t_y^k,t_w^k,t_h^k)$,k表示类别的索引，前两个参数是指相对于object proposal尺度不变的平移，后两个参数是指对数空间中相对于object proposal的高与宽。</p>
-<p>每个训练的RoI都被标记了ground-truth类别 u 以及ground-truth边界框回归 v 。在每个标记好的RoI上用multi-task loss 函数来级联的训练分类和bbox边界框回归：<br>$$<br>L(p,u,t^u,v) = L<em>{cls}(p,u) + \lambda[u\geq1]L</em>{loc}(t^u,v)<br>$$</p>
-<p>u = 0为背景类不需要参与边界回归。</p>
-<p>第一项是对于 u 类的分类损失（log loss for true class u）。<br>$$ L_{cls}(p,u) = -logp_u $$</p>
-<p>第二项是回归损失，是在 u 类的真正边界框回归目标的元组 v 上定义的，是一个 4xN 路输出的regressor，也就是说对于每个类别都会训练一个单独的regressor，评估回归损失代价就是比较真实分类 u 对应的预测平移缩放参数和真实平移缩放参数的差距：<br>$$ Loc(t^u,v) = \sum<em>{i\in{x,y,w,h}} smooth</em>{L_1}(t_i^u-v<em>i) $$<br>$$<br>    smooth</em>{L_1}(x) =<br>    \begin{cases}<br>        0.5x^2,  &amp; \text{if |x| &lt; 1} \<br>        |x|-0.5, &amp; \text{otherwise}<br>        \end{cases}<br>$$<br>超参数 $\lambda$是用来控制两个损失函数的平衡的。作者对回归目标进行归一化使其具有零均值及单位权方差。所有的函数都设置超参数$\lambda$= 1。</p>
+<p>每个训练的RoI都被标记了ground-truth类别 u 以及ground-truth边界框回归 v 。在每个标记好的RoI上用multi-task loss 函数来级联的训练分类和bbox边界框回归：</p>
+<script type="math/tex; mode=display">
+L(p,u,t^u,v) = L_{cls}(p,u) + \lambda[u\geq1]L_{loc}(t^u,v)</script><p>u = 0为背景类不需要参与边界回归。</p>
+<p>第一项是对于 u 类的分类损失（log loss for true class u）。</p>
+<script type="math/tex; mode=display">L_{cls}(p,u) = -logp_u</script><p>第二项是回归损失，是在 u 类的真正边界框回归目标的元组 v 上定义的，是一个 4xN 路输出的regressor，也就是说对于每个类别都会训练一个单独的regressor，评估回归损失代价就是比较真实分类 u 对应的预测平移缩放参数和真实平移缩放参数的差距：</p>
+<script type="math/tex; mode=display">Loc(t^u,v) = \sum_{i\in\{x,y,w,h\}} smooth_{L_1}(t_i^u-v_i)</script><script type="math/tex; mode=display">
+    smooth_{L_1}(x) =
+    \begin{cases}
+        0.5x^2,  & \text{if |x| < 1} \\
+        |x|-0.5, & \text{otherwise}
+        \end{cases}</script><p>超参数 $\lambda$是用来控制两个损失函数的平衡的。作者对回归目标进行归一化使其具有零均值及单位权方差。所有的函数都设置超参数$\lambda$= 1。</p>
 <h3 id="小批量取样"><a href="#小批量取样" class="headerlink" title="小批量取样"></a>小批量取样</h3><p>每个SGD的批量大小是128，由两张图片各自的64个Roi组成。</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -413,6 +421,7 @@
 </tr>
 </tbody>
 </table>
+</div>
 <p>之所以选择负样本需要大于0.1的阈值是因为使用启发式的hard example mining（低于0.1的IoU作为难例挖掘的启发式）。在训练期间，图像有0.5的概率水平翻转。</p>
 <h3 id="通过RoI池化层的反向传播"><a href="#通过RoI池化层的反向传播" class="headerlink" title="通过RoI池化层的反向传播"></a>通过RoI池化层的反向传播</h3><p>对于最大池化层来说，响应输出的点，即窗口中最大值位置的输入点，才有反向传播，其他输入点反向传播的倒数都为0，如果一个输入点响应多个输出（因为不同的候选区域有重叠），则反向传播的导数累加。可以看看这<a href="https://blog.csdn.net/l691899397/article/details/52250190" target="_blank" rel="noopener">深度学习笔记5：池化层的实现</a>和<a href="https://blog.csdn.net/LOVE1055259415/article/details/79047208" target="_blank" rel="noopener">Fast R-CNN 学习笔记</a><br>我应该去补一补卷积层的反向传播过程。<a href="https://blog.csdn.net/haolexiao/article/details/72628083" target="_blank" rel="noopener">CNN中的梯度的求法和反向传播过程</a></p>
 <h3 id="SGD超参数选择"><a href="#SGD超参数选择" class="headerlink" title="SGD超参数选择"></a>SGD超参数选择</h3><p>除了修改增加的层，原有的层参数已经通过预训练方式初始化：<br>用于分类的全连接层以均值为0、标准差为0.01的高斯分布初始化；<br>用于回归的全连接层以均值为0、标准差为0.001的高斯分布初始化，偏置都初始化为0； </p>
@@ -423,8 +432,8 @@
 <h2 id="Fast-R-CNN检测"><a href="#Fast-R-CNN检测" class="headerlink" title="Fast R-CNN检测"></a>Fast R-CNN检测</h2><p><img src="https://github.com/platoTao/Image-Hosting/raw/master/Fast%20R-CNN/Figure%203.jpg" alt="alt text"></p>
 <p>一旦Fast R-CNN网络被微调，检测相当于运行正向传播（假设对象建议框object proposal是预先计算的）<br>网络将图像（或图像金字塔，编码为图像列表）和待给得分的 R 对象建议框（object proposal）列表作为输入。<br>在测试阶段，R 大约为2K个，当使用图像金字塔的时候，每个RoI被指定尺度使得接近224*224。对于每个测试RoI r ，网络输出关于 r 的一个后验概率分布 p 和一系列预测bbox偏移（每个类 [共k个类] 获得自己的精确bbox预测）。然后使用估计概率$ Pr(class = k|r)≜ p_k $来给r赋予关于k个对象的检测置信度。最后，对每一个类都使用一个非极大值抑制。</p>
 <h3 id="截断SVD"><a href="#截断SVD" class="headerlink" title="截断SVD"></a>截断SVD</h3><p>在图片分类中，花在卷积上的时间比花在全连接上的时间多。然而在目标检测任务中，因为要处理的Roi数量很多，几乎有一半的计算时间用在全连接层。<br>就Fast R-CNN而言，RoI池化层后的全连接层需要进行约2k次【每个RoI都要计算】，因此在Fast R-CNN中可以采用SVD分解加速全连接层计算；</p>
-<p>具体如何实现的呢？<br>①物体分类和bbox回归都是通过全连接层实现的，假设全连接层输入数据为X，输出数据为Y，全连接层权值矩阵为W，尺寸为 u × v ，那么该层全连接计算为:<br>Y = W × X<br>②若将W进行SVD分解（奇异值分解），并用前t个特征值近似代替，即:<br>$$W  \approx U\Sigma_tV^T$$</p>
-<p>U是 u × t 的左奇异矩阵，$\Sigma_t$ 是 t × t 的对角矩阵 ，V是 v × t 的右奇异矩阵。<br>截断SVD将参数量由原来的 u × v 减少到 t × (u + v) ，当 t 远小于 min(u,v) 的时候降低了很大的计算量。<br>在实现时，相当于把一个全连接层拆分为两个全连接层，第一个全连接层使用权值矩阵$\Sigma_tV^T$（不含偏置），第二个全连接层使用矩阵U（含偏置）；<br>当RoI的数量大时，这种简单的压缩方法有很好的加速。<br>实验表明（Fig . 2），SVD分解全连接层能使mAP只下降0.3%的情况下提升30%的速度，同时该方法也不必再执行额外的微调操作。</p>
+<p>具体如何实现的呢？<br>①物体分类和bbox回归都是通过全连接层实现的，假设全连接层输入数据为X，输出数据为Y，全连接层权值矩阵为W，尺寸为 u × v ，那么该层全连接计算为:<br>Y = W × X<br>②若将W进行SVD分解（奇异值分解），并用前t个特征值近似代替，即:</p>
+<script type="math/tex; mode=display">W  \approx U\Sigma_tV^T</script><p>U是 u × t 的左奇异矩阵，$\Sigma_t$ 是 t × t 的对角矩阵 ，V是 v × t 的右奇异矩阵。<br>截断SVD将参数量由原来的 u × v 减少到 t × (u + v) ，当 t 远小于 min(u,v) 的时候降低了很大的计算量。<br>在实现时，相当于把一个全连接层拆分为两个全连接层，第一个全连接层使用权值矩阵$\Sigma_tV^T$（不含偏置），第二个全连接层使用矩阵U（含偏置）；<br>当RoI的数量大时，这种简单的压缩方法有很好的加速。<br>实验表明（Fig . 2），SVD分解全连接层能使mAP只下降0.3%的情况下提升30%的速度，同时该方法也不必再执行额外的微调操作。</p>
 <h2 id="参考文献："><a href="#参考文献：" class="headerlink" title="参考文献："></a>参考文献：</h2><p><a href="https://blog.csdn.net/LOVE1055259415/article/details/79047208" target="_blank" rel="noopener">Fast R-CNN 学习笔记</a><br><a href="https://alvinzhu.xyz/2017/10/10/fast-r-cnn/" target="_blank" rel="noopener">Fast R-CNN 论文翻译</a><br><a href="https://blog.csdn.net/u014380165/article/details/72851319" target="_blank" rel="noopener">Fast RCNN算法详解</a></p>
 
       
@@ -745,7 +754,7 @@
   
 
 
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
 
 
 
@@ -798,6 +807,43 @@
   
 
   
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
   
 
 
