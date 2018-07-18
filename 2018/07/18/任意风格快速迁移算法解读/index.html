@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="深度学习、风格迁移," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="任意风格快速迁移算法解读论文：Arbitrary Style Transfer in Real-time with Adaptive Instance Normalization 算法背景图像风格迁移即对于给定的图像，将其渲染成某种艺术风格的图像。这主要包含两个问题，一是如何对风格图像中的风格特征进行建模和提取，二是如何将提取的风格和内容混合然后还原成一个相应的风格化结果。 图像风格化起源于纹理建">
+<meta name="keywords" content="深度学习、风格迁移">
+<meta property="og:type" content="article">
+<meta property="og:title" content="任意风格快速迁移算法解读">
+<meta property="og:url" content="www.platot.site/2018/07/18/任意风格快速迁移算法解读/index.html">
+<meta property="og:site_name" content="心远地自偏">
+<meta property="og:description" content="任意风格快速迁移算法解读论文：Arbitrary Style Transfer in Real-time with Adaptive Instance Normalization 算法背景图像风格迁移即对于给定的图像，将其渲染成某种艺术风格的图像。这主要包含两个问题，一是如何对风格图像中的风格特征进行建模和提取，二是如何将提取的风格和内容混合然后还原成一个相应的风格化结果。 图像风格化起源于纹理建">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/42877131-4000dcf8-8abb-11e8-9336-244bda1d7b1a.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/42877308-ccd32b86-8abb-11e8-9293-be4335156c00.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/42877344-ea53ae9c-8abb-11e8-9484-6771d0af2bc0.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/42878133-87e8f084-8abe-11e8-8756-1e995383d075.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/42878202-c8f206b0-8abe-11e8-9390-b0a7e451f65c.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/42878235-e1550cfc-8abe-11e8-98e8-4b8d441aceb4.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/42878317-3867a5fe-8abf-11e8-9fad-76771b505ba0.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/42878352-5c9fd496-8abf-11e8-96dd-94228b60485a.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/42878392-77b36d4c-8abf-11e8-8839-fc11420833a6.png">
+<meta property="og:updated_time" content="2018-07-18T11:30:18.220Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="任意风格快速迁移算法解读">
+<meta name="twitter:description" content="任意风格快速迁移算法解读论文：Arbitrary Style Transfer in Real-time with Adaptive Instance Normalization 算法背景图像风格迁移即对于给定的图像，将其渲染成某种艺术风格的图像。这主要包含两个问题，一是如何对风格图像中的风格特征进行建模和提取，二是如何将提取的风格和内容混合然后还原成一个相应的风格化结果。 图像风格化起源于纹理建">
+<meta name="twitter:image" content="https://user-images.githubusercontent.com/23336589/42877131-4000dcf8-8abb-11e8-9336-244bda1d7b1a.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="www.platot.site/2018/07/18/任意风格快速迁移算法解读/"/>
+
+
+
+
+
+  <title>任意风格快速迁移算法解读 | 心远地自偏</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">心远地自偏</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="www.platot.site/2018/07/18/任意风格快速迁移算法解读/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="plato">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="心远地自偏">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">任意风格快速迁移算法解读</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-18T19:28:22+08:00">
+                2018-07-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/计算机视觉/" itemprop="url" rel="index">
+                    <span itemprop="name">计算机视觉</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="任意风格快速迁移算法解读"><a href="#任意风格快速迁移算法解读" class="headerlink" title="任意风格快速迁移算法解读"></a><center>任意风格快速迁移算法解读</center></h1><p><a href="https://arxiv.org/abs/1703.06868" target="_blank" rel="noopener">论文：Arbitrary Style Transfer in Real-time with Adaptive Instance Normalization</a></p>
+<h2 id="算法背景"><a href="#算法背景" class="headerlink" title="算法背景"></a>算法背景</h2><p>图像风格迁移即对于给定的图像，将其渲染成某种艺术风格的图像。这主要包含两个问题，一是如何对风格图像中的风格特征进行建模和提取，二是如何将提取的风格和内容混合然后还原成一个相应的风格化结果。</p>
+<p><strong>图像风格化起源于纹理建模和图像重建。</strong></p>
+<p>其中纹理建模（Visual Texture Modelling）又分为两类：</p>
+<ol>
+<li>基于统计分布的参数化纹理建模方法</li>
+<li>基于MRF的非参数化纹理建模方法</li>
+</ol>
+<p>纹理建模解决了如何对风格特征进行提取的问题。</p>
+<p>而图像重建解决的则是如何将给定的特征表达重建还原为一张图像。</p>
+<p>图像重建算法其实也可以分为两类：</p>
+<ol>
+<li>基于在线图像优化的慢速图像重建方法</li>
+<li>基于离线模型优化的快速图像重建方法</li>
+</ol>
+<p>第一类图像重建的方法是在图像像素空间做梯度下降来最小化目标函数。</p>
+<p>这一类算法的过程可以理解为：由随机噪声作为起始图，然后不断迭代改变图片的所有像素值来寻找一个目标结果图 x’ ，这个目标结果图的特征表达和我们作为重建目标的目标特征表达 Φ(x) 相似，即像素迭代的目标为 Φ(x’)≈Φ(x) 。</p>
+<p>由于每个重建结果都需要在像素空间进行迭代优化很多次，这种方式是很耗时的。为了加速这一过程，一个直接的想法是我们能不能设计一个前向网络，用数据驱动的方式，喂给它很多训练数据去提前训练它，训练的目标就是给定一个特征表达作为输入，这个训练好的网络只需要一次前向就能输出一张重建结果图像。</p>
+<h2 id="背景知识"><a href="#背景知识" class="headerlink" title="背景知识"></a>背景知识</h2><h3 id="批量归一化-Batch-Normalization"><a href="#批量归一化-Batch-Normalization" class="headerlink" title="批量归一化(Batch Normalization)"></a>批量归一化(Batch Normalization)</h3><p>使用BN layer来归一化样本可显著地加速前馈神经网络的训练。同时它对图片生成模型也有卓越的功效。对于每一个样本的特征通道，BN 归一化它们的均值和标准差。</p>
+<script type="math/tex; mode=display">BN(x) = \gamma(\cfrac{x-\mu(x)}{\sigma(x)}) + \beta</script><p>$\gamma$ 和$\beta$ 是从数据中学习的仿射参数。<br>其中</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/42877131-4000dcf8-8abb-11e8-9336-244bda1d7b1a.png" alt="Alt text"></p>
+<h3 id="实例归一化-Instance-Normalization"><a href="#实例归一化-Instance-Normalization" class="headerlink" title="实例归一化(Instance Normalization)"></a>实例归一化(Instance Normalization)</h3><p>Ulyanov 发现在风格迁移中通过替换BN lawyer为IN lawyer 可以有明显的改善。</p>
+<script type="math/tex; mode=display">IN(x) = \gamma(\cfrac{x-\mu(x)}{\sigma(x)}) + \beta</script><p>不同于BN lawyer ，这里的均值和标准差是独立地从每一个样本每一个通道的空间维度计算来的。<br><img src="https://user-images.githubusercontent.com/23336589/42877308-ccd32b86-8abb-11e8-9293-be4335156c00.png" alt="Alt text"></p>
+<p><img src="https://user-images.githubusercontent.com/23336589/42877344-ea53ae9c-8abb-11e8-9484-6771d0af2bc0.png" alt="Alt text"></p>
+<h3 id="自适应实例归一化-Adaptive-Instance-Normalization"><a href="#自适应实例归一化-Adaptive-Instance-Normalization" class="headerlink" title="自适应实例归一化(Adaptive Instance Normalization)"></a>自适应实例归一化(Adaptive Instance Normalization)</h3><p>如果IN可以通过仿射参数将输入归一化为某种特定风格，那它也可以通过自适应的仿射变换将输入归一化为任意给定的风格。这种IN被称为AdaIN。AdaIN对于收到的输入x和风格输入y，通过对齐x每一个通道的均值和标准差来匹配y。AdaIN没有需要学习的仿射参数，相反它是自适应地从风格输入里计算得。</p>
+<script type="math/tex; mode=display">AdaIN(x,y) = \sigma(y)(\cfrac{x-\mu(x)}{\sigma(x)}) + \mu(y)</script><p>简单地通过风格y地均值和标准差来平移和缩放x。</p>
+<p>直觉性地，让我们简单地思考一下检测某种风格笔触地特征通道。具有这种笔触地风格图像会对这种特征产生很高的平均激活。通过AdaIN产生的输出也会对这种特征具有很高的平均激活，同时能保留内容图像的空间结构。这种笔触特征可以通过解码器前向传播反转到图像空间上去。此特征通道的方差可编码更细微的风格信息，这也是将转移到AdaIN输出和最终输出图像的风格信息。一言以蔽之，在feature 空间中，将content图的每通道输入的均值和方差归一化后的结果对齐匹配到风格图的每通道输入的均值和方差。这里的content图和style图的每通道输入的值都是feature空间的，这篇论文中采用的是预训练好的vgg网络relu4_1的feature空间结果作为输入的。</p>
+<h2 id="架构"><a href="#架构" class="headerlink" title="架构"></a>架构</h2><p><img src="https://user-images.githubusercontent.com/23336589/42878133-87e8f084-8abe-11e8-8756-1e995383d075.png" alt="Alt text"></p>
+<p>此风格迁移网络T将一张内容图片c和一张任意的风格图片s作为输入，输出一张联合了s的风格和c的内容的图片。</p>
+<p>T分为两部分，生成网络和计算损耗网络，生成网络采用简单的编码器—解码器架构。风格转换生成网络由Encoder-AdaIN-Decoder这3部分组成。Encoder 部分是采用预训练好的VGG网络，只使用到了Relu4_1部分，将风格和内容图的图像都从图像空间转到特征空间。在特征空间编码了风格图像和内容图像之后，我们将这两个特征图都喂给一层AdaIN对内容图进行归一化，这里是通过对齐内容图的每通道的feature map的均值和方差来匹配风格图每通道feature map的均值和方差。<br><img src="https://user-images.githubusercontent.com/23336589/42878202-c8f206b0-8abe-11e8-9390-b0a7e451f65c.png" alt="Alt text"></p>
+<p> 一个随机初始化的解码器g训练来将特征空间t转变为图像空间，整个网络中需要训练的就是这部分网络的权重参数信息，，通过梯度下降可以不断进行更新参数以使整个损耗函数比较小、网络逐渐收敛。用它以生成风格化图像T（c，s）<br><img src="https://user-images.githubusercontent.com/23336589/42878235-e1550cfc-8abe-11e8-98e8-4b8d441aceb4.png" alt="Alt text"></p>
+<p>解码器几乎是编码器的镜像，只是将所有的池化层替换为最近邻上采样层来减少棋盘效应（神经网络生成的图像时，经常会看到一些奇怪的棋盘格子状的伪影）。在编码器和解码器中都使用reflection padding来消除边界伪影。</p>
+<p>整个生成网络的时间花费基本是content encoding、style encoding、decoding各占三分之一时间。</p>
+<h2 id="训练"><a href="#训练" class="headerlink" title="训练"></a>训练</h2><p>用MS-COCO作为内容图像级及从WiKiArt收集的绘画作品集合作为风格图像集来训练我们的网络。每一个数据集大概包括80 000张训练样本。使用adam 优化器和大小为8的content-style 的图像对批量.</p>
+<p>在训练时，先将两张图片的最小的维度resize到512<em>512，保留纵横比，然后随机地裁剪256</em>256的区域。因为论文中的网络是全卷积的，所以它在测试阶段是可以应用任意大小的图像。</p>
+<p>我们用预先训练好的VGG-19计算损失函数来训练解码器：<br><img src="https://user-images.githubusercontent.com/23336589/42878317-3867a5fe-8abf-11e8-9fad-76771b505ba0.png" alt="Alt text"></p>
+<p>这个损失函数用一个权重参数联合了内容损失函数和风格损失函数。内容损失函数是内容图片和AdaIN输出目标图片的欧几里得距离，而不是通常的特征地图的欧几里得距离。<br><img src="https://user-images.githubusercontent.com/23336589/42878352-5c9fd496-8abf-11e8-96dd-94228b60485a.png" alt="Alt text"></p>
+<p>风格损失没有采用Gram矩阵这种方式，即使会产生相似的结果。因为在AdaIN层只传递了风格特征的均值和方差，所以风格损失只做了这些数据的匹配。同样也采用了relu1_1,relu2_1,relu3_1,relu4_1四层的feature maps。即风格损耗只是基于IN统计的损耗。</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/42878392-77b36d4c-8abf-11e8-8839-fc11420833a6.png" alt="Alt text"></p>
+<p>每一个∅_i 代表着VGG19中的某一层网络的输出，以此来计算损失<br>在论文中使用具有相同权重的relu1_1,relu2_1,relu3_1,relu4_1.</p>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><ol>
+<li><a href="https://my.oschina.net/u/3419498/blog/1814269" target="_blank" rel="noopener">综述：图像风格化算法最全盘点</a></li>
+<li><a href="https://www.jiqizhixin.com/articles/2017-05-15-3" target="_blank" rel="noopener">神经风格迁移研究概述：从当前研究到未来方向</a></li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/深度学习、风格迁移/" rel="tag"># 深度学习、风格迁移</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/06/Fast-R-CNN/" rel="next" title="Fast R-CNN">
+                <i class="fa fa-chevron-left"></i> Fast R-CNN
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">plato</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#任意风格快速迁移算法解读"><span class="nav-number">1.</span> <span class="nav-text">任意风格快速迁移算法解读</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#算法背景"><span class="nav-number">1.1.</span> <span class="nav-text">算法背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#背景知识"><span class="nav-number">1.2.</span> <span class="nav-text">背景知识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#批量归一化-Batch-Normalization"><span class="nav-number">1.2.1.</span> <span class="nav-text">批量归一化(Batch Normalization)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实例归一化-Instance-Normalization"><span class="nav-number">1.2.2.</span> <span class="nav-text">实例归一化(Instance Normalization)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自适应实例归一化-Adaptive-Instance-Normalization"><span class="nav-number">1.2.3.</span> <span class="nav-text">自适应实例归一化(Adaptive Instance Normalization)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#架构"><span class="nav-number">1.3.</span> <span class="nav-text">架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#训练"><span class="nav-number">1.4.</span> <span class="nav-text">训练</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文献"><span class="nav-number">1.5.</span> <span class="nav-text">参考文献</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">plato</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>
