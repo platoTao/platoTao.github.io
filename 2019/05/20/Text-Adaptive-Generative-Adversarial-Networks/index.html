@@ -79,13 +79,13 @@
 
 
 
-<meta name="description" content="Text-Adaptive Generative Adversarial NetworksText-Adaptive Generative Adversarial Networks: Manipulating Images with Natural Language 摘要&amp;emsp;&amp;emsp;该论文提出了一种生成式对抗网络TAGANs，可以用自然语言描述操纵图像，即根据文本描述修改图像中某对象的">
+<meta name="description" content="Text-Adaptive Generative Adversarial Networks[Text-Adaptive Generative Adversarial Networks: Manipulating Images with Natural Language](https://papers.nips.cc/paper/7290-text-adaptive-generative-adver">
 <meta name="keywords" content="对抗学习">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Text-Adaptive Generative Adversarial Networks">
 <meta property="og:url" content="www.platot.site/2019/05/20/Text-Adaptive-Generative-Adversarial-Networks/index.html">
 <meta property="og:site_name" content="心远地自偏">
-<meta property="og:description" content="Text-Adaptive Generative Adversarial NetworksText-Adaptive Generative Adversarial Networks: Manipulating Images with Natural Language 摘要&amp;emsp;&amp;emsp;该论文提出了一种生成式对抗网络TAGANs，可以用自然语言描述操纵图像，即根据文本描述修改图像中某对象的">
+<meta property="og:description" content="Text-Adaptive Generative Adversarial Networks[Text-Adaptive Generative Adversarial Networks: Manipulating Images with Natural Language](https://papers.nips.cc/paper/7290-text-adaptive-generative-adver">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://user-images.githubusercontent.com/23336589/57994629-94480b80-7af0-11e9-83f0-f9f3f9e6902d.png">
 <meta property="og:image" content="https://user-images.githubusercontent.com/23336589/58000918-c9faed80-7b0c-11e9-97cb-d89269cfff53.png">
@@ -94,10 +94,10 @@
 <meta property="og:image" content="https://user-images.githubusercontent.com/23336589/58003703-e77f8580-7b13-11e9-948d-9e994cf369c9.png">
 <meta property="og:image" content="https://user-images.githubusercontent.com/23336589/58003746-0251fa00-7b14-11e9-88bb-bf2370bcd954.png">
 <meta property="og:image" content="https://user-images.githubusercontent.com/23336589/58004465-de8fb380-7b15-11e9-9ee8-5345ee64a700.PNG">
-<meta property="og:updated_time" content="2019-05-20T08:20:33.437Z">
+<meta property="og:updated_time" content="2019-05-20T08:23:09.969Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Text-Adaptive Generative Adversarial Networks">
-<meta name="twitter:description" content="Text-Adaptive Generative Adversarial NetworksText-Adaptive Generative Adversarial Networks: Manipulating Images with Natural Language 摘要&amp;emsp;&amp;emsp;该论文提出了一种生成式对抗网络TAGANs，可以用自然语言描述操纵图像，即根据文本描述修改图像中某对象的">
+<meta name="twitter:description" content="Text-Adaptive Generative Adversarial Networks[Text-Adaptive Generative Adversarial Networks: Manipulating Images with Natural Language](https://papers.nips.cc/paper/7290-text-adaptive-generative-adver">
 <meta name="twitter:image" content="https://user-images.githubusercontent.com/23336589/57994629-94480b80-7af0-11e9-83f0-f9f3f9e6902d.png">
 
 
@@ -350,7 +350,8 @@
       
 
       
-        <h1 id="Text-Adaptive-Generative-Adversarial-Networks"><a href="#Text-Adaptive-Generative-Adversarial-Networks" class="headerlink" title="Text-Adaptive Generative Adversarial Networks"></a><center>Text-Adaptive Generative Adversarial Networks</center></h1><p><a href="https://papers.nips.cc/paper/7290-text-adaptive-generative-adversarial-networks-manipulating-images-with-natural-language" target="_blank" rel="noopener">Text-Adaptive Generative Adversarial Networks: Manipulating Images with Natural Language</a></p>
+        <h1 id="Text-Adaptive-Generative-Adversarial-Networks"><a href="#Text-Adaptive-Generative-Adversarial-Networks" class="headerlink" title="Text-Adaptive Generative Adversarial Networks"></a><center>Text-Adaptive Generative Adversarial Networks</center></h1><center>[Text-Adaptive Generative Adversarial Networks: Manipulating Images with Natural Language](https://papers.nips.cc/paper/7290-text-adaptive-generative-adversarial-networks-manipulating-images-with-natural-language)</center>
+
 <h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>&emsp;&emsp;该论文提出了一种生成式对抗网络TAGANs，可以用自然语言描述操纵图像，即根据文本描述修改图像中某对象的某个视觉方面的属性。之前的方式是合成具有新属性的图像，但会丢失原始图像中和文本描述无关的内容。该方法使用<strong>text-adaptive discriminator</strong>创建的<strong>word-level discriminators</strong>可以根据输入文本分类图像中对象细粒度的属性。该论文代码已开源，<a href="https://github.com/woozzu/tagan" target="_blank" rel="noopener">传送门</a>。</p>
 <h2 id="相关工作"><a href="#相关工作" class="headerlink" title="相关工作"></a>相关工作</h2><p>&emsp;&emsp;该论文的工作是和<strong>conditional image generation methods</strong>紧密相关的。有许多工作尝试使用条件变量生成图像，比如<strong>cGAN、Attribute2Image、infoGAN</strong>。这些工作解决了从纯噪声向量生成新图像的问题。该论文则聚焦于根据给定的文本描述修改图像，类似的工作之前也有，但它们不能很好的保留原始图像中和文本描述无关的内容。因为它们的<strong>sentence-level discriminatior</strong>提供给生成器的是粗粒的训练反馈。而改论文提出的<strong>word-level discriminators</strong>可以区分更为精细的属性。</p>
 <h2 id="网络架构"><a href="#网络架构" class="headerlink" title="网络架构"></a>网络架构</h2><p>&emsp;&emsp;$令x,t,\hat{t}$分别代表图像，匹配图像的文本描述和与图像不匹配的文本描述。任务是根据$\hat{t}$操纵$x$，令得到的图像$\hat{y}$匹配$\hat{t}$，同时保存原始图像中与文本描述无关的信息。<br><img src="https://user-images.githubusercontent.com/23336589/57994629-94480b80-7af0-11e9-83f0-f9f3f9e6902d.png" alt="alt text"></p>
