@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="对抗学习,变分自编码器," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Introspective Variational Autoencoders 摘要&amp;emsp;&amp;emsp;该论文提出了一种新的深度生成模型——自省变分自编码器，用来实现高清图像等高维数据的无条件生成。该模型是VAEs和GANs的一种混合模型，兼有二者的优点。该模型一方面在不引入额外的对抗判别器的情况下，克服了变分自编码器合成图像趋于模糊的问题；另一方面在不使用常用的多阶段多判别器策略下，实现了高">
+<meta name="keywords" content="对抗学习,变分自编码器">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Autoencoders">
+<meta property="og:url" content="www.platot.site/2019/05/22/Introspective-Variational-Autoencoders/index.html">
+<meta property="og:site_name" content="心远地自偏">
+<meta property="og:description" content="Introspective Variational Autoencoders 摘要&amp;emsp;&amp;emsp;该论文提出了一种新的深度生成模型——自省变分自编码器，用来实现高清图像等高维数据的无条件生成。该模型是VAEs和GANs的一种混合模型，兼有二者的优点。该模型一方面在不引入额外的对抗判别器的情况下，克服了变分自编码器合成图像趋于模糊的问题；另一方面在不使用常用的多阶段多判别器策略下，实现了高">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/58165380-45e66880-7cba-11e9-8132-d70f573802fb.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/58165452-67475480-7cba-11e9-87bd-230980ef9b3f.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/58165547-92ca3f00-7cba-11e9-9cec-a86ba6861228.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/58165569-9e1d6a80-7cba-11e9-874a-16e808713598.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/58165612-b2616780-7cba-11e9-853b-38056b4cc4d2.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/58165634-bb523900-7cba-11e9-950c-1dbbbf787175.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/58166208-e4bf9480-7cbb-11e9-8963-b47ab543c328.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/58165655-c60cce00-7cba-11e9-8bcb-e344b014977b.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/58165676-d1f89000-7cba-11e9-9a05-098a299a4303.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/58165694-da50cb00-7cba-11e9-8e58-e7f9863d112a.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/58165722-efc5f500-7cba-11e9-85e2-50d16c695a66.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/58165976-68c54c80-7cbb-11e9-9468-f99786f74c98.png">
+<meta property="og:updated_time" content="2019-05-22T10:10:15.981Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Autoencoders">
+<meta name="twitter:description" content="Introspective Variational Autoencoders 摘要&amp;emsp;&amp;emsp;该论文提出了一种新的深度生成模型——自省变分自编码器，用来实现高清图像等高维数据的无条件生成。该模型是VAEs和GANs的一种混合模型，兼有二者的优点。该模型一方面在不引入额外的对抗判别器的情况下，克服了变分自编码器合成图像趋于模糊的问题；另一方面在不使用常用的多阶段多判别器策略下，实现了高">
+<meta name="twitter:image" content="https://user-images.githubusercontent.com/23336589/58165380-45e66880-7cba-11e9-8132-d70f573802fb.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="www.platot.site/2019/05/22/Introspective-Variational-Autoencoders/"/>
+
+
+
+
+
+  <title>Autoencoders | 心远地自偏</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">心远地自偏</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="www.platot.site/2019/05/22/Introspective-Variational-Autoencoders/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="plato">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="心远地自偏">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Autoencoders</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-22T18:07:47+08:00">
+                2019-05-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/深度学习/" itemprop="url" rel="index">
+                    <span itemprop="name">深度学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Introspective-Variational-Autoencoders"><a href="#Introspective-Variational-Autoencoders" class="headerlink" title=" Introspective Variational Autoencoders "></a><center> Introspective Variational Autoencoders </center></h1><h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>&emsp;&emsp;该论文提出了一种新的深度生成模型——自省变分自编码器，用来实现高清图像等高维数据的无条件生成。该模型是VAEs和GANs的一种混合模型，兼有二者的优点。该模型一方面在不引入额外的对抗判别器的情况下，克服了变分自编码器合成图像趋于模糊的问题；另一方面在不使用常用的多阶段多判别器策略下，实现了高分辨率图像合成的稳定训练。实验结果表明，该模型不仅能够稳定生成高分辨率照片级图像，而且在生成模型常用的量化指标上取得了目前最好的结果。<a href="https://papers.nips.cc/paper/7291-introvae-introspective-variational-autoencoders-for-photographic-image-synthesis" target="_blank" rel="noopener">论文地址</a>。</p>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><h3 id="变分自编码器-VAEs"><a href="#变分自编码器-VAEs" class="headerlink" title="变分自编码器(VAEs)"></a>变分自编码器(VAEs)</h3><p>&emsp;&emsp;<strong>VAEs</strong>希望构建一个从隐变量$z$生成目标数据$x$的模型。<strong>VAEs</strong>包括两个组成网络：生成器(Generator)，负责根据隐变量$z$生成目标数据$x$，和近似推断网络(approximate inference network,i.e.Enoder)，负责将数据$x$映射到隐变量$z$。<strong>VAEs</strong>通过最大化一个置信下界(ELBO)来最大化极大似然概率。如下所示：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/58165380-45e66880-7cba-11e9-8132-d70f573802fb.png" alt="Alt text"></p>
+<p>&emsp;&emsp;<strong>VAEs</strong>的一个主要局限是生成的图片比较模糊。这常常被归咎于推断模型的弱表示能力、注入的噪声和不合适的逐像素的评价准者(element-wise criteria)。</p>
+<h3 id="生成对抗网络-GANs"><a href="#生成对抗网络-GANs" class="headerlink" title="生成对抗网络(GANs)"></a>生成对抗网络(GANs)</h3><p>&emsp;&emsp;<strong>GANs</strong>由两个玩极大极小博弈的模块组成，生成器从先验分布$P(z)$采样得到$G(z)$,试图骗过判别器$D(x)$，判别器$D(x)$则试图区分生成的样本和来自训练数据的样本。学习目标如下:</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/58165452-67475480-7cba-11e9-87bd-230980ef9b3f.png" alt="Alt text"></p>
+<p>&emsp;&emsp;<strong>GANs</strong>往往可以生成清晰的图像，但很难训练，尤其是在生成高分辨率图像的时候，训练过程不稳定并且容易发生模型崩塌。</p>
+<h3 id="Hybrid-Model-of-VAEs-and-GANs"><a href="#Hybrid-Model-of-VAEs-and-GANs" class="headerlink" title="Hybrid Model of VAEs and GANs"></a>Hybrid Model of VAEs and GANs</h3><p>&emsp;&emsp;生成对抗网络和变分自编码模型的混合模型，往往包括三部分：完成数据空间和隐变量空间之间相互映射的编码器和解码器，再加上一个可以对变量空间加上对抗约束的判别器。</p>
+<h2 id="相关工作"><a href="#相关工作" class="headerlink" title="相关工作"></a>相关工作</h2><p>&emsp;&emsp;近些年有许多生成模型被提出来并被广泛研究，比如autoregressive models, VAEs, GANs, real NVP, GMMNs。这些模型在多种任务上取得了很大的成功，比如无条件或有条件图像合成，图象到图像转换，图像重建，语音合成。其中最突出的两个模型是VAEs和GANs。<strong>VAEs</strong>理论优雅且易于训练，具有很好的流行表示(manifold representations)但会产生缺乏细节的模糊图像。这可能是因为其训练原则令其对训练数据赋予高概率，却不能确保对模糊点赋予低概率。<strong>GANs</strong>往往可以生成清晰的图像，但很难训练，尤其是在生成高分辨率图像的时候，训练过程不稳定并且容易发生模型崩塌。这可能是因为判别器太轻易就能把生成数据和真实数据区分开。<br>&emsp;&emsp;针对这些挑战，有许多方法被提出来了。<strong>*LAPGAN</strong>和<strong>StackGAN</strong>在拉普拉斯金字塔内训练一堆<strong>GANs</strong>，从粗略到精细的方式生成高分辨率图像。<strong>StackGAN-v2</strong>和<strong>HGDAN</strong>引入了树状结构的多尺寸判别器。<strong>PGGAN</strong>通过将高分辨率图像分解，从低分辨率出发，分多个阶段使用多个判别器逐步合成高分辨率图像。这种方法增加了模型的训练复杂性。<br>&emsp;&emsp;另外，许多工作致力于联合<strong>VAEs</strong>和<strong>GANs</strong>。<strong>AAE</strong>在隐变量空间进行判别，来使后验概率匹配先验概率，目的是最大化极大似然概率。<strong>ALI</strong>和<strong>BiGAN</strong>则将数据空间和隐变量空间联合起来做判别。混合模型往往拥有更复杂的网络架构看，并且相比<strong>GANs</strong>而言图像生成质量较差。</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/58165547-92ca3f00-7cba-11e9-9cec-a86ba6861228.png" alt="alt text"></p>
+<p>&emsp;&emsp;该论文提出了自省变分自编码器，所谓自省是指，该模型可以自己评估生成图片和真实图片的差异，并据此改进自身。在训练阶段，推断模型试图最小化真实样本的后验概率和先验概率分布差异，最大化生成样本的后验概率和先验概率的分布差异，而生成模型试图最小化生成样本和真实样本的差异来误导推断模型。该模型，对于真实样本来说，表现为一个标准的<strong>VAEs</strong>，对于生成样本，表现为<strong>GANs</strong>。该模型不需要额外的判别器，推断模型担当了这一角色，和其他混合模型相比，减少了模型复杂度。<br>该论文贡献如下：<br>1.以一种自省的方式训练<strong>VAEs</strong>,模型自身可以评估生成样本和真实样本的差异，不需要引入额外的判别器。<br>2.提出了一种单流单阶段对抗模型，更轻松更高效的合成高分辨率图像。<br>3.该论文提出的方法联合了<strong>VAEs</strong>和<strong>GANs</strong>的优点。</p>
+<h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><p>&emsp;&emsp;除了表现出类似<strong>GANs</strong>的对抗学习之外，推断模型和生成模型还需要联合训练来保留<strong>VAEs</strong>的优点。<strong>VAEs</strong>的训练目标包括两部分：一个对数似然项$L_(AE)$和一个先验正则项$L_{REG}$,它们的负数形式如下：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/58165569-9e1d6a80-7cba-11e9-874a-16e808713598.png" alt="Alt text"></p>
+<p>&emsp;&emsp;$L_(AE)$使概率自动编码器中的重建损失，$L_{REG}$促使编码器令近似后验概率分布$q_{\varphi}(z|x)$尽量匹配先验概率分布$p(z)$。</p>
+<h3 id="Adversarial-distrubution-matching"><a href="#Adversarial-distrubution-matching" class="headerlink" title="Adversarial distrubution matching"></a>Adversarial distrubution matching</h3><p>&emsp;&emsp;为了令生成样本的分布匹配训练数据的真实分布。该论文使用$L_{REG}$作为对抗训练损失函数。对于真实样本而言，推断模型需要最小化$L_{REG}$，令真实数据$x$的后验概率$q_{\varphi}(z|x)$尽量匹配先验概率分布$p(z)$；对于生成样本，推断模型则需要最大化$L_{REG}$，；令生成样本$G(z^{‘})$的后验概率${q_\varphi}(z|G(z^{‘}))$偏离先验分布$p(z)$，$z^{‘}$是从分布$p(z)$中采样得到的。相对的，生成器被训练产生具有很小的$L_{REG}$的生成样本$G(z^{‘})$。<br>&emsp;&emsp;对于推断模型$E$和生成模型$G$，损失函数如下：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/58165612-b2616780-7cba-11e9-853b-38056b4cc4d2.png" alt="Alt text"></p>
+<h3 id="Introspective-variational-inference"><a href="#Introspective-variational-inference" class="headerlink" title="Introspective variational inference"></a>Introspective variational inference</h3><p>&emsp;&emsp;在推断模型和生成模型之间引入了对抗学习后，可以产生更真实的图像。但模型的训练过程仍然有着<strong>GANs</strong>的缺点，即训练不稳定和模型崩塌，为此需要引入<strong>IntroVAE</strong>，以一种自省的方式，联合<strong>GANs</strong>和<strong>VESs</strong>。<br>&emsp;&emsp;解决方案极其简单，只需要将对抗目标公式(5)、公式(6)和<strong>VAEs</strong>的置信下界联合起来。推断模型$E$和生成模型$G$的训练目标被重新阐释如下：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/58165634-bb523900-7cba-11e9-950c-1dbbbf787175.png" alt="Alt text"></p>
+<p>&emsp;&emsp;加上了重建损失$L_{AE}$，相当于在推断模型和生成模型之间搭建了一座桥梁，也产生了一种特定的<strong>GANs</strong>和<strong>VESs</strong>的混合模型。对于真实样本来说，训练目标塌缩为一个<strong>VAEs</strong>的置信下界目标，因此保留了<strong>VAEs</strong>的优点；对于生成样本$G(z)$,训练目标推动推断模型和生成模型进行最大最小博弈，也令生成器产生的图像更真实。</p>
+<h3 id="Training-IntroVAE-networks"><a href="#Training-IntroVAE-networks" class="headerlink" title="Training IntroVAE networks"></a>Training IntroVAE networks</h3><p><img src="https://user-images.githubusercontent.com/23336589/58166208-e4bf9480-7cbb-11e9-8963-b47ab543c328.png" alt="Alt text"></p>
+<p>&emsp;&emsp;同原始<strong>VAEs</strong>，作者选择中心各向同性高斯$N(0,1)$(centered isotropic multivariate Gaussian)作为隐变量$z$的先验分布$p(z)$。如上图所示,推断模型$E$拥有两个输出变量$\mu$和$\sigma$,因此后验概率分布$q_{\varphi}(z|x) = N(z;\mu,{\sigma}^2)$。生成器$G$的输入$z$使用一种重参数化的技巧从该后验概率分布中采样得到：$z = \mu + \sigma\bigodot\epsilon, \epsilon服从N(0,1)$。在这种设定下，KL散度$L_{REG}$对<strong>N</strong>个样本，计算公式如下：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/58165655-c60cce00-7cba-11e9-8bcb-e344b014977b.png" alt="Alt text"></p>
+<p>&emsp;&emsp;对于公式(7)(8)中重建损失$L_{AE}$，选择均方差损失函数：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/58165676-d1f89000-7cba-11e9-9a05-098a299a4303.png" alt="Alt text"></p>
+<p>&emsp;&emsp;如上图所示，有两种样本，一类是重建样本$x_r$,另一类是生成样本$x_p$。来自$p(z)$和$q_{\varphi}(z|x)$的两类样本，都用来训练模型，可以对模型学习更具有表示能力的隐编码和合成更真实的样本，提供更有用的信号。推断模型$E$和生成器$G$最终的损失函数分别如下：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/58165694-da50cb00-7cba-11e9-8e58-e7f9863d112a.png" alt="Alt text"></p>
+<p><img src="https://user-images.githubusercontent.com/23336589/58165722-efc5f500-7cba-11e9-85e2-50d16c695a66.png" alt="Alt text"></p>
+<p>训练过程如下所示：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/58165976-68c54c80-7cbb-11e9-9468-f99786f74c98.png" alt="Alt text"></p>
+<h2 id="学习"><a href="#学习" class="headerlink" title="学习"></a>学习</h2><p>&emsp;&emsp;我认为这篇论文的巧妙之处在于，在<strong>VAEs</strong>的基础上，转换<strong>VAEs</strong>的训练对象(ELOB)，令其对真实样本和生成样本，分别表现为<strong>VAEs</strong>，<strong>GANs</strong>。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/对抗学习/" rel="tag"># 对抗学习</a>
+          
+            <a href="/tags/变分自编码器/" rel="tag"># 变分自编码器</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/20/Text-Adaptive-Generative-Adversarial-Networks/" rel="next" title="Text-Adaptive Generative Adversarial Networks">
+                <i class="fa fa-chevron-left"></i> Text-Adaptive Generative Adversarial Networks
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">plato</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Introspective-Variational-Autoencoders"><span class="nav-number">1.</span> <span class="nav-text"> Introspective Variational Autoencoders </span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#摘要"><span class="nav-number">1.1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#背景"><span class="nav-number">1.2.</span> <span class="nav-text">背景</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#变分自编码器-VAEs"><span class="nav-number">1.2.1.</span> <span class="nav-text">变分自编码器(VAEs)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#生成对抗网络-GANs"><span class="nav-number">1.2.2.</span> <span class="nav-text">生成对抗网络(GANs)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hybrid-Model-of-VAEs-and-GANs"><span class="nav-number">1.2.3.</span> <span class="nav-text">Hybrid Model of VAEs and GANs</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相关工作"><span class="nav-number">1.3.</span> <span class="nav-text">相关工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#方法"><span class="nav-number">1.4.</span> <span class="nav-text">方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Adversarial-distrubution-matching"><span class="nav-number">1.4.1.</span> <span class="nav-text">Adversarial distrubution matching</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Introspective-variational-inference"><span class="nav-number">1.4.2.</span> <span class="nav-text">Introspective variational inference</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Training-IntroVAE-networks"><span class="nav-number">1.4.3.</span> <span class="nav-text">Training IntroVAE networks</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#学习"><span class="nav-number">1.5.</span> <span class="nav-text">学习</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">plato</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>
