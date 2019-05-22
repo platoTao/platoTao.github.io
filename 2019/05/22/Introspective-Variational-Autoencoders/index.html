@@ -99,7 +99,7 @@
 <meta property="og:image" content="https://user-images.githubusercontent.com/23336589/58165694-da50cb00-7cba-11e9-8e58-e7f9863d112a.png">
 <meta property="og:image" content="https://user-images.githubusercontent.com/23336589/58165722-efc5f500-7cba-11e9-85e2-50d16c695a66.png">
 <meta property="og:image" content="https://user-images.githubusercontent.com/23336589/58165976-68c54c80-7cbb-11e9-9468-f99786f74c98.png">
-<meta property="og:updated_time" content="2019-05-22T10:23:57.495Z">
+<meta property="og:updated_time" content="2019-05-22T10:32:07.716Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Introspective Variational Autoencoders">
 <meta name="twitter:description" content="Introspective Variational Autoencoders 摘要&amp;emsp;&amp;emsp;该论文提出了一种新的深度生成模型——自省变分自编码器，用来实现高清图像等高维数据的无条件生成。该模型是VAEs和GANs的一种混合模型，兼有二者的优点。该模型一方面在不引入额外的对抗判别器的情况下，克服了变分自编码器合成图像趋于模糊的问题；另一方面在不使用常用的多阶段多判别器策略下，实现了高">
@@ -355,7 +355,7 @@
       
 
       
-        <h1 id="Introspective-Variational-Autoencoders"><a href="#Introspective-Variational-Autoencoders" class="headerlink" title=" Introspective Variational Autoencoders "></a><center> Introspective Variational Autoencoders </center></h1><h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>&emsp;&emsp;该论文提出了一种新的深度生成模型——自省变分自编码器，用来实现高清图像等高维数据的无条件生成。该模型是VAEs和GANs的一种混合模型，兼有二者的优点。该模型一方面在不引入额外的对抗判别器的情况下，克服了变分自编码器合成图像趋于模糊的问题；另一方面在不使用常用的多阶段多判别器策略下，实现了高分辨率图像合成的稳定训练。实验结果表明，该模型不仅能够稳定生成高分辨率照片级图像，而且在生成模型常用的量化指标上取得了目前最好的结果。<a href="https://papers.nips.cc/paper/7291-introvae-introspective-variational-autoencoders-for-photographic-image-synthesis" target="_blank" rel="noopener">论文地址</a>。</p>
+        <h1 id="Introspective-Variational-Autoencoders"><a href="#Introspective-Variational-Autoencoders" class="headerlink" title=" Introspective Variational Autoencoders "></a><center> Introspective Variational Autoencoders </center></h1><h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>&emsp;&emsp;该论文提出了一种新的深度生成模型——自省变分自编码器，用来实现高清图像等高维数据的无条件生成。该模型是VAEs和GANs的一种混合模型，兼有二者的优点。该模型一方面在不引入额外的对抗判别器的情况下，克服了变分自编码器合成图像趋于模糊的问题；另一方面在不使用常用的多阶段多判别器策略下，实现了高分辨率图像合成的稳定训练。实验结果表明，该模型不仅能够稳定生成高分辨率照片级图像，而且在生成模型常用的量化指标上取得了目前最好的结果。<a href="https://papers.nips.cc/paper/7291-introvae-introspective-variational-autoencoders-for-photographic-image-synthesis" target="_blank" rel="noopener">论文地址</a>。<a href="https://github.com/dragen1860/IntroVAE-Pytorch" target="_blank" rel="noopener">开源代码</a>。</p>
 <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><h3 id="变分自编码器-VAEs"><a href="#变分自编码器-VAEs" class="headerlink" title="变分自编码器(VAEs)"></a>变分自编码器(VAEs)</h3><p>&emsp;&emsp;<strong>VAEs</strong>希望构建一个从隐变量$z$生成目标数据$x$的模型。<strong>VAEs</strong>包括两个组成网络：生成器(Generator)，负责根据隐变量$z$生成目标数据$x$，和近似推断网络(approximate inference network,i.e.Enoder)，负责将数据$x$映射到隐变量$z$。<strong>VAEs</strong>通过最大化一个置信下界(ELBO)来最大化极大似然概率。如下所示：</p>
 <p><img src="https://user-images.githubusercontent.com/23336589/58165380-45e66880-7cba-11e9-8132-d70f573802fb.png" alt="Alt text"></p>
 <p>&emsp;&emsp;<strong>VAEs</strong>的一个主要局限是生成的图片比较模糊。这常常被归咎于推断模型的弱表示能力、注入的噪声和不合适的逐像素的评价准者(element-wise criteria)。</p>
