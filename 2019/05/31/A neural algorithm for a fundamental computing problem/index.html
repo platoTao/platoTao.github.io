@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="相似搜索," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="A neural algorithm for a fundamental computing problem 简介&amp;emsp;&amp;emsp;相似搜索(similarity search)，比如确认数据库中相似的图片或互联网上相似的文档，是许多大规模信息检索系统面临的基本计算问题。该论文发现果蝇嗅觉神经回路使用一种不同于传统计算科学算法(locality-sensitive hashing)的方法来">
+<meta name="keywords" content="相似搜索">
+<meta property="og:type" content="article">
+<meta property="og:title" content="A neural algorithm for a fundamental computing problem">
+<meta property="og:url" content="www.platot.site/2019/05/31/A neural algorithm for a fundamental computing problem/index.html">
+<meta property="og:site_name" content="心远地自偏">
+<meta property="og:description" content="A neural algorithm for a fundamental computing problem 简介&amp;emsp;&amp;emsp;相似搜索(similarity search)，比如确认数据库中相似的图片或互联网上相似的文档，是许多大规模信息检索系统面临的基本计算问题。该论文发现果蝇嗅觉神经回路使用一种不同于传统计算科学算法(locality-sensitive hashing)的方法来">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/58682461-31cdf580-83a3-11e9-9679-9ceaecb58fa3.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/58682496-5a55ef80-83a3-11e9-869b-a5ed2833d55e.png">
+<meta property="og:updated_time" content="2019-05-31T06:42:16.584Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="A neural algorithm for a fundamental computing problem">
+<meta name="twitter:description" content="A neural algorithm for a fundamental computing problem 简介&amp;emsp;&amp;emsp;相似搜索(similarity search)，比如确认数据库中相似的图片或互联网上相似的文档，是许多大规模信息检索系统面临的基本计算问题。该论文发现果蝇嗅觉神经回路使用一种不同于传统计算科学算法(locality-sensitive hashing)的方法来">
+<meta name="twitter:image" content="https://user-images.githubusercontent.com/23336589/58682461-31cdf580-83a3-11e9-9679-9ceaecb58fa3.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="www.platot.site/2019/05/31/A neural algorithm for a fundamental computing problem/"/>
+
+
+
+
+
+  <title>A neural algorithm for a fundamental computing problem | 心远地自偏</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">心远地自偏</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="www.platot.site/2019/05/31/A neural algorithm for a fundamental computing problem/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="plato">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="心远地自偏">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">A neural algorithm for a fundamental computing problem</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-31T14:39:12+08:00">
+                2019-05-31
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/机器学习/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="A-neural-algorithm-for-a-fundamental-computing-problem"><a href="#A-neural-algorithm-for-a-fundamental-computing-problem" class="headerlink" title=" A neural algorithm for a fundamental computing problem "></a><center> A neural algorithm for a fundamental computing problem </center></h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>&emsp;&emsp;相似搜索(<strong>similarity search</strong>)，比如确认数据库中相似的图片或互联网上相似的文档，是许多大规模信息检索系统面临的基本计算问题。该论文发现果蝇嗅觉神经回路使用一种不同于传统计算科学算法(<strong>locality-sensitive hashing</strong>)的方法来解决这个问题。果蝇的神经回路赋予相似的输入刺激以相似的神经活动模式，所以接触到相似的气味时，可以应用之前学习到的行为。果蝇的算法，使用了三种不同于传统方法的计算成分。作者展示了在一些基准数据库上，和传统方法相比，果蝇算法可以用于改善相似搜索的性能。作者受此启发，为近似相似搜索(<strong>approximate similarity search or nearest-neighbors search</strong>)这一基本机器学习问题提出了新的计算策略。该策略将输入映射到更高维的空间，输出是稀疏的，并且尽可能保留数据之间的相似性。</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/58682461-31cdf580-83a3-11e9-9679-9ceaecb58fa3.png" alt="alt text"></p>
+<h2 id="果蝇嗅觉神经回路"><a href="#果蝇嗅觉神经回路" class="headerlink" title="果蝇嗅觉神经回路"></a>果蝇嗅觉神经回路</h2><p>&emsp;&emsp;果蝇的嗅觉回路对不同的气味赋予一个相应的标签<strong>(tag)</strong>，该标签对应于当某气味出现时被激活的神经元的集合。这个标签对于学习对不同气味所做出的不同的行为十分关键。举个例子，如果奖励(eg.,糖水)或者惩罚(eg.,电击)与某种气味相关联，对应的，这种气味就变得更有吸引力(果蝇会接近)或者变得更有排斥性。据我们所知，赋予气味的标签是稀疏的，对每一种气味，只有很小一部分接受到气味信息的神经元被激活;也是非重叠的，两种随机选择的气味的标签之间只共享很少的激活神经元，如果有的话，这样可以很轻易的区分开来不同的气味。<br>&emsp;&emsp;每种气味的标签要经过三步计算得到。如图(A)所示。<br>&emsp;&emsp;第一步包括从果蝇鼻子处的气味受体神经元<strong>(odorant receptor neurons,ORNs)</strong>到肾小球处投影神经元<strong>(projection neurons,PNs)</strong>的前向反馈连接。果蝇鼻子处有50种<strong>ORNs</strong>，每一种<strong>ORNs</strong>对不同的气味具有不同的敏感性和选择性。因此，每一种输入的气味都在一个50维空间有一个由50种<strong>ORN</strong>决定的坐标。对于每一种气味，五十种气味受体神经元放电速率的分布都是指数分布(每一种对不同气味的敏感性和选择性不一样)，其均值取决于气味浓度。对于投影神经元来说，移除了这种浓度依赖性。对于每种气味，50种投影神经元的放电速率是指数分布的，对于所有气味和气味浓度，均值接近一样。因此，算法的第一步本质上来讲是均值中心化。这一步十分重要，这样果蝇就不会将气味类型和气味强度混淆。(这一步可以看作是预处理)<br>&emsp;&emsp;第二步是算法的主要的<strong>insight</strong>开始的地方，包括40倍的神经元数量扩增。50个<strong>PNs</strong>投影到2000个<strong>Kenyon cells(KCs)</strong>，由一个稀疏二值随机矩阵连接。每一个<strong>KC</strong>从大约六个随机选择的<strong>PNs</strong>处接收并对其放电速率求和。<br>&emsp;&emsp;第三步包括一个赢者通吃<strong>(winner-take-all)</strong>回路，使用来自单个抑制神经元的强抑制反馈实现。因此，除了放电速率最高的5%的神经元，其他的<strong>KLs</strong>都被沉默。剩下的5%神经元的放电速率对应于输入气味的标签。</p>
+<h2 id="论文贡献"><a href="#论文贡献" class="headerlink" title="论文贡献"></a>论文贡献</h2><p>&emsp;&emsp;从计算机科学的角度出发，作者把果蝇的嗅觉回路看作一个哈希函数，输入是某种气味，输出是对应的标签<strong>(tag)</strong>。虽然标签应该将不同的气味区分开来，但果蝇的优点更在于对相似的气味赋予相似的标签，如图B所示。这样，从一种气味学习到的条件反应就可以应用到相似的气味，或者学习过的气味的噪声版本。这让作者推测果蝇嗅觉回路产生的标签是局部敏感的<strong>(locallity-sensitive)</strong>，即越相似的一对气味，它们的标签也越相似。局部敏感哈希<strong>(LSH)</strong>是解决大规模相似搜索问题的基础。果蝇的算法，在三个方面不同于传统算法：使用稀疏二值随机矩阵将输入到更高维的输出，接着使用赢者通吃策略稀疏标签。<br>该论文有如下贡献:</p>
+<ol>
+<li>受果蝇算法的启发，提出了一种新类型的<strong>LSH</strong>算法，可以高效地寻找高维空间中一个点的近似最近邻。</li>
+<li>证明了果蝇算法构造的标签保留了输入的近邻结构，并比过去经常使用的算法计算上更高效。</li>
+<li>展示了果蝇的算法与传统<strong>LSH</strong>算法相比，在三个基准数据库上改善了寻求最近邻的性能。</li>
+</ol>
+<h2 id="最近邻搜索，LSH，果蝇算法的关系"><a href="#最近邻搜索，LSH，果蝇算法的关系" class="headerlink" title="最近邻搜索，LSH，果蝇算法的关系"></a>最近邻搜索，LSH，果蝇算法的关系</h2><h3 id="最近邻搜索"><a href="#最近邻搜索" class="headerlink" title="最近邻搜索"></a>最近邻搜索</h3><p>&emsp;&emsp;想象你有一张大象的照片，你想在互联网上超过百万的图片中，寻求到100张看起来和你的大象照片最相似的图片。这就被称为最近邻搜索问题，在信息检索，数据压缩，机器学习中具有根本重要性。每一张图片通常被表征为一个$d$维特征向量，两张图片（特征向量）的相似性使用距离来度量，目的是高效地得到任意查询的图片的最近邻。如果互联网只具有很少的图片，可使用暴力线性搜索轻易地找到精确的最近邻。如果互联网具有很多的图片，但每一张图片被表征为一个低维向量(eg.,10 or 20 features)，则可以使用空间划分方法，比如<strong>kd-trees</strong>，这样足够用了。但对于高维向量的大规模数据库，没有一种方法可行。</p>
+<h3 id="LSH"><a href="#LSH" class="headerlink" title="LSH"></a>LSH</h3><p>&emsp;&emsp;幸运的是，在许多应用环境中，返回和查询数据足够接近的近似最近邻的集合，只要足够快，也是可行的。这样就推动了一种使用被称为<strong>LSH</strong>的概率技术来寻找近似最近邻的方法的产生。对于果蝇来说，一种气味的标签<strong>(hash)</strong>对应于<strong>KCs</strong>放电速率的特定向量。局部敏感特性显示两种相似的气味会被表征为相似的标签。同样，对于图片搜索来讲，一张大象图片的标签会与另一张大象图片的标签更相似，与摩天大楼照片的标签相比。形式上可定义为：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/58682496-5a55ef80-83a3-11e9-869b-a5ed2833d55e.png" alt="alt text"></p>
+<p>&emsp;&emsp;传统的哈希函数<strong>(non-LSH)</strong>，将输入数据点随机均匀的分散到特定空间中；而<strong>LSH</strong>提供一种从$d$维空间到$m$维空间的保留距离的点嵌入方式。因此，在输入空间里越相似的两个点，就会以更高的概率被赋予相同或相似的标签；在输入空间里越不相似的两个点，被赋予的标签则越不相似。<br>&emsp;&emsp;对于设计<strong>LSH</strong>函数，一个常见的<strong>trick</strong>是计算输入数据的随机投影，通常是将输入的特征向量和一个随机矩阵相乘。<strong>The Johnson-Lindenstrauss</strong>定理及其变体，为使用各种类型的随机投影，将点从$d$维空间投影到到$m$维空间，能多好保留局部性提供了强大的理论证明。<br>&emsp;&emsp;引人注目的，果蝇也使用随机投影将标签分配给气味(step 2)，但和传统的<strong>LSH</strong>算法相比有三处不同。第一，果蝇算法使用稀疏二值随机投影，而<strong>LSH</strong>函数通常使用计算代价更高的密集投影，比如高斯随机投影。第二，果蝇算法将输入投影到更高维的空间，而传统的<strong>LSH</strong>则投影到更低维空间。第三，果蝇算法使用赢者通吃策略使输出稀疏化，而传统的<strong>LSH</strong>算法则保留输出的密集性。</p>
+<h3 id="Deriving-the-distance-preserving-properties-of-the-fly’s-olfactory-circuit"><a href="#Deriving-the-distance-preserving-properties-of-the-fly’s-olfactory-circuit" class="headerlink" title="Deriving the distance-preserving properties of the fly’s olfactory circuit"></a>Deriving the distance-preserving properties of the fly’s olfactory circuit</h3><p>&emsp;&emsp;我们可以将从<strong>PNs</strong>到<strong>KCs</strong>的映射看作是一个双向连接矩阵(m X d)，$x$是$d$维向量，代表输入，在果蝇那其中每一个$x_i$代表一个<strong>PN</strong>；$y$是$m$维向量，代表输出，$y$中每一个$y_i$则代表一个<strong>KC</strong>，每一$y_i$等于少数的$x_i$的和。二者之间的连接关系可以无向边连接表示。这个双向图可以使用一个m X d的邻接矩阵表示如下：</p>
+<script type="math/tex; mode=display">M_{ji} = \begin{cases} 1,&\text{if $x_i$ connects $y_i$ } \\ 0, &\text{otherwise} \end{cases}</script><p>这样就有：</p>
+<script type="math/tex; mode=display">y = Mx</script><p>在<strong>APl</strong>抑制反馈后，只有放电速率最大的$k$个<strong>KCs</strong>保留了它们的值，其余得都被归零了，这就是赢者通吃策略。这样可以产生一个$m$维的稀疏向量，也就是标签，如下所示：</p>
+<script type="math/tex; mode=display">z_i = \begin{cases} y_i ,&\text{if $y_i$ is one of the k largest entries in y } \\ 0, &\text{otherwise} \end{cases}</script><p>$M$的一种简单模型就是一个稀疏二值随机矩阵：每一个元素$M_{ij}$用概率$p$独立设置，即该元素为1的概率$p$。比如，选择$p = 6/d$，意味着$M$有大约6个1，这符合实验发现。、<br>&emsp;&emsp;在补充部分，作者证明，果蝇算法的前两步产生的标签，符合预期的保留了输入气味的$L2$距离。证明如下：<br>定理 1:如果两个输入$x,x \in R^d$被分别投影到$y,y’ \in R^m$，我们有：</p>
+<script type="math/tex; mode=display">E{ \parallel y-y'\parallel}^2 \le mp((1-p){\parallel x-x'\parallel}^2)</script><p>&emsp;&emsp;同样，作者证明当$m$足够大时，变量${\parallel y\parallel}^2$紧密的集中在其期望：</p>
+<script type="math/tex; mode=display">(1-\epsilon)E {\parallel y \parallel}^2 \le (1+\epsilon) E {\parallel y \parallel}^2</script><p>对于很小的$\epsilon &gt;0$以一个很高的概率成立。</p>
+<p>&emsp;&emsp;因此结果就证明果蝇算法代表了<strong>LSH</strong>新的一种类型。(ps:这里只有结论，原论文也没有证明部分，应该看看LSH算法证明来理解这里)</p>
+<h2 id="讨论"><a href="#讨论" class="headerlink" title="讨论"></a>讨论</h2><p>&emsp;&emsp;总的来说，作者确定了一种新的大脑算法，该算法支持重要的感官功能，从理论上证明了其距离保留的性质。作者亦在三种基准数据库上经验的评估了该算法用于寻找最近邻的表现。这份工作提供了大脑中相似性匹配策略和大规模信息检索系统中最近邻搜索的协同作用。该论文的工作可以应用在重复值检测，聚类和<strong> energy-efficient deep learning</strong>。<br>&emsp;&emsp;对<strong>LSH</strong>，有许多扩展，比如使用多个哈希表来提高精度；使用多探头<strong>(multi-probe)</strong>，这样相似的标签就会落入同一个桶中；各种用于离散散列的量化技巧。也有方法可以加速随机投影乘法，比如对于<strong>LSH</strong>，可使用<strong> fast Johnson-Lindenstrauss transforms</strong>；对于果蝇算法，可以使用<strong> fast sparese matrix multiplication</strong>。<br>&emsp;&emsp;接下来，我们将注意力放在数据无关哈希上，也就是哈希函数不是从之前的数据学习来的，也没有使用先前的数据。最近，许多类型的数据无关的<strong>LSH</strong>被提出来，包括<strong> PCA hashing</strong>，<strong> spectral hashing </strong>，<strong> semantic hasing</strong>，<strong>deep hashing</strong>和其他的。果蝇算法的一些部分之前也有被人使用。比如<strong> MinHash</strong>和<strong>winer-take-all hash</strong>都使用了类似赢者通吃的策略，但没有一种扩展了数据维度。同样的，随机映射也被多种方法使用，但没有一种使用稀疏二值随机映射。</p>
+<h2 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h2><p>&emsp;&emsp;该论文确实为解决一个根本问题—相似搜索，提供了新的方法。因为相似搜索在很多地方都可以用到，比如，聚类，最近邻，信息检索。而果蝇算法之所以计算成本更低，我的理解是随机映射使用的稀疏二值矩阵，虽然被扩展到更高维，但计算量实际上很小。<br>&emsp;&emsp;果蝇算法使用的哈希函数是数据无关的，因为是以概率$p$随机生成的。nips2018的一篇论文对此做了改进，$M$使用数据训练得到。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/相似搜索/" rel="tag"># 相似搜索</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/24/文献汇报一/" rel="next" title="文献汇报一">
+                <i class="fa fa-chevron-left"></i> 文献汇报一
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">plato</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#A-neural-algorithm-for-a-fundamental-computing-problem"><span class="nav-number">1.</span> <span class="nav-text"> A neural algorithm for a fundamental computing problem </span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#果蝇嗅觉神经回路"><span class="nav-number">1.2.</span> <span class="nav-text">果蝇嗅觉神经回路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#论文贡献"><span class="nav-number">1.3.</span> <span class="nav-text">论文贡献</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最近邻搜索，LSH，果蝇算法的关系"><span class="nav-number">1.4.</span> <span class="nav-text">最近邻搜索，LSH，果蝇算法的关系</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#最近邻搜索"><span class="nav-number">1.4.1.</span> <span class="nav-text">最近邻搜索</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LSH"><span class="nav-number">1.4.2.</span> <span class="nav-text">LSH</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deriving-the-distance-preserving-properties-of-the-fly’s-olfactory-circuit"><span class="nav-number">1.4.3.</span> <span class="nav-text">Deriving the distance-preserving properties of the fly’s olfactory circuit</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#讨论"><span class="nav-number">1.5.</span> <span class="nav-text">讨论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#思考"><span class="nav-number">1.6.</span> <span class="nav-text">思考</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">plato</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>
