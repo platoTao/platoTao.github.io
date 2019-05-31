@@ -79,13 +79,13 @@
 
 
 
-<meta name="description" content="任意风格快速迁移算法解读论文：Arbitrary Style Transfer in Real-time with Adaptive Instance Normalization 算法背景图像风格迁移即对于给定的图像，将其渲染成某种艺术风格的图像。这主要包含两个问题，一是如何对风格图像中的风格特征进行建模和提取，二是如何将提取的风格和内容混合然后还原成一个相应的风格化结果。 图像风格化起源于纹理建">
+<meta name="description" content="论文：Arbitrary Style Transfer in Real-time with Adaptive Instance Normalization 算法背景图像风格迁移即对于给定的图像，将其渲染成某种艺术风格的图像。这主要包含两个问题，一是如何对风格图像中的风格特征进行建模和提取，二是如何将提取的风格和内容混合然后还原成一个相应的风格化结果。 图像风格化起源于纹理建模和图像重建。 其中纹理">
 <meta name="keywords" content="深度学习、风格迁移">
 <meta property="og:type" content="article">
 <meta property="og:title" content="任意风格快速迁移算法解读">
 <meta property="og:url" content="www.platot.site/2018/07/18/任意风格快速迁移算法解读/index.html">
 <meta property="og:site_name" content="心远地自偏">
-<meta property="og:description" content="任意风格快速迁移算法解读论文：Arbitrary Style Transfer in Real-time with Adaptive Instance Normalization 算法背景图像风格迁移即对于给定的图像，将其渲染成某种艺术风格的图像。这主要包含两个问题，一是如何对风格图像中的风格特征进行建模和提取，二是如何将提取的风格和内容混合然后还原成一个相应的风格化结果。 图像风格化起源于纹理建">
+<meta property="og:description" content="论文：Arbitrary Style Transfer in Real-time with Adaptive Instance Normalization 算法背景图像风格迁移即对于给定的图像，将其渲染成某种艺术风格的图像。这主要包含两个问题，一是如何对风格图像中的风格特征进行建模和提取，二是如何将提取的风格和内容混合然后还原成一个相应的风格化结果。 图像风格化起源于纹理建模和图像重建。 其中纹理">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://user-images.githubusercontent.com/23336589/42877131-4000dcf8-8abb-11e8-9336-244bda1d7b1a.png">
 <meta property="og:image" content="https://user-images.githubusercontent.com/23336589/42877308-ccd32b86-8abb-11e8-9293-be4335156c00.png">
@@ -96,10 +96,10 @@
 <meta property="og:image" content="https://user-images.githubusercontent.com/23336589/42878317-3867a5fe-8abf-11e8-9fad-76771b505ba0.png">
 <meta property="og:image" content="https://user-images.githubusercontent.com/23336589/42878352-5c9fd496-8abf-11e8-96dd-94228b60485a.png">
 <meta property="og:image" content="https://user-images.githubusercontent.com/23336589/42878392-77b36d4c-8abf-11e8-8839-fc11420833a6.png">
-<meta property="og:updated_time" content="2018-07-18T11:30:18.220Z">
+<meta property="og:updated_time" content="2019-05-31T06:51:48.172Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="任意风格快速迁移算法解读">
-<meta name="twitter:description" content="任意风格快速迁移算法解读论文：Arbitrary Style Transfer in Real-time with Adaptive Instance Normalization 算法背景图像风格迁移即对于给定的图像，将其渲染成某种艺术风格的图像。这主要包含两个问题，一是如何对风格图像中的风格特征进行建模和提取，二是如何将提取的风格和内容混合然后还原成一个相应的风格化结果。 图像风格化起源于纹理建">
+<meta name="twitter:description" content="论文：Arbitrary Style Transfer in Real-time with Adaptive Instance Normalization 算法背景图像风格迁移即对于给定的图像，将其渲染成某种艺术风格的图像。这主要包含两个问题，一是如何对风格图像中的风格特征进行建模和提取，二是如何将提取的风格和内容混合然后还原成一个相应的风格化结果。 图像风格化起源于纹理建模和图像重建。 其中纹理">
 <meta name="twitter:image" content="https://user-images.githubusercontent.com/23336589/42877131-4000dcf8-8abb-11e8-9336-244bda1d7b1a.png">
 
 
@@ -352,7 +352,7 @@
       
 
       
-        <h1 id="任意风格快速迁移算法解读"><a href="#任意风格快速迁移算法解读" class="headerlink" title="任意风格快速迁移算法解读"></a><center>任意风格快速迁移算法解读</center></h1><p><a href="https://arxiv.org/abs/1703.06868" target="_blank" rel="noopener">论文：Arbitrary Style Transfer in Real-time with Adaptive Instance Normalization</a></p>
+        <p><a href="https://arxiv.org/abs/1703.06868" target="_blank" rel="noopener">论文：Arbitrary Style Transfer in Real-time with Adaptive Instance Normalization</a></p>
 <h2 id="算法背景"><a href="#算法背景" class="headerlink" title="算法背景"></a>算法背景</h2><p>图像风格迁移即对于给定的图像，将其渲染成某种艺术风格的图像。这主要包含两个问题，一是如何对风格图像中的风格特征进行建模和提取，二是如何将提取的风格和内容混合然后还原成一个相应的风格化结果。</p>
 <p><strong>图像风格化起源于纹理建模和图像重建。</strong></p>
 <p>其中纹理建模（Visual Texture Modelling）又分为两类：</p>
@@ -570,7 +570,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#任意风格快速迁移算法解读"><span class="nav-number">1.</span> <span class="nav-text">任意风格快速迁移算法解读</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#算法背景"><span class="nav-number">1.1.</span> <span class="nav-text">算法背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#背景知识"><span class="nav-number">1.2.</span> <span class="nav-text">背景知识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#批量归一化-Batch-Normalization"><span class="nav-number">1.2.1.</span> <span class="nav-text">批量归一化(Batch Normalization)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实例归一化-Instance-Normalization"><span class="nav-number">1.2.2.</span> <span class="nav-text">实例归一化(Instance Normalization)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自适应实例归一化-Adaptive-Instance-Normalization"><span class="nav-number">1.2.3.</span> <span class="nav-text">自适应实例归一化(Adaptive Instance Normalization)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#架构"><span class="nav-number">1.3.</span> <span class="nav-text">架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#训练"><span class="nav-number">1.4.</span> <span class="nav-text">训练</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文献"><span class="nav-number">1.5.</span> <span class="nav-text">参考文献</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#算法背景"><span class="nav-number">1.</span> <span class="nav-text">算法背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#背景知识"><span class="nav-number">2.</span> <span class="nav-text">背景知识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#批量归一化-Batch-Normalization"><span class="nav-number">2.1.</span> <span class="nav-text">批量归一化(Batch Normalization)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实例归一化-Instance-Normalization"><span class="nav-number">2.2.</span> <span class="nav-text">实例归一化(Instance Normalization)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自适应实例归一化-Adaptive-Instance-Normalization"><span class="nav-number">2.3.</span> <span class="nav-text">自适应实例归一化(Adaptive Instance Normalization)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#架构"><span class="nav-number">3.</span> <span class="nav-text">架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#训练"><span class="nav-number">4.</span> <span class="nav-text">训练</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文献"><span class="nav-number">5.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
             
 
           </div>

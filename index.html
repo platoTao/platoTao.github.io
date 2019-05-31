@@ -468,11 +468,11 @@
       
         
           
-          文献汇报工作概述策略
+          工作概述策略
 选取策略：按时间顺序，从新到旧依次阅读
 阅读策略：从前往后阅读，重点放在论文提出的方法原理阐释
 
-内容&emsp;&emsp;本周读了来自nips2018的2篇论文，分别是Text-Adaptive Generative Adversarial Networks: Manipulating Images with Natural Language和IntroVAE: Introspective Variational Autoencoders forPhotographic Image Synthesis。另外尝试着读Efficient Algorithms for No
+内容&emsp;&emsp;本周读了来自nips2018的2篇论文，分别是Text-Adaptive Generative Adversarial Networks: Manipulating Images with Natural Language和IntroVAE: Introspective Variational Autoencoders forPhotographic Image Synthesis。另外尝试着读Efficient Algorithms for Non-co
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -620,8 +620,8 @@
       
         
           
-           Introspective Variational Autoencoders 摘要&emsp;&emsp;该论文提出了一种新的深度生成模型——自省变分自编码器，用来实现高清图像等高维数据的无条件生成。该模型是VAEs和GANs的一种混合模型，兼有二者的优点。该模型一方面在不引入额外的对抗判别器的情况下，克服了变分自编码器合成图像趋于模糊的问题；另一方面在不使用常用的多阶段多判别器策略下，实现了高分辨率图像合成的稳定训练。实验结果表明，该模型不仅能够稳定生成高分辨率照片级图像，而且在生成模型常用的量化指标上取得了目前最好的结果。论文地址。开源代码。
-背景变分自编码器(VAEs)&emsp;&e
+          摘要&emsp;&emsp;该论文提出了一种新的深度生成模型——自省变分自编码器，用来实现高清图像等高维数据的无条件生成。该模型是VAEs和GANs的一种混合模型，兼有二者的优点。该模型一方面在不引入额外的对抗判别器的情况下，克服了变分自编码器合成图像趋于模糊的问题；另一方面在不使用常用的多阶段多判别器策略下，实现了高分辨率图像合成的稳定训练。实验结果表明，该模型不仅能够稳定生成高分辨率照片级图像，而且在生成模型常用的量化指标上取得了目前最好的结果。论文地址。开源代码。
+背景变分自编码器(VAEs)&emsp;&emsp;VAEs希望构建一个从隐变量$z$生成目标数据$x$的模型。VAEs包括
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -769,8 +769,8 @@
       
         
           
-          Text-Adaptive Generative Adversarial Networks摘要&emsp;&emsp;该论文提出了一种生成式对抗网络TAGANs，可以用自然语言描述操纵图像，即根据文本描述修改图像中某对象的某个视觉方面的属性。之前的方式是合成具有新属性的图像，但会丢失原始图像中和文本描述无关的内容。该方法使用text-adaptive discriminator创建的word-level discriminators可以根据输入文本自适应地对细粒度的属性进行独立的分类。论文地址，该论文代码已开源，传送门。
-相关工作&emsp;&emsp;该论文的工作是和conditional 
+          摘要&emsp;&emsp;该论文提出了一种生成式对抗网络TAGANs，可以用自然语言描述操纵图像，即根据文本描述修改图像中某对象的某个视觉方面的属性。之前的方式是合成具有新属性的图像，但会丢失原始图像中和文本描述无关的内容。该方法使用text-adaptive discriminator创建的word-level discriminators可以根据输入文本自适应地对细粒度的属性进行独立的分类。论文地址，该论文代码已开源，传送门。
+相关工作&emsp;&emsp;该论文的工作是和conditional image generation methods紧密相关的。有许多工作尝试使用条件变量生成
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -918,7 +918,7 @@
       
         
           
-          任意风格快速迁移算法解读论文：Arbitrary Style Transfer in Real-time with Adaptive Instance Normalization
+          论文：Arbitrary Style Transfer in Real-time with Adaptive Instance Normalization
 算法背景图像风格迁移即对于给定的图像，将其渲染成某种艺术风格的图像。这主要包含两个问题，一是如何对风格图像中的风格特征进行建模和提取，二是如何将提取的风格和内容混合然后还原成一个相应的风格化结果。
 图像风格化起源于纹理建模和图像重建。
 其中纹理建模（Visual Texture Modelling）又分为两类：
@@ -926,7 +926,8 @@
 基于统计分布的参数化纹理建模方法
 基于MRF的非参数化纹理建模方法
 
-纹理建模解决了如何对风格特征进行提
+纹理建模解决了如何对风格特征进行提取的问题。
+而图像重建解
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1074,11 +1075,11 @@
       
         
           
-          Fast R-CNN前言论文地址
+          前言论文地址
 2015年Ross Girshick基于R-CNN的工作提出来Fast R-CNN，使用很深的VGG16网络，训练速度是R-CNN的9倍，检测速度是其的213倍，而且在PASCAL VOC2012上达到了更高的准确度。与SPPnet相比，fast R-CNN训练VGG16网络比他快3倍，测试速度快10倍，并且更准确。
 R-CNN具有显著的缺点:
 
-训练过程是多级流水线。R-CNN首先使用目标候选框对卷积神经网络使用log损失进行微调。然后，它将卷积神经网络得到的特征送入SVM。 这些SVM作为目标      测器，替代通过微调学习的softmax分类器。 在第
+训练过程是多级流水线。R-CNN首先使用目标候选框对卷积神经网络使用log损失进行微调。然后，它将卷积神经网络得到的特征送入SVM。 这些SVM作为目标      测器，替代通过微调学习的softmax分类器。 在第三个训练阶段，学习检
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1226,7 +1227,7 @@ R-CNN具有显著的缺点:
       
         
           
-           好好学习 前言勤奋无法避免战略上的失败。我想，方法论的重要性是毋庸置疑的，成甲老师的《好好学习》便是讲授方法论的，这本书语言特别通俗，尽管有些我认为不太合理的地方，比如复利，指数爆炸在其他地方都是让人头疼的存在，在本书中成了一碗鸡汤，还有对哪些知识应该学的议论，也只是一己之见，但瑕不掩瑜，书中一些观点让我很受启发，于是总结记录如下。
+          前言勤奋无法避免战略上的失败。我想，方法论的重要性是毋庸置疑的，成甲老师的《好好学习》便是讲授方法论的，这本书语言特别通俗，尽管有些我认为不太合理的地方，比如复利，指数爆炸在其他地方都是让人头疼的存在，在本书中成了一碗鸡汤，还有对哪些知识应该学的议论，也只是一己之见，但瑕不掩瑜，书中一些观点让我很受启发，于是总结记录如下。
 知识和临界知识知识是什么？维基百科的定义如下：
 
 知识是对某个主题确信的认识，并且这些认识拥有潜在的能力为特定目的而使用。
@@ -1235,7 +1236,7 @@ Google的定义如下：
 
 人类在实践中认识客观世界（包括人类自身）的成果。
 
-可以看出知识是经过验证(或者说当前、部分验证过)的人类对
+可以看出知识是经过验证(或者说当前、部分验证过)的人类对世界的认识。
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1383,8 +1384,8 @@ Google的定义如下：
       
         
           
-          R-CNN 探究前言在2012年,Alex Krizhevsky通过展示在ILSVRC使用卷积神经网络达到了较高的图片分类准确度，而重新激起了人们对CNNs的兴趣。在2012年ILSVRC的研讨会上，最核心的问题是：CNNs在ImageNet图片分类上的表现，如果推广到PASCAL YOC数据集上的目标检测任务上，其表现可以达到何种程度。Ross Girshick等人在2013年11月发表的这篇论文：
-Rich feature hierarchies for accurate object detection and semantic segmentation，第一次展示了和传统的方法相比，如
+          前言在2012年,Alex Krizhevsky通过展示在ILSVRC使用卷积神经网络达到了较高的图片分类准确度，而重新激起了人们对CNNs的兴趣。在2012年ILSVRC的研讨会上，最核心的问题是：CNNs在ImageNet图片分类上的表现，如果推广到PASCAL YOC数据集上的目标检测任务上，其表现可以达到何种程度。Ross Girshick等人在2013年11月发表的这篇论文：
+Rich feature hierarchies for accurate object detection and semantic segmentation，第一次展示了和传统的方法相比，如HOG-like
           ...
           <!--noindex-->
           <div class="post-button text-center">
