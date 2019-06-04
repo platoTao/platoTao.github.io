@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="对抗脆弱性," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="摘要&amp;emsp;&amp;emsp;用于图像分类的深度网络面对对抗性攻击的脆弱性已经众所周知，但人们对其的了解还不够深入。通过新颖的实验分析，作者说明了用于图像分类的深度卷积网络的一些事实，这些事实揭示了它们的分类行为和分类行为如何与对抗的问题联系在一起的。简而言之，这些网络的卓越表现和它们面对对抗性攻击的脆弱性是同一枚硬币的两面：网络面对对抗性攻击最脆弱的输入图像空间方向与网络首先用来实现其分类性能的方">
+<meta name="keywords" content="对抗脆弱性">
+<meta property="og:type" content="article">
+<meta property="og:title" content="With Friends Like These, Who Needs Adversaries?">
+<meta property="og:url" content="www.platot.site/2019/06/04/With Friends Like These, Who Needs Adversaries/index.html">
+<meta property="og:site_name" content="心远地自偏">
+<meta property="og:description" content="摘要&amp;emsp;&amp;emsp;用于图像分类的深度网络面对对抗性攻击的脆弱性已经众所周知，但人们对其的了解还不够深入。通过新颖的实验分析，作者说明了用于图像分类的深度卷积网络的一些事实，这些事实揭示了它们的分类行为和分类行为如何与对抗的问题联系在一起的。简而言之，这些网络的卓越表现和它们面对对抗性攻击的脆弱性是同一枚硬币的两面：网络面对对抗性攻击最脆弱的输入图像空间方向与网络首先用来实现其分类性能的方">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/58886957-4a2d6f80-8717-11e9-9d08-f62e7ec9a0f5.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/58886839-21a57580-8717-11e9-9b53-f6c951262863.png">
+<meta property="og:updated_time" content="2019-06-04T14:29:28.269Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="With Friends Like These, Who Needs Adversaries?">
+<meta name="twitter:description" content="摘要&amp;emsp;&amp;emsp;用于图像分类的深度网络面对对抗性攻击的脆弱性已经众所周知，但人们对其的了解还不够深入。通过新颖的实验分析，作者说明了用于图像分类的深度卷积网络的一些事实，这些事实揭示了它们的分类行为和分类行为如何与对抗的问题联系在一起的。简而言之，这些网络的卓越表现和它们面对对抗性攻击的脆弱性是同一枚硬币的两面：网络面对对抗性攻击最脆弱的输入图像空间方向与网络首先用来实现其分类性能的方">
+<meta name="twitter:image" content="https://user-images.githubusercontent.com/23336589/58886957-4a2d6f80-8717-11e9-9d08-f62e7ec9a0f5.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="www.platot.site/2019/06/04/With Friends Like These, Who Needs Adversaries/"/>
+
+
+
+
+
+  <title>With Friends Like These, Who Needs Adversaries? | 心远地自偏</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">心远地自偏</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="www.platot.site/2019/06/04/With Friends Like These, Who Needs Adversaries/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="plato">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="心远地自偏">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">With Friends Like These, Who Needs Adversaries?</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-04T22:27:17+08:00">
+                2019-06-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/深度学习/" itemprop="url" rel="index">
+                    <span itemprop="name">深度学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>&emsp;&emsp;用于图像分类的深度网络面对对抗性攻击的脆弱性已经众所周知，但人们对其的了解还不够深入。通过新颖的实验分析，作者说明了用于图像分类的深度卷积网络的一些事实，这些事实揭示了它们的分类行为和分类行为如何与对抗的问题联系在一起的。简而言之，这些网络的卓越表现和它们面对对抗性攻击的脆弱性是同一枚硬币的两面：网络面对对抗性攻击最脆弱的输入图像空间方向与网络首先用来实现其分类性能的方向相同。作者通过两个主要的步骤得出这个结果。首先是揭示类别倾向于和特定的图像空间方向关联的事实。这是通过检查网络的类得分输出作为沿着这些方向一维运动的函数来显示的。这为通用对抗性扰动的存在提供了一种新颖的视角。第二步是清楚地证明在跨越这些方向的空间内分类性能和面对对抗性攻击的脆弱性之间的紧密联系。因此，作者的分析解决了准确性和脆弱性之间的明显矛盾。它为许多现有技术提供了新的视角，并揭示了构建对对抗攻击的具有准确性和鲁棒性的网络的深远影响。</p>
+<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>&emsp;&emsp;那些深度网络发现它们必须面对一个显然的悖论。一方面，这些网络在训练集上学习类别判定并似乎能很好的泛化到从未见过的数据，被证明是成功的。另一方面，这些同样的网络面对对抗性扰动时很脆弱，在类别预测时会发生急剧的变化，尽管对抗性扰动是反直觉的或是人眼不可感知的。对这个问题的一个共同理解如下所述：“虽然深度网络已经证明了它们能够在它们的目标类别之间做出很好区分以便对没见过的自然变化进行推广，但它们奇怪地都拥有一个必须得到保卫的致命弱点”。实际上，制造攻击和抵制网络防御的努力导致了一场专门的竞争，相关的一系列文献已经过于庞大而无法总结。<br>&emsp;&emsp;在目前的工作中，作者试图从根本上揭开这一现象的神秘面纱。作者基于他们之前关于几何决策边界分析的工作[2]，将其重新阐述并扩展为一个框架，作者相信这个框架关于用于图像分类的深度卷积网络<strong>(DCNs)</strong>上述的悖论行为更简单并且更有启发性。通过一系列相当简单的实验和解释，作者阐释了对抗样本表示的是什么，现代的<strong>DCNs</strong>做了什么和没有做什么。通过这样，作者将专注于对抗本身的工作和其他寻求描述网络学习到的特征空间的工作结合在一起。<br>&emsp;&emsp;让$\hat{i}$表示输入图片的向量，$\overline{i}$表示给定的数据集的平均图片向量。这样，数据集的均值标准化版本$\Pi = \{i_i, i_2,…i_N\}$，第$N^{th}$个图像$i_n = \hat{i}_n - \overline{i}$。定义图像$i_n$在方向$d_j$上的扰动为：$\widetilde{i}_n \leftarrow i_n + s \hat{d}_j$，$s$是一个扰动比例因子，$\hat{d}_j$是方向$d_j$上的单位规范向量。一张图像经过神经网络，神经网络的参数为$\theta$，对特定类$c$的输出分数为$\mathcal{F}_c(\widetilde{i}|\theta)$。这个类得分函数可以重写为$\mathcal{F}_c(i_n+s\hat{d}_j|\theta)$,可以等价得记为$\mathcal{\widetilde{F}}_c(s|i_n,d_j,\theta)$。作者<br>在不同的分类<strong>DCNs</strong>上从随机选取的自然图像$i_n$开始，考察了$\mathcal{\widetilde{F}}_c$作为$s$在图像空间特定方向运动的函数的性质。通过这个新颖的分析，作者发现了这些函数三条值得注意的观察结果，这些观察结果直接与这些网络中的对抗性脆弱现象有关，所有这些都在图1中展示。现在来更详细地讨论这些观察结果。</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/58886957-4a2d6f80-8717-11e9-9d08-f62e7ec9a0f5.png" alt="alt text"></p>
+<p>&emsp;&emsp;在开始之前，先说明这些方向$d_j$都是通过后面介绍的方法获得的。在图片1，作者针对’frog’类，研究了两个方向：所有其他类都存在这样的方向。首先，请注意作为$s$的函数的相应类$c$(这里是’frog’类)的得分通常关于某些点$s_0$近似对称，i.e. $\mathcal{\widetilde{F}}_c(s-s_0|i_n,d_j,\theta) \approx \mathcal{\widetilde{F}}_c(-s-s_0|i_n,d_j,\theta)$，并且两边都是单调的。这意味着简单地增加输入图像和单个方向之间的相关的幅度，导致网络相信更多或更少类$c$的存在。换句话说，在图像空间的某一方向上，可让所有图像里类$c$更近或者更远。在前一种情况中，该方向代表了特定于类的通用对抗扰动<strong>(UAP)</strong>。第二，让$i^d = i \cdot \hat{d}$，令$i^{d \perp}$代表$i$在空间中正交于$\hat{d}$的投影，这样$i^{d \perp} = i-i^d \cdot \hat{d}$。于是，作者的结果表明存在一个基础的包含$\hat{d}$的图像空间，使得类别得分函数近似可加性地分离，i.e.$\mathcal{F}_c(i|\theta) = \mathcal{F}_c([i^d, i^{d\perp}]|\theta) \approx \mathcal{G}(i^d) + \mathcal{H}(i^{d\perp})$。这意味着所研究的方向可以用来几乎彼此独立地改变网络的预测。然而，如图1所示，尽管有这些事实，这些方向的2D可视化揭示了低级结构缺乏与类关联的清晰的语义连接(比如，$d_1$和’frog’相关联，但其可视化结果看起来没有一点像青蛙)。所以，作者证明了不像<strong>DCNs</strong>通常被认为的那样，它们学习到的函数编码的是更简单的类标志概念，尽管在一定程度上可以泛化到测试集分布。这和人类视觉系统利用这些数据维度的方式不同：“对抗脆弱性”只是给予这种差异和由此产生的现象的名称，通用对抗性扰动是这一事实的一个特别直接的例子。<br>&emsp;&emsp;最后作者展示了网络的分类表现和对抗脆弱性和它们利用以上的方向的方式有着千丝万缕的关系，尽管网络架构多样。所以，通过抑制网络对这些方向上的成分的响应来改善鲁棒性，就会损失网络的分类准确性。<strong>DCNs</strong>现在用来解决分类问题的特征和函数，在某种意义上，就是它们自己最差劲的对手。</p>
+<h2 id="相关工作"><a href="#相关工作" class="headerlink" title="相关工作"></a>相关工作</h2><h3 id="Fundamental-developments-in-attack-methods"><a href="#Fundamental-developments-in-attack-methods" class="headerlink" title="Fundamental developments in attack methods"></a>Fundamental developments in attack methods</h3><p>&emsp;&emsp;<strong>Szegedy</strong>提出了对抗性样本<strong>(adversarial example)</strong>这一术语，演示使用盒约束<strong>L-BFGS</strong>来估计加到输入图像上的最小$\ell_2$范数的扰动，令输入图像的预测标签变为目标类，同时结果图像保持在强度范围内。引人注目的是，对于每个测试的网络，他们在每个点都找到了一个小范数（不易察觉）的扰动。更进一步，由此产生的对抗样本，可以欺骗不同训练产生的网络，即使是使用不同的数据子集来训练。<strong>Goodfellow</strong>接着提出了<strong>fast gradient sign method(FGSM)</strong>，计算损失函数的梯度，并在其符号方向上以固定大小的步长进行扰动，证明了局部线性假设在产生同样结果的有效性。<strong>DeepFool method</strong>保留了<strong>FGSM</strong>的一阶框架，但是对其做了修改，这样对给定的自然图片，可以找到改变其类标签到除自身类之外的其他类标签的最小范数的扰动。尽管需要重复尝试以一个很小的幅度跨越最近的决策边界，这种方法记录的成功的扰动的范数比<strong>FSGM</strong>的更小。<strong>Moosavi-Dezffli &amp; Fawzi</strong>等人提出了一种<strong>DeepFool</strong>扰动的迭代聚合，这样可以产生通用对抗扰动：单张图片，对于目标网络，可以作为整个数据集的大部分的对抗。尽管这些扰动比单个<strong>DeepFools</strong>要大的多，它们与人类的感知不符，表明有固定的图像空间方向网络很容易受到欺骗，而与它们所使用的图像空间位置无关。它们还展示了对网络架构的泛化性。<br>&emsp;&emsp;<strong> Sabour &amp; Cao</strong>提出了上述问题的一个有趣的变体：不做”label adversaries”,转而做“feature adversaries”,令其在选定网络的特征空间中到特定的指引图像的距离最小(很明显指引图像相当于对抗的ground-trut，简单来说，希望对抗朝着指引图像的方向逼近),受限于到源图像的$\ell_\infty$-norm的图像空间距离。尽管存在这种限制，但是对抗性图像模仿指引图像非常接近：它不仅几乎总是被赋予指引图像的类别，而且它似乎是所选特征空间中指引类分布的一个内部因素。最后，尽管对抗最后，虽然“对抗”被认为是小扰动应用于自然图像，得到的图像仍然可以被人类识别，但<strong> Nguyen</strong>的欺骗图片却完全不能被人类识别，却能够被深度网络自信地预测为特定类。这样地图片可以用进化算法和梯度下降对像素改变轻易地获得。</p>
+<h3 id="Analysis-of-adversarial-vulnerability-and-proposed-defences"><a href="#Analysis-of-adversarial-vulnerability-and-proposed-defences" class="headerlink" title="Analysis of adversarial vulnerability and proposed defences"></a>Analysis of adversarial vulnerability and proposed defences</h3><p>&emsp;&emsp;<strong>Wang</strong>等人提出了一种命名法和理论框架，用以讨论对任何实际网络或者攻击都是不可知的抽象的对抗脆弱性问题。他们标记了一个用于判断的”圣人”，其鲁棒性和准确信必须可以评估，并说明如果分类器学会使用与“圣人”（理想分类器）完全相同的特征空间，那么相对于“圣人”，分类器只能是准确且鲁棒的（面对攻击很健壮）。不然，网络在其特征空间与”圣人”的特征空间分离的方向上面对对抗攻击是很脆弱。基于这种假设，网络的特征空间包含了一些虚假的方向，<strong>Gao</strong>等人提出抑制神经元激活的的减法方案，抑制的神经元是在自然输入和对抗输入间变化明显的。值得注意的是，这种提高鲁棒性的方法是以准确度的降低为代价的。网络特征抑制的替代方案是对所研究的输入图像数据的压缩。<br>&emsp;&emsp;<strong>Goodfellow</strong>假设深层网络的高维度性和过多的线性解释了网络的脆弱性。<strong> Tanay &amp; Griffin</strong>首先通过说明<strong>toy problems</strong>来解决上述问题。然后他们进一步提出一种基于分离边界和数据流行的交叉角度的解释，该数据流行依赖于过拟合并要求有效的正则化，他们注意到这种数据流行即未被解决也不知道能不能用深度网络解决。一些基于训练的方法被提出来用以解决上述的假设。<strong>Hardening methods</strong>探索使用对抗样本训练得到更鲁棒的深度网络。基于检测的方法视对抗样本为训练数据分布的异常值，并训练检测器在网络的中间特征空间中识别它们。此外，例如<strong>Zhang</strong>等人的数据增强方案，其中输入图像的突组合被映射到它们标签的凸组合，试图让网络能够学习到更平滑的决策边界。虽然他们的方法改进了对单步梯度符号攻击的抵抗力，但它对相同类型的迭代攻击不再具有鲁棒性。<br>&emsp;&emsp;在一些工作中[2,22,23,24]，作者建立了深度网络决策边界几何形状的图像空间分析，及其与对抗性脆弱的联系。在[23]中，他们注意到[9]的<strong>DeepFool</strong>扰动倾向于表明由高曲率的决策边界中的方向所跨越的子空间中有相对较高的分量。此外，<em>*DeepFooled image</em>附近的决策边界的平均曲率的符号相对于相应的自然图像的符号是相反的，这为识别和撤销攻击提供了一种简单方案。他们得出结论，大多的图像空间方向对应于决策边界的近平坦度，并且对攻击不敏感，但沿着剩余的方向，即具有显著曲率的方向，网络确实是脆弱的。此外，观察到所讨论的方向在样本图像上是共享的。他们在[2]中说明了为什么理论上具有这种性质的假设网络面对通用对抗是脆弱的，并注意到分析表明这种对抗可以替代原始的随机迭代方法[4]：它们可以被构造为共享高曲率维度的子空间中的随机向量。</p>
+<h2 id="Method"><a href="#Method" class="headerlink" title="Method"></a>Method</h2><p>&emsp;&emsp;这类分析从[2]开始，提取分类器的图像空间类决策边界的主要方向和主要曲率。简而言之，一个主要方向和与之相关联的主要曲率可以告诉我们从一个特定点出发，沿着一个特定的方向，曲面的弯曲程度。现在，需要许多决策边界来表征多类网络的分类行为：$({ C \atop 2})$，对于$c$类分类器来说。但是，为了理解利于将某类和其他类区分开来的决策边界的性质，只需要分析$C$个$1-vs-all$的决策边界就够了。因此，对每一类$c$而言，该方法定位非常接近决策边界的样本。实际上，对每一个样本，这对应于$c$和其最近的相邻类$\widetilde{c}$之间的决策边界这决策边界是通过从后者到前者的样本进行扰动得到的。接着，决策边界的几何形状通过<strong>Alg.1</strong>测算得到，该算法和[2]中的方法很接近。</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/58886839-21a57580-8717-11e9-9b53-f6c951262863.png" alt="alt text"></p>
+<p>&emsp;&emsp;[2]的作者提出了一个假设，将正向弯曲的方向和[4]的通用对抗扰动联系起来。从本质上讲，他们证明了如果网络的决策表面的沿着给定方向的常见部分，可以被样本图像点附近的特定正曲率的圆弧局部的界定，然后几何形状相应的指示该点与该方向上的边界之间的距离的上限。如果这样的方向和界限在样本图像点之间变得非常普遍，则表明有通用对抗的存在，较高的曲率意味着较低范数的对抗。</p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>&emsp;&emsp;在这项工作中，作者揭示了一系列方向，给定网络的类别得分输出函数在这些方向上展示了在样本图像之间惊人的相似性。这些函数是非线性的，但是是相对受约束的形式：大致轴对称 并且大范围内通常是单调的。作者说明了这些方向和类别一致性之间的紧密关系：许多此类方向有效地编码了网络认为特定目标类别存在或不存在的程度。因此，就目前而言，所研究的网络的预测能力和对抗性脆弱性是相互交织的，因为它们的分类决策基于对特定方向上输入图像的组成部分的相当简单的响应，而不管这些组成部分的来源如何，是自然的还是对抗的。显然，通过抑制网络对这些成份的响应而获得的任何稳健性增益必须以相应的精度损失为代价。作者通过实验证明了这一点 还注意到，这些稳健性增益可能低于它们的出现，因为网络实际上仍然容易受到其继续使用的其余方向的适当设计的攻击。总而言之，作者认为，对于任何能够真正有效抵御对抗性脆弱问题的方案，它必须在根本上使用比现在的特征恒具有洞察力的特征。在那之前，目前这些特征将继续成为网络自身最糟糕的对抗。</p>
+<h2 id="反思"><a href="#反思" class="headerlink" title="反思"></a>反思</h2><p>&emsp;&emsp;这篇文章使用的方法很复杂，具体的方法都在[2]中。这篇论文主要的观点是：分类网络学习到的特征比较简单，虽然令其高效地分类，但这些简单的特征导致分类网络的鲁棒性不够好。这篇论文对于目前的我来说很有难度，翻译的也不好，比如方向<strong>(directions)</strong>和对抗<strong>(adversaries)</strong>，我找不到合适的词。另外本论文的精彩部分在于实验分析，这一块我没有翻译，及时止损，其实我觉得这篇论文对于我而言看看结论就好了。下次第一次接触一个领域的时候，我应该先看看中文文献，熟悉一下术语再去看英文文献。</p>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p>[2] Moosavi-Dezfooli<em>, S.M., Fawzi</em>, A., Fawzi, O., Frossard, P., Soatto, S.: Robustness of classifiers to<br>universal perturbations: A geometric perspective. In: International Conference on Learning Representations.<br>(2018)<br>[4] Moosavi-Dezfooli<em>, S.M., Fawzi</em>, A., Fawzi, O., Frossard, P.: Universal adversarial perturbations. In:<br>Computer Vision and Pattern Recognition (CVPR), 2017 IEEE Conference on, IEEE (2017) 86–94<br>[22] Fawzi<em>, A., Moosavi-Dezfooli</em>, S.M., Frossard, P.: Robustness of classifiers: from adversarial to random<br>noise. In: Advances in Neural Information Processing Systems. (2016) 1632–1640<br>[23] Fawzi<em>, A., Moosavi-Dezfooli</em>, S.M., Frossard, P., Soatto, S.: Classification regions of deep neural<br>networks. arXiv preprint arXiv:1705.09552 (2017)<br>[24] Fawzi, A., Moosavi-Dezfooli, S.M., Frossard, P.: The robustness of deep networks: A geometrical<br>perspective. IEEE Signal Processing Magazine 34(6) (2017) 50–62</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/对抗脆弱性/" rel="tag"># 对抗脆弱性</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/02/Fast Similarity Search via Optimal Sparse Lifting/" rel="next" title="Fast Similarity Search via Optimal Sparse Lifting">
+                <i class="fa fa-chevron-left"></i> Fast Similarity Search via Optimal Sparse Lifting
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">plato</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#摘要"><span class="nav-number">1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-number">2.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相关工作"><span class="nav-number">3.</span> <span class="nav-text">相关工作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Fundamental-developments-in-attack-methods"><span class="nav-number">3.1.</span> <span class="nav-text">Fundamental developments in attack methods</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Analysis-of-adversarial-vulnerability-and-proposed-defences"><span class="nav-number">3.2.</span> <span class="nav-text">Analysis of adversarial vulnerability and proposed defences</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Method"><span class="nav-number">4.</span> <span class="nav-text">Method</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Conclusion"><span class="nav-number">5.</span> <span class="nav-text">Conclusion</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#反思"><span class="nav-number">6.</span> <span class="nav-text">反思</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文献"><span class="nav-number">7.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">plato</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>
