@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="文献汇报," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="工作概述&amp;emsp;&amp;emsp;本次学习了四篇论文。&amp;emsp;&amp;emsp;第一篇是来自 science 2017的”A neural algorithm for a fundamental computing problem”,该论文发现果蝇嗅觉神经的算法可以用于相似搜索，和传统的LSH算法相比更精准且计算量更少，该算法使用稀疏二值映射将低维数据映射到更高维空间，使用赢者通吃策略确保输出向量是稀">
+<meta name="keywords" content="文献汇报">
+<meta property="og:type" content="article">
+<meta property="og:title" content="文献汇报二">
+<meta property="og:url" content="www.platot.site/2019/06/07/文献汇报二/index.html">
+<meta property="og:site_name" content="心远地自偏">
+<meta property="og:description" content="工作概述&amp;emsp;&amp;emsp;本次学习了四篇论文。&amp;emsp;&amp;emsp;第一篇是来自 science 2017的”A neural algorithm for a fundamental computing problem”,该论文发现果蝇嗅觉神经的算法可以用于相似搜索，和传统的LSH算法相比更精准且计算量更少，该算法使用稀疏二值映射将低维数据映射到更高维空间，使用赢者通吃策略确保输出向量是稀">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/58682461-31cdf580-83a3-11e9-9679-9ceaecb58fa3.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/58682496-5a55ef80-83a3-11e9-869b-a5ed2833d55e.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/58760484-039b1200-856b-11e9-89ad-56e6d51eee7a.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/58760548-e7e43b80-856b-11e9-9a52-c25894dc92ab.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/58760523-98057480-856b-11e9-84bf-c918dbff53fe.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/58760532-b1a6bc00-856b-11e9-8491-e682ae2bf399.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/58760534-bc615100-856b-11e9-921a-416e5dd621fa.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/58760564-2548c900-856c-11e9-9b0d-942f179f3d67.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/58760569-3b568980-856c-11e9-98da-1dc85bb490d0.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/58886957-4a2d6f80-8717-11e9-9d08-f62e7ec9a0f5.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/58886839-21a57580-8717-11e9-9b53-f6c951262863.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/59095545-5c8fef00-894b-11e9-91b2-80830c1b97a9.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/59095600-80ebcb80-894b-11e9-9940-90b77a4cd7c0.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/59095661-ab3d8900-894b-11e9-90d7-d541f0d2aaec.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/59095711-bdb7c280-894b-11e9-9d25-11a96411dd95.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/59097272-b72b4a00-894f-11e9-9d18-3a2d3ca6990d.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/59095802-f3f54200-894b-11e9-98c7-14e346621111.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/59097224-94009a80-894f-11e9-8a61-843ed2182089.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/59100110-abdc1c80-8957-11e9-92f6-53f135b76b96.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/59100141-bd252900-8957-11e9-9dff-5c6a0e7dbe08.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/59100190-df1eab80-8957-11e9-8728-6d66381a57af.png)">
+<meta property="og:updated_time" content="2019-06-07T11:48:03.938Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="文献汇报二">
+<meta name="twitter:description" content="工作概述&amp;emsp;&amp;emsp;本次学习了四篇论文。&amp;emsp;&amp;emsp;第一篇是来自 science 2017的”A neural algorithm for a fundamental computing problem”,该论文发现果蝇嗅觉神经的算法可以用于相似搜索，和传统的LSH算法相比更精准且计算量更少，该算法使用稀疏二值映射将低维数据映射到更高维空间，使用赢者通吃策略确保输出向量是稀">
+<meta name="twitter:image" content="https://user-images.githubusercontent.com/23336589/58682461-31cdf580-83a3-11e9-9679-9ceaecb58fa3.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="www.platot.site/2019/06/07/文献汇报二/"/>
+
+
+
+
+
+  <title>文献汇报二 | 心远地自偏</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">心远地自偏</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="www.platot.site/2019/06/07/文献汇报二/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="plato">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="心远地自偏">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">文献汇报二</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-07T19:20:41+08:00">
+                2019-06-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="工作概述"><a href="#工作概述" class="headerlink" title="工作概述"></a>工作概述</h2><p>&emsp;&emsp;本次学习了四篇论文。<br>&emsp;&emsp;第一篇是来自<strong> science 2017</strong>的”A neural algorithm for a fundamental computing problem”,该论文发现果蝇嗅觉神经的算法可以用于相似搜索，和传统的LSH算法相比更精准且计算量更少，该算法使用稀疏二值映射将低维数据映射到更高维空间，使用赢者通吃策略确保输出向量是稀疏的，同时输出向量尽可能保留了输入数据之间的相似性。相似搜索在很多地方都可以用到，比如，聚类，最近邻，信息检索。<br>&emsp;&emsp;第二篇是来自于<strong>nips 2018</strong>的”Fast Similarity Search via Optimal Sparse Lifting”。这篇论文在第一篇论文上更近一步，第一篇论文使用的映射矩阵是随机生成的，有证据表明果蝇神经元的连接并不是随机生成的，该论文使用伪范数评估映射矩阵的表现，并将其转换一个优化问题，得到近似最佳的映射矩阵，移除了连接的随机性，更加符合生物学证据。<br>&emsp;&emsp;第三篇论文是来自于<strong>nips 2018</strong>的”With Friends Like These, Who Needs Adversaries ?”。这篇论文我之所以选择阅读，是因为其名字很有意思，但实际读的过程中，我发现这篇论文对我来说难度很大，我没怎么读懂。这篇论文利用作者之前的工作，刻画了多分类网络的决策边界的几何形状，以此来分析网络的分类行为及其于对抗性脆弱之间的关系。作者发现网络的特征空间中存在着一些方向，作者说明了这些方向和类别一致性之间的紧密关系：许多此类方向有效地编码了网络认为特定目标类别存在或不存在的程度。因此，就目前而言，所研究的网络的预测能力和对抗性脆弱性是相互交织的，因为它们的分类决策基于对特定方向上输入图像的组成部分的相当简单的响应，而不管这些组成部分的来源如何，是自然的还是对抗的。显然，通过抑制网络对这些成份的响应而获得的任何稳健性增益必须以相应的精度损失为代价。总而言之，作者认为，对于任何能够真正有效抵御对抗性脆弱问题的方案，它必须在根本上使用比现在的特征恒具有洞察力的特征。在那之前，目前这些特征将继续成为网络自身最糟糕的对抗。<br>&emsp;&emsp;第四篇论文是来自于<strong>nips 2018</strong>的”Knowledge Distillation with Generative Adversarial Networks”。作者提出了一种取名为<strong>KDGAN</strong>的框架应用于带特权条款的多标签学习，该框架联合了知识蒸馏和生成对抗网络。<strong>KDGAN</strong>包括分类器、教师、判别器的三人博弈游戏。分类器和教师通过蒸馏损失相互学习，并且通过对抗损失被对抗地训练来对抗判别器。作者证明了分类器将会在平衡状态下学得真实数据分布。作者使用具体分布在对抗训练阶段控制梯度的方差并且获得低方差的梯度来加速训练。</p>
+<h2 id="A-neural-algorithm-for-a-fundamental-computing-problem"><a href="#A-neural-algorithm-for-a-fundamental-computing-problem" class="headerlink" title="A neural algorithm for a fundamental computing problem"></a>A neural algorithm for a fundamental computing problem</h2><h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p><a href="https://www.biorxiv.org/content/biorxiv/early/2017/08/25/180471.full.pdf?" target="_blank" rel="noopener">论文地址</a><br>&emsp;&emsp;相似搜索(<strong>similarity search</strong>)，比如确认数据库中相似的图片或互联网上相似的文档，是许多大规模信息检索系统面临的基本计算问题。该论文发现果蝇嗅觉神经回路使用一种不同于传统计算科学算法(<strong>locality-sensitive hashing</strong>)的方法来解决这个问题。果蝇的神经回路赋予相似的输入刺激以相似的神经活动模式，所以接触到相似的气味时，可以应用之前学习到的行为。果蝇的算法，使用了三种不同于传统方法的计算成分。作者展示了在一些基准数据库上，和传统方法相比，果蝇算法可以用于改善相似搜索的性能。作者受此启发，为近似相似搜索(<strong>approximate similarity search or nearest-neighbors search</strong>)这一基本机器学习问题提出了新的计算策略。该策略将输入映射到更高维的空间，输出是稀疏的，并且尽可能保留数据之间的相似性。</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/58682461-31cdf580-83a3-11e9-9679-9ceaecb58fa3.png" alt="alt text"></p>
+<h3 id="果蝇嗅觉神经回路"><a href="#果蝇嗅觉神经回路" class="headerlink" title="果蝇嗅觉神经回路"></a>果蝇嗅觉神经回路</h3><p>&emsp;&emsp;果蝇的嗅觉回路对不同的气味赋予一个相应的标签<strong>(tag)</strong>，该标签对应于当某气味出现时被激活的神经元的集合。这个标签对于学习对不同气味所做出的不同的行为十分关键。举个例子，如果奖励(eg.,糖水)或者惩罚(eg.,电击)与某种气味相关联，对应的，这种气味就变得更有吸引力(果蝇会接近)或者变得更有排斥性。据我们所知，赋予气味的标签是稀疏的，对每一种气味，只有很小一部分接受到气味信息的神经元被激活;也是非重叠的，两种随机选择的气味的标签之间只共享很少的激活神经元，如果有的话，这样可以很轻易的区分开来不同的气味。<br>&emsp;&emsp;每种气味的标签要经过三步计算得到。如图(A)所示。<br>&emsp;&emsp;第一步包括从果蝇鼻子处的气味受体神经元<strong>(odorant receptor neurons,ORNs)</strong>到肾小球处投影神经元<strong>(projection neurons,PNs)</strong>的前向反馈连接。果蝇鼻子处有50种<strong>ORNs</strong>，每一种<strong>ORNs</strong>对不同的气味具有不同的敏感性和选择性。因此，每一种输入的气味都在一个50维空间有一个由50种<strong>ORN</strong>决定的坐标。对于每一种气味，五十种气味受体神经元放电速率的分布都是指数分布(每一种对不同气味的敏感性和选择性不一样)，其均值取决于气味浓度。对于投影神经元来说，移除了这种浓度依赖性。对于每种气味，50种投影神经元的放电速率是指数分布的，对于所有气味和气味浓度，均值接近一样。因此，算法的第一步本质上来讲是均值中心化。这一步十分重要，这样果蝇就不会将气味类型和气味强度混淆。(这一步可以看作是预处理)<br>&emsp;&emsp;第二步是算法的主要的<strong>insight</strong>开始的地方，包括40倍的神经元数量扩增。50个<strong>PNs</strong>投影到2000个<strong>Kenyon cells(KCs)</strong>，由一个稀疏二值随机矩阵连接。每一个<strong>KC</strong>从大约六个随机选择的<strong>PNs</strong>处接收并对其放电速率求和。<br>&emsp;&emsp;第三步包括一个赢者通吃<strong>(winner-take-all)</strong>回路，使用来自单个抑制神经元的强抑制反馈实现。因此，除了放电速率最高的5%的神经元，其他的<strong>KLs</strong>都被沉默。剩下的5%神经元的放电速率对应于输入气味的标签。</p>
+<h3 id="论文贡献"><a href="#论文贡献" class="headerlink" title="论文贡献"></a>论文贡献</h3><p>&emsp;&emsp;从计算机科学的角度出发，作者把果蝇的嗅觉回路看作一个哈希函数，输入是某种气味，输出是对应的标签<strong>(tag)</strong>。虽然标签应该将不同的气味区分开来，但果蝇的优点更在于对相似的气味赋予相似的标签，如图B所示。这样，从一种气味学习到的条件反应就可以应用到相似的气味，或者学习过的气味的噪声版本。这让作者推测果蝇嗅觉回路产生的标签是局部敏感的<strong>(locallity-sensitive)</strong>，即越相似的一对气味，它们的标签也越相似。局部敏感哈希<strong>(LSH)</strong>是解决大规模相似搜索问题的基础。果蝇的算法，在三个方面不同于传统算法：使用稀疏二值随机矩阵将输入到更高维的输出，接着使用赢者通吃策略稀疏标签。<br>该论文有如下贡献:</p>
+<ol>
+<li>受果蝇算法的启发，提出了一种新类型的<strong>LSH</strong>算法，可以高效地寻找高维空间中一个点的近似最近邻。</li>
+<li>证明了果蝇算法构造的标签保留了输入的近邻结构，并比过去经常使用的算法计算上更高效。</li>
+<li>展示了果蝇的算法与传统<strong>LSH</strong>算法相比，在三个基准数据库上改善了寻求最近邻的性能。</li>
+</ol>
+<h3 id="最近邻搜索，LSH，果蝇算法的关系"><a href="#最近邻搜索，LSH，果蝇算法的关系" class="headerlink" title="最近邻搜索，LSH，果蝇算法的关系"></a>最近邻搜索，LSH，果蝇算法的关系</h3><h4 id="最近邻搜索"><a href="#最近邻搜索" class="headerlink" title="最近邻搜索"></a>最近邻搜索</h4><p>&emsp;&emsp;想象你有一张大象的照片，你想在互联网上超过百万的图片中，寻求到100张看起来和你的大象照片最相似的图片。这就被称为最近邻搜索问题，在信息检索，数据压缩，机器学习中具有根本重要性。每一张图片通常被表征为一个$d$维特征向量，两张图片（特征向量）的相似性使用距离来度量，目的是高效地得到任意查询的图片的最近邻。如果互联网只具有很少的图片，可使用暴力线性搜索轻易地找到精确的最近邻。如果互联网具有很多的图片，但每一张图片被表征为一个低维向量(eg.,10 or 20 features)，则可以使用空间划分方法，比如<strong>kd-trees</strong>，这样足够用了。但对于高维向量的大规模数据库，没有一种方法可行。</p>
+<h4 id="LSH"><a href="#LSH" class="headerlink" title="LSH"></a>LSH</h4><p>&emsp;&emsp;幸运的是，在许多应用环境中，返回和查询数据足够接近的近似最近邻的集合，只要足够快，也是可行的。这样就推动了一种使用被称为<strong>LSH</strong>的概率技术来寻找近似最近邻的方法的产生。对于果蝇来说，一种气味的标签<strong>(hash)</strong>对应于<strong>KCs</strong>放电速率的特定向量。局部敏感特性显示两种相似的气味会被表征为相似的标签。同样，对于图片搜索来讲，一张大象图片的标签会与另一张大象图片的标签更相似，与摩天大楼照片的标签相比。形式上可定义为：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/58682496-5a55ef80-83a3-11e9-869b-a5ed2833d55e.png" alt="alt text"></p>
+<p>&emsp;&emsp;传统的哈希函数<strong>(non-LSH)</strong>，将输入数据点随机均匀的分散到特定空间中；而<strong>LSH</strong>提供一种从$d$维空间到$m$维空间的保留距离的点嵌入方式。因此，在输入空间里越相似的两个点，就会以更高的概率被赋予相同或相似的标签；在输入空间里越不相似的两个点，被赋予的标签则越不相似。<br>&emsp;&emsp;对于设计<strong>LSH</strong>函数，一个常见的<strong>trick</strong>是计算输入数据的随机投影，通常是将输入的特征向量和一个随机矩阵相乘。<strong>The Johnson-Lindenstrauss</strong>定理及其变体，为使用各种类型的随机投影，将点从$d$维空间投影到到$m$维空间，能多好保留局部性提供了强大的理论证明。<br>&emsp;&emsp;引人注目的，果蝇也使用随机投影将标签分配给气味(step 2)，但和传统的<strong>LSH</strong>算法相比有三处不同。第一，果蝇算法使用稀疏二值随机投影，而<strong>LSH</strong>函数通常使用计算代价更高的密集投影，比如高斯随机投影。第二，果蝇算法将输入投影到更高维的空间，而传统的<strong>LSH</strong>则投影到更低维空间。第三，果蝇算法使用赢者通吃策略使输出稀疏化，而传统的<strong>LSH</strong>算法则保留输出的密集性。</p>
+<h4 id="Deriving-the-distance-preserving-properties-of-the-fly’s-olfactory-circuit"><a href="#Deriving-the-distance-preserving-properties-of-the-fly’s-olfactory-circuit" class="headerlink" title="Deriving the distance-preserving properties of the fly’s olfactory circuit"></a>Deriving the distance-preserving properties of the fly’s olfactory circuit</h4><p>&emsp;&emsp;我们可以将从<strong>PNs</strong>到<strong>KCs</strong>的映射看作是一个双向连接矩阵(m X d)，$x$是$d$维向量，代表输入，在果蝇那其中每一个$x_i$代表一个<strong>PN</strong>；$y$是$m$维向量，代表输出，$y$中每一个$y_i$则代表一个<strong>KC</strong>，每一$y_i$等于少数的$x_i$的和。二者之间的连接关系可以无向边连接表示。这个双向图可以使用一个m X d的邻接矩阵表示如下：</p>
+<script type="math/tex; mode=display">M_{ji} = \begin{cases} 1,&\text{if $x_i$ connects $y_i$ } \\ 0, &\text{otherwise} \end{cases}</script><p>这样就有：</p>
+<script type="math/tex; mode=display">y = Mx</script><p>在<strong>APl</strong>抑制反馈后，只有放电速率最大的$k$个<strong>KCs</strong>保留了它们的值，其余得都被归零了，这就是赢者通吃策略。这样可以产生一个$m$维的稀疏向量，也就是标签，如下所示：</p>
+<script type="math/tex; mode=display">z_i = \begin{cases} y_i ,&\text{if $y_i$ is one of the k largest entries in y } \\ 0, &\text{otherwise} \end{cases}</script><p>$M$的一种简单模型就是一个稀疏二值随机矩阵：每一个元素$M_{ij}$用概率$p$独立设置，即该元素为1的概率$p$。比如，选择$p = 6/d$，意味着$M$有大约6个1，这符合实验发现。、<br>&emsp;&emsp;在补充部分，作者证明，果蝇算法的前两步产生的标签，符合预期的保留了输入气味的$L2$距离。证明如下：<br>定理 1:如果两个输入$x,x \in R^d$被分别投影到$y,y’ \in R^m$，我们有：</p>
+<script type="math/tex; mode=display">E{ \parallel y-y'\parallel}^2 \le mp((1-p){\parallel x-x'\parallel}^2)</script><p>&emsp;&emsp;同样，作者证明当$m$足够大时，变量${\parallel y\parallel}^2$紧密的集中在其期望：</p>
+<script type="math/tex; mode=display">(1-\epsilon)E {\parallel y \parallel}^2 \le (1+\epsilon) E {\parallel y \parallel}^2</script><p>对于很小的$\epsilon &gt;0$以一个很高的概率成立。</p>
+<p>&emsp;&emsp;因此结果就证明果蝇算法代表了<strong>LSH</strong>新的一种类型。(ps:这里只有结论，原论文也没有证明部分，应该看看LSH算法证明来理解这里)</p>
+<h3 id="讨论"><a href="#讨论" class="headerlink" title="讨论"></a>讨论</h3><p>&emsp;&emsp;总的来说，作者确定了一种新的大脑算法，该算法支持重要的感官功能，从理论上证明了其距离保留的性质。作者亦在三种基准数据库上经验的评估了该算法用于寻找最近邻的表现。这份工作提供了大脑中相似性匹配策略和大规模信息检索系统中最近邻搜索的协同作用。该论文的工作可以应用在重复值检测，聚类和<strong> energy-efficient deep learning</strong>。<br>&emsp;&emsp;对<strong>LSH</strong>，有许多扩展，比如使用多个哈希表来提高精度；使用多探头<strong>(multi-probe)</strong>，这样相似的标签就会落入同一个桶中；各种用于离散散列的量化技巧。也有方法可以加速随机投影乘法，比如对于<strong>LSH</strong>，可使用<strong> fast Johnson-Lindenstrauss transforms</strong>；对于果蝇算法，可以使用<strong> fast sparese matrix multiplication</strong>。<br>&emsp;&emsp;接下来，我们将注意力放在数据无关哈希上，也就是哈希函数不是从之前的数据学习来的，也没有使用先前的数据。最近，许多类型的数据无关的<strong>LSH</strong>被提出来，包括<strong> PCA hashing</strong>，<strong> spectral hashing </strong>，<strong> semantic hasing</strong>，<strong>deep hashing</strong>和其他的。果蝇算法的一些部分之前也有被人使用。比如<strong> MinHash</strong>和<strong>winer-take-all hash</strong>都使用了类似赢者通吃的策略，但没有一种扩展了数据维度。同样的，随机映射也被多种方法使用，但没有一种使用稀疏二值随机映射。</p>
+<h3 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h3><p>&emsp;&emsp;该论文确实为解决一个根本问题—相似搜索，提供了新的方法。因为相似搜索在很多地方都可以用到，比如，聚类，最近邻，信息检索。而果蝇算法之所以计算成本更低，我的理解是随机映射使用的稀疏二值矩阵，虽然被扩展到更高维，但计算量实际上很小。<br>&emsp;&emsp;果蝇算法使用的哈希函数是数据无关的，因为是以概率$p$随机生成的。nips2018的一篇论文对此做了改进，$M$使用数据训练得到。</p>
+<h2 id="Fast-Similarity-Search-via-Optimal-Sparse-Lifting"><a href="#Fast-Similarity-Search-via-Optimal-Sparse-Lifting" class="headerlink" title="Fast Similarity Search via Optimal Sparse Lifting"></a>Fast Similarity Search via Optimal Sparse Lifting</h2><h3 id="简介-1"><a href="#简介-1" class="headerlink" title="简介"></a>简介</h3><p>&emsp;&emsp;从名字可以看出，这篇论文是关于相似搜索，并通过最优稀疏提升<strong>(Optimal Sparse Lifting)</strong>，加快相似搜索的速度和精度。这篇论文来自nips2018，是在之前介绍过的<a href="https://platotao.github.io/2019/05/31/A%20neural%20algorithm%20for%20a%20fundamental%20computing%20problem/" target="_blank" rel="noopener">A neural algorithm for a fundamental computing problem</a>的基础上更进一步。我们知道，之前的算法通常将输入映射到更低维的空间，来减少计算复杂度并加快相似搜索的速度。果蝇算法却通过稀疏二值随机矩阵将输入映射到更高维的输出空间，同时保留输入数据之间的相似性。果蝇算法的映射矩阵是以概率$p$随机生成的，但我们知道，神经连接的过程是动态变化的，会随着时间推进而逐渐优化（我个人认为是这样）。所以这篇论文提出了最优提升算子。该论文提出的方法有关键的两步：第一步，根据提供的输入样本(一小部分)，计算它们的最优稀疏提升，也就是将输入样本映射到更高维的稀疏空间，并尽量保留数据之间的相似性,最优稀疏提升即是输入样本在更高维空间的稀疏二值向量表征；第二步是寻找最优提升算子，其是将输入数据映射到最优稀疏提升的最佳稀疏二值矩阵。这两步都可以看作优化问题，可以使用<strong> Frank-Wolfe algorithm</strong>来高效求解。前言和相关工作在此略过不提，感兴趣可以看看<a href="https://platotao.github.io/2019/05/31/A%20neural%20algorithm%20for%20a%20fundamental%20computing%20problem/" target="_blank" rel="noopener">A neural algorithm for a fundamental computing problem</a>。<br>&emsp;&emsp;<a href="https://papers.nips.cc/paper/7302-fast-similarity-search-via-optimal-sparse-lifting" target="_blank" rel="noopener">论文地址</a></p>
+<h3 id="Models"><a href="#Models" class="headerlink" title="Models"></a>Models</h3><h4 id="The-optimal-sparse-lifting-framework"><a href="#The-optimal-sparse-lifting-framework" class="headerlink" title="The optimal sparse lifting framework"></a>The optimal sparse lifting framework</h4><p>&emsp;&emsp;作者关心的问题是在输出空间维度大于或者远远大于给定的输入空间维度的情况下，求得给定的输入样本的稀疏二值输出向量。作者希望输入空间中数据之间的相似性，当输入数据转变为输出空间中的新向量之后，能够尽量保留它们之间的相似性。更进一步，如果能够得到小部分输入数据的最优输出向量，作者希望能以一种近似、计算上更经济的方法，获得其他输入数据的最优输出向量，也就是求解最优提升算子。<br>&emsp;&emsp;作者们将这两个问题建模为一个统一最优稀疏提升框架。令$X \in R^{d \times m}$是在$d$维空间中的输入样本的矩阵。希望最小化的目标如下所示：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/58760484-039b1200-856b-11e9-89ad-56e6d51eee7a.png" alt="Alt text"></p>
+<p>$W \in R^{d’ \times d}$,$Y \in R^{d’ \times m}$，并且$W$和$Y$被要求是稀疏的。上式的第一项旨在确保$Y \approx WX$。第二项希望尽可能的保留输入数据在输出空间中原来的相似性关系。上式中$\alpha &gt;0$ 是一个平衡参数。<br>&emsp;&emsp;输出空间是$d’$维的，并且$d’ \gg d$。因此输出$Y$被称为是输入$X$的稀疏提升，矩阵$W$被称为是稀疏提升算子。<br>&emsp;&emsp;除了对$W$的稀疏约束外，作者还期望$W$是二值的，并且每一行恰好有$c$个1。如果将二值约束放宽到单位区间<strong>(unit interval)</strong>约束，$W$就应该逐分量<strong>(component-wise)</strong>满足(ps:这个公式我没看懂什么意思):</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/58760548-e7e43b80-856b-11e9-9a52-c25894dc92ab.png" alt="Alt text"></p>
+<p>同样$Y$也被加上同样的约束:</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/58760523-98057480-856b-11e9-84bf-c918dbff53fe.png" alt="Alt text"></p>
+<p>希望$Y$每一列恰恰有$k$个1。但如果最优先的目的是使用训练集获得一个较好的$W$，那么对$Y$加上更少的约束比较好。<br>&emsp;&emsp;在公式一中的问题，可以通过交替最小化来解决。固定住$W$,求解$Y$；然后固定住$Y$，求解$W$；重复以上过程。有一种简化方法，在实践中表现的，使用伪范数$\ell_p$(0&lt; $p$ &lt; 1)促进稀疏性和二值化(ps:虽然不知道伪范数是什么，但可以看出它可以确保输出空间中新向量保留原来的相似性关系)。最佳稀疏提升$Y_*$的求解如下:</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/58760532-b1a6bc00-856b-11e9-8491-e682ae2bf399.png" alt="Alt text"></p>
+<p>最佳稀疏算子$W_*$的求解如下：<br><img src="https://user-images.githubusercontent.com/23336589/58760534-bc615100-856b-11e9-921a-416e5dd621fa.png" alt="Alt text"></p>
+<p>两个公式的第二项都是惩罚项，目的是令其稀疏化。值得一提的是，这里的”最优”，实际上是近似最优解。<br>&emsp;&emsp;有了最优提升算子$W_*$，输入向量$x$的最优稀疏提升&amp;y&amp;就可以被计算出来,$y = (y_1,…,y_{d’}) \in {\{0,1\}}^{d’}$:</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/58760564-2548c900-856c-11e9-9b0d-942f179f3d67.png" alt="Alt text"></p>
+<p>这一步也就是果蝇算法中的赢者通吃策略。</p>
+<h4 id="Algorithm"><a href="#Algorithm" class="headerlink" title="Algorithm"></a>Algorithm</h4><p>&emsp;&emsp;有许多优化方法可以用来求解公式(4)和公式(5)表示的最小化问题。该论文采用了<strong>Frank-Wolfe algorithm</strong>，这是一种用于约束优化的迭代一阶优化方法。<a href="https://blog.csdn.net/gnefniu/article/details/17529609" target="_blank" rel="noopener">详情可以看看这篇博文</a>。在每次迭代中，该优化算法将目标函数作线性近似，通过求解线性规划求得可行下降方向,并沿该方向在可行域内作一维搜索。基于<strong>Frank-Wolfe algorithm</strong>，一种用来对公式(4)最小化的简单迭代解决方法如<strong>Algorithm 1</strong>所示：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/58760569-3b568980-856c-11e9-98da-1dc85bb490d0.png" alt="Alt text"></p>
+<p>如果不考虑line 6 平衡参数$\gamma$的增加(随着每次迭代，单调递增,可令输出矩阵$Y$更稀疏和二值化)，该算法就是一个标准的<strong>Frank-Wolfe algorithm</strong>。在每次迭代中，最大的计算开销来自于line 4 的求解线性规划过程。尽管这里线性规划可能涉及上百万甚至更多的变量，也可以使用现代优化技术高效求解。公式(5)可用同样的算法求解。</p>
+<h4 id="Optimal-lifting-vs-random-lifting"><a href="#Optimal-lifting-vs-random-lifting" class="headerlink" title="Optimal lifting vs. random lifting"></a>Optimal lifting vs. random lifting</h4><p>&emsp;&emsp;果蝇算法使用随机生成的数据转化矩阵$W$将输入$X$映射到更高维的空间，再紧接一个稀疏化和二值化过程。和<strong>LSH</strong>算法一样，有理论证明，输出向量保留了输入向量之间的$\ell_p$距离（也就是相似性关系）。但是考虑到其后有一个稀疏化和二值化过程，就没有强力的理论可以保证这一点。<br>&emsp;&emsp;尽管同样是受果蝇嗅觉神经回路这一生物证据的启发，该论文以完全不同的视角出发，研究扩展到高维空间的相似搜索问题。这里有两个关键的<strong>novelties</strong>。该论文将果蝇算法的过程形式化定义为稀疏提升。输入向量被提升为更高维空间中的稀疏二值向量，并且特征值由它们的高能量集中位置代替(最大的$k$个数)，并进一步以稀疏二进制编码表征。<br>&emsp;&emsp;一个更有意义的<strong>novelty</strong>体现在将输入向量映射到更高维输出向量的原则中。果蝇算法使用随机生成的矩阵$W$，可以被认为是随机提升方法。这样能量集中位置的产生就会带有随机性。与此同时，<strong>PNs</strong>到<strong>KCs</strong>的生物连接机制尚不完全清楚，最近来自动物大脑的电子显微镜图像表明连接并不是随机的。形成对照的是，该论文将映射建模为优化问题，实际上减少了随机性。</p>
+<h3 id="思考-1"><a href="#思考-1" class="headerlink" title="思考"></a>思考</h3><p>&emsp;&emsp;我认为这篇文章的亮点在于，使用伪范数评估映射矩阵的表现，并将其转换一个优化问题，移除了连接的随机性，更加符合生物学证据。另一个就是名字取得很好。</p>
+<h2 id="With-Friends-Like-These-Who-Needs-Adversaries"><a href="#With-Friends-Like-These-Who-Needs-Adversaries" class="headerlink" title="With Friends Like These, Who Needs Adversaries"></a>With Friends Like These, Who Needs Adversaries</h2><h3 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h3><p>&emsp;&emsp;用于图像分类的深度网络面对对抗性攻击的脆弱性已经众所周知，但人们对其的了解还不够深入。通过新颖的实验分析，作者说明了用于图像分类的深度卷积网络的一些事实，这些事实揭示了它们的分类行为和分类行为如何与对抗的问题联系在一起的。简而言之，这些网络的卓越表现和它们面对对抗性攻击的脆弱性是同一枚硬币的两面：网络面对对抗性攻击最脆弱的输入图像空间方向与网络首先用来实现其分类性能的方向相同。作者通过两个主要的步骤得出这个结果。首先是揭示类别倾向于和特定的图像空间方向关联的事实。这是通过检查网络的类得分输出作为沿着这些方向一维运动的函数来显示的。这为通用对抗性扰动的存在提供了一种新颖的视角。第二步是清楚地证明在跨越这些方向的空间内分类性能和面对对抗性攻击的脆弱性之间的紧密联系。因此，作者的分析解决了准确性和脆弱性之间的明显矛盾。它为许多现有技术提供了新的视角，并揭示了构建对对抗攻击的具有准确性和鲁棒性的网络的深远影响。<br>&emsp;&emsp;<a href="https://papers.nips.cc/paper/8273-with-friends-like-these-who-needs-adversaries" target="_blank" rel="noopener">论文地址</a></p>
+<h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><p>&emsp;&emsp;那些深度网络发现它们必须面对一个显然的悖论。一方面，这些网络在训练集上学习类别判定并似乎能很好的泛化到从未见过的数据，被证明是成功的。另一方面，这些同样的网络面对对抗性扰动时很脆弱，在类别预测时会发生急剧的变化，尽管对抗性扰动是反直觉的或是人眼不可感知的。对这个问题的一个共同理解如下所述：“虽然深度网络已经证明了它们能够在它们的目标类别之间做出很好区分以便对没见过的自然变化进行推广，但它们奇怪地都拥有一个必须得到保卫的致命弱点”。实际上，制造攻击和抵制网络防御的努力导致了一场专门的竞争，相关的一系列文献已经过于庞大而无法总结。<br>&emsp;&emsp;在目前的工作中，作者试图从根本上揭开这一现象的神秘面纱。作者基于他们之前关于几何决策边界分析的工作<a href="https://user-images.githubusercontent.com/23336589/58682496-5a55ef80-83a3-11e9-869b-a5ed2833d55e.png" target="_blank" rel="noopener">2</a>，将其重新阐述并扩展为一个框架，作者相信这个框架关于用于图像分类的深度卷积网络<strong>(DCNs)</strong>上述的悖论行为更简单并且更有启发性。通过一系列相当简单的实验和解释，作者阐释了对抗样本表示的是什么，现代的<strong>DCNs</strong>做了什么和没有做什么。通过这样，作者将专注于对抗本身的工作和其他寻求描述网络学习到的特征空间的工作结合在一起。<br>&emsp;&emsp;让$\hat{i}$表示输入图片的向量，$\overline{i}$表示给定的数据集的平均图片向量。这样，数据集的均值标准化版本$\Pi = \{i_i, i_2,…i_N\}$，第$N^{th}$个图像$i_n = \hat{i}_n - \overline{i}$。定义图像$i_n$在方向$d_j$上的扰动为：$\widetilde{i}_n \leftarrow i_n + s \hat{d}_j$，$s$是一个扰动比例因子，$\hat{d}_j$是方向$d_j$上的单位规范向量。一张图像经过神经网络，神经网络的参数为$\theta$，对特定类$c$的输出分数为$\mathcal{F}_c(\widetilde{i}|\theta)$。这个类得分函数可以重写为$\mathcal{F}_c(i_n+s\hat{d}_j|\theta)$,可以等价得记为$\mathcal{\widetilde{F}}_c(s|i_n,d_j,\theta)$。作者<br>在不同的分类<strong>DCNs</strong>上从随机选取的自然图像$i_n$开始，考察了$\mathcal{\widetilde{F}}_c$作为$s$在图像空间特定方向运动的函数的性质。通过这个新颖的分析，作者发现了这些函数三条值得注意的观察结果，这些观察结果直接与这些网络中的对抗性脆弱现象有关，所有这些都在图1中展示。现在来更详细地讨论这些观察结果。</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/58886957-4a2d6f80-8717-11e9-9d08-f62e7ec9a0f5.png" alt="alt text"></p>
+<p>&emsp;&emsp;在开始之前，先说明这些方向$d_j$都是通过后面介绍的方法获得的。在图片1，作者针对’frog’类，研究了两个方向：所有其他类都存在这样的方向。首先，请注意作为$s$的函数的相应类$c$(这里是’frog’类)的得分通常关于某些点$s_0$近似对称，i.e. $\mathcal{\widetilde{F}}_c(s-s_0|i_n,d_j,\theta) \approx \mathcal{\widetilde{F}}_c(-s-s_0|i_n,d_j,\theta)$，并且两边都是单调的。这意味着简单地增加输入图像和单个方向之间的相关的幅度，导致网络相信更多或更少类$c$的存在。换句话说，在图像空间的某一方向上，可让所有图像里类$c$更近或者更远。在前一种情况中，该方向代表了特定于类的通用对抗扰动<strong>(UAP)</strong>。第二，让$i^d = i \cdot \hat{d}$，令$i^{d \perp}$代表$i$在空间中正交于$\hat{d}$的投影，这样$i^{d \perp} = i-i^d \cdot \hat{d}$。于是，作者的结果表明存在一个基础的包含$\hat{d}$的图像空间，使得类别得分函数近似可加性地分离，i.e.$\mathcal{F}_c(i|\theta) = \mathcal{F}_c([i^d, i^{d\perp}]|\theta) \approx \mathcal{G}(i^d) + \mathcal{H}(i^{d\perp})$。这意味着所研究的方向可以用来几乎彼此独立地改变网络的预测。然而，如图1所示，尽管有这些事实，这些方向的2D可视化揭示了低级结构缺乏与类关联的清晰的语义连接(比如，$d_1$和’frog’相关联，但其可视化结果看起来没有一点像青蛙)。所以，作者证明了不像<strong>DCNs</strong>通常被认为的那样，它们学习到的函数编码的是更简单的类标志概念，尽管在一定程度上可以泛化到测试集分布。这和人类视觉系统利用这些数据维度的方式不同：“对抗脆弱性”只是给予这种差异和由此产生的现象的名称，通用对抗性扰动是这一事实的一个特别直接的例子。<br>&emsp;&emsp;最后作者展示了网络的分类表现和对抗脆弱性和它们利用以上的方向的方式有着千丝万缕的关系，尽管网络架构多样。所以，通过抑制网络对这些方向上的成分的响应来改善鲁棒性，就会损失网络的分类准确性。<strong>DCNs</strong>现在用来解决分类问题的特征和函数，在某种意义上，就是它们自己最差劲的对手。</p>
+<h3 id="相关工作"><a href="#相关工作" class="headerlink" title="相关工作"></a>相关工作</h3><h4 id="Fundamental-developments-in-attack-methods"><a href="#Fundamental-developments-in-attack-methods" class="headerlink" title="Fundamental developments in attack methods"></a>Fundamental developments in attack methods</h4><p>&emsp;&emsp;<strong>Szegedy</strong>提出了对抗性样本<strong>(adversarial example)</strong>这一术语，演示使用盒约束<strong>L-BFGS</strong>来估计加到输入图像上的最小$\ell_2$范数的扰动，令输入图像的预测标签变为目标类，同时结果图像保持在强度范围内。引人注目的是，对于每个测试的网络，他们在每个点都找到了一个小范数（不易察觉）的扰动。更进一步，由此产生的对抗样本，可以欺骗不同训练产生的网络，即使是使用不同的数据子集来训练。<strong>Goodfellow</strong>接着提出了<strong>fast gradient sign method(FGSM)</strong>，计算损失函数的梯度，并在其符号方向上以固定大小的步长进行扰动，证明了局部线性假设在产生同样结果的有效性。<strong>DeepFool method</strong>保留了<strong>FGSM</strong>的一阶框架，但是对其做了修改，这样对给定的自然图片，可以找到改变其类标签到除自身类之外的其他类标签的最小范数的扰动。尽管需要重复尝试以一个很小的幅度跨越最近的决策边界，这种方法记录的成功的扰动的范数比<strong>FSGM</strong>的更小。<strong>Moosavi-Dezffli &amp; Fawzi</strong>等人提出了一种<strong>DeepFool</strong>扰动的迭代聚合，这样可以产生通用对抗扰动：单张图片，对于目标网络，可以作为整个数据集的大部分的对抗。尽管这些扰动比单个<strong>DeepFools</strong>要大的多，它们与人类的感知不符，表明有固定的图像空间方向网络很容易受到欺骗，而与它们所使用的图像空间位置无关。它们还展示了对网络架构的泛化性。<br>&emsp;&emsp;<strong> Sabour &amp; Cao</strong>提出了上述问题的一个有趣的变体：不做”label adversaries”,转而做“feature adversaries”,令其在选定网络的特征空间中到特定的指引图像的距离最小(很明显指引图像相当于对抗的ground-trut，简单来说，希望对抗朝着指引图像的方向逼近),受限于到源图像的$\ell_\infty$-norm的图像空间距离。尽管存在这种限制，但是对抗性图像模仿指引图像非常接近：它不仅几乎总是被赋予指引图像的类别，而且它似乎是所选特征空间中指引类分布的一个内部因素。最后，尽管对抗最后，虽然“对抗”被认为是小扰动应用于自然图像，得到的图像仍然可以被人类识别，但<strong> Nguyen</strong>的欺骗图片却完全不能被人类识别，却能够被深度网络自信地预测为特定类。这样地图片可以用进化算法和梯度下降对像素改变轻易地获得。</p>
+<h4 id="Analysis-of-adversarial-vulnerability-and-proposed-defences"><a href="#Analysis-of-adversarial-vulnerability-and-proposed-defences" class="headerlink" title="Analysis of adversarial vulnerability and proposed defences"></a>Analysis of adversarial vulnerability and proposed defences</h4><p>&emsp;&emsp;<strong>Wang</strong>等人提出了一种命名法和理论框架，用以讨论对任何实际网络或者攻击都是不可知的抽象的对抗脆弱性问题。他们标记了一个用于判断的”圣人”，其鲁棒性和准确信必须可以评估，并说明如果分类器学会使用与“圣人”（理想分类器）完全相同的特征空间，那么相对于“圣人”，分类器只能是准确且鲁棒的（面对攻击很健壮）。不然，网络在其特征空间与”圣人”的特征空间分离的方向上面对对抗攻击是很脆弱。基于这种假设，网络的特征空间包含了一些虚假的方向，<strong>Gao</strong>等人提出抑制神经元激活的的减法方案，抑制的神经元是在自然输入和对抗输入间变化明显的。值得注意的是，这种提高鲁棒性的方法是以准确度的降低为代价的。网络特征抑制的替代方案是对所研究的输入图像数据的压缩。<br>&emsp;&emsp;<strong>Goodfellow</strong>假设深层网络的高维度性和过多的线性解释了网络的脆弱性。<strong> Tanay &amp; Griffin</strong>首先通过说明<strong>toy problems</strong>来解决上述问题。然后他们进一步提出一种基于分离边界和数据流行的交叉角度的解释，该数据流行依赖于过拟合并要求有效的正则化，他们注意到这种数据流行即未被解决也不知道能不能用深度网络解决。一些基于训练的方法被提出来用以解决上述的假设。<strong>Hardening methods</strong>探索使用对抗样本训练得到更鲁棒的深度网络。基于检测的方法视对抗样本为训练数据分布的异常值，并训练检测器在网络的中间特征空间中识别它们。此外，例如<strong>Zhang</strong>等人的数据增强方案，其中输入图像的突组合被映射到它们标签的凸组合，试图让网络能够学习到更平滑的决策边界。虽然他们的方法改进了对单步梯度符号攻击的抵抗力，但它对相同类型的迭代攻击不再具有鲁棒性。<br>&emsp;&emsp;在一些工作中[2,22,23,24]，作者建立了深度网络决策边界几何形状的图像空间分析，及其与对抗性脆弱的联系。在[23]中，他们注意到<a href="https://user-images.githubusercontent.com/23336589/58760569-3b568980-856c-11e9-98da-1dc85bb490d0.png" target="_blank" rel="noopener">9</a>的<strong>DeepFool</strong>扰动倾向于表明由高曲率的决策边界中的方向所跨越的子空间中有相对较高的分量。此外，<em>*DeepFooled image</em>附近的决策边界的平均曲率的符号相对于相应的自然图像的符号是相反的，这为识别和撤销攻击提供了一种简单方案。他们得出结论，大多的图像空间方向对应于决策边界的近平坦度，并且对攻击不敏感，但沿着剩余的方向，即具有显著曲率的方向，网络确实是脆弱的。此外，观察到所讨论的方向在样本图像上是共享的。他们在<a href="https://user-images.githubusercontent.com/23336589/58682496-5a55ef80-83a3-11e9-869b-a5ed2833d55e.png" target="_blank" rel="noopener">2</a>中说明了为什么理论上具有这种性质的假设网络面对通用对抗是脆弱的，并注意到分析表明这种对抗可以替代原始的随机迭代方法<a href="https://user-images.githubusercontent.com/23336589/58760548-e7e43b80-856b-11e9-9a52-c25894dc92ab.png" target="_blank" rel="noopener">4</a>：它们可以被构造为共享高曲率维度的子空间中的随机向量。</p>
+<h3 id="Method"><a href="#Method" class="headerlink" title="Method"></a>Method</h3><p>&emsp;&emsp;这类分析从<a href="https://user-images.githubusercontent.com/23336589/58682496-5a55ef80-83a3-11e9-869b-a5ed2833d55e.png" target="_blank" rel="noopener">2</a>开始，提取分类器的图像空间类决策边界的主要方向和主要曲率。简而言之，一个主要方向和与之相关联的主要曲率可以告诉我们从一个特定点出发，沿着一个特定的方向，曲面的弯曲程度。现在，需要许多决策边界来表征多类网络的分类行为：$({ C \atop 2})$，对于$c$类分类器来说。但是，为了理解利于将某类和其他类区分开来的决策边界的性质，只需要分析$C$个$1-vs-all$的决策边界就够了。因此，对每一类$c$而言，该方法定位非常接近决策边界的样本。实际上，对每一个样本，这对应于$c$和其最近的相邻类$\widetilde{c}$之间的决策边界这决策边界是通过从后者到前者的样本进行扰动得到的。接着，决策边界的几何形状通过<strong>Alg.1</strong>测算得到，该算法和<a href="https://user-images.githubusercontent.com/23336589/58682496-5a55ef80-83a3-11e9-869b-a5ed2833d55e.png" target="_blank" rel="noopener">2</a>中的方法很接近。</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/58886839-21a57580-8717-11e9-9b53-f6c951262863.png" alt="alt text"></p>
+<p>&emsp;&emsp;<a href="https://user-images.githubusercontent.com/23336589/58682496-5a55ef80-83a3-11e9-869b-a5ed2833d55e.png" target="_blank" rel="noopener">2</a>的作者提出了一个假设，将正向弯曲的方向和<a href="https://user-images.githubusercontent.com/23336589/58760548-e7e43b80-856b-11e9-9a52-c25894dc92ab.png" target="_blank" rel="noopener">4</a>的通用对抗扰动联系起来。从本质上讲，他们证明了如果网络的决策表面的沿着给定方向的常见部分，可以被样本图像点附近的特定正曲率的圆弧局部的界定，然后几何形状相应的指示该点与该方向上的边界之间的距离的上限。如果这样的方向和界限在样本图像点之间变得非常普遍，则表明有通用对抗的存在，较高的曲率意味着较低范数的对抗。</p>
+<h3 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h3><p>&emsp;&emsp;在这项工作中，作者揭示了一系列方向，给定网络的类别得分输出函数在这些方向上展示了在样本图像之间惊人的相似性。这些函数是非线性的，但是是相对受约束的形式：大致轴对称 并且大范围内通常是单调的。作者说明了这些方向和类别一致性之间的紧密关系：许多此类方向有效地编码了网络认为特定目标类别存在或不存在的程度。因此，就目前而言，所研究的网络的预测能力和对抗性脆弱性是相互交织的，因为它们的分类决策基于对特定方向上输入图像的组成部分的相当简单的响应，而不管这些组成部分的来源如何，是自然的还是对抗的。显然，通过抑制网络对这些成份的响应而获得的任何稳健性增益必须以相应的精度损失为代价。作者通过实验证明了这一点 还注意到，这些稳健性增益可能低于它们的出现，因为网络实际上仍然容易受到其继续使用的其余方向的适当设计的攻击。总而言之，作者认为，对于任何能够真正有效抵御对抗性脆弱问题的方案，它必须在根本上使用比现在的特征恒具有洞察力的特征。在那之前，目前这些特征将继续成为网络自身最糟糕的对抗。</p>
+<h3 id="反思"><a href="#反思" class="headerlink" title="反思"></a>反思</h3><p>&emsp;&emsp;这篇文章使用的方法很复杂，具体的方法都在<a href="https://user-images.githubusercontent.com/23336589/58682496-5a55ef80-83a3-11e9-869b-a5ed2833d55e.png" target="_blank" rel="noopener">2</a>中。这篇论文主要的观点是：分类网络学习到的特征比较简单，虽然令其高效地分类，但这些简单的特征导致分类网络的鲁棒性不够好。这篇论文对于目前的我来说很有难度，翻译的也不好，比如方向<strong>(directions)</strong>和对抗<strong>(adversaries)</strong>，我找不到合适的词。另外本论文的精彩部分在于实验分析，这一块我没有翻译，及时止损，其实我觉得这篇论文对于我而言看看结论就好了。下次第一次接触一个领域的时候，我应该先看看中文文献，熟悉一下术语再去看英文文献。</p>
+<h3 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h3><p><a href="https://user-images.githubusercontent.com/23336589/58682496-5a55ef80-83a3-11e9-869b-a5ed2833d55e.png" target="_blank" rel="noopener">2</a> Moosavi-Dezfooli<em>, S.M., Fawzi</em>, A., Fawzi, O., Frossard, P., Soatto, S.: Robustness of classifiers to<br>universal perturbations: A geometric perspective. In: International Conference on Learning Representations.<br>(2018)<br><a href="https://user-images.githubusercontent.com/23336589/58760548-e7e43b80-856b-11e9-9a52-c25894dc92ab.png" target="_blank" rel="noopener">4</a> Moosavi-Dezfooli<em>, S.M., Fawzi</em>, A., Fawzi, O., Frossard, P.: Universal adversarial perturbations. In:<br>Computer Vision and Pattern Recognition (CVPR), 2017 IEEE Conference on, IEEE (2017) 86–94<br>[22] Fawzi<em>, A., Moosavi-Dezfooli</em>, S.M., Frossard, P.: Robustness of classifiers: from adversarial to random<br>noise. In: Advances in Neural Information Processing Systems. (2016) 1632–1640<br>[23] Fawzi<em>, A., Moosavi-Dezfooli</em>, S.M., Frossard, P., Soatto, S.: Classification regions of deep neural<br>networks. arXiv preprint arXiv:1705.09552 (2017)<br>[24] Fawzi, A., Moosavi-Dezfooli, S.M., Frossard, P.: The robustness of deep networks: A geometrical<br>perspective. IEEE Signal Processing Magazine 34(6) (2017) 50–62</p>
+<h2 id="Knowledge-Distillation-with-Generative-Adversarial-Networks"><a href="#Knowledge-Distillation-with-Generative-Adversarial-Networks" class="headerlink" title="Knowledge Distillation with Generative Adversarial Networks"></a>Knowledge Distillation with Generative Adversarial Networks</h2><h3 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h3><p>&emsp;&emsp;知识蒸馏<strong>(Knowledge distillation)</strong>旨在训练一种轻量分类器，能够在资源受限的多标签学习中提供精准的推理。分类器不是直接使用特征-标签对，而是由教师进行训练。比如，一个使用大量资源训练的高能力模型，这种分类器的精确度由于很难从教师那里学习到真实数据分布从而达不到理想水平。另一种方法是在类似生成对抗网络中，分类器对抗判别器，以保证分类器在博弈均衡状态下学习到真实的数据分布。但这种双人博弈方法因为高方差梯度更新，往往需要很长的时间才能达到博弈均衡状态。为了解决这些问题，作者提出了一种取名为<strong>KDGAN</strong>的包括分类器、教师、判别器的三人博弈游戏。分类器和教师通过蒸馏损失相互学习，并且通过对抗损失来对抗判别器。通过同时优化蒸馏损失和对抗损失，分类器或者教师将会在平衡状态下学得的真实数据分布。作者用一个具体的分布来近似分类器(或教师)学习到的离散分布。从具体分布出发，生成连续样本，得到低方差梯度更新，加快了训练速度。实际数据集的大量实验验证了<strong>KDGAN</strong>在精度和训练速度上的优越性。<br>&emsp;&emsp;<a href="https://papers.nips.cc/paper/7358-kdgan-knowledge-distillation-with-generative-adversarial-networks" target="_blank" rel="noopener">论文地址</a>。</p>
+<h3 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h3><p>&emsp;&emsp;在机器学习中，通常在模型的训练阶段比在模型部署阶段(推理阶段)使用更多的资源（比如输入特征或计算资源），这些多出来的部分被称为特权条款。图一展示了一个图像标记推荐的示例应用程序，在训练阶段比在推理阶段使用了更多的输入特征（即特权信息）：训练阶段不仅输入的有图片，还有图片标题和注释，但推理阶段输入的只有图片本身。在一名智能手机用户上传一张图片后，他将给图片一个标签，但在手机上输入标签不方便及思考标签需要时间，如图1b所示，基于图片的标签推荐是非常有用的。另一个实例应用程序是手机人脸解锁。我们往往将人脸识别模型部署在手机上，这样合法用户就可以不需要远程服务或网络连接就可以解锁手机。训练阶段往往在功能强大的服务器上完成，其计算资源要比在手机上完成的推理阶段多得多。因此，一个关键的问题是如何利用特权条款，如，资源只能在训练阶段使用，训练出来的模型具有优秀的推理能力。</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/59095545-5c8fef00-894b-11e9-91b2-80830c1b97a9.png" alt="Alt text"></p>
+<p>&emsp;&emsp;解决这一问题的典型方法是基于知识蒸馏。如图2左半部所示，知识蒸馏由一个分类器和教师组成。为了应对资源受限下的知识推理，分类器并不使用特权条款；另一方面，教师使用特权条款，例如，使用一个大模型容量或者使用更多的输入特征。一旦训练完成，教师师将为每一个训练实例输出一个被称为软标签的标签分布。接着，教师通过蒸馏损失如<strong> the L2 loss on logits</strong>训练分类器预测软标签。这种训练过程通常被称为“提炼”教师的知识到分类器。由于教师通常不能很好地对真实数据分布进行建模，分类器很难从教师那里学习真实数据分布。<br>&emsp;&emsp;生成对抗网络提供了另一种学习真实的数据分布的方法。受[49]的启发，作者首先提出了一种<strong>naive GAN(NaGAN)</strong>，拥有两名玩家。如图2右半部分所示，<strong>NaGAN</strong>由一个分类器和一个判别器组成。分类器作为生成器，当给其一个实例，则生成相关的标签；判别器旨在区分真实标签和生成的标签。该分类器通过对抗损失从判别器处学习完美地建模博弈均衡时地真实数据分布。<strong>NaGAN</strong>的一个限制是达成博弈均衡需要大量的训练实例和大量的<strong>epoches</strong>,这就限制了其在当收集标注数据代价很高的领域的应用。在这种双人博弈框架中，来自判别器的更新分类器的梯度在对抗训练中经常消失或者爆炸，导致了该方法的训练需要大量时间。在有限训练实例和<strong>epochs</strong>的条件下，训练分类器学习到真实的数据分布是一个挑战。<br>&emsp;&emsp;为了解决这个挑战，作者提出了取名为<strong>KDGAN</strong>的三人博弈框架，使用生成对抗网络来提炼知识。如图2所示，<strong>KDGAN</strong>由一个分类器，一位教师，一个判别器组成。除了知识蒸馏中的蒸馏损失和上述提及的<strong>NaGAN</strong>中的对抗损失外，作者还定义了从分类器到教师的蒸馏损失、教师和判别器之间的对抗损失。具体来说，分类器和教师作为生成器，目的是通过生成类似于真实标签的伪标签来欺骗鉴别器。与此同时，分类器和教师试图通过将他们的知识提炼成彼此的知识，从而就生成什么伪标签达成一致。通过将蒸馏和对抗损失表示为极小极大博弈，作者使分类器能够学习均衡时的真实数据分布(see Methods 3.2)。另外，分类器通过蒸馏损失接收从教师处传来的梯度，通过对抗损失接收从判别器处传来的梯度。从教师处传来的梯度通常具有低方差，这就降低了整个梯度的方差，因此加速了对抗训练（see Methods 3.3）。<br>&emsp;&emsp;作者进一步考虑了降低从判别器处传来的损失的方差，以加速<strong>KDGAN</strong>的训练。当使用某些广为使用的策略梯度下降方法时，从判别器处获得的梯度可能存在较大的方差。从判别器处获得低方差的梯度是很重要的，因为分类器和教师生成的离散样本关于它们的参数是不可微分的。作者建议使用<strong>Gumbel-Max</strong>技巧将分类器和教师学习到的离散分布松弛为具体分布。他们使用具体的分布来生成连续样本，以此达到端到端的微分和充分控制梯度的方差（ps：为什么要连续样本，为什么离散样本不可微分，什么具体分布）。在给定连续样本的情况下，作者从判别器得到低方差梯度，以加速<strong>KDGAN</strong>的训练。总而言之，作者的贡献如下:</p>
+<ol>
+<li><p>提出了一种用于多标签学习的<strong>KDGAN</strong>框架，该框架利用仅用于训练的资源来训练适合于资源约束推理的轻量级分类器。</p>
+</li>
+<li><p>通过减小梯度的方差来减少收敛所需的训练时间，这是通过<strong>KDGAN</strong>的设计和<strong>Gumbel-Max</strong>技巧实现的。</p>
+</li>
+<li><p>在图像标签推荐和深度模型压缩两方面进行了广泛的实验。实验验证了<strong>KDGAN</strong>相对于现有方法的优越性。</p>
+</li>
+</ol>
+<h3 id="Related-Work"><a href="#Related-Work" class="headerlink" title="Related Work"></a>Related Work</h3><p>&emsp;&emsp;这里简单的回顾一下知识蒸馏和生成对抗网路相关的研究。<br>&emsp;&emsp;知识蒸馏目的是从一位强大的教师那转移知识到一个轻量的分类器那里。如，<strong>Ba and Caruana<a href="https://user-images.githubusercontent.com/23336589/58760534-bc615100-856b-11e9-921a-416e5dd621fa.png" target="_blank" rel="noopener">7</a></strong>通过<strong>L2 loss</strong>匹配<strong>logits</strong>训练一个浅层的分类器网络来模拟深度的教师网络。<strong>Hinton</strong>等人[23]通过训练一个分类器来预测教师提供的软标签泛化了这个工作。<strong>Sau and Balasubramanian[39]</strong>进一步添加随机扰动到软标签上，以此来模拟从多位老师那里学习。<strong>Remero</strong>等人[36]提出使用教师网络的中间层而不是软标签来训练分类器。不像之前在分类问题上的工作，<strong>Chen et al.<a href="https://user-images.githubusercontent.com/23336589/58886957-4a2d6f80-8717-11e9-9d08-f62e7ec9a0f5.png" target="_blank" rel="noopener">10</a></strong>应用知识蒸馏和提示学习<strong>(hint learning)</strong>到目标检测问题上。也有一些工作充分利用知识蒸馏在不同域之间转移知识，比如，在高质量和低质量图片之间[41]。<strong>Lopez-Paz el al.[29]</strong>将使用特权信息的只是蒸馏统一为一个泛化提炼，存在一个使用特权信息作为输入的与训练好的教师。和知识蒸馏相比，该论文提出的<strong>KDGAN</strong>框架引入了一个判别器以确保分类器能够在均衡状态时学习到真实数据分布。<br>&emsp;&emsp;<strong>GAN</strong>首次被提出来生成连续数据<a href="https://user-images.githubusercontent.com/23336589/59095802-f3f54200-894b-11e9-98c7-14e346621111.png" target="_blank" rel="noopener">17</a>，通过极大极小博弈对抗地训练一个生成器和判别器。因为离散数据使得判别器的梯度很难通过后向传播来更新生成器，<strong>GAN</strong>最近才被用来生成离散数据。和那些拥有两个玩家的<strong>GANs</strong>不同，<strong>Li et al.</strong>提出一种具有三个玩家的<strong>GAN</strong>，取名为<strong>Triple-GAN</strong><a href="https://user-images.githubusercontent.com/23336589/59095600-80ebcb80-894b-11e9-9940-90b77a4cd7c0.png" target="_blank" rel="noopener">13</a>。该论文提出的<strong>KDGAN</strong>同样拥有三个玩家，但不同于<strong>Triple-GAN</strong>:（1） <strong>KDGAN</strong>中的两个生成器在给与特征的条件下，学习标签的条件分布。但是<strong>Triple-GAN</strong>中的两个生成器分别学习给定特征下标签的条件分布，给定标签下特征的条件分布。（2）<strong>KDGAN</strong>中两个生成器产生的样本都是离散数据，但<strong>Triple-GAN</strong>中的两个生成器产生的既有离散数据也有连续数据。这些不同导致了不同的目标函数和训练技术。比如，<strong>KDGAN</strong>可以使用<strong>Gumbel-Max trick</strong>来生成从两个生成器产生的样本，但是<strong>Triple-GAN</strong>不能。<br>&emsp;&emsp;作者探索了将知识蒸馏和生成对抗网络整合在一起。工作[51]提出来相似的想法，其引入一个判别器来训练分类器。但其和该论文的不同之处在于他们的判别器训练分类器学习教师产生的数据分布，但<strong>KDGAN</strong>的判别器训练分类器学习真实数据分布。<br>&emsp;&emsp;作者将<strong>KDGAN</strong>用来解决深度模型压缩和图像标签推荐问题，但也可以将<strong>KDGAN</strong>应用到解决其他特权条款可用的问题。比如，考虑上下文信息作为特权信息在意图追踪中使用，将用户评论作为特权条款在电影推荐中使用。</p>
+<h3 id="Methods"><a href="#Methods" class="headerlink" title="Methods"></a>Methods</h3><p>&emsp;&emsp;作者研究从一个使用特权条款（记为$\varrho$）训练的教师来训练一个轻量分类器来满足受限的推理的问题。推理可能受到（1）以有限的计算资源实时完成推理的要求；（2）缺少某些输入特征。在现有工作[29]之后，作者使用多标签学习问题作为他们用于说明提出的方法的目标应用场景。<br><img src="https://user-images.githubusercontent.com/23336589/59095600-80ebcb80-894b-11e9-9940-90b77a4cd7c0.png" alt="Alt text"><br>&emsp;&emsp;因为特权条款只在训练阶段可用，该问题的目标是训练一个不使用特权特权条款就具有高效推理的轻量分类器。为了实现这个目标，作者从<strong>NaGAN</strong>开始。何其它两玩家框架类似，<strong>NaGAN</strong>要求大量的训练实例和长时间的训练，这很难在实践中使用。为了解决这个问题，作者提出了三玩家框架的<strong>KDGAN</strong>,该框架可以加速训练同时保持均衡。</p>
+<h4 id="NaGAN-Formulation"><a href="#NaGAN-Formulation" class="headerlink" title="NaGAN Formulation"></a>NaGAN Formulation</h4><p>&emsp;&emsp;首先介绍<strong>NaGAN</strong>，其包括玩极大极小博弈的一个分类器$C$和一个判别器$D$。由于$D$不用于推理，因此可以利用特权条款。在<strong>NaGAN</strong>中，$C$给定特征$x$生成伪标签$y$，遵循分类分布$P_c(y|x)$；$D$则计算给定特征$x$标签$y$来自于真实数据分布$p_u(y|x)$的概率${p_d}^{\varrho}(x,y)$。遵循<strong>IRGAN</strong>[49]的价值函数，作者为<strong>NaGAN</strong>的极大极小博弈定义的价值函数$V(c,d)$如下：<br><img src="https://user-images.githubusercontent.com/23336589/59095661-ab3d8900-894b-11e9-90d7-d541f0d2aaec.png" alt="alt text"><br>令$h(x,y)$和$g(x,y)$分别为$C$和$D$的评分函数,定义$P_c(y|x)$和$p_u(y|x)$如下所示：<br><img src="https://user-images.githubusercontent.com/23336589/59095711-bdb7c280-894b-11e9-9d25-11a96411dd95.png" alt="alt text"><br>评分函数的实现有很多种方法。比如，$h(x,y)$可以是一个多层感知机。对于具体应用下的评分函数，论文在实验部分有详细介绍。这样的双人博弈框架通过交替地更新$C$和$D$来训练。除非达到均衡状态，这时$C$学习到真实的数据分布，否则训练会持续进行。在均衡状态时，在决定给定标签是否由$C$生成时，$D$不能比随机猜测做的更好。<br>&emsp;&emsp;作者注意到知识蒸馏和<strong>NaGAN</strong>的优缺点时可以互补的：（1）知识蒸馏通常要求少量的训练实例和较短的训练时长，但不能确保均衡时$P_c(y|x) = p_u(y|x)$。（2）<strong>NaGAN</strong>可以确保均衡时$P_c(y|x) = p_u(y|x)$，但通常需要大量的训练实例和训练时间。作者旨在提出一种单一的框架，保持这两种方法的优点，避免二者的缺点。</p>
+<h4 id="KDGAN-Formulation"><a href="#KDGAN-Formulation" class="headerlink" title="KDGAN Formulation"></a>KDGAN Formulation</h4><p>&emsp;&emsp;作者将<strong>KDGAN</strong>形式化表示为一个具有分类器$C$,教师$T$，判别器$D$的极大极小博弈。同分类器$C$一样，教师$T$基于分类分布${p_t}^{\varrho}(y|x) = softmax(f(x,y))$来生成伪标签。$T$和$D$都可以使用特权条款。在<strong>KDGAN</strong>中，$D$目标是最大化正确区分真标签和伪标签的概率，但$C$和$T$的目标是最小化它们生成的伪标签被$D$拒绝的概率。同时，$C$通过模拟$T$学习到的分布从$T$那学习。为了建立一个通用框架，作者还使$T$能够从$C$学习，因为实际上，通过与学生互动也可以提高教师的能力。这样的相互学习帮助$C$和$T$减少它们生成不同的伪标签的概率。形式化的，作者为<strong>KDGAN</strong>中的极大极小博弈定义的价值函数$U(c,t,d)$如下：<br><img src="https://user-images.githubusercontent.com/23336589/59097272-b72b4a00-894f-11e9-9d18-3a2d3ca6990d.png" alt="alt text"><br>$\alpha \in (0,1)$，$\beta \in (0,+\infty)$,$\gamma \in (0,+\infty)$都是超参数。上式中期望项是对抗损失，${\mathcal{L}_{DS}}^c$和${\mathcal{L}_{DS}}^t$是蒸馏损失。蒸馏损失可以有几种定义的方式，比如$L2$损失或<strong>KL</strong>散度。${\mathcal{L}_{DS}}^c$和${\mathcal{L}_{DS}}^t$分别用来训练分类器和教师。<br>&emsp;&emsp;下面是理论分析部分，证明<strong>KDGAN</strong>的分类器能够学习到真实的数据分布。公式(4)相当于一个变形。公式(5)两个期望的最大值是那两个分布的<strong>JS</strong>散度这一步我没推出来(利用JS散度的定义)。该部分证明了<strong>KDGAN</strong>当且并仅在$P_c(y|x)={p_t}^{\varrho}(y|x)= p_u(y|x)$到达均衡状态，这是分类器学得真实的数据分布。<br><img src="https://user-images.githubusercontent.com/23336589/59095802-f3f54200-894b-11e9-98c7-14e346621111.png" alt="alt text"></p>
+<h4 id="KDGAN-Training"><a href="#KDGAN-Training" class="headerlink" title="KDGAN Training"></a>KDGAN Training</h4><p>&emsp;&emsp;在这一部分，作者细述通过减少需要的<strong>epoches</strong>数来加速<strong>KDGAN</strong>训练的技术。正如在之前的研究[8,46]中讨论过那样，训练速度和梯度的方差有很大的关系。和<strong>NaGAN</strong>相比，<strong>KDGAN</strong>框架被设计的可以减少梯度的方差。这是因为高方差的随机变量可以被低方差的随机变量减少，正如之前讨论的，$T$能提供比$D$更小方差的梯度。为了减少来自$D$的梯度的方差，并获得对方差的充分控制，作者进一步提出从松弛离散样本得到的连续空间那获得梯度，也就是伪标签，通过重新参数化技巧在分类器(或教师)和判别器之间传播成连续样本。<br>&emsp;&emsp;首先，我们展示<strong>KDGAN</strong>如何减少梯度的方差。正如上述所讨论的那样，在<strong>NaGAN</strong>中，$C$仅从$D$处接收梯度$\triangledown _cV$,但在<strong>KDGAN</strong>中，它从$D$和$T$那都接收到梯度$\triangledown _cU$,如下所示：<br><img src="https://user-images.githubusercontent.com/23336589/59097224-94009a80-894f-11e9-8a61-843ed2182089.png" alt="alt text"><br>和之前的研究一致，作者观察到$\triangledown _c{\mathcal{L}_{DS}}^c$往往比$\triangledown _c{\mathcal{L}_{AD}}^n$具有跟小的方差，随后的实验分析也证明了这一点。因此，这轻松地展示了<strong>KDGAN</strong>中$C$的梯度的方差比<strong>NaGAN</strong>中的更小，如下所示：<br><img src="https://user-images.githubusercontent.com/23336589/59100110-abdc1c80-8957-11e9-92f6-53f135b76b96.png" alt="alt text"></p>
+<p>&emsp;&emsp;接着，作者进一步使用重参数化技巧<strong>Gumbel-Max trick</strong>来减少梯度的方差。<strong>Gumbel-Max trick</strong>是一种从离散分布取样的方法，它的形式可以允许我们定义一种可微分的，离散分布的近似取样。<strong>Gumbel-Max trick</strong>的本质是使用其参数的可微函数加上<strong>Gumbel</strong>分布的随机变量来重参数化生成离散样本。为了在从分类分布$p_c(y|x)$使用<strong>Gumbel-Max trick</strong>来生成离散样本，一种具体分布[25,31]被使用。作者使用一个具体的分布$q_c(y|x)$来生成连续样本并且使用连续样本来计算分类器关于对抗损失的梯度$\triangledown _c{\mathcal{L}_{AD}}^n$，如下所示：<br><img src="https://user-images.githubusercontent.com/23336589/59100141-bd252900-8957-11e9-9dff-5c6a0e7dbe08.PNG" alt="alt text"><br>使用温度参数$\tau$在训练阶段控制梯度的方差。当有一个高温度参数时(ps:这里温度不知道是是什么意思)，来自具体分布的样本很平滑，导致梯度的方差比较小。注意，具体分布的缺点在于，在高温下，它变得近似原始分类分布，准确度较低，这导致偏差梯度估计。在实验部分会讨论如何调温度参数。<br>&emsp;&emsp;除了改善$C$的训练之外，同样的方法也可以应用于改善$T$的训练。<strong>KDGAN</strong>的总题训练逻辑如算法1所示。三个部分都可以先单独预训练，然后通过小批量随机梯度下降联合训练。<br><img src="https://user-images.githubusercontent.com/23336589/59100190-df1eab80-8957-11e9-8728-6d66381a57af.png)" alt="alt text"></p>
+<h3 id="Conclusion-1"><a href="#Conclusion-1" class="headerlink" title="Conclusion"></a>Conclusion</h3><p>&emsp;&emsp;作者提出了一种取名为<strong>KDGAN</strong>的框架应用于带特权条款的多标签学习，该框架联合了知识蒸馏和生成对抗网络。<strong>KDGAN</strong>包括分类器、教师、判别器的三人博弈游戏。分类器和教师通过蒸馏损失相互学习，并且通过对抗损失被对抗地训练来对抗判别器。作者证明了分类器将会在平衡状态下学得真实数据分布。作者使用具体分布在对抗训练阶段控制梯度的方差并且获得低方差的梯度来加速训练。作者展示了<strong>KDGAN</strong>在图像标签推荐和深度模型压缩这两个重要的应用上取得了当前最佳表现。对未来的工作，作者将探索用于确定模型超参数的自适应方法，以实现更好的训练动态。</p>
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><p><a href="https://user-images.githubusercontent.com/23336589/58760534-bc615100-856b-11e9-921a-416e5dd621fa.png" target="_blank" rel="noopener">7</a> J. Ba and R. Caruana. Do deep nets really need to be deep? In NeurIPS, 2014.<br><a href="https://user-images.githubusercontent.com/23336589/58760564-2548c900-856c-11e9-9b0d-942f179f3d67.png" target="_blank" rel="noopener">8</a> L. Bottou, F. E. Curtis, and J. Nocedal. Optimization methods for large-scale machine learning.<br>arXiv preprint arXiv:1606.04838, 2016.<br><a href="https://user-images.githubusercontent.com/23336589/59095600-80ebcb80-894b-11e9-9940-90b77a4cd7c0.png" target="_blank" rel="noopener">13</a> L. Chongxuan, T. Xu, J. Zhu, and B. Zhang. Triple generative adversarial nets. In NeurIPS,<br>2017.<br><a href="https://user-images.githubusercontent.com/23336589/59095802-f3f54200-894b-11e9-98c7-14e346621111.png" target="_blank" rel="noopener">17</a> I. Goodfellow, J. Pouget-Abadie, M. Mirza, B. Xu, D. Warde-Farley, S. Ozair, A. Courville, and<br>Y. Bengio. Generative adversarial nets. In NeurIPS, 2014.<br>[23] G. Hinton, O. Vinyals, and J. Dean. Distilling the knowledge in a neural network. In NeurIPS<br>workshop, 2014.<br>[29] D. Lopez-Paz, L. Bottou, B. Schölkopf, and V. Vapnik. Unifying distillation and privileged<br>information. In ICLR, 2016.<br>[36] A. Romero, N. Ballas, S. E. Kahou, A. Chassang, C. Gatta, and Y. Bengio. Fitnets: Hints for<br>thin deep nets. arXiv preprint arXiv:1412.6550, 2014.<br>[46] G. Tucker, A. Mnih, C. J. Maddison, J. Lawson, and J. Sohl-Dickstein. Rebar: Low-variance,<br>unbiased gradient estimates for discrete latent variable models. In NeurIPS, 2017.<br>[49] J.Wang, L. Yu, W. Zhang, Y. Gong, Y. Xu, B.Wang, P. Zhang, and D. Zhang. Irgan: A minimax<br>game for unifying generative and discriminative information retrieval models. In SIGIR, 2017.<br>[51] X.Wang, J. Qi, K. Ramamohanarao, Y. Sun, B. Li, and R. Zhang. A joint optimization approach<br>for personalized recommendation diversification. In PAKDD, 2018.</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/文献汇报/" rel="tag"># 文献汇报</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/07/Knowledge Distillation with Generative Adversarial Networks/" rel="next" title="Knowledge Distillation with Generative Adversarial Networks">
+                <i class="fa fa-chevron-left"></i> Knowledge Distillation with Generative Adversarial Networks
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">plato</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#工作概述"><span class="nav-number">1.</span> <span class="nav-text">工作概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#A-neural-algorithm-for-a-fundamental-computing-problem"><span class="nav-number">2.</span> <span class="nav-text">A neural algorithm for a fundamental computing problem</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简介"><span class="nav-number">2.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#果蝇嗅觉神经回路"><span class="nav-number">2.2.</span> <span class="nav-text">果蝇嗅觉神经回路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#论文贡献"><span class="nav-number">2.3.</span> <span class="nav-text">论文贡献</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#最近邻搜索，LSH，果蝇算法的关系"><span class="nav-number">2.4.</span> <span class="nav-text">最近邻搜索，LSH，果蝇算法的关系</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#最近邻搜索"><span class="nav-number">2.4.1.</span> <span class="nav-text">最近邻搜索</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LSH"><span class="nav-number">2.4.2.</span> <span class="nav-text">LSH</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Deriving-the-distance-preserving-properties-of-the-fly’s-olfactory-circuit"><span class="nav-number">2.4.3.</span> <span class="nav-text">Deriving the distance-preserving properties of the fly’s olfactory circuit</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#讨论"><span class="nav-number">2.5.</span> <span class="nav-text">讨论</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#思考"><span class="nav-number">2.6.</span> <span class="nav-text">思考</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Fast-Similarity-Search-via-Optimal-Sparse-Lifting"><span class="nav-number">3.</span> <span class="nav-text">Fast Similarity Search via Optimal Sparse Lifting</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简介-1"><span class="nav-number">3.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Models"><span class="nav-number">3.2.</span> <span class="nav-text">Models</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#The-optimal-sparse-lifting-framework"><span class="nav-number">3.2.1.</span> <span class="nav-text">The optimal sparse lifting framework</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Algorithm"><span class="nav-number">3.2.2.</span> <span class="nav-text">Algorithm</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Optimal-lifting-vs-random-lifting"><span class="nav-number">3.2.3.</span> <span class="nav-text">Optimal lifting vs. random lifting</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#思考-1"><span class="nav-number">3.3.</span> <span class="nav-text">思考</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#With-Friends-Like-These-Who-Needs-Adversaries"><span class="nav-number">4.</span> <span class="nav-text">With Friends Like These, Who Needs Adversaries</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#摘要"><span class="nav-number">4.1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#介绍"><span class="nav-number">4.2.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#相关工作"><span class="nav-number">4.3.</span> <span class="nav-text">相关工作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Fundamental-developments-in-attack-methods"><span class="nav-number">4.3.1.</span> <span class="nav-text">Fundamental developments in attack methods</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Analysis-of-adversarial-vulnerability-and-proposed-defences"><span class="nav-number">4.3.2.</span> <span class="nav-text">Analysis of adversarial vulnerability and proposed defences</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Method"><span class="nav-number">4.4.</span> <span class="nav-text">Method</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Conclusion"><span class="nav-number">4.5.</span> <span class="nav-text">Conclusion</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#反思"><span class="nav-number">4.6.</span> <span class="nav-text">反思</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考文献"><span class="nav-number">4.7.</span> <span class="nav-text">参考文献</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Knowledge-Distillation-with-Generative-Adversarial-Networks"><span class="nav-number">5.</span> <span class="nav-text">Knowledge Distillation with Generative Adversarial Networks</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Abstract"><span class="nav-number">5.1.</span> <span class="nav-text">Abstract</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Introduction"><span class="nav-number">5.2.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Related-Work"><span class="nav-number">5.3.</span> <span class="nav-text">Related Work</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Methods"><span class="nav-number">5.4.</span> <span class="nav-text">Methods</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#NaGAN-Formulation"><span class="nav-number">5.4.1.</span> <span class="nav-text">NaGAN Formulation</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#KDGAN-Formulation"><span class="nav-number">5.4.2.</span> <span class="nav-text">KDGAN Formulation</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#KDGAN-Training"><span class="nav-number">5.4.3.</span> <span class="nav-text">KDGAN Training</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Conclusion-1"><span class="nav-number">5.5.</span> <span class="nav-text">Conclusion</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Reference"><span class="nav-number">5.6.</span> <span class="nav-text">Reference</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">plato</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>
