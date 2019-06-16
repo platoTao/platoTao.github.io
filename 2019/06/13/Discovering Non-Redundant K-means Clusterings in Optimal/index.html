@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="聚类," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="ABSTRACT&amp;emsp;&amp;emsp;高维空间中的大量对象集合通常可用多种方式聚类，比如，对象可以按照它们的形状或者它们的颜色进行聚类。每一个分组代表数据集的不同视角。无冗余聚类这一新研究领域解决了这类问题。在本文中，作者遵循这样的方法：不同的，非冗余的类K均值类簇可能存在高维空间的不同的、任意方向的子空间中。作者假设这些子空间(另外一个可选的无聚类结构的噪声空间)相互正交(两个子空间正交即两个">
+<meta name="keywords" content="聚类">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Discovering Non-Redundant K-means Clusterings in Optimal">
+<meta property="og:url" content="www.platot.site/2019/06/13/Discovering Non-Redundant K-means Clusterings in Optimal/index.html">
+<meta property="og:site_name" content="心远地自偏">
+<meta property="og:description" content="ABSTRACT&amp;emsp;&amp;emsp;高维空间中的大量对象集合通常可用多种方式聚类，比如，对象可以按照它们的形状或者它们的颜色进行聚类。每一个分组代表数据集的不同视角。无冗余聚类这一新研究领域解决了这类问题。在本文中，作者遵循这样的方法：不同的，非冗余的类K均值类簇可能存在高维空间的不同的、任意方向的子空间中。作者假设这些子空间(另外一个可选的无聚类结构的噪声空间)相互正交(两个子空间正交即两个">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/59558048-83b98100-901b-11e9-8b1b-9c9211805180.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/59558050-ae0b3e80-901b-11e9-870c-6b9ee048d51b.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/59559402-3e0bb100-9039-11e9-9a08-13a888a67e3a.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/59559411-55e33500-9039-11e9-90d4-00632ae8a506.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/59559415-7dd29880-9039-11e9-8d93-d736acc1c69e.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/59559416-8f1ba500-9039-11e9-946e-5b07247aeccb.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/59559424-a8bcec80-9039-11e9-830c-947ce8348f99.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/59559463-55976980-903a-11e9-97cb-7c6e8a86a797.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/59559466-5fb96800-903a-11e9-96aa-221ed2021200.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/59559483-be7ee180-903a-11e9-8e68-93cc267b1e25.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/59559432-d3a74080-9039-11e9-8e71-d7e215c5694f.png">
+<meta property="og:updated_time" content="2019-06-16T05:57:41.694Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Discovering Non-Redundant K-means Clusterings in Optimal">
+<meta name="twitter:description" content="ABSTRACT&amp;emsp;&amp;emsp;高维空间中的大量对象集合通常可用多种方式聚类，比如，对象可以按照它们的形状或者它们的颜色进行聚类。每一个分组代表数据集的不同视角。无冗余聚类这一新研究领域解决了这类问题。在本文中，作者遵循这样的方法：不同的，非冗余的类K均值类簇可能存在高维空间的不同的、任意方向的子空间中。作者假设这些子空间(另外一个可选的无聚类结构的噪声空间)相互正交(两个子空间正交即两个">
+<meta name="twitter:image" content="https://user-images.githubusercontent.com/23336589/59558048-83b98100-901b-11e9-8b1b-9c9211805180.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="www.platot.site/2019/06/13/Discovering Non-Redundant K-means Clusterings in Optimal/"/>
+
+
+
+
+
+  <title>Discovering Non-Redundant K-means Clusterings in Optimal | 心远地自偏</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">心远地自偏</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="www.platot.site/2019/06/13/Discovering Non-Redundant K-means Clusterings in Optimal/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="plato">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="心远地自偏">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Discovering Non-Redundant K-means Clusterings in Optimal</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-13T18:07:47+08:00">
+                2019-06-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/机器学习/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="ABSTRACT"><a href="#ABSTRACT" class="headerlink" title="ABSTRACT"></a>ABSTRACT</h2><p>&emsp;&emsp;高维空间中的大量对象集合通常可用多种方式聚类，比如，对象可以按照它们的形状或者它们的颜色进行聚类。每一个分组代表数据集的不同视角。无冗余聚类这一新研究领域解决了这类问题。在本文中，作者遵循这样的方法：不同的，非冗余的类K均值类簇可能存在高维空间的不同的、任意方向的子空间中。作者假设这些子空间(另外一个可选的无聚类结构的噪声空间)相互正交(两个子空间正交即两个子空间的任意两个向量正交。ps:我理解是两个子空间不共享原空间的某一维度。)该假设能够对非冗余聚类聚类问题进行特别严格的数学处理，因此是一种特别有效的算法，作者将其称为<strong>Nr-Kmeans(For non-redundant k-means)</strong>。该算法的优越性通过理论和实验两个部分的阐释。<br>&emsp;&emsp;<a href="https://www.kdd.org/kdd2018/accepted-papers/view/discovering-non-redundant-k-means-clusterings-in-optimal-subspaces" target="_blank" rel="noopener">论文地址</a>。<br>&emsp;&emsp;在该论文中，作者提出了<strong>Nr-Kmeans</strong>，作为经典K均值聚类算法的一种扩张，可以在数据集中找到多个无冗余划分，即每一个对象被分配给不同子空间的不同簇。它为每一种划分同时定位最优的，任意方向的，相互正交的子空间。噪声空间的引入令其可以移除不能很好被任意一种划分表征的特征。在论文中，作者将经典K均值聚类的代价函数转换为一个迹最小化问题，再将其转换为特征值分解问题，因为迹等于特征值之和。在特殊情况下,即仅两个子空间的情况下，对矩阵作特征值分解，负的特征值相应的特征向量可将数据投影到第一个子空间，这时对应的迹最小。接着作者将一般情况$S&gt;2$下所有子空间的组合当作特殊情况来处理，因为所有子空间是成对正交的因此对它们做优化不影响其余子空间内的代价函数。</p>
+<h2 id="INTRODUCTION"><a href="#INTRODUCTION" class="headerlink" title="INTRODUCTION"></a>INTRODUCTION</h2><p>&emsp;&emsp;聚类或者找到大量对象集合的一个自然的分组深深根植于人类认知。我们的大脑一直聚类感官刺激，以识，监控和解释它们。来自认知心理学的实验表明一岁左右的儿童早已能够可靠的发现一系列物体中的类簇。他们解决图1所示的任务并没有困难。给定一些对象的图片————来自<strong>ALOI</strong>数据集，我们直觉性地将它们聚类，分别按照红色，绿色，圆地和圆柱形的聚类规则。<br><img src="https://user-images.githubusercontent.com/23336589/59558048-83b98100-901b-11e9-8b1b-9c9211805180.png" alt="Alt text"></p>
+<p>&emsp;&emsp;对于刚会走路的孩子而言，这是一个简单的任务，但它已将最先经的聚类和降维技术推到了它们的极限，出于以下两个原因：（1）图像由包含总计611个特征的高维特征向量所表征。经典的聚类算法，比如K均值由于维度诅咒问题往往会失败。稀疏高维特征空间不包含任何聚类结构。（2）有两种同样有意义的方法可以将图1中的对象分组。在数学上，有两个不同的低维子空间，每个子空间都展现出一种重要的聚类结构。在这些子空间中的类簇是相互无冗余的，也就是，每一个对象属于不同子空间中的不同簇。<br>&emsp;&emsp;受维度诅咒的启发，许多将特征选取和降维整合在一起的精心设计的算法被提出来。这些技术旨在为每一个簇定位一个子空间，在该子空间中，该簇被最好地表征。对每一个簇一个单独的子空间有助于对抗维度诅咒，但令结果解释更困难。没有可以可视化所有簇的公共子空间。因此，很难说哪些聚类是，比如，彼此最相似或者存在异常值，或者存在聚类层次结构。受该缺点的启发，[17]提出了一种技术，该技术对单个K均值聚类可以找到最好的子空间。其他一些方法聚焦于挑战(2)，也就是定位在不同的子空间中的多个非冗余类簇。允许类簇存在任意子空间中，并且允许对象被赋予给不同子空间中的不同簇，以此来建立一个更大的解决空间。现存的非冗余子空间聚类方法有以下一个到多个的缺点：要求许多输入参数，导致大量的运行时间或者产生大量难以解释的结果。<br>&emsp;&emsp;作者研究发现在不同子空间的多个K均值聚类这一挑战。基本的思想是寻找多个相互正交的子空间，使得经典K均值聚类的目标函数在所有子空间中得到优化。另外，该论文提出的技术引入了一个噪声子空间，该噪声子空间正交于其他子空间，其数据分布被假设为是单峰的。图1展示了<strong>Nr-Kmeans</strong>的结果。该算法发现相关的子空间和相应的累类簇，和比较方法相比，在一系列任务上表现更佳。该论文的贡献如下：</p>
+<ol>
+<li><strong>在最优子空间上的多个重要的K均值聚类</strong>。<strong>Nr-Kmeans</strong>在正交子空间上发现多个非冗余的K均值聚类。该方法为每个聚类找到根据k均值的目标函数优化聚类分离的子空间。对每一个聚类子空间，<strong>Nr-Kmeans</strong>构造最相关的基本向量。子空间之间的正交性保证发现的聚类表示提供相互非冗余信息的数据的不同视图。这些子空间适合可视化和进一步分析，因为它们揭示了一个聚类中簇之间的关系。从K均值聚类继承而来，<strong>NR-KMEANS</strong>的结果包括可解释的簇中心，正如图1所示。</li>
+<li><strong>高效</strong>。该优化算法，<strong>Nr-Kmeans</strong>，容易实现，兼容K均值的许多扩展。即使没有其他精心设计的性能优化，该算法也很快速。</li>
+<li><strong> 轻量参数</strong>。<strong>Nr-Kmeans</strong>的输入仅仅是子空间数目，及每个子空间中有多少簇。</li>
+<li><strong>噪声处理</strong>。与现有的非冗余子空间聚类方法相比，<strong>Nr-Kmeans</strong>模型包括噪声子空间的思想。该噪声子空间捕获数据中所有单峰变量，其对于聚类来说并不重要。此性质有助于<strong>Nr-Kmeans</strong>优于现有方法，尤其是在高维数据上。</li>
+</ol>
+<h2 id="NON-REDUNDANT-K-MEANS"><a href="#NON-REDUNDANT-K-MEANS" class="headerlink" title="NON-REDUNDANT K-MEANS"></a>NON-REDUNDANT K-MEANS</h2><p>&emsp;&emsp;在该部分，作者阐述提出的方法<strong>Nr-Kmeans</strong>。该算法的实现和补充材料可以在<a href="http://dmm.dbs.ifi.lmu.de/downloads" target="_blank" rel="noopener">这里下载</a>。<br><img src="https://user-images.githubusercontent.com/23336589/59558050-ae0b3e80-901b-11e9-870c-6b9ee048d51b.png" alt="Alt Text"></p>
+<p>&emsp;&emsp;作者将他们的算法作为著名的<strong>Lloy’d</strong>算法的一种简单扩展来描述，具有交替的分配和更新步骤。然而，有可能将<strong>Nr-Kmeans</strong>和其他提出来的K均值扩展以一种简单的方法进行扩展。<br>&emsp;&emsp;表 1显示了接下来使用的必需的符号和定义。</p>
+<h3 id="Cost-Function"><a href="#Cost-Function" class="headerlink" title="Cost Function"></a>Cost Function</h3><p>&emsp;&emsp;在K均值算法的经典版本中，我们希望寻找到K个簇$C_i$的集合，使得欧几里得距离平方距离的和最小化。作者在<strong>Nr-Kmeans</strong>扩展了这一基本思想，通过假设数据集可以被S种不同的方法划分。每一个聚类$j$包含$k_j$个簇并且驻留在一个任意方向的子空间中，该子空间和其余$S-1$个子空间相互正交。<br>&emsp;&emsp;更进一步，作者假设存在一个正交变化矩阵$V$(样本之间的距离不变),该矩阵可以将数据空间旋转到一个所有子空间都是轴平行(axis-parallel)的变换空间中。进一步，作者使用掩子矩阵$P_j$将数据投影到相应的轴平行子空间上。因为这些子空间并不重叠，因此旋转数据空间的每个维度都专门映射到单个子空间。一个数据点$x$可以通过${P_j}^TV^Tx$被投影到$j^th$个子空间。结合这些假设，作者得到下面的损失函数，希望最小化它：<br><img src="https://user-images.githubusercontent.com/23336589/59559402-3e0bb100-9039-11e9-9a08-13a888a67e3a.png" alt="Alt Text"><br>通过优化该目标函数，我们将原来空间中特征的每一线性组合赋给子空间，该子空间通过相应的聚类最佳地表示包含的结构信息。因此，我们对$S$个K均值聚类划分中每一个划分可以找到最佳子空间。<br>&emsp;&emsp;掩子矩阵$P_J \in R^{m_j \times d}$是这样建立的，如果旋转数据空间的$a$维应该被映射到子空间的$b$维，则元素$P_j[a,b]$就被设置为1，其余的元素都被设为0。为了清楚和易于解释，作者假设子空间维度可以不必在旋转空间的特征向量内相邻。然而，如果确实需要，可以使用置换矩阵将子空间在旋转空间中对齐。<br>&emsp;&emsp;作者证明该损失函数和其理论，即他们的算法从理论角度通过与具有统计独立空间的高斯混合模型的关系找到非冗余聚类。标准K均值损失函数是具有概率分布$p(x) = \prod_{i}^k \Pi_iN(\mu_i|\sigma I)$的高斯混合模型的极限。<br>&emsp;&emsp;按照相同的方法，可以很容易地证明<strong>Nr-Kmeans</strong>的代价函数可以被视为下面具有$S$个独立子空间的高斯混合模型的对数似然函数的极限($w.r.t \sigma \longrightarrow 0$):<br><img src="https://user-images.githubusercontent.com/23336589/59559411-55e33500-9039-11e9-90d4-00632ae8a506.png" alt="Alt text"><br>该混合模型的统计独立分量在极限时变为<strong>Nr-Kmeans</strong>模型的正交非冗余子空间。</p>
+<h3 id="Optimization-Algorithm"><a href="#Optimization-Algorithm" class="headerlink" title="Optimization Algorithm"></a>Optimization Algorithm</h3><p>&emsp;&emsp;作者通过一个<strong>Lloyd’s algorithm</strong>的修改版本来优化目标函数，如<strong>Algorithm 1</strong>所示。该算法使用如下描述的更新和分配步骤直到收敛。<br>&emsp;&emsp;第一步，先使用随机正交矩阵初始化$V$。接着，初始化每一个子空间的维度$m_j$，其中$m_1 + … + m_S = d$。为了简化，作者将维度在所有子空间上平均分配。每一个子空间维度的最优值，在接下来的优化过程得到。最后但并非最不重要的，簇中心的初始化可以使用随机或者使用<strong>k-mean++</strong>设置。<br>&emsp;&emsp;分配步骤几乎和经典K均值聚类算发一样。我们将参数$V,m_j,u_{j,i}$固定住，将每一个数据点分配给相应子空间中的簇均值与该数据点的平方距离最小的簇：${|{P_j}^TV^Tx-{P_j}^TV^Tu_i|}^2$。<br>&emsp;&emsp;对于更新步骤，我们将数据点分配固定住，并且决定最优的参数值。接下的部分讨论需要的优化步骤的细节和每一步的正确性。</p>
+<h4 id="Estimation-of-the-cluster-centers-u-j-i"><a href="#Estimation-of-the-cluster-centers-u-j-i" class="headerlink" title="Estimation of the cluster centers$u_{j,i}$"></a>Estimation of the cluster centers$u_{j,i}$</h4><p>&emsp;&emsp;我们可以通过设置相对于$u_{j,i}$的偏导数等于零来确定聚类中心的估计量（不太懂）。这一计算结果显示了人们的直觉期望：在该子空间中的聚类均值${P_j}^TV^Tu_{j,i}$只是在原始空间中分配给该簇的所有数据点的变换平均值。它可以通过下面这个著名公式来计算：$\frac{1}{|C_{j,i}|} \sum_{x \in C_{j,i}} x$。<br><img src="https://user-images.githubusercontent.com/23336589/59559415-7dd29880-9039-11e9-8d93-d736acc1c69e.png" alt="Alt Text"></p>
+<h4 id="Estimation-of-V-in-the-case-of-subspaces-S-2"><a href="#Estimation-of-V-in-the-case-of-subspaces-S-2" class="headerlink" title="Estimation of $V$ in the case of subspaces $S$ = 2"></a>Estimation of $V$ in the case of subspaces $S$ = 2</h4><p>&emsp;&emsp;接下来，我们需要估计$V$的最优值。在展示一般情况下$V$的优化策略之前，我们先考虑只有两个子空间$S = 2$的特殊情况。这些结果接下来将帮助我们优化一般情况：$S &gt; 2$。<br>&emsp;&emsp;让我们假设现在$m_i和m_2$都是固定的，是随机的正整数，并且$d = m_i + m_2$。接下来，我们假设投影矩阵$P_1$将数据向量最前面的$m$个特征投影到第一个子空间，投影矩阵$P_2$将随后的$m_2$特征投影到第二个子空间：<br><img src="https://user-images.githubusercontent.com/23336589/59559416-8f1ba500-9039-11e9-946e-5b07247aeccb.png" alt="Alt Text"></p>
+<p>&emsp;&emsp;对该特殊情况，损失函数如下：<br><img src="https://user-images.githubusercontent.com/23336589/59559424-a8bcec80-9039-11e9-830c-947ce8348f99.png" alt="Alt Text"><br>我们可以将该损失函数转换为一个迹最小化的问题，通过利用一个$1 \times 1-matrix$的标量和$Tr(P_2 {P_2}^TA) = Tr(A)-Tr(P_1 {P_1}^TA)$,其中$A \in R^{d \times d}$这一事实。<br>&emsp;&emsp;转换后的目标函数如下：<br><img src="https://user-images.githubusercontent.com/23336589/59559463-55976980-903a-11e9-97cb-7c6e8a86a797.png" alt="Alt Text"><br>其中$\Sigma_{j}$是子空间$j$所有簇的分散矩阵的和：<br><img src="https://user-images.githubusercontent.com/23336589/59559466-5fb96800-903a-11e9-96aa-221ed2021200.png" alt="Alt Text"><br>&emsp;&emsp;在公式(3)中第二项对于任意$V$来说是个常数，因为迹函数的循环性质，还因为$V$是正交矩阵，因此$Tr(V^T\Sigma_2V) = Tr(\Sigma_2)$。<br>&emsp;&emsp;接下来，我们应该注意到$P_1{P_1}^T$是对角矩阵，其前$m_1$个对角元素是1，随后的$m_2$个对角元素是0。因此，如果我们将其与$V^T[\Sigma_1-\Sigma_2]V$右乘，它让$V^T[\Sigma_1-\Sigma_2]V$左上角的$m_1 \times m_1$个元素不变，让其他所有元素都为零。进一步，我们注意到迹函数产生了特征值之和(特征值之和等于迹，所以最小化特征值和也就最小化迹)。因此，对于固定但是任意的$m_1,m_2$,有可能最小化公式(2)的函数，通过放置$[\Sigma_1-\Sigma_2]$的特征向量到$V$的列，令对应最小的$m_1$个特征值的$m_1$个特征向量将数据投影到第一个$m_1$维的子空间，余下的$m_2$个特征向量将数据投影到第二个子空间。因此，我们使用$[\Sigma_1-\Sigma_2]$的特征值分解和作为$V$列向量的特征向量————对应于按升序排列的特征值。我们应该注意到$[\Sigma_1-\Sigma_2]$是对称，因此是可以正交对角化的，并且它的所有特征值都是实数。<br>&emsp;&emsp;因为我们将$V$中的向量对应于按升序排列的特征值排序并且公式(3)中的常数项并不依赖于$m_1$和$m_2$,$V$的最佳值独立于每一个子空间的维度。这一性质给了我们在每一更新步骤中额外的能力去优化关于$m_1$和$m_2$的代价。公式(2)中的代价函数仅仅通过投影矩阵$P_1,P_2$依赖于$m_1,m_2$。因为迹是特征值的和并且我们希望最小化这个和，所以我们可以仅仅最小化这个和，如果我们将$[\Sigma_1-\Sigma_2]$的所有负特征值求和。因此，我们将和负特征值对应的特征向量分配给第一个子空间，将大于零的特征值对应的特征向量分配给第二个子空间。如果特征值是零，其对代价函数无关紧要，我们可以这些特征放到任意一个子空间。<br>&emsp;&emsp;因此，对于给定$V$，我们可以优化代价函数，通过设置$m_1$为$[\Sigma_1-\Sigma_2]$负特征值的个数，$m_2 = d-m_1$。<br>&emsp;&emsp;我们应该注意到$[\Sigma_1-\Sigma_2]$的特征值也显示了其相应的特征向量和结果特征对于聚类结构的重要性。但我们将$m_1$设置为1的时候很容易看出来，我们只能使用对应于最小的特征值的特征向量将数据投影到第一个子空间的向量来最小化代价函数。因此，该特征向量对于该聚类来说是最重要的，对于$m_1 = 2$，我们同样需要和最小的两个特征值对应的特征向量来投影数据。对于第二个聚类和最大的特征值来说，该结论同样成立。因此，将$V$的列向量对应于升序的特征值来排列，意味着我们按照这些特征向量的重要性排列它们，对第一个子空间来说是降序，对第二个子空间来说是升序。</p>
+<h4 id="Estimation-of-V-and-m-j-in-the-general-case-S-gt-2"><a href="#Estimation-of-V-and-m-j-in-the-general-case-S-gt-2" class="headerlink" title="Estimation of $V$ and $m_j$ in the general case S &gt; 2"></a>Estimation of $V$ and $m_j$ in the general case S &gt; 2</h4><p>&emsp;&emsp;在一般情况$S&gt;2$优化$V$的问题并不像特殊情况$S=2$时拥有闭式解。这就是为什么我们不能通过单一特征值分解步骤来直接优化$V$的值。但是，我们可以使用这一事实，即所有子空间都是彼此成对正交的并且旋转这两个子空间的组合空间并不影响其余子空间内的代价。因此，在一般情况下优化的技巧就是考虑将旋转空间内的两个聚类的所有组合当作特殊情况$S=2$来按上小节方法来处理。一个解释的例子如图2所示。<br><img src="https://user-images.githubusercontent.com/23336589/59559483-be7ee180-903a-11e9-8e68-93cc267b1e25.png" alt="Alt Text"><br>&emsp;&emsp;让我们假设我们早已更新了所有的$\mu_{j,i}$，但是现在关于早已固定的参数的$V$和$m_j$还没有达到最优。我们考虑两个聚类$s$和$t$及它们对应的在旋转空间中的两个子空间$S_s$（对应图2红色块）和$S_t$(对应图2蓝色块)。我们可以使用投影矩阵$P_{s,t} = [P_s, P_t]$将整个数据集投影到组合空间$S_{s,t}$，该投影矩阵将组合空间$S_{s,t}$的前$m_s$个维度投影到$S_s$子空间，将后面的$m_t$个维度投影到$S_t$子空间。这时我们就可以将聚类$s$和$t$及它们的组合空间$S_{s,t}$当作特殊情况$S = 2$来处理，初始化这个子空间的旋转矩阵${V_{s,t}}^{&lt; c &gt;} = I_{m_s+m_t}$。但是，我们假设这个旋转矩阵关于公式(2)的代价函数来说不是最优的并且对于$s$和$t$的最优子空间也许是任意方向的(在图2中最优子空间$S_s$和$S_t$分别对应黄色和紫色)。但上一节讨论的结果，让我们能够找到旋转矩阵${V_{s,t}}^{&lt; c &gt;}$更好的值并且让我们能够调整两个子空间的维度以使代价函数最小化。接下来，我们描述子空间$S_{s,t}$中的旋转矩阵${V_{s,t}}^{&lt; c &gt;}$在满空间中对应的旋转矩阵${V_{s,t}}^{&lt; f &gt;}$:<br><img src="https://user-images.githubusercontent.com/23336589/59559432-d3a74080-9039-11e9-8e71-d7e215c5694f.png" alt="Alt text"><br>这个满空间中的转换矩阵可以使用$V \gets V \times{V_{s,t}}^{&lt; c &gt;}$来更新。另外我们也需要更新$P_s,P_t$，因为$m_s,m_t$可能发生变化并且旋转空间的一些维度可能分配给其他子空间了。我们应该记住，我们希望根据它们对聚类的重要性来排序每个子空间中的特征。对每对子空间执行此过程，我们优化变换矩阵$V$和关于每个子空间的维度$m_j$ ，因此进一步最小化我们的一般代价函数。</p>
+<h4 id="Accelerating-the-general-case-S-gt-2"><a href="#Accelerating-the-general-case-S-gt-2" class="headerlink" title="Accelerating the general case $S&gt;2$"></a>Accelerating the general case $S&gt;2$</h4><p>&emsp;&emsp;上面描述的程序有一个缺点，他将整个数据集都投影到每一个组合子空间。对于大数据集来说，这样代价很大。<br>&emsp;&emsp;但我们可以规避这个问题，因为我们只需要计算每一聚类$j$在组合子空间内的分散矩阵${\Sigma_j}^{&lt; c &gt;}$的和。这些矩阵可以通过$V$和$P_{s,t}$在原始空间中计算的分散矩阵${\Sigma_j}^{&lt; f &gt;}$的和得到。我们可以轻易的预计算原始空间中的${\Sigma_j}^{&lt; f &gt;}$并且对于每一个组合子空间将它们转换为${\Sigma_j}^{&lt; c &gt;}$。因此，${V_{s,t}}^{&lt; c &gt;}，m_s,m_t$可以由$eig({P_{s,t}}^TV^T|{\Sigma_s}^{&lt; f &gt;}-{\Sigma_t}^{&lt; f &gt;}|VP_{s,t})$轻易决定。</p>
+<h3 id="Noise-Space-as-a-Special-Subspace"><a href="#Noise-Space-as-a-Special-Subspace" class="headerlink" title="Noise-Space as a Special Subspace"></a>Noise-Space as a Special Subspace</h3><p>&emsp;&emsp;作者观察到聚类结果可以通过增加一个额外的包含单一簇的子空间来得到改善。作者将该子空间称为噪声空间，其余子空间为结果聚类空间。和该噪声空间有关的特征并不建立在其他聚类空间中的任何簇的结构并且在该子空间内的所有数据点的值来自相同的单峰分布或者均匀分布。因此，根据k均值聚类假设，我们通过单个聚类描述该空间。</p>
+<h2 id="CONCLUSION"><a href="#CONCLUSION" class="headerlink" title="CONCLUSION"></a>CONCLUSION</h2><p>&emsp;&emsp;在该论文中，作者提出了<strong>Nr-Kmeans</strong>，作为经典K均值聚类算法的一种扩张，可以在数据集中找到多个无冗余划分。它为每一种划分同时定位最优的，任意方向的，相互垂直的子空间。噪声空间的引入令其可以移除不能很好被任意一种划分表征的特征。这可以解释为数据降维步骤。<strong>Nr-Kmeans</strong>具有许多理想的特性。 最基本的非优化版本易于实现，仅使用所有线性代数框架提供的标准功能。即使在最基本的实现中，它也非常快。<br>此外，<strong>Nr-Kmeans</strong>可以简单的与经典k-means的许多其他扩展相结合。<br>方式。<br>&emsp;&emsp;未来的努力可以针对其中的子空间和簇的数量的全自动选择过程。 其他研究方向可能在于近似扩展的发展。</p>
+<h2 id="REFERENCES"><a href="#REFERENCES" class="headerlink" title="REFERENCES"></a>REFERENCES</h2><p>[17] Dominik Mautz, Wei Ye, Claudia Plant, and Christian Böhm. 2017. Towards<br>an Optimal Subspace for K-Means. In Proceedings of the 23rd ACM SIGKDD<br>International Conference on Knowledge Discovery and Data Mining, Halifax, NS,<br>Canada, August 13 - 17, 2017. 365–373. <a href="https://doi.org/10.1145/3097983.3097989" target="_blank" rel="noopener">https://doi.org/10.1145/3097983.3097989</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/聚类/" rel="tag"># 聚类</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/07/文献汇报二/" rel="next" title="文献汇报二">
+                <i class="fa fa-chevron-left"></i> 文献汇报二
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">plato</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ABSTRACT"><span class="nav-number">1.</span> <span class="nav-text">ABSTRACT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#INTRODUCTION"><span class="nav-number">2.</span> <span class="nav-text">INTRODUCTION</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NON-REDUNDANT-K-MEANS"><span class="nav-number">3.</span> <span class="nav-text">NON-REDUNDANT K-MEANS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Cost-Function"><span class="nav-number">3.1.</span> <span class="nav-text">Cost Function</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Optimization-Algorithm"><span class="nav-number">3.2.</span> <span class="nav-text">Optimization Algorithm</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Estimation-of-the-cluster-centers-u-j-i"><span class="nav-number">3.2.1.</span> <span class="nav-text">Estimation of the cluster centers$u_{j,i}$</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Estimation-of-V-in-the-case-of-subspaces-S-2"><span class="nav-number">3.2.2.</span> <span class="nav-text">Estimation of $V$ in the case of subspaces $S$ = 2</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Estimation-of-V-and-m-j-in-the-general-case-S-gt-2"><span class="nav-number">3.2.3.</span> <span class="nav-text">Estimation of $V$ and $m_j$ in the general case S &gt; 2</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Accelerating-the-general-case-S-gt-2"><span class="nav-number">3.2.4.</span> <span class="nav-text">Accelerating the general case $S&gt;2$</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Noise-Space-as-a-Special-Subspace"><span class="nav-number">3.3.</span> <span class="nav-text">Noise-Space as a Special Subspace</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CONCLUSION"><span class="nav-number">4.</span> <span class="nav-text">CONCLUSION</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#REFERENCES"><span class="nav-number">5.</span> <span class="nav-text">REFERENCES</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">plato</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>
