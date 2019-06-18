@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="半监督学习," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="导读&amp;emsp;&amp;emsp;本论文将半监督学习重新阐述为一个基于模型的强化学习问题并提出一种新的对抗学习框架。由于之前的对抗学习框架不能直接扩展到半监督文本分类，因为GAN被设计为产生连续数据，自然不能用于离散数据生成。另外自我训练基于启发式方法，其从自己的高置信预测中获得额外的有标签数据，这样其表现是不稳定的，因为性能糟糕的预测可能得到加强。作者结合自我训练和对抗网络来克服上述问题。具体说来，基">
+<meta name="keywords" content="半监督学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Learning Adversarial Networks for Semi-Supervised Text Classification via Policy Gradient">
+<meta property="og:url" content="www.platot.site/2019/06/17/Learning Adversarial Networks for Semi-Supervised Text Classification via Policy Gradient/index.html">
+<meta property="og:site_name" content="心远地自偏">
+<meta property="og:description" content="导读&amp;emsp;&amp;emsp;本论文将半监督学习重新阐述为一个基于模型的强化学习问题并提出一种新的对抗学习框架。由于之前的对抗学习框架不能直接扩展到半监督文本分类，因为GAN被设计为产生连续数据，自然不能用于离散数据生成。另外自我训练基于启发式方法，其从自己的高置信预测中获得额外的有标签数据，这样其表现是不稳定的，因为性能糟糕的预测可能得到加强。作者结合自我训练和对抗网络来克服上述问题。具体说来，基">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/59655933-932cfb80-91ce-11e9-9256-45882efcbdd7.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/59655965-a5a73500-91ce-11e9-9a62-4265c2db0fb7.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/59655988-c079a980-91ce-11e9-8a52-ec51fc84070f.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/59656004-cec7c580-91ce-11e9-8aad-12c2f6aeb303.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/59656011-d6876a00-91ce-11e9-936c-787ef31f559a.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/59656036-eef78480-91ce-11e9-9eec-c4477082878f.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/59656057-fcad0a00-91ce-11e9-86b0-27e29a10839e.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/59656087-1bab9c00-91cf-11e9-86fb-abeccd34f1e1.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/59656101-2403d700-91cf-11e9-96c3-796fac56ccf3.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/59656108-2cf4a880-91cf-11e9-9c5d-58bf0851a408.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/59656127-37af3d80-91cf-11e9-9e8c-1a6118ad9812.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/59656138-4138a580-91cf-11e9-9e3a-b4dd139bbad1.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/59656150-485fb380-91cf-11e9-8de5-8f60d046787c.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/59656172-57defc80-91cf-11e9-93bf-a6e89eea7b4a.png">
+<meta property="og:updated_time" content="2019-06-18T05:57:23.003Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Learning Adversarial Networks for Semi-Supervised Text Classification via Policy Gradient">
+<meta name="twitter:description" content="导读&amp;emsp;&amp;emsp;本论文将半监督学习重新阐述为一个基于模型的强化学习问题并提出一种新的对抗学习框架。由于之前的对抗学习框架不能直接扩展到半监督文本分类，因为GAN被设计为产生连续数据，自然不能用于离散数据生成。另外自我训练基于启发式方法，其从自己的高置信预测中获得额外的有标签数据，这样其表现是不稳定的，因为性能糟糕的预测可能得到加强。作者结合自我训练和对抗网络来克服上述问题。具体说来，基">
+<meta name="twitter:image" content="https://user-images.githubusercontent.com/23336589/59655933-932cfb80-91ce-11e9-9256-45882efcbdd7.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="www.platot.site/2019/06/17/Learning Adversarial Networks for Semi-Supervised Text Classification via Policy Gradient/"/>
+
+
+
+
+
+  <title>Learning Adversarial Networks for Semi-Supervised Text Classification via Policy Gradient | 心远地自偏</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">心远地自偏</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="www.platot.site/2019/06/17/Learning Adversarial Networks for Semi-Supervised Text Classification via Policy Gradient/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="plato">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="心远地自偏">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Learning Adversarial Networks for Semi-Supervised Text Classification via Policy Gradient</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-17T13:55:55+08:00">
+                2019-06-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/机器学习/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="导读"><a href="#导读" class="headerlink" title="导读"></a>导读</h2><p>&emsp;&emsp;本论文将半监督学习重新阐述为一个基于模型的强化学习问题并提出一种新的对抗学习框架。由于之前的对抗学习框架不能直接扩展到半监督文本分类，因为<strong>GAN</strong>被设计为产生连续数据，自然不能用于离散数据生成。另外自我训练基于启发式方法，其从自己的高置信预测中获得额外的有标签数据，这样其表现是不稳定的，因为性能糟糕的预测可能得到加强。作者结合自我训练和对抗网络来克服上述问题。具体说来，基于自我训练建立的模型不需要通过重建输入实例来近似数据分布，另一方面，受对抗网络的启发，一个判断网络被引进自我训练来判断某实例数据的标签是不是真的，因此减少了加强糟糕预测的风险并令自我训练变得更稳定和更鲁棒。<br>&emsp;&emsp;<a href="https://www.kdd.org/kdd2018/accepted-papers/view/learning-adversarial-networks-for-semi-supervised-text-classification-via-p" target="_blank" rel="noopener">论文地址</a></p>
+<h2 id="ABSTRACT"><a href="#ABSTRACT" class="headerlink" title="ABSTRACT"></a>ABSTRACT</h2><p>&emsp;&emsp;半监督学习是机器学习技术的分支，其目标是充分利用有标签和无标签数据来改善预测性能。现代真实世界的数据集以前所未有的速度扩大，令为它们建立标签很困难和成本巨大。因此，深度半监督学习变得越来越流行。许多现在的深度半监督方法建立在基于生成模型的方案上，该方案通过重建输入数据近似输入数据的分布。但这种方案对离散数据不起作用，比如文本。另外，学习一个好的数据表征有时会直接和学习一个优秀的预测模型的目标对立。为了解决这些方法的上述问题，作者将半监督学习重新阐述为一种基于模型的强化学习问题，并提出一种基于对抗网络的框架。该框架包括两个网络：一个用于目标估计的预测网络和一个用于评估的判断网络<br><strong>（judge network）</strong>。判断网络迭代地生成合适地奖励，来指引预测网络的训练，并且预测网络通过策略梯度<strong>(policy gradient)</strong>训练。基于刚刚提及的框架，作者提出了一个基于循环神经网络的模型用于半监督文本分类。作者在几个真实世界的基准文本数据集上进行了全面的实验分析，评估结果显示了其方法优于其他竞争的最先进的方法。</p>
+<h2 id="INTRODUCTION"><a href="#INTRODUCTION" class="headerlink" title="INTRODUCTION"></a>INTRODUCTION</h2><p>&emsp;&emsp;在许多真实世界应用中，为一个学习问题标注数据常常需要来自经过训练的专家的大量努力。因此，获取大量的标注数据是非常昂贵甚至是不可能的。但是，获取大量未标注数据相对简单和低廉。半监督学习是机器学习方法的一个分支，其旨在利用少量标记数据来利用剩余的未标记数据，以提高预测模型的准确性。<br>&emsp;&emsp;深度学习最新的进展提供了新的精心设计的范例从复杂数据中获得端到端的学习模型。在深度学习背景下，大多数半监督学习算法都基于生成模型方案。在该方法下，深度生成模型作为数据分布的估计器，并且学习到的数据分布作为辅助信息来增强分类模型的学习过程。<strong>Goodfellow et al.</strong>提出生成对抗网络框架，其中两个网络被训练相互对抗。这种对抗学习框架在计算视觉任务上取得了很大的成功，并被成功的扩展到半监督图像分类。但是这种框架不能被直接扩展到半监督文本分类，因为<strong>GAN</strong>被设计用于生成连续数据，这自然不会对离散数据生成起作用。<br>&emsp;&emsp;为了克服<strong>GAN</strong>自然的限制并且在半监督文本分类中利用对抗训练框架的优点，作者提出了一种基于判别对抗网路<strong>(discriminative adversarial networks,DAN)</strong>的模型，该模型深植于自我训练<strong>(Self-training)</strong>。自我训练对于半监督学习来说是最直接的方案。它基于一种启发式方法建立，在这种方法中，模型使用从其高置信预测中获得的额外的标注数据训练。因此，该方法的表现不稳定，因为糟糕预测可能被加强。在本论文中，作者将自我训练和对抗学习网络的思想结合起来克服它们的问题。具体来说，具体说来，基于自我训练建立的模型不需要通过重建输入实例来近似数据分布，因此就克服了基于<strong>GAN</strong>的半监督学习方法的限制，另一方面，受对抗网络的启发，一个判断网络被引进自我训练来判断某实例数据的标签是不是真的，因此减少了加强糟糕预测的风险并令自我训练变得更稳定和更鲁棒。<br>&emsp;&emsp;将上述两个学习框架联合起来并结合它们的优点，在该论文中，作者提出<strong>RLANS</strong>框架，即<strong>Reinforcement Learning based Adversarial Network for Semi-supervised learning</strong>。该框架将半监督学习的预测网络<strong> P </strong>重新制定为一个强化学习代理<strong>(agent)</strong>，其中状态是输入数据，动作是标签预测。因此，学习问题的首要目标被转换为<strong> P </strong>学习一个好的策略的问题，使得生成的预测标签可以最大化期望的总奖励。预测网络<strong> P </strong>通过策略梯度<strong>(policy gradient)</strong>学得。判断网络<strong> J </strong>用来评估预测的标签和提供评估的反馈来引导预测器的学习。采用<strong> J </strong>的反馈作为奖励可以迭代地改进预测网络<strong> P </strong>，因为奖励是动态更新的。具体来说，令$D_L =<br>\{(x_1,y_1),…,(x_l,x_l)|x_i \in \mathcal{X},y_i \in \mathcal{Y}\}$是一组$l$个标注实例，令$D_<br>U = \{x_{l+1},…x_{l+u}|x_i \in \mathcal{X}\}$是一组$u$个未标注的实例。该论文提出的模型总体结构如<strong>Figure 1</strong>所示。<br><img src="https://user-images.githubusercontent.com/23336589/59655933-932cfb80-91ce-11e9-9256-45882efcbdd7.png" alt="Alt text"><br>&emsp;&emsp;强化学习是不稳定的甚至是发散的，当行动值函数<strong>(action-value function)</strong>是由非线性函数表征时。在模型实现中，为了缓解不稳定性，预测器<strong> P </strong>在$D_L$上使用最大似然估计预训练几个迭代，并且当预测器预训练结束时，判断器<strong> J </strong>也要预训练几次迭代。<br>&emsp;&emsp;论文主要的贡献总结如下:</p>
+<ol>
+<li>受自我训练的启发，为了同时考虑有标签和无标签实例，作者将半监督学习问题重新制定为基于模型的强化学习问题。</li>
+<li>作者为半监督学习提出一种基于对抗网络的框架。不像大多数其他基于<strong>GAN</strong>的半监督学习方法，该框架不需要重建输入数据，因此可以应用于半监督文本分类。</li>
+<li>基于提出的<strong>RLANS</strong>框架，作者为半监督文本分类提出一种具体模型，另外，在几种基准数据集上进行了全面的实验分析。</li>
+</ol>
+<h2 id="相关工作"><a href="#相关工作" class="headerlink" title="相关工作"></a>相关工作</h2><p>&emsp;&emsp;半监督学习可以朔源到1970s，并且从1990s起，它引起了极大的关注。现在的半监督学习方法可以大概的归为如下几类：<strong>self-training，transductive leaning based，co-training，graph-based，和generative model based</strong>。在本部分，我们先简短的描述以下每个类别最重要的工作，然后重点讲述这些方法和作者提出的方法的关系和主要区别。<br>&emsp;&emsp;在前面提及的所有半监督学习方案中，最直截了当的方法是自我训练方案，其中预测模型使用标签数据和最自信的预测迭代的重训练。转换支持向量机<strong>TSVM</strong>是用于半监督学习著名的转换方法。它将支持向量机作扩展，旨在找到处在低密度区域的判别决策边界，因此使其到原始标签数据和无标签数据都为最大间隔。共同训练是多视图学习的一个特殊例子，其假设数据拥有两个视图并且每个视图都能够训练一个好的预测器。最初，对每一种视图，一个独立的分类器使用标注数据训练。接着每一个训练器对未标注数据的最置信的预测联合标注数据迭代的重新训练其他的分类器。基于图的半监督方法为标注实例和未标注实例构建一个相似图，并且相似的实例别假设为同一类。其他方法比如<strong>Gaussian fields</strong>和隐马尔可夫随机域被引入基于图的半监督学习在图内建模标签传播。<br>&emsp;&emsp;基于生成模型的半监督学习方案可以被看作是联合数据分布辅助信息的监督学习的扩展，数据分布通过重建输入数据学得。在之前的十年，一些传统生成混合模型被用于半监督学习。随着深度学习方法的发展，深度神经网络被用作密度估计器(ps:概率密度)并且比传统生成模型更有弹性和更强大。深度生成模型比如<strong>VAE</strong>和<strong>GAN</strong>在近些年取得令人印象深刻的成功。在这类基于重建的半监督学习方法中，生成器被训练学习能够保留输入样本所有信息的表征，以此实现完美重建数据。生成器常被用来预训练分类网络。但是，分类器的学习是一个最小化对标签预测有价值的信息的过程，这就成为了完美数据重建的对立面（ps：最小化有价值的信息，是指其是一种消耗品吗？），因此有时学得的表征甚至可能损害预测模型的性能。<br>&emsp;&emsp;基于重建的半监督学习方案，在[8]用于半监督学习的两阶段方法被提出来。首先，在预训练阶段，一个传统的无监督语言模型[2]被构建用来学习序列的向量表征，该模型预测在序列中下一个是什么。其次，从预训练阶段获得模型参数，作为在文本分类中有监督训练模型的出发点。基于这种方案，在工作<a href="https://user-images.githubusercontent.com/23336589/59656101-2403d700-91cf-11e9-96c3-796fac56ccf3.png" target="_blank" rel="noopener">20</a>中，作者引入对抗扰动增强了第二阶段。在这些论文中，无标签数据并未直接用于第二阶段训练分类器。最近[28]，基于<strong>DAN</strong>的方法被提出来用于半监督学习。但是，标注数据仅用来训练判断网络，并不用于训练预测网络。<br>&emsp;&emsp;在该论文中，不同于上述所有的深度半监督学习模型，作者们将半监督学习重新制定为基于模型的强化学习问题，并且提出一种基于对抗网络的框架来改进训练过程。该论文提出的<strong>RLANS</strong>与上述深度半监督学习方法的主要不同总结如下：</p>
+<ol>
+<li>不同于深度生成半监督学习模型，<strong>RLANS</strong>框架不需要执行实例重建来近似数据分布。因此，该框架可以轻松的用在半监督文本分类。</li>
+<li>不同于现有的深度半监督文本分类算法，<strong>RLANS</strong>框架采用了强化学习和对抗网络的优点。因此，可以迭代更新，并且标注数据和未标注数据可以直接用于训练分类器。</li>
+</ol>
+<h2 id="METHODS"><a href="#METHODS" class="headerlink" title="METHODS"></a>METHODS</h2><p>&emsp;&emsp;在该部分，我们详细介绍为半监督学习提出的对抗学习框架。我们先描述<strong>RLANS</strong>框架的总体架构，接着描述为半监督文本分类提出来的一种具体的模型。</p>
+<h3 id="Model-Overview"><a href="#Model-Overview" class="headerlink" title="Model Overview"></a>Model Overview</h3><p>&emsp;&emsp;半监督学习的首要目标是从标注数据$D_L$和未标注数据$D_U$中学习一个参数为$\theta$的预测模型$P_\theta$，使得预测标签尽可能接近真实标签。因为未标注实例的标注信息是未知的，基于常用的最大似然估计来训练预测器$P_\theta$并不是一种直截了当的方法。取而代之，在本论文中，作者将半监督学习重新指定为强化学习问题。<br>&emsp;&emsp;<strong> 训练预测模型$P_\theta$。</strong>作者基于强化学习解释预测问题，其中输入数据$x$可以被视为是状态，并且相应的预测标签$\hat{y}$被看作动作。预测器$P_\theta(\hat{y}|x)$可以被视为策略模型，给定状态$x$,决定行动$\hat{y}$的概率。该策略模型的目标是生成合适的预测标签以最大化期望奖励：<br><img src="https://user-images.githubusercontent.com/23336589/59655965-a5a73500-91ce-11e9-9a62-4265c2db0fb7.png" alt="Alt Text"><br>其中$\mathcal{Y}$是可行动作空间，$V(\cdot)$是选择$\hat{y}$作为行动的行动值函数。在半监督学习中，给定输入数据，一个好的预测器应该生成尽可能接近真实标签的预测标签。因此，行动值函数在该问题中被定义为预测标签$\hat{y}$和真实标签$y$的相似度。<br>&emsp;&emsp;现在关键的问题就是如何为$\hat{y}$和$y$定义一个合适的相似度函数，特别是未标注实例的真实标签是未知的。为了解决这个问题，受对抗学习框架<strong>GAN</strong>的启发，作者训练一个判别模型$J_\phi$作评判，为改进预测器$P_\theta$提供引导。$J_\phi(x,\hat{y})$是指示$(x,\hat{y})$被认为是真实数据-标签对的概率。因此，在<strong>RLANS</strong>中，行动值函数可以被定义如下：<br><img src="https://user-images.githubusercontent.com/23336589/59655988-c079a980-91ce-11e9-8a52-ec51fc84070f.png" alt="action-value function"><br>&emsp;&emsp;在行动值函数中使用$J_\phi(x,\hat{y})$的主要优点是$J_\phi$是动态更新的，因此它可以迭代地改进预测器$P_\theat$。值得注意，上面定义的行动值函数在每次迭代中提供即时的奖励，因此并不需要使用额外的技术，比如蒙特卡洛树搜索，<strong>Temporal-Difference (TD) learning </strong>来近似长期奖励。<br>&emsp;&emsp;最大化公式(1)中的目标需要计算关于模型参数$\theta$的梯度：<br><img src="https://user-images.githubusercontent.com/23336589/59656004-cec7c580-91ce-11e9-8aad-12c2f6aeb303.png" alt="parameter theta"><br>使用似然比技巧公式(3)可以被重写为：<br><img src="https://user-images.githubusercontent.com/23336589/59656011-d6876a00-91ce-11e9-936c-787ef31f559a.png" alt="Alt text"><br>公式(4)是公式(3)的无偏估计。在实际中，作者使用<strong>m</strong>个标注实例和<strong>m</strong>个未标注实例作为一个小批量来训练模型，近似梯度可以计算如下：<br><img src="https://user-images.githubusercontent.com/23336589/59656036-eef78480-91ce-11e9-9eec-c4477082878f.png" alt="approximated gradient"><br>接下来预测模型的参数$\theta$可以按照如下更新：<br><img src="https://user-images.githubusercontent.com/23336589/59656057-fcad0a00-91ce-11e9-86b0-27e29a10839e.png" alt="update theat"></p>
+<p>&emsp;&emsp;<strong>训练判断模型$J_\phi$。</strong>在该框架中，$J_\phi$是这样训练的，将一组真实标注实例$\{(x_i,y_i) \in D_L \}$作为正样本，一组未标注数据和相应的预测标签$\{(x_i,\hat{y}_i) x_i \in D_U,\hat{y}_i \in P_\theta(x_i)\}$作为负样本。判断模型$J_\phi$应该尽可能清楚的判别正样本和负样本。因此，判断模型的训练需要最小化交叉熵：<br><img src="https://user-images.githubusercontent.com/23336589/59656087-1bab9c00-91cf-11e9-86fb-abeccd34f1e1.png" alt="cross-entropy"><br>&emsp;&emsp;<strong>Algorithm 1</strong>总结了<strong>RLANS</strong>总体的训练过程。在对抗学习前，在第一行预测器使用最大似然估计在标注数据$D_L$上先预训练。在第三行判读模型$J_\phi$通过最小化交叉熵在真实标注实例和假的和预测标注数据上预训练。在每次对抗训练循环中，预测器$P_\theat$为m个未标注数据预测标签。判断模型$J_\phi$使用真实数据-标签对和预测数据-标签对进行训练。每次新的判断模型获得时，就按照公式(5)计算更新行动值函数，然后通过策略梯度更新预测器。<br><img src="https://user-images.githubusercontent.com/23336589/59656101-2403d700-91cf-11e9-96c3-796fac56ccf3.png" alt="Algorithm1"></p>
+<h3 id="RLANS-For-Semi-supervised-Text-Classification"><a href="#RLANS-For-Semi-supervised-Text-Classification" class="headerlink" title="RLANS For Semi-supervised Text Classification"></a>RLANS For Semi-supervised Text Classification</h3><p>&emsp;&emsp;基于上述提及的<strong>RLANS</strong>框架，作者提出为半监督文本分类提出了一个具体的模型。<br>&emsp;&emsp;<strong>用于文本的预测器网络。</strong>在该论文中，作者使用基于标准<strong>LSTM</strong>网络的模型作为预测器，如图<strong>Figure 2</strong>所示：<br><img src="https://user-images.githubusercontent.com/23336589/59656108-2cf4a880-91cf-11e9-9c5d-58bf0851a408.png" alt="Figure 2"><br>&emsp;&amp;emsp令一个实例$x = \{w^{(1)},\cdot \cdot \cdot,w^{(T)}|w^{(t)} \in {\{0,1\}}^k\}$是<strong>T</strong>个单词的独热编码序列，其对应的目标$\mathcal{y} \in {\{0,1\}}^c$是c个类标签的独热编码，其中k是单词表中不同的单词的数目。一个嵌入矩阵$E \in R^{(k+1)\times p}$用来将原始的独热编码表征为相应的p维连续向量$\{v^{(1),\cdot \cdot \cdot,v^{(T)}}\}$，其中词向量的第k+1维被用作指示序列结束标志$V_{eos}$。给定输入单词$w^{(t)}$，在第$t-1$步，长期单元状态$c^{(t-1)} \in R^{1 \ times q}$，隐藏状态$h^{(t-1)} \in R^{1 \ times q}$，在第$t$步，$c^{(t)}，h^{(t)}$被计算。在最后一步，给定最后隐藏状态$h_eos$，该模型先通过带有Relu的全连接网络计算隐藏向量$h_c \in R^{1 \times d}$，然后使用softmax output layer计算相应的估计标签的分布：<br><img src="https://user-images.githubusercontent.com/23336589/59656127-37af3d80-91cf-11e9-9e8c-1a6118ad9812.png" alt="predicton"><br>&emsp;&emsp;<strong>用于文本的判断网络。</strong>在该论文中，作者使用基于<strong>LSTM</strong>的模型作为其判断网络，如<strong>Figure 3</strong>所示：<br><img src="https://user-images.githubusercontent.com/23336589/59656138-4138a580-91cf-11e9-9e3a-b4dd139bbad1.png" alt="Figure3"><br>&emsp;&emsp;在第t步，一个目前估计的标签向量$o(t) \in R^{1 \times c}$通过一个子网络生成，该子网络的结构和之前的预测网络的输出部分是一样的。接着将$o^{( t )}$，独热编码目标向量$y$（或者未标注数据的估计目标向量$\hat{y}$）拼接起来。一旦所有拼接向量都生成了，一个权重联合如下：<br><img src="https://user-images.githubusercontent.com/23336589/59656150-485fb380-91cf-11e9-8de5-8f60d046787c.png" alt="weight combination"><br>该值作为判断模型输出部分的输入，其中$\beta \in R^T$是可训练的权重向量。<br>&emsp;&emsp;判断模型的目标是估计$(y;w^{(1)},\cdot \cdot \cdot,w^{(T)})$来自标注数据$D_L$可能性的概率，其在${[o,y]}_\beta$是两个成份的联合概率。一个单层的神经网络单独的处理所有输入特征，因此不能进行特征提取。因此，设计的输出网络应该具有多层。在作者的模型中，输出网络具有两层，分别如下是：<br><img src="https://user-images.githubusercontent.com/23336589/59656172-57defc80-91cf-11e9-93bf-a6e89eea7b4a.png" alt="two layers"></p>
+<h2 id="CONCLUSION"><a href="#CONCLUSION" class="headerlink" title="CONCLUSION"></a>CONCLUSION</h2><p>&emsp;&emsp;在该论文中，作者将半监督学习重新制定为基于模型的强化学习问题，并且提出一种新的对抗学习框架<strong>RLANS</strong>。该框架包含两个网络：一个预测网络和一个判断网络。判断网络用来动态地评估预测网络的表现并提供反馈作为奖励动态地引导预测器地学习过程。<strong>RLANS</strong>框架并不要求数据生成，因此可以轻易的用于离散数据。基于该框架，作者提出一种用于半监督文本分类的具体模型。作者广泛地比较了所提算法的性能与一些最先进的深度半监督文本分类算法的性能，在几个基准文本数据集上。<br>&emsp;&emsp;将来，基于提出的框架，作者计划为不同类型的数据精心设计更具体的预测和判断网络。然后，作者计划基于强化学习方案开发更先进的深度半监督学习方法。作者还计划进行一些相应的理论分析，以进一步提高拟议框架的稳定性。</p>
+<h2 id="REFERENCES"><a href="#REFERENCES" class="headerlink" title="REFERENCES"></a>REFERENCES</h2><p>[2] Yoshua Bengio, Réjean Ducharme, Pascal Vincent, and Christian Jauvin.</p>
+<ol>
+<li>A neural probabilistic language model. Journal of machine<br>learning research 3, Feb (2003), 1137–1155.<br>[8] Andrew M Dai and Quoc V Le. 2015. Semi-supervised sequence learning. In Advances in Neural Information Processing Systems. 3079–3087.<br><a href="https://user-images.githubusercontent.com/23336589/59656101-2403d700-91cf-11e9-96c3-796fac56ccf3.png" target="_blank" rel="noopener">20</a> Takeru Miyato, Andrew M Dai, and Ian Goodfellow. 2016. Adversarial Training Methods for Semi-Supervised Text Classification. arXiv<br>preprint arXiv:1605.07725 (2016).<br>[28] Cicero Nogueira dos Santos, Kahini Wadhawan, and Bowen Zhou.</li>
+<li>Learning Loss Functions for Semi-supervised Learning via Discriminative Adversarial Networks. arXiv preprint arXiv:1707.02198<br>(2017).</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/半监督学习/" rel="tag"># 半监督学习</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/13/Discovering Non-Redundant K-means Clusterings in Optimal/" rel="next" title="Discovering Non-Redundant K-means Clusterings in Optimal">
+                <i class="fa fa-chevron-left"></i> Discovering Non-Redundant K-means Clusterings in Optimal
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">plato</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#导读"><span class="nav-number">1.</span> <span class="nav-text">导读</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ABSTRACT"><span class="nav-number">2.</span> <span class="nav-text">ABSTRACT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#INTRODUCTION"><span class="nav-number">3.</span> <span class="nav-text">INTRODUCTION</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相关工作"><span class="nav-number">4.</span> <span class="nav-text">相关工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#METHODS"><span class="nav-number">5.</span> <span class="nav-text">METHODS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Model-Overview"><span class="nav-number">5.1.</span> <span class="nav-text">Model Overview</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RLANS-For-Semi-supervised-Text-Classification"><span class="nav-number">5.2.</span> <span class="nav-text">RLANS For Semi-supervised Text Classification</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CONCLUSION"><span class="nav-number">6.</span> <span class="nav-text">CONCLUSION</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#REFERENCES"><span class="nav-number">7.</span> <span class="nav-text">REFERENCES</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">plato</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>
