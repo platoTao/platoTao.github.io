@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="短文流聚类," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="导读&amp;emsp;&amp;emsp;在本论文中，作者第一次提出一种基于迪利克雷过程多项式混合(DPMM)模型的短文本流聚类聚类算法，称为MStream，该算法可以自然得处理概念漂移问题和特征稀疏问题。因为基于DPMM可以直接计算一个文档属于某个现存的簇还是新簇的概率，因此就可以解决概率漂移问题。作者假设每个文档只与一个主题（簇）相关联，而不是假设文档分布在主题上。按照这种方法，MStream算法可以解决短">
+<meta name="keywords" content="短文流聚类">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Model-based Clustering of Short Text Streams">
+<meta property="og:url" content="www.platot.site/2019/06/21/Model-based Clustering of Short Text Streams/index.html">
+<meta property="og:site_name" content="心远地自偏">
+<meta property="og:description" content="导读&amp;emsp;&amp;emsp;在本论文中，作者第一次提出一种基于迪利克雷过程多项式混合(DPMM)模型的短文本流聚类聚类算法，称为MStream，该算法可以自然得处理概念漂移问题和特征稀疏问题。因为基于DPMM可以直接计算一个文档属于某个现存的簇还是新簇的概率，因此就可以解决概率漂移问题。作者假设每个文档只与一个主题（簇）相关联，而不是假设文档分布在主题上。按照这种方法，MStream算法可以解决短">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/59920230-6e4db800-945c-11e9-82fa-96234aecabc7.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/59920365-e4eab580-945c-11e9-9f71-93570069a3f0.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/59920319-be2c7f00-945c-11e9-8974-f65fea1b3a2a.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/59920399-fb910c80-945c-11e9-9c10-3ec7253babdf.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/59920431-119ecd00-945d-11e9-80ea-3ea40db98c09.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/59920490-3a26c700-945d-11e9-927d-77ccefe0e695.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/59921250-ae626a00-945f-11e9-9f24-f65f4f5a43d1.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/59920873-858da500-945e-11e9-861b-92a7c67244d8.png">
+<meta property="og:updated_time" content="2019-06-21T12:18:21.349Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Model-based Clustering of Short Text Streams">
+<meta name="twitter:description" content="导读&amp;emsp;&amp;emsp;在本论文中，作者第一次提出一种基于迪利克雷过程多项式混合(DPMM)模型的短文本流聚类聚类算法，称为MStream，该算法可以自然得处理概念漂移问题和特征稀疏问题。因为基于DPMM可以直接计算一个文档属于某个现存的簇还是新簇的概率，因此就可以解决概率漂移问题。作者假设每个文档只与一个主题（簇）相关联，而不是假设文档分布在主题上。按照这种方法，MStream算法可以解决短">
+<meta name="twitter:image" content="https://user-images.githubusercontent.com/23336589/59920230-6e4db800-945c-11e9-82fa-96234aecabc7.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="www.platot.site/2019/06/21/Model-based Clustering of Short Text Streams/"/>
+
+
+
+
+
+  <title>Model-based Clustering of Short Text Streams | 心远地自偏</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">心远地自偏</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="www.platot.site/2019/06/21/Model-based Clustering of Short Text Streams/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="plato">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="心远地自偏">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Model-based Clustering of Short Text Streams</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-21T19:26:05+08:00">
+                2019-06-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/机器学习/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="导读"><a href="#导读" class="headerlink" title="导读"></a>导读</h2><p>&emsp;&emsp;在本论文中，作者第一次提出一种基于迪利克雷过程多项式混合(DPMM)模型的短文本流聚类聚类算法，称为<strong>MStream</strong>，该算法可以自然得处理概念漂移问题和特征稀疏问题。因为基于DPMM可以直接计算一个文档属于某个现存的簇还是新簇的概率，因此就可以解决概率漂移问题。作者假设每个文档只与一个主题（簇）相关联，而不是假设文档分布在主题上。按照这种方法，<strong>MStream</strong>算法可以解决短文本的稀疏性问题。另外作者提出簇特征向量，本质是该簇中文档的一个大文档，利用其可加可删除性质，可以高效的更新聚类结果。<br>&emsp;&emsp;另外作者提出改进了的带有遗忘规则的<strong>MStreamF</strong>算法，该算法直觉地将距离当前批次一定批次间隔的旧批次中的文档从其所属的簇特征向量中删除(得益于簇的表征方式)，可以解决簇数量过多的问题。</p>
+<h2 id="ABSTRACT"><a href="#ABSTRACT" class="headerlink" title="ABSTRACT"></a>ABSTRACT</h2><p>&emsp;&emsp;短文本流聚类由于多种社交媒体中短文本的爆炸增长，已经成为一个日益重要的问题。在该论文中，作者提出一种基于模型的短文本聚类算法<strong>(MStream)</strong>，该算法可以自然得处理概念漂移问题和特征稀疏问题。<strong>(MStream)</strong>算法只需对流一次通过(one pass of the stream)即可实现最先进的性能，并且当允许每批次多次迭代时，可以获得更好的性能。作者们进一步提出具有遗忘规则的<strong>(MStream)</strong>的改进算法<strong>(MStreamF)</strong>，该算法能够通过高效地删除过时批次的簇，来删除过时的文档。作者们的扩展实验显示上述两种算法可以在一些真实数据集上取得比三种基准更好的表现。</p>
+<h2 id="INTRODUCTION"><a href="#INTRODUCTION" class="headerlink" title="INTRODUCTION"></a>INTRODUCTION</h2><p>&emsp;&emsp;短文本流聚类比如网上流行的微博帖子经常围绕真实生活事件或者故事形成簇。聚类短文本流的任务是在文档按时间顺序到达时将文档分组到各个簇，该任务有许多应用，比如搜索结果多样化，事件检测和追踪，文本摘要。短文本流聚类问题面对如下两个挑战：（1）短文本的稀疏性（特征稀疏）。（2）文本连续到达，导致存储所有文档和像静态文本聚类方法那样迭代多次处理文档是不可能的。（3）文本流的主题可能随着时间连续改变，因此我们需要自动地检测新的簇并且移除过时的簇。<br>&emsp;&emsp;通常，短文本流聚类问题有两种方案：一次通过方案和批量方案。一次通过方案假设流文档一个接一个地到来，我们只能对每一个文档进行一次处理。批量方案假设流文档是批量到来的，我们可以对一个批次中的文档多次处理。在真实应用中，批量方案可能更加合理，因为我们能够对一个文档批次进行预处理然后将它们发送流聚类算法。在批量方案中，我们可以多次迭代现在批次中的文档，并当新的批次到达时就丢弃它们。当我们允许每一批次多次迭代时，流聚类算法的表现就得到明显的改善。<br>&emsp;&emsp;在本论文中，作者们提出两种基于模型的短文本流聚类算法，其在上述两种方案中都表现的很好。作者第一次提出基于<strong>Dirichlet process multinational mixture（DPMM）model</strong>的短文本流聚类算法，取名为<strong>(MStream)</strong>。该算法具有一次通过聚类处理和在每一批次更新聚类的处理。作者假设每个文档只与一个主题（簇）相关联，而不是假设文档分布在主题上。按照这种方法，<strong>MStream</strong>算法可以解决短文本的稀疏性问题。更进一步，该算法决定将一个文档赋予新的簇时并需要一个相似度阈值，因为我们可以计算一个文档选择一个新簇的概率，该概率可直接从<strong>DPMM modle</strong>得到，因此<strong>MStream</strong>可以自然地处理概念漂移问题。<br>&emsp;&emsp;随着更过文档到来，簇数量逐渐增加，<strong>MStream</strong>算法的空间和时间复杂度会增长到很大的地步，如果我们不将过时的簇删除的话。另外，和整个数据流相比，我们常常对一段特定时期的信息感兴趣。然而，检测和删除过时的簇常常是困难和低效的，因为我们在内存中不能存储所有簇的文档。作者提出<strong>MStream</strong>算法的改进算法<strong>MStreamF</strong>，其具有遗忘规则，可以通过删除过时批次的簇来删除过时的文档。在<strong>MStreamF</strong>算法中，作者依然只存储当前批次的文档，同时存储几个批次的簇。因为一个批次的簇包含用于删除该批次中文档的所有必需信息，并且记住一个批次的簇不需要太多内存。当一个批次的文档过时，我们可以使用减法操作高效地从现在的簇特征向量中直接删除这些文档。<strong>MStreamF</strong>算法能够在硬盘上存储每一个批次地簇，作为文本流的离线分析。<br>&emsp;&emsp;该论文的贡献可以总结如下。</p>
+<ol>
+<li>作者提出一种基于模型的短文本聚类算法（MStream），其可以自然地处理概念漂移问题。<strong>MStream</strong>在一次通过方案下可以达到当前最佳表现，如果对每一批次允许迭代多次处理，其表现会更好。</li>
+<li>作者提出<strong>MStream</strong>的带有遗忘规则的改进算法<strong>MStreamF</strong>，其可以高效地通过删除过时批次地簇来删除过时的文档。</li>
+<li>作者在几个真实数据集上进行了扩展实验，证明了其方法的高效性和有效性。<a href="https://github.com/jackyin12/MStream" target="_blank" rel="noopener">源代码和数据集传送门在此。</a></li>
+</ol>
+<h2 id="RELATED-WORK"><a href="#RELATED-WORK" class="headerlink" title="RELATED WORK"></a>RELATED WORK</h2><p>&emsp;&emsp;文本流聚类方法可以被归类为如下两种：基于相似度的流聚类和基于模型的流聚类。</p>
+<h3 id="Similarity-based-Stream-Clustering"><a href="#Similarity-based-Stream-Clustering" class="headerlink" title="Similarity-based Stream Clustering"></a>Similarity-based Stream Clustering</h3><p>&emsp;&emsp;基于相似度的文本流聚类方法大多数使用向量空间模型来表征文档并且需要选择一个相似度度量比如余弦相似度来衡量文档或者簇之间的相似度。<br>&emsp;&emsp;<strong>CluStream</strong>是最经典的流聚类方法之一，其由一个在线微聚类成分和一个离线宏聚类成分组成。<strong>CluStream</strong>使用金字塔时间框架存储不同时刻的历史的微簇，以供后面分析。<strong>DenStream</strong>联合微聚类和一个密度估计过程来进行流聚类，其可以形成任何形状的数据簇并且处理异常点。<strong>Yoo et.al.</strong>提出一种流光谱聚类方法，其可以随着时间维持数据流的规范拉普拉斯的近似并且可以高效地更新流时尚的拉普拉斯的变化的特征向量。<br>&emsp;&emsp;<strong>Zhong et.al.</strong>提出一种高效的流文本聚类算法，其基于著名的赢者通吃竞争学习在线更新簇质心。(后面还有几种，我认为没必要写了，短短几句我也搞不懂究竟是怎么一回事)<br>&emsp;&emsp;基于相似度的文本聚类方法的一个限制是它们需要选择一个相似度阈值来手动的决定是将一个文档赋予新的簇还是不。作者提出的<strong>MStream</strong>算法计算一个文档属于现有簇的或者新簇的概率，并且根据这些概率来决定文档的归属。通过这种方式，<strong>MStream</strong>可以更自然的检测新的簇并且能够处理概漂移问题。</p>
+<h3 id="Model-based-Stream-Clustering"><a href="#Model-based-Stream-Clustering" class="headerlink" title="Model-based Stream Clustering"></a>Model-based Stream Clustering</h3><p>&emsp;&emsp;基于模型的文本流聚类方法假设文档是由一个混合模型产生的，然后使用像<strong>Gibbs Sampling</strong>和<strong>Sequential Monte Carlo</strong>等技术来估计混合模型的参数，这样就可以获得聚类结果。<br>&emsp;&emsp;许多模型扩展<strong>Latent Dirichlet Allocation（LDA）</strong>，来建模文本流，比如动态主题模型（DTM），主题随着时间推移模型（TOT），动态混合模型（DMM），主题追踪模型（TTM），temporal-LDA(TM-LDA)，streaming LDA(ST-LDA)和Dirichlet-Hawkes topic model。这些方法假设文档内容足够丰富，可以推断出每个主题的每个文档的多项分布。该假设对短文本并不成立，导致这些方法在短文本流上不能取得很好的表现。<strong>Liang et.al。</strong>提出动态聚类主题模型（DCT），其基于迪利克雷多项混合分布模型。DCT通过将单个主题赋予每个短文本并且使用在特定时间推断的分布作为下一批推断的先验可以处理短文本流。<br>&emsp;&emsp;上述的大部分方法假设簇的数量是一个固定的数，这意味着它们不能高效处理文本流聚类中的概念漂移问题。<strong>Ahmed and Xing</strong>提出<strong>temporal Dirichlet process mixture model (TDPM)</strong>可以自动的在数据上增长簇的数量。然而TDPM是离线框架，需要整个文本流的序列。该论文提出的文本聚类方法可以在一次通过和批量方案下工作的很好。另外该方法可以处理短文本的挑战和概念漂移问题。</p>
+<h2 id="BACKGROUND"><a href="#BACKGROUND" class="headerlink" title="BACKGROUND"></a>BACKGROUND</h2><p>&emsp;&emsp;这一部分，作者简短的介绍了迪利克雷过程（一种随机过程），和迪利克雷过程多项式混合(DPMM)模型。<br>&emsp;&emsp;可以参考这两篇博客<a href="https://blog.csdn.net/qy20115549/article/details/62041632" target="_blank" rel="noopener">Dirichlet Process and Stick-Breaking</a>和<a href="https://blog.csdn.net/qy20115549/article/details/62041632" target="_blank" rel="noopener">DPMM的理解、公式推导及抽样</a>。</p>
+<h2 id="APPROACH"><a href="#APPROACH" class="headerlink" title="APPROACH"></a>APPROACH</h2><p>&emsp;&emsp;在这部分，作者先介绍其方法中文本和簇的表征，然后介绍提出的<strong>MStream</strong>算法和<strong>MStreamF</strong>算法。</p>
+<h3 id="Representation"><a href="#Representation" class="headerlink" title="Representation"></a>Representation</h3><p>&emsp;&emsp;作者使用一个文档中的单词和其在文档中相应的频率来表征一份文档。基于向量空间模型的方法假设文档是由高斯分布产生的，而本论文作者假设文档是由多项式分布产生的。<br>&emsp;&emsp;基于相似度的聚类方法比如K均值，使用一个簇的所有文档向量的均值来表征一个向量。相反，本论文作者使用簇特征（CF）向量来表征一个簇，这本质上是一个结合其文档的大文件。一个簇的CF特征向量定义如下。<br><img src="https://user-images.githubusercontent.com/23336589/59920230-6e4db800-945c-11e9-82fa-96234aecabc7.png" alt="CF Vector"><br>&emsp;&emsp;簇特征向量提供重要的可加可删除性质，如下所示。<br><img src="https://user-images.githubusercontent.com/23336589/59920365-e4eab580-945c-11e9-9f71-93570069a3f0.png" alt="Addible Property"><br><img src="https://user-images.githubusercontent.com/23336589/59920319-be2c7f00-945c-11e9-8974-f65fea1b3a2a.png" alt="Deletable Property"><br>&emsp;&emsp;这里，${N_d}^w$和$N_d$分别是在文档 d 中单词 w 出现的次数和在文档 d 中总的单词数，并且$N_d = \sum_{w \in d} {N_d}^w$。另外${N_z}^w$是簇 z 中单词 w 出现的频率。将一个文档添加到一个簇和将一个文档从簇中删除的复杂度均为$O(\overline{L})$,其中$\overline{L}$是文档的平均长度，通常少于100。在本论文提出的算法中，簇特征向量的可加可删除性质十分有用。</p>
+<h3 id="The-MStream-Algorithm"><a href="#The-MStream-Algorithm" class="headerlink" title="The MStream Algorithm"></a>The MStream Algorithm</h3><p>&emsp;&emsp;聚类文本流的一个最重要的考虑是如何定义文本和簇之间的关系。基于相似度的流聚类方法使用度量比如余弦相似度来衡量一个文档和一个簇之间的相似度。为了处理概念漂移问题，这些方法通常选择一个相似度阈值。当聚类一个文档时，如果它和最近的簇的相似度大于该阈值，就将其赋予该簇，否则就将其赋予一个新簇。然而，在真实应用中很难手动的选择一个合适的阈值。<br>&emsp;&emsp;与此不同，本文作者假设文档是由迪利克雷过程多项式混合(DPMM)模型生成的。<strong>Yin and Wang</strong>为静态文本聚类的DPMM提出了一种<strong>collapsed Gibbs sampling</strong>算法。更近一步，本文作者提出基于DPMM的短文本聚类算法。该算法可以基于DPMM可以直接计算文档 d 选择一个存在的簇的概率，如下所示：<br><img src="https://user-images.githubusercontent.com/23336589/59920399-fb910c80-945c-11e9-9c10-3ec7253babdf.png" alt="choose exisiting"></p>
+<p>&emsp;&emsp;¬d 表示文档 d 从现在的簇特征向量中移除，这对于<strong>MStream</strong>的聚类更新处理很有用。对于一个新到来的文档，¬d并不影响 CF 向量。不同于静态文本聚类<a href="https://user-images.githubusercontent.com/23336589/59920490-3a26c700-945d-11e9-927d-77ccefe0e695.png" target="_blank" rel="noopener">31</a>，D 是现在记录的文本(所有簇中的文档数量)的数量，V 是现在记录的文本的单词表中单词数。<br>&emsp;&emsp;我们可以得到文档 d 选择一个新簇的概率，如下所示：<br><img src="https://user-images.githubusercontent.com/23336589/59920431-119ecd00-945d-11e9-80ea-3ea40db98c09.png" alt="new cluster"><br>不同于静态文本聚类<a href="https://user-images.githubusercontent.com/23336589/59920490-3a26c700-945d-11e9-927d-77ccefe0e695.png" target="_blank" rel="noopener">31</a>，作者设置$\gamma = \alpha D$，因为对于文本流聚类的混合权重$\theta ~ GEM(\gamma)$，超参数$\gamma$应该是动态的。$\alpha D$是新簇中文档的伪数量(ps:这个数目是指估计的簇成型后的文档数量)，超参数$\beta$是新簇中每个单词伪的出现次数。<br>&emsp;&emsp;公式(4)和(5)的第一部分表示一个文档选择一个簇的概率和该簇含有的文档数量成比例。一个新到的文档选择具有更多文档的簇的概率更高，因此不会超过一定数量的簇将会创建，即使簇的数量可以是无限的。这也被称为富者更富现象，大型簇很吸引更多的文档。<br>&emsp;&emsp;公式(4)和(5)的第二部分实际上定义了文档和该簇之间的相似性。这部分是$N_d$个部分的乘积，对应于文档 d 中的$N_d$个单词。对于文档 d 中的每一个单词 w，对应的部分测度单词 w 在簇 z 中的频率。当一个簇具有更多的文档，这些文档和文档 d享有同样的单词，公式第二部分会更大，文档 d 也更可能选择该簇。<br>&emsp;&emsp;<strong>MStream</strong>算法的细节见<strong>Algorithm 1</strong>。该算法具有一次通过聚类处理和批量更新聚类过程。<br>&emsp;&emsp;<strong>The one pass clustering process of MStream</strong>可用于处理一次通过方案的文本流，该情况下假设流文本一个接一个地到来，并且我们只能处理每一个文档一次。对第一个文档，该算法会为其选择一个新簇。这个新簇的簇特征向量使用第一个文档初始化。接着，新到来的文档会选择一个现存的簇或者一个新簇，根据公式(4)和(5)计算出来的概率。当新簇被选中，我们创建要给新簇来存储相应的文档。否则，就将对应的文档添加到选中的存在的簇，根据其可加性质。<br>&emsp;&emsp;<strong>The update clustering process of MStream</strong>可用于处理批量方案的文本流，其假设流文档一个批次地到来，我们可以多次处理每一批次中的文档。当一个新的文档批次到来时，我们最先使用一次通过聚类处理来获得一个该批文档一次迭代的聚类结果。然后我们使用更新聚类处理来更新聚类结果。对每一文档，我们先将其从归属的簇中删除。然后，我们根据它归属于K个簇和一个新簇的概率将其重新赋予概率最高的簇（簇特征向量并不对这文档进行更新）。对最后一次迭代，我们将每一个文档赋予最高概率对应的簇。<br><img src="https://user-images.githubusercontent.com/23336589/59920490-3a26c700-945d-11e9-927d-77ccefe0e695.png" alt="Algorithm 1"><br>&emsp;&emsp;<strong>MStream</strong>算法需要记录当前的K个簇的特征向量和当前批次的文档。其空间复杂度是$O(KV+M\overline{L})$，其中K是簇数量，V是单词表的尺寸，M是每一批次中文档数量，$\overline{L}$是一个批次中文档的平均长度。计算一个文档属于某个簇的概率的时间复杂度是和文档的平均长度线性相关的。一次通过聚类过程的时间复杂度是$O(KN\overline{L})$,其中N是流中文档总数。具有一次通过聚类处理和更新聚类处理的算法的时间复杂度是$O(IKN\overline{L})$，其中I是每一个批次的迭代数量。</p>
+<h3 id="The-MStreamF-Algorithm"><a href="#The-MStreamF-Algorithm" class="headerlink" title="The MStreamF Algorithm"></a>The MStreamF Algorithm</h3><p>&emsp;&emsp;随着越来越多的文档到啦，簇的数量也会增加，<strong>MStream</strong>的空间和时间复杂度会增加到很大的地步，如果我们不删除过时的批次的话。另外，和整个数据流相比，我们常常对一段特定时期的信息感兴趣。和检测然后删除过时的簇相比，另一种选择是直接删除过时的文档，该方法更简单和高效。然而，本论文作者只存储当前批次中的文档，过去批次中的文档被丢弃。一个直觉是簇可以被视为与其文档相结合的大文档，我们可以存储没有过时的批次的簇。当批次 b 中的文档过时，我们可以直接从当前簇特征向量中删除掉批次 b 中的文档，减法操作定义如下。<br><img src="https://user-images.githubusercontent.com/23336589/59921250-ae626a00-945f-11e9-9f24-f65f4f5a43d1.png" alt="alt text"></p>
+<p>&emsp;&emsp;基于上面的直觉，作者提出<strong>MStream</strong>算法改进了的带有遗忘规则的版本，称为<strong>MStreamF</strong>。该算法的细节见<strong>Algorithm 2</strong>。<strong>MStreamF</strong>具有一个超参数$B_s$，代表存储的批次的最大数量，当存储的批次数目大于$B_s$时，该算法在聚类新批次文档前将过时批次的文档从其所属簇特征向量中删除，这步操作使用可删除性质。<br>&emsp;&emsp;随着更多文档批次到达，我们可以检测新的簇和删除旧批次中的文档。一些簇会被置为空，因为过时的文档被删除了。当一个簇变为空时，其后的文档选择这个簇的概率为零。为了方便进一步分析，作者并不服用过去的簇的编号。<br><img src="https://user-images.githubusercontent.com/23336589/59920873-858da500-945e-11e9-861b-92a7c67244d8.png" alt="Algorithm 2"></p>
+<h2 id="CONCLUSION"><a href="#CONCLUSION" class="headerlink" title="CONCLUSION"></a>CONCLUSION</h2><p>&emsp;&emsp;在本论文中，作者第一次提出一种基于迪利克雷过程多项式混合(DPMM)模型的短文本流聚类聚类算法，称为<strong>MStream</strong>，该算法可以自然得处理概念漂移问题和特征稀疏问题。<strong>(MStream)</strong>算法只需对流一次通过(one pass of the stream)即可实现最先进的性能，并且当允许每批次多次迭代时，可以获得更好的性能。作者们进一步提出具有遗忘规则的<strong>(MStream)</strong>的改进算法<strong>(MStreamF)</strong>，该算法能够通过高效地删除过时批次的簇，来删除过时的文档。作者们的扩展实验显示上述两种算法可以在一些真实数据集上取得比三种基准更好的表现。<br>&emsp;&emsp;作为将来的工作，作者打算使用提出的方法来改进其他相关应用的表现，比如搜索结果多样化，事件检测和追踪，文本摘要。</p>
+<h2 id="REFERENCES"><a href="#REFERENCES" class="headerlink" title="REFERENCES"></a>REFERENCES</h2><p><a href="https://user-images.githubusercontent.com/23336589/59920490-3a26c700-945d-11e9-927d-77ccefe0e695.png" target="_blank" rel="noopener">31</a> Jianhua Yin and JianyongWang. 2016. A model-based approach for text clustering with outlier detection. In ICDE. IEEE, 625–636.</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/短文流聚类/" rel="tag"># 短文流聚类</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/17/Learning Adversarial Networks for Semi-Supervised Text Classification via Policy Gradient/" rel="next" title="Learning Adversarial Networks for Semi-Supervised Text Classification via Policy Gradient">
+                <i class="fa fa-chevron-left"></i> Learning Adversarial Networks for Semi-Supervised Text Classification via Policy Gradient
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">plato</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#导读"><span class="nav-number">1.</span> <span class="nav-text">导读</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ABSTRACT"><span class="nav-number">2.</span> <span class="nav-text">ABSTRACT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#INTRODUCTION"><span class="nav-number">3.</span> <span class="nav-text">INTRODUCTION</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RELATED-WORK"><span class="nav-number">4.</span> <span class="nav-text">RELATED WORK</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Similarity-based-Stream-Clustering"><span class="nav-number">4.1.</span> <span class="nav-text">Similarity-based Stream Clustering</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Model-based-Stream-Clustering"><span class="nav-number">4.2.</span> <span class="nav-text">Model-based Stream Clustering</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BACKGROUND"><span class="nav-number">5.</span> <span class="nav-text">BACKGROUND</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#APPROACH"><span class="nav-number">6.</span> <span class="nav-text">APPROACH</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Representation"><span class="nav-number">6.1.</span> <span class="nav-text">Representation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#The-MStream-Algorithm"><span class="nav-number">6.2.</span> <span class="nav-text">The MStream Algorithm</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#The-MStreamF-Algorithm"><span class="nav-number">6.3.</span> <span class="nav-text">The MStreamF Algorithm</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CONCLUSION"><span class="nav-number">7.</span> <span class="nav-text">CONCLUSION</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#REFERENCES"><span class="nav-number">8.</span> <span class="nav-text">REFERENCES</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">plato</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>
