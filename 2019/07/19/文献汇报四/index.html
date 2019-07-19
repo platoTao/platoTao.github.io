@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="文献汇报," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="工作概述&amp;emsp;&amp;emsp;本次学习了两篇来自KDD2018的论文，分别是“Learning Dynamics of Decision Boundaries without Additional Labeled Data”和“A Stock AI Assistant for Reliability Modeling of Stock Comments”。&amp;emsp;&amp;emsp;第一篇论文中，作">
+<meta name="keywords" content="文献汇报">
+<meta property="og:type" content="article">
+<meta property="og:title" content="文献汇报四">
+<meta property="og:url" content="www.platot.site/2019/07/19/文献汇报四/index.html">
+<meta property="og:site_name" content="心远地自偏">
+<meta property="og:description" content="工作概述&amp;emsp;&amp;emsp;本次学习了两篇来自KDD2018的论文，分别是“Learning Dynamics of Decision Boundaries without Additional Labeled Data”和“A Stock AI Assistant for Reliability Modeling of Stock Comments”。&amp;emsp;&amp;emsp;第一篇论文中，作">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/61115008-1850bb00-a4c4-11e9-808f-67c8cabee725.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/61115073-3d452e00-a4c4-11e9-98f1-897c4308583c.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/61115075-3fa78800-a4c4-11e9-958c-677224a60a1d.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/61115245-a0cf5b80-a4c4-11e9-8b4f-97c33b926b41.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/61115109-5352ee80-a4c4-11e9-82bc-361840d0fc3a.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/61115299-be042a00-a4c4-11e9-96ca-b4107ea84c69.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/61115303-c0668400-a4c4-11e9-83e5-bc5a2410dd24.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/61115326-cd837300-a4c4-11e9-80d3-d7f97d4e2ac6.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/61115332-d116fa00-a4c4-11e9-9f5a-ef3d0a74e5c0.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/61115359-e1c77000-a4c4-11e9-981f-60bbcb3b2d3e.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/61115361-e2f89d00-a4c4-11e9-94d6-f0f8313c28db.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/61115365-e4c26080-a4c4-11e9-829a-be6458b41194.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/61115369-e5f38d80-a4c4-11e9-952f-1fbd509108b8.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/61115373-e7bd5100-a4c4-11e9-935d-3cdd6de9314f.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/61115428-058ab600-a4c5-11e9-9e40-9880f426302e.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/61115458-15a29580-a4c5-11e9-9263-15d434c2eb1b.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/61115463-1804ef80-a4c5-11e9-92d1-f67b287fe4e7.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/61115510-34089100-a4c5-11e9-96ec-0a29adf8a6d7.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/61115515-366aeb00-a4c5-11e9-953d-8c7674997b18.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/61115547-4682ca80-a4c5-11e9-9d13-473f17d71b15.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/61115550-484c8e00-a4c5-11e9-8788-660fcd9c16d7.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/61115551-4a165180-a4c5-11e9-9f6e-d023650fb248.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/61115556-4f739c00-a4c5-11e9-9239-31ad18b2e1c4.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/61515423-24dd9200-aa35-11e9-8da2-034e1db19607.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/61515472-450d5100-aa35-11e9-9a64-58e54554cbaa.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/61515491-4fc7e600-aa35-11e9-8e65-571bfb8ec1dc.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/61515495-522a4000-aa35-11e9-8ee3-91331346d924.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/61515496-53f40380-aa35-11e9-969b-2e684fbe3a45.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/61515505-58b8b780-aa35-11e9-8aba-ebe68279e9bb.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/61515506-5c4c3e80-aa35-11e9-92bf-61eb4ef29fc5.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/61515513-5eae9880-aa35-11e9-9f11-d59807bf26b5.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/61515518-60785c00-aa35-11e9-966b-2e901ad12951.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/61515522-62421f80-aa35-11e9-8342-7fe31956ef87.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/61515528-640be300-aa35-11e9-9aba-982d7145ec09.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/61515530-65d5a680-aa35-11e9-9481-66fe1af4f2a7.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/61515535-68380080-aa35-11e9-90dc-b92044cab1d2.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/61515538-69692d80-aa35-11e9-8b66-af65ede6a189.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/61515543-6c641e00-aa35-11e9-951f-d8b0554f3b75.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/61515547-6e2de180-aa35-11e9-84e2-167bfa6db442.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/61515549-6ff7a500-aa35-11e9-87d7-f53eb7a3f658.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/61515552-71c16880-aa35-11e9-8318-2c3ac7655cf7.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/61515559-738b2c00-aa35-11e9-8fbb-43531be1ad4a.PNG">
+<meta property="og:updated_time" content="2019-07-19T10:22:15.115Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="文献汇报四">
+<meta name="twitter:description" content="工作概述&amp;emsp;&amp;emsp;本次学习了两篇来自KDD2018的论文，分别是“Learning Dynamics of Decision Boundaries without Additional Labeled Data”和“A Stock AI Assistant for Reliability Modeling of Stock Comments”。&amp;emsp;&amp;emsp;第一篇论文中，作">
+<meta name="twitter:image" content="https://user-images.githubusercontent.com/23336589/61115008-1850bb00-a4c4-11e9-808f-67c8cabee725.PNG">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="www.platot.site/2019/07/19/文献汇报四/"/>
+
+
+
+
+
+  <title>文献汇报四 | 心远地自偏</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">心远地自偏</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="www.platot.site/2019/07/19/文献汇报四/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="plato">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="心远地自偏">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">文献汇报四</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-19T17:54:39+08:00">
+                2019-07-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="工作概述"><a href="#工作概述" class="headerlink" title="工作概述"></a>工作概述</h2><p>&emsp;&emsp;本次学习了两篇来自KDD2018的论文，分别是“Learning Dynamics of Decision Boundaries without Additional Labeled Data”和“A Stock AI Assistant for Reliability Modeling of Stock Comments”。<br>&emsp;&emsp;第一篇论文中，作者的目的是使用新获得的无标注数据和之前收集的标注数据来预测分类器参数，使分类器能够长时间维持较好的性能。作者使用逻辑斯蒂回归作为分类器，使用高斯过程来建模分类器参数的分布，即对分类器参数做回归。当训练数据的数量很小或者长期预测需要执行时，预测出来的分类器的不确定性就会很高。通过使用贝叶斯框架，该方法能够考虑到这种不确定性，并学习决策边界的动态，这令分类器更加鲁棒。另外，为了利用无标注数据关于决策边界的信息，作者使用熵最小原则将其整合到提出的模型中，即决策边界不应该穿过样本的高密度区域，而应该位于低密度区域。该篇论文的数学推导我没看懂。<br>&emsp;&emsp;第二篇论文提出的方法是用于建模股票评论的可靠性，用的技术都不复杂，比如FM，ARMA，SVM这些。但这篇论文提取特征的思路很值得学习。首先是以一种时间演化的方式分析股票评论，即考虑分析师的历史表现，基于作者对分析师行为的观察，构造出反映分析师可靠程度的指标，分析师可靠程度又与其发布的评论的可靠性挂钩。另一个是考虑到股票趋势对评论可靠性的影响构造特征。该方法先根据评论文本的tf-idf特征，使用FM得到评论的意见极性，即对股票看涨还是看跌。接着使用ASMR建模股票价格的趋势。最后使用SVMs和ARMA的线性组合，基于使用评论文本中的语义信息、股票价格和分析师的历史表现构造时间序列提取的特征，得到评论的可靠值。</p>
+<h2 id="Learning-Dynamics-of-Decision-Boundaries-without-Additional-Labeled-Data"><a href="#Learning-Dynamics-of-Decision-Boundaries-without-Additional-Labeled-Data" class="headerlink" title="Learning Dynamics of Decision Boundaries without Additional Labeled Data"></a>Learning Dynamics of Decision Boundaries without Additional Labeled Data</h2><h3 id="导读"><a href="#导读" class="headerlink" title="导读"></a>导读</h3><p>&emsp;&emsp;在本论文中，作者的目的是使用新获得的无标注数据和之前收集的标注数据来预测分类器参数，使分类器能够长时间维持较好的性能。作者使用逻辑斯蒂回归作为分类器，使用高斯过程来建模分类器参数的分布，即对分类器参数做回归。当训练数据的数量很小或者长期预测需要执行时，预测出来的分类器的不确定性就会很高。通过使用贝叶斯框架，该方法能够考虑到这种不确定性，并学习决策边界的动态，这令分类器更加鲁棒。另外，为了利用无标注数据关于决策边界的信息，作者使用熵最小原则将其整合到提出的模型中，即决策边界不应该穿过样本的高密度区域，而应该位于低密度区域。<br>&emsp;&emsp;<a href="https://www.kdd.org/kdd2018/accepted-papers/view/learning-dynamics-of-decision-boundaries-without-additional-labeled-data" target="_blank" rel="noopener">论文地址。</a></p>
+<h3 id="ABSTRACT"><a href="#ABSTRACT" class="headerlink" title="ABSTRACT"></a>ABSTRACT</h3><p>&emsp;&emsp;我们提出一种不使用额外的标注数据但能维持分能器性能的方法，该方法学习决策边界的动态(dynamics)。在许多应用中，比如欺诈邮件分类，决策边界随着时间改变。对应的，分类器的性能很快就恶化，除非分类器使用额外的标注数据重新训练。然而，连续准备标注数据是相当昂贵，甚至不可能做到。该论文提出的方法使用新获得的无标签数据和之前收集的标注数据缓解了这种恶化。在该方法中，高斯过程用来建模决策边界的动态。为了压榨来自于无标注数据的决策边界的信息，低密度分离标准，即决策边界不应该穿过样本的高密度区域，而应该位于低密度区域，被整合到该论文提出的方法中。我们以一种有原则的方式将此标准纳入到我们的框架中，通过引入在通用正则贝叶斯框架基础上对分类器参数施加熵后验正则化。我们基于变分贝叶斯推断为该模型发展了一种高效推断算法。该论文提出方法的效用通过在两种人工和四种真实世界的数据集上的实验得以证明。</p>
+<h3 id="INTRODUCTION"><a href="#INTRODUCTION" class="headerlink" title="INTRODUCTION"></a>INTRODUCTION</h3><p>&emsp;&emsp;在某些应用中，决策边界随着时间动态变化。比如，在网站分类中，恶意网站连续不断的被创建来诈骗用户。因此，用来将一个网站分类为恶意或者无恶意的决策边界在不同时间就不同。在使用传感器进行活动识别时，决策边界也会随着时间改变，因为用户的活动模式动态变化。在推荐系统中，为用户呈现一件商品或信息是否合适的决策边界也会随着时间改变，因为用户的兴趣动态发生变化。但如果我们不重新训练分类器，当分类器用于决策边界随着时间变化的任务，分类性能很快就恶化了。<br>&emsp;&emsp;许多方法被提出，用于重新训练分类器以维持分类性能，比如在线学习，遗忘算法，时间窗口方法，集成学习和主动学习。这些方法要求额外的标注数据来重训练分类器。然而，连续准备标注数据是很昂贵甚至不可能的，因为标签需要领域内专家手动标注。<br>&emsp;&emsp;为了克服这个问题，给定当前之前收集的标注数据，预测将来的决策边界的方法被提出来。这些方法使用给定的标注数据，学习决策边界的动态。通过使用学得的动态，这些方法可以预测将来的决策边界，其可以对将来获得的样本正确地分类，并且不使用额外的数据。尽管这些方法被设计用来维持分类器的性能，但其在长时间内很难保持预测正确的决策边界，因为真实世界应用中，决策边界会发生出乎意料的改变。<br>&emsp;&emsp;尽管收集标注数据很困难，无标注数据比标注数据更容易收集，因为它们不需要标签。比如，在网站分类中，新创建的网站将被通过爬虫轻易的获得，用于学习。因为无标注数据包含丰富的决策边界的信息，半监督学习方法可以使用无标注数据来改善分类性能。然而，当决策边界随着时间改变时，这些方法会变得不准确。<br>&emsp;&emsp;在该论文中，我们提出一种学习决策边界的动态以维持分类性能的方法，该方法利用新到达的无标注数据和之前收集的标注数据。在该方法下，一种决策边界由分类器的参数定义，并且使用高斯过程建模每一个参数的动态，这是一个非线性无参数的回归模型。通过处理每一个参数的动态，我们的方法可以反映出每一特征的特性。尽管标注数据被直接用于学习分类器参数和每一个参数的动态，如何使用无标注数据并非是不重要的。为了压榨来自于无标注数据的决策边界的信息，低密度分离标准，即决策边界不应该穿过高密度区域，而应该位于低密度区域，被整合到该论文提出的方法中。我们以一种有原则的方式将此标准纳入到我们的框架中，通过引入在通用正则贝叶斯框架基础上对分类器参数施加熵后验正则化。因为无标注数据包含丰富的决策边界的信息，该方法可以改善当标注数据不可用时学习决策边界的动态的能力，因此能在长时间内保持分类器的性能。该方法同样涉及我们发展的一种基于变分贝叶斯推断的推断算法，该算法用于同时优化分类器参数和高斯过程的超参数。当训练数据的数量很小或者长期预测需要执行时，预测的分类器的不确定性就会很高。通过使用贝叶斯框架，该方法能够考虑到这种不确定性，并学习决策边界的动态，这令分类器更加鲁棒。</p>
+<h3 id="PROPOSED-METHOD"><a href="#PROPOSED-METHOD" class="headerlink" title="PROPOSED METHOD"></a>PROPOSED METHOD</h3><p>&emsp;&emsp;我们下面介绍在本论文中使用的符号并定义我们研究的任务。令$\mathcal{D}^L_t:=\{(x_n^t,y_n^t)\}^{N_t}_{n=1}$为在时间 t 收集的标注数据的集合，其中$x_n^t \in \mathbb{R}^D$是在时间 t 的第 n 个样本的 D 维特征向量，$y_n^t \in \{0,1\}$是其类标签，$N_t$是在时间 t 收集的标注数据的数目。尽管本论文提出的方法可以直接用于多类别分类，但我们为了简洁使用二分类。术语$t^L:=(t_1,\cdot \cdot \cdot,t_L)$,其中$t_1 &lt; t_2 &lt; \cdot \cdot \cdot &lt; t_L$,表示收集标注数据的时间。同理，$\mathcal{D}^U_t:=\{x_m^t\}^{M_t}_{m=1}$是在时间 t 收集$M_t$个无标注数据的集合。术语$t^U:=(t_{L+1},\cdot \cdot \cdot,t_{L+U})$,其中$t_L &lt; t_{L+1} &lt; \cdot \cdot \cdot &lt; t_{L+U}$,表示获得无标注数据的时间。注意所有无标注数据的收集都发生在标注数据收集之后，并且每一个样本获得的间隔是不规律的。<br>&emsp;&emsp;我们的目标是找到分类器$h_t : \mathbb{R}^D \to \{0,1\},\forall t &gt; t_L$，可以精确地分类时间 t 的样本，给定标注数据和无标注数据的集合，$\mathcal{D} := \mathcal{D}^L \cup \mathcal{D}^U$，其中$\mathcal{D}^L := \{\mathcal{D}_t^L\}_{t \in t^L}$，$\mathcal{D}^U := \{\mathcal{D}_t^L\}_{t \in t^U}$。本论文提出的方法可以预测任意时间 t 的分类器，即使在时间 t 没有标注或是未标注的训练数据。 <strong>Figure 1</strong>阐释了我们的方法。使用时间 $t_1\  to \  t_L$的标注数据和$t_{L+1}\  to \ t_{L+U}$的无标注数据，每一时间的决策边界，其由分类器$h_t$所定义，和决策边界的动态被学得。<br><img src="https://user-images.githubusercontent.com/23336589/61115008-1850bb00-a4c4-11e9-808f-67c8cabee725.PNG" alt="Figure 1"></p>
+<h4 id="Probabilistic-Model-for-Dynamics-of-Decision-Boundary"><a href="#Probabilistic-Model-for-Dynamics-of-Decision-Boundary" class="headerlink" title="Probabilistic Model for Dynamics of Decision Boundary"></a>Probabilistic Model for Dynamics of Decision Boundary</h4><p>&emsp;&emsp;我们的概率模型假设给定特征向量$x_n^t$，标签$y_n^t$的概率由 <strong>logistic</strong>回归所建模，如下所示，<br><img src="https://user-images.githubusercontent.com/23336589/61115073-3d452e00-a4c4-11e9-98f1-897c4308583c.PNG" alt="logistic regression"><br>&emsp;&emsp;我们的概率模型假设分类器参数的第 d 个成分$w_{td}$是使用一个非线性函数映射输入时间 t生成的，<br><img src="https://user-images.githubusercontent.com/23336589/61115075-3fa78800-a4c4-11e9-958c-677224a60a1d.PNG" alt="mapping t"><br>我们对$f_d$的先验分布使用高斯过程。特别的，给定任意有限的输入时间$t:=(t_1,\cdot \cdot \cdot,t_{L+U})$，对应输出$f_d:=(f_d(t_1),\cdot \cdot \cdot,f_d(t_{L+U}))$的先验概率被表征为 t 上的零均值多元高斯分布，<br><img src="https://user-images.githubusercontent.com/23336589/61115245-a0cf5b80-a4c4-11e9-8b4f-97c33b926b41.PNG" alt="Gaussian distribution"><br>（ps：其中核函数刻画的是变量 t 之间的关系，只要我们对整个空间给定一个对距离相关性的度量标准，那么我们因为这个度量标准可以推测出别处的数据(可能的)分布，这就是核函数）。通常核函数依赖于控制$f_d$的平滑性质的某些超参数。在本论文中，我们使用如下的高斯核和额外的常数项和线性项作为核函数，<br><img src="https://user-images.githubusercontent.com/23336589/61115109-5352ee80-a4c4-11e9-82bc-361840d0fc3a.PNG" alt="kernel function"><br>这个核函数广泛用于高斯过程回归和高效描述具有平滑形状的时间序列。通过整合出来$f_d$，我们获得处于时间 t 的分类器的第 d 个成分的概率，$w_{\cdot d}:=(w_{t_1d},\cdot \cdot \cdot,w_{t_{L+U}d}) \in \mathbb{R}^{L+U}$，如下所示，<br><img src="https://user-images.githubusercontent.com/23336589/61115299-be042a00-a4c4-11e9-96ca-b4107ea84c69.PNG" alt="probability of d-th"><br>&emsp;&emsp;标注数据$\mathcal{D}^L$和分类器在时间 t 的参数的联合分布，$W := (w_{t_1}，\cdot \cdot \cdot,w_{t_{L+U}})$，被写为：<br><img src="https://user-images.githubusercontent.com/23336589/61115303-c0668400-a4c4-11e9-83e5-bc5a2410dd24.PNG" alt="joint distribution"><br>当$\alpha$无限大，$\gamma$和$\zeta$为零时，不同时间点的分类器的参数时独立的（ps：这时对应的协方差函数为零）。这对应于独立地学习每一个时间点的分类器。当$\alpha$和$\zeta$为零，并且$\beta$或者$\gamma$是无限大时，分类器参数几乎随着时间变化是固定的（ps：这是对应的协方差函数无限大，但？）。这对应于学习一个适用于所有时间点的单个分类器，通过使用所有数据并忽略它们的时间戳。我们的概率模型可以表征各种决策边界的动态，通过改变核超参数的值。尽管许多时间序列模型，比如向量自回归模型要求数据按照规律的间隔不中断地收集，由于高斯过程的特性，概率模型并不要求这点。注意尽管我们使用logistic回归作为分类器，但其他的分类器比如神经网络也可用于我们的框架。</p>
+<h4 id="RegBayes-Framework-with-Entropy-Posterior-Regularization"><a href="#RegBayes-Framework-with-Entropy-Posterior-Regularization" class="headerlink" title="RegBayes Framework with Entropy Posterior Regularization"></a>RegBayes Framework with Entropy Posterior Regularization</h4><p>&emsp;&emsp;为了获得后验分布$p(W|\mathcal{D}^L;\theta)$和超参数$\theta$，我们需要计算模型证据（model evidence）$p(\mathcal{D}^L;\theta) = \int p(\mathcal{D}^L;\theta)dW$。然而，不幸的是，这是很困难的。因此，我们求解下确界（ELBO），这是$p(\mathcal{D}^L;\theta)$的下界。具体的，ELBO 定义如下<br><img src="https://user-images.githubusercontent.com/23336589/61115326-cd837300-a4c4-11e9-80d3-d7f97d4e2ac6.PNG" alt="ELBO"><br>我们可以通过最大化关于q 的ELBO来获得$q(W)$，因为最小化$q(W)$和$p(W|\mathcal{D}^L;\theta)$之间的KL散度等价于最大化ELBO。超参数$\theta$可以通过最大化关于$\theta$的ELBO来获得。注意到该ELBO并不依赖于无标注数据$\mathcal{D}^U$。<br>&emsp;&emsp;为了将无标注数据中的有用信息整合到我们模型中，我们使用熵最小原则，其鼓励决策边界位于低密度区域。具体的，我们定义对于$t \in t^U$的分类器参数$w_t$的熵后验正则项如下<br><img src="https://user-images.githubusercontent.com/23336589/61115332-d116fa00-a4c4-11e9-9f5a-ef3d0a74e5c0.PNG" alt="entropy posterior regu"><br>因为公式（10）当样本$x_m^t$位于远离决策边界$w_t$的位置时，取得较小值。熵最小原则广泛用于半监督学习并在多种任务中具有较好的表现。因此，我们选择该正则将无标注数据整合到我们模型中。当然，使用其他正则，比如manifold正则也是可以的。因为在时间$t^U$是没有标注数据的，分类器参数$\{w_t\}_{t \in t^U}$的不确定性会变得很高。为了适当的处理这种不确定性，该论文提出的方法在公式（9）采取关于$W$的熵函数的期望。通过最小化关于$q(w_t)$的公式（9）,分类器参数$w_t$被学得以便穿过无标注数据样本的低密度区域，同时遵循决策边界的动态。<br>&emsp;&emsp;通过使用熵后验正则作为一个后验正则项$R(q):=\sum_{t=t_{L+1}}^{t_{L+U}} {R_t(q)}$，我们考虑如下的 <strong>RegBayes framework</strong>：<br><img src="https://user-images.githubusercontent.com/23336589/61115359-e1c77000-a4c4-11e9-981f-60bbcb3b2d3e.PNG" alt="RegBayes framework"><br>高斯过程先验$p(W;\theta)$具有连接分类器参数$\{w_t\}_{t \in t^L}$的效果，其主要是从标注数据估计得到的，分类器参数$\{w_t\}_{t \in t^U}$主要是从无标注数据估计得到的。注意，当$p = 0$，熵后验正则被模型忽略并且目标函数等价于[Atsutoshi Kumagai and Tomoharu Iwata. 2017. Learning non-linear dynamics of<br>decision boundaries for maintaining classification performance. In AAAI.]，除了高斯过程先验依赖于$\{w_t\}_{t \in t^U}$,同依赖于$\{w_t\}_{t \in t^L}$一样。因此，我们的方法是其的一种自然而然的半监督扩展。</p>
+<h4 id="Inference"><a href="#Inference" class="headerlink" title="Inference"></a>Inference</h4><p>&emsp;&emsp;我们对提出的模型基于变分贝叶斯推断提出一种高效的推断算法(ps:因为后验分布很难求出，因此我们求其近似分布，变分贝叶斯推断正为此服务)。我们假设变分后验分布$q(W)$可以被分解为(can be factorized)：<br><img src="https://user-images.githubusercontent.com/23336589/61115361-e2f89d00-a4c4-11e9-94d6-f0f8313c28db.PNG" alt="variational posterior q"><br>对于$t \in t^U$的情况，我们假设$q(w_{td})$的函数形式是一个高斯分布，$q(w_{td}) = \mathcal{N}(w_{td}|\mu_{td},\sigma_{td}^2)$，其中$\mu_{td}$是均值，$\sigma_{td}^2$是方差。在变分贝叶斯推断中，本论文提出的方法最大化公式（11）中的目标函数，通过迭代地更新每一个变分后验分布$q(w_{td})$和核超参数$\theta$。<br>&emsp;&emsp;首先，我们考虑推导对$\{q(w_t)\}_{t \in t^L}$的更新规则。因为变分后验分布$\{q(w_t)\}_{t \in t^L}$仅仅依赖于公式（11）中的$\mathcal{L}^L(q;\theta)$，我们可以通过计算$\mathcal{L}^L(q;\theta)$关于$\{q(w_t)\}_{t \in t^L}$的导数推导$\{q(w_t)\}_{t \in t^L}$的更新规则。然而，这是不可能的，因为$p(y_n^t|x_n^t,w_t)$的非共轭性(ps:不懂)。为了克服这个问题，我们使用如下的不等式，<br><img src="https://user-images.githubusercontent.com/23336589/61115365-e4c26080-a4c4-11e9-829a-be6458b41194.PNG" alt="inequality"><br>通过令$\mathcal{L}^L(q;\theta)$减去公式（13）的右部，我们获得$\mathcal{L}^L(q;\theta)$新的下界$\mathcal{L}^L(q;\theta,\xi)$，增加$\mathcal{L}^L(q;\theta,\xi)$的值导致$\mathcal{L}^L(q;\theta)$的值也增加。通过计算$\mathcal{L}^L(q;\theta,\xi)$关于$\{q(w_t)\}_{t \in t^L}$和$\xi_n^t$的导数，我们发现$q(w_{td})$对于$t \in t^L$和$d = 1,\cdot \cdot \cdot,D$具有如下的形式，<br><img src="https://user-images.githubusercontent.com/23336589/61115369-e5f38d80-a4c4-11e9-952f-1fbd509108b8.PNG" alt="alt text"><br>对于$\mu_{td},\lambda_{td},\xi_t^n$的更新规则如下，<br><img src="https://user-images.githubusercontent.com/23336589/61115373-e7bd5100-a4c4-11e9-935d-3cdd6de9314f.PNG" alt="update rules 1"><br>&emsp;&emsp;第二，我们考虑更新$\{q(w_t)\}_{t \in t^U}$。因为熵后验正则项$R(q)$是难以处理的，分析获得目标函数$\mathcal{L}(q;\theta,\xi):=\mathcal{L}^L(q;\theta,\xi)-\frac {p} {M}R(q)$关于$\{q(w_t)\}_{t \in t^U}$的导数是不可能的。为了解决这个问题，我们使用重参数技巧，该技术用于得到具有低方差的期望。该技巧将一个连续随机变量$w$表示为一个确定性变量$w = g_{\phi}(\epsilon)$，其中$\epsilon$是一个带有$p(\epsilon)$的辅助变量，$g_{\phi}$是一些由$\phi$参数化的vector-valued 函数。通过这个表达式，关于$w$的期望值就被转换为关于$\epsilon$的期望值。因为$\epsilon$和$\phi$是不相关的，通过从$p(\epsilon)$抽样得到的近似期望值关于$\phi$是可微的。因为我们假设对于$t \in t^U$，$q(w_t)$是高斯分布，重参数技巧可以用于熵后验正则项$R(q)$。具体的，通过使用等式：<br><img src="https://user-images.githubusercontent.com/23336589/61115428-058ab600-a4c5-11e9-9e40-9880f426302e.PNG" alt="alt"><br>我们引入新的变量$v_{td}$使得满足等式$v_{td} = log\sigma_{td}$。通过关于参数$\mu_t$和$v_t:=(v_{t1,\cdot \cdot \cdot,v_{tD}})$最大化公式（16）,我们获得对于$t \in t^U$的更新后的分布$q(w_t)$。为了实现这一点，我们使用拟牛顿法(<strong>quasi-Newton method</strong>)，该方法需要公式（16）的梯度信息。这些关于$\mu_{td}$和$v_{td}$的梯度表示如下：<br><img src="https://user-images.githubusercontent.com/23336589/61115458-15a29580-a4c5-11e9-9263-15d434c2eb1b.PNG" alt="gradients"><br><img src="https://user-images.githubusercontent.com/23336589/61115463-1804ef80-a4c5-11e9-92d1-f67b287fe4e7.PNG" alt="ps"><br>&emsp;&emsp;最后，我们考虑通过最大化关于$\theta$的$\mathcal{L}(q;\theta,\xi)$来更新$\theta$，使用拟牛顿法。在目标函数$\mathcal{L}(q;\theta,\xi)$中依赖于$\theta$的项表示如下，<br><img src="https://user-images.githubusercontent.com/23336589/61115510-34089100-a4c5-11e9-96ec-0a29adf8a6d7.PNG" alt="alt"><br>$\mathcal{L}(\theta)$关于$\theta_d$的梯度，其表示$\alpha_d,\beta_d,\zeta_d$和$\eta$其中一个，表示如下，<br><img src="https://user-images.githubusercontent.com/23336589/61115515-366aeb00-a4c5-11e9-953d-8c7674997b18.PNG" alt="alt"><br><img src="https://user-images.githubusercontent.com/23336589/61115547-4682ca80-a4c5-11e9-9d13-473f17d71b15.PNG" alt="alt"><br><img src="https://user-images.githubusercontent.com/23336589/61115550-484c8e00-a4c5-11e9-8788-660fcd9c16d7.PNG" alt="alt"><br>&emsp;&emsp;ps：这一节我没搞懂，todo…</p>
+<h4 id="Prediction"><a href="#Prediction" class="headerlink" title="Prediction"></a>Prediction</h4><p>&emsp;&emsp;我们解释使用学得的模型获得任意时间的分类器。当我们打算分类在时间$t_<em> \in t^U$的样本，我们可以使用变分后验分布$q(w_</em>)$作为分类器参数的分布。当分类的样本是时间$t_<em> \notin t$,此时没有标注还是无标注训练数据，我们可以获得通常的高斯过程行为的分类器参数相应的分布$q(w_{t_</em>})$。具体的，$w_{t_<em>} = (w_{t_</em>1},\cdot \cdot \cdot,w_{t_<em>D})$被表示为如下：<br><img src="https://user-images.githubusercontent.com/23336589/61115551-4a165180-a4c5-11e9-9f6e-d023650fb248.PNG" alt="alt"><br>为了分类在时间$t_</em>$的样本，我们使用贝叶逻辑斯蒂回归，该方法用于分类时会将$p(w_{t_<em>})$的方差考虑进去。给定样本$x_n^{t_</em>}$，标签$y_n^{t_*}$的后验概率如下，<br><img src="https://user-images.githubusercontent.com/23336589/61115556-4f739c00-a4c5-11e9-9239-31ad18b2e1c4.PNG" alt="lable probability"><br>&emsp;&emsp;ps：这一节我也没搞懂，todo…</p>
+<h3 id="CONCLUSION"><a href="#CONCLUSION" class="headerlink" title="CONCLUSION"></a>CONCLUSION</h3><p>&emsp;&emsp;我们提出一种方法用于学习决策边界的动态以维持分类器的性能，该方法使用新获得的无标注数据和之前收集的标注数据。在该方法中，高斯过程用来建模决策边界的动态。为了将无标注数据整合到我们的概率模型中，本方法在通用的贝叶斯回归框架的基础上引入熵后验正则项。另外，我们提出一种基于变分贝叶斯推断的高效推断算法。经过实验证明，本方法与其他方法相比能更好维持分类器性能。对于将来的工作，我们将应用其他的正则到我们的框架中，比如<strong>manifold regularization</strong>。</p>
+<h2 id="A-Stock-AI-Assistant-for-Reliability-Modeling-of-Stock-Comments"><a href="#A-Stock-AI-Assistant-for-Reliability-Modeling-of-Stock-Comments" class="headerlink" title="A Stock AI Assistant for Reliability Modeling of Stock Comments"></a>A Stock AI Assistant for Reliability Modeling of Stock Comments</h2><h3 id="导读-1"><a href="#导读-1" class="headerlink" title="导读"></a>导读</h3><p>&emsp;&emsp;这篇论文提出的方法是用于建模股票评论的可靠性，用的技术都不复杂，比如FM，ARMA，SVM这些。但这篇论文提取特征的思路很值得学习。首先是以一种时间演化的方式分析股票评论，即考虑分析师的历史表现，基于作者对分析师行为的观察，构造出反映分析师可靠程度的指标，分析师可靠程度又与其发布的评论的可靠性挂钩。另一个是考虑到股票趋势对评论可靠性的影响构造特征。<br>&emsp;&emsp;方法大概框架可见<strong>Figure 2</strong>，大概步骤可见结论部分。<a href="https://www.kdd.org/kdd2018/accepted-papers/view/stockassistant-a-stock-ai-assistant-for-reliability-modeling-of-stock-comme" target="_blank" rel="noopener">论文地址</a>。</p>
+<h3 id="ABSTRACT-1"><a href="#ABSTRACT-1" class="headerlink" title="ABSTRACT"></a>ABSTRACT</h3><p>&emsp;&emsp;来自分析师的股票评论对于投资者预见股票波动和市场趋势来说包含重要顾问信息。对股票评论的现存研究往往集中在捕获粗粒度的意见极性或是理解市场基本面上。然而，由于大量的带有巨大噪音和模糊意见的评论，投资者往往不知所措和困惑。因此，需要一种细粒度的股票评论分析工具来识别更可靠的股票评论。为此，这篇论文提供了一种解决方案，称为<strong>StockAssIstant</strong>，该解决方案考虑多种因素，比如股票价格趋势，评论文本和分析师的表现，以一种整体的方式来建模股票评论的可靠性。具体的，我们第一次根据历史评论分析了分析师的意见动态的模式。然后，我们使用评论文本中的语义信息、股票价格和分析师的历史表现构造时间序列，从中提取关键的特征。基于这些特征，我们提出一种基于集成学习的方法用于测量评论的可靠性。最后，我们进行了扩展实验并且提供了在真实世界股票数据的交易仿真。实验结果和在12个月周期的交易仿真中的收益清晰地证明了我们方法用于建模股票评论可靠性的效用。</p>
+<h3 id="INTRODUCTION-1"><a href="#INTRODUCTION-1" class="headerlink" title="INTRODUCTION"></a>INTRODUCTION</h3><p>&emsp;&emsp;股票论坛上，越来越多的股票评论正变的可用。股票评论是指分析师对某一个股票的分析和走势的预测。股票评论对于投资者理解市场趋势和股票波动已经是丰富的信息资源了。比如，研究者努力研究探索股票评论发布者活动和股票交易活动的关系。这些研究通常集中于捕获粗粒度意见极性或是理解评论对市场走向的主要影响。一些其他工作使用分类模型比如<strong>SVMs</strong>通过压榨股票评论的情感特征来明确预测股票趋势。<br>&emsp;&emsp;然而，可靠地预测股票趋势是一项挑战，正如<strong>Figure 4</strong>所阐述的那样，这归结于股票价格受许多不确定的经济-政策因素影响的事实。因此，由于股票评论天然的噪声和偏见，股票评论的可靠性受到投资者们的热切关注。因此，需要一种细粒度的股票评论分析工具来识别更可靠的股票评论，其可以帮助投资者更好地理解市场状态，并指引投资者建立可盈利的投资策略。然而，决定一个评论是否可靠是很困难的，尤其是在真实市场中，在其中投资者会被冲突的或是模棱两可的意见搞的不知所措。<br>&emsp;&emsp;如<strong>Figure 1</strong>所示，为了测量股票评论的可靠性，应该考虑一些因素，比如历史股票价格，现在的市场状态和评论文本中隐藏的意见极性。还有，分析师的历史表现，比如他们的预测准确度和动态意见转移行为，也是很关键的因素。实际上，分析师的意见也随着动态的市场状态在演化。他们坚持同样的意见或是转移到对立的方向。比如，如果之前的判断和现在的市场状态不一致，一些分析师更可能改变他们关于对市场趋势的意见。因此，股票评论的可靠性应该以一种随时间演化的方式来建模。然而，之前的研究很少在捕获分析师的意见转移模式上做出努力。因此，如何建模意见动态和整合以上所有因素到一个统一的框架依然是一项挑战。<br><img src="https://user-images.githubusercontent.com/23336589/61515423-24dd9200-aa35-11e9-8da2-034e1db19607.PNG" alt="Figure 1"><br>&emsp;&emsp;为此，我们第一次以一种随时间演化的方式分析了历史股票评论，并且揭示了一些关于分析师意见和意见转移模式的一致性特质的现象。然后，我们提供了一种建模每个股票评论可靠性的系统方案。<strong>Figure 2</strong>展示了这种方案的框架。具体的，我们先用因子分解机(factorization machines)来检测股票评论的意见极性。接着，我们使用评论文本中的语义信息、股票价格和分析师的历史表现构造时间序列，从中提取关键的特征。最后，我们提出一种基于集成学习的方案，可以利用分类模型和时间序列分析模型的优势，比如，支持向量机和自回归滑动平均模型，来测量每一个股票评论的可靠性。使用确定了的可靠评论，我们可以建立可盈利的交易策略。为了验证我们方案的效用，我们在真实世界数据上进行了广泛的实验并且提供了股票交易模拟。实验结果和模拟交易达到的盈利水平显示我们的方案在建模股票评论的可靠性上是高效的并且可以应用在各种金融相关的业务上，比如经济趋势预测，盈利管理和自动交易。<br><img src="https://user-images.githubusercontent.com/23336589/61515472-450d5100-aa35-11e9-9a64-58e54554cbaa.PNG" alt="Figure 2"><br>&emsp;&emsp;据我们所知，这是第一次尝试提供对股票评论可靠性的细粒度的分析。这篇论文的主要贡献如下所示：</p>
+<ol>
+<li>分析师意见和意见转移模式的一致性特质的发现。</li>
+<li>自股票评论文本、股票价格和分析师行为的多因素特征选择</li>
+<li>基于集成学习的建模股票评论可靠性的框架</li>
+<li>基于股票可靠性建模的高效股票交易策略的制定</li>
+</ol>
+<h3 id="DATA-DESCRIPTION"><a href="#DATA-DESCRIPTION" class="headerlink" title="DATA DESCRIPTION"></a>DATA DESCRIPTION</h3><p>&emsp;&emsp;<strong>股票评论数据</strong>。<strong>Figure 3</strong>显示了来自于<a href="http://finance.yahoo.com/" target="_blank" rel="noopener">Yahoo！Finance message board</a>的一个样本。它表明一位叫做allan的在线分析师八天前表示看好IBM股票的看涨意见，并且给出了他的理由：有一个支持。因此，一个股票评论通常包含五个元素：分析师，股票代码，意见极性，评论文本和发布时间戳。<br><img src="https://user-images.githubusercontent.com/23336589/61515491-4fc7e600-aa35-11e9-8e65-571bfb8ec1dc.PNG" alt="Figure 3"><br>&emsp;&emsp;这里我们正式的将股票评论数据集表示为$C = \{c_1,c_2,\cdot \cdot<br>cdot,c_{|C|} \}$，股票代码的集合为$S = \{s_1,s_2,\cdot \cdot \cdot,s_{|S|}\}$，分析师的集合为$A = \{a_1,a_2,\cdot \cdot \cdot,a_{|A|}\}$。请注意$|\cdot|$代表集合的大小。基于这些，我们给出每一个评论的定义。<br><img src="https://user-images.githubusercontent.com/23336589/61515495-522a4000-aa35-11e9-8ee3-91331346d924.PNG" alt="definition 2.l.1"><br><img src="https://user-images.githubusercontent.com/23336589/61515496-53f40380-aa35-11e9-969b-2e684fbe3a45.PNG" alt="definition 2.1.2"><br>&emsp;&emsp;这里$o^{(c_i)}$和$r^{(c_i)}$是两个我们需要去预测的未知变量。另外，$o^{(c_i)}$是布尔变量，不是看涨(1)就是看跌(-1)；$r^{(c_i)}$也是布尔变量，不是可靠(1)就是不可靠(-1)。当目标股票价格在下一个交易日增加时并且意见极性是看涨，则$r^{(c_i)}$被设置为1，否则会-1；当股票价格下跌并且意见极性是看跌时，$r^{(c_i)}$被设置为1，否则为-1。<br>&emsp;&emsp;注意到我们选择下一日的股票趋势来评估一个评论是否可靠，因为无论是对于人类（分析师）还是算法，短期预测(一日)的表现通常比长期预测（一周或是一月）的好。实际上，多数评论并没有明确的指示其预测窗口的宽度，比如一日\一周\一月。另外，一条评论甚至在不同窗口做出了多条预测。  因此，要定量地确认一条评论的粒度，即如果它与短期或长期预测有关，相当困难（即使是人类）。所以，作为第一次建模股票评论的可靠性的尝试，我们现在不考虑粒度，简单地将其当作短期预测来对待。然而，未来的工作会集中在识别评论的粒度并使用它来实现准确的预测。<br>&emsp;&emsp;基于<strong>comment unit</strong>的定义，我们给出另外一个定义：<strong>comment sequence</strong>。<strong>Figure 1</strong>展示了一个例子。<br><img src="https://user-images.githubusercontent.com/23336589/61515505-58b8b780-aa35-11e9-8aba-ebe68279e9bb.PNG" alt="definition 2.2"></p>
+<p>&emsp;&emsp;我们从<strong>Sina Financial Planner</strong>收集了由1154名分析师发布的187782条股票评论，其中被分析的股票有2969个。时间跨度为2014年8月到2016年10月。我们将原始评论转换为评论序列，并且移除长度小于5的评论序列以避免数据稀疏问题。持中立观点的评论也被移除，因为它们对投资者做出交易决策并没有用。<br>&emsp;&emsp;<strong>股票相关数据</strong>。股票价格数据是调整过的收盘价格。股票行业数据包含十个行业的公司股票数据，如$Table 1$所示。<br><img src="https://user-images.githubusercontent.com/23336589/61515506-5c4c3e80-aa35-11e9-92bf-61eb4ef29fc5.PNG" alt="Table 1"></p>
+<h3 id="OBSERVATION-OF-ANALYST-BEHAVIORS"><a href="#OBSERVATION-OF-ANALYST-BEHAVIORS" class="headerlink" title="OBSERVATION OF ANALYST BEHAVIORS"></a>OBSERVATION OF ANALYST BEHAVIORS</h3><p>&emsp;&emsp;在这一部分，我们以随时间演化的视角分析评论序列，并且观察到一些关于分析师意见和意见转移模式一致性特质的有趣现象。<br>&emsp;&emsp;在开始探索前，我们列出了三个问题，有助于解释分析师表达的意见和分析师发布的股票评论可靠性之间的关系：</p>
+<ol>
+<li>在一条评论中，分析师倾向于表达哪一种意见极性；并且这些极性在多大程度上是可靠的？</li>
+<li>对于一个股票，分析师倾向于保持一致意见还是频繁转移他们的意见？</li>
+<li>在何种条件下，分析师倾向于保持\转移他们的意见；保持\转移意见是否是一项好的策略？</li>
+</ol>
+<h4 id="Distribution-of-Opinion-and-Reliability"><a href="#Distribution-of-Opinion-and-Reliability" class="headerlink" title="Distribution of Opinion and Reliability"></a>Distribution of Opinion and Reliability</h4><p>&emsp;&emsp;对于第一个问题，<strong>Figure 4(a)</strong>描画了分析师评论的意见和可靠性分布。我们可以看见接近65%的评论看涨，这意味着分析师倾向于表达看涨意见。这种现象可以被解释为分析师倾向于鼓励交易者购买股票。<br>&emsp;&emsp;另一方面，只有一半的评论是可靠的，不管其表达的是何种意见极性。这显示了可靠的预测股票趋势不是一件容易的任务。尤其是<strong>Figure 4(b)</strong>显示了只有很小的一部分分析师的可靠比率大于0.8。作为对照，大多数分析师的预测准确率在0.5左右。这里可靠率指的是可靠评论的比率。<br><img src="https://user-images.githubusercontent.com/23336589/61515513-5eae9880-aa35-11e9-9f11-d59807bf26b5.PNG" alt="figure 4"></p>
+<h4 id="Characteristics-of-Opinion-Coherence"><a href="#Characteristics-of-Opinion-Coherence" class="headerlink" title="Characteristics of Opinion Coherence"></a>Characteristics of Opinion Coherence</h4><p>&emsp;&emsp;对第二个问题，<strong>Figure 5(a)</strong>给出了答案，其中基于他们的可靠性，分析师被划分为四个组：最可靠，可靠，不可靠，最不可靠。它显示大多数分析师的平均转移率(OSRations)低于0.3。这里<strong>OSRatios</strong>指的是由一名分析师发布的评论的比率，这些评论表达的意见极性和该评论序列中前一个评论的意见极性不同。因此，当讨论一个股票时，分析师倾向于保持一致的意见，而不是频繁地转移意见。另外，我们观察到具有更高可靠率的分析师具有更低的<strong>OSRatios</strong>，这意味着平均OSRatio可以被考虑当作决定一名分析师是否可靠的指示器或者特征。</p>
+<h4 id="Patterns-of-Opinion-Shift"><a href="#Patterns-of-Opinion-Shift" class="headerlink" title="Patterns of Opinion Shift"></a>Patterns of Opinion Shift</h4><p>&emsp;&emsp;对最后一个问题，我们分析了分析师意见和他们的可靠率的关系。<br>&emsp;&emsp;何时转移？我们探索了在何种条件下一名分析师的转移行为会发生：在一次成功的预测或是一次失败的预测之后。换句话说，当上一个评论单元$C_{i-1}$分别是可靠的或是不可靠的，我们测量现在的评论单元$c_{i}$是否表达的意见极性和$C_{i-1}$的相反。<strong>Figure 5(b)</strong>展示了观察结果，其中 TSRatio（the ratio of True-then-Shift）和 FSRatio（the ratio of False-then-Shift分别表示当上一个预测是正确的或是不正确的情况下意见转移行为发生的比率。通常，分析师的 FSRatios 大于他们的 TSRatios。这意味着当他们之前做出了错误的决策时他们更可能改变他们对市场趋势的意见，尤其是那些可靠率小于0.3的分析师。然而，可靠率大于0.8的分析师是例外：他们的TSRatios略超过FSRatios。这一现象可能用这一点来解释，这些分析师不是根据之前的预测来改变他们的观点的，而是根据他们自己对市场趋势的判断来的。因此， TSRatio 和 FSRatio 可以被当作两个指标来区分可靠的分析师和不可靠的分析师。</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/61515518-60785c00-aa35-11e9-966b-2e901ad12951.PNG" alt="Figure 5"></p>
+<p>&emsp;&emsp;转移是否是一个好的策略？我们探索是否一次意见转移行为会导致更好的预测。在<strong>Figure 6</strong>中，展示了两种情况：上一次预测是正确的或是不正确的。</p>
+<p>&emsp;&emsp;最开始，当上一次预测是正确的，<strong>Figure 6(a)</strong>展示TCTRatio总是比TSTRatio大，其中TCTRatio（the reliability ratio of Ture-then-Constant）和TSTRatio（the reliability ratio of Ture-then-Shift）分别代表当上一次预测是正确是保持或是转移意见的可靠率。可以看出，意见转移行为更可能会导致一次错误的预测。因此，对于分析师来说一个好的策略就是保持同样的观点。</p>
+<p>&emsp;&emsp;第二，当上一次预测不正确时，<strong>Figure 6(b)</strong>显示不同可靠率的分析师具有不同的模式。对于最可靠的分析师，他们的FCTRatios（The reliability ratio of False-then-Constant）远超过FSTRatios（The reliability ratio of False-then-Shift）。另外，对于可靠率在0.5-0.8的分析师，他们的FCTRatios略大于FSTRatios。但是对那些可靠率小于0.5的不可靠分析师，他们的FCTRatios小于FSTRatios。因此，FCTRatios和FSTRatios可以被当作区分分析师可不可靠的指标。</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/61515522-62421f80-aa35-11e9-8342-7fe31956ef87.PNG" alt="Figure 6"></p>
+<p>&emsp;&emsp;上述提到的观察证实了分析师的意见动态和他们的可靠率之间有明显的关系。因此，对于准确的建模分析师的意见动态，OSRatio，TSRatio，FSRatio，FCTRatio和FSTRatio可以作为预测股票评论可靠性的关键特征。</p>
+<h3 id="METHOD"><a href="#METHOD" class="headerlink" title="METHOD"></a>METHOD</h3><p>&emsp;&emsp;基于上述的观察，这一部分介绍我们用于建模股票评论可靠性的方法的关键成分。<strong>Figure 2</strong>展示了该方法的大致框架。具体的，我们先使用FM模型来将历史评论单元的意见极性分类为看涨或是看跌。然后，我们根据提取的评论意见和历史股票价格的时间序列构建评论序列。此外，我们使用TSA模型（Time-Series Analysis），ARMA，来预测股票价格的未来趋势。接着，我们使用一种集成学习方法，该方法将SVM和ARMA整合到一块来预测每一条新到达的评论的可靠性，基于从评论序列和价格趋势提取的特征。最后，我们基于可靠值对股票评论排序，用于盈利建议。</p>
+<h4 id="Classification-of-Comment-Opinions"><a href="#Classification-of-Comment-Opinions" class="headerlink" title="Classification of Comment Opinions"></a>Classification of Comment Opinions</h4><p>&emsp;&emsp;方法的第一步是评论意见的分类。目的是通过分析评论文本$d^{(c_t)}$决定一个评论单元$c_i$的意见极性$o^{(c_i)}$。每一个评论单元$c_i$的意见极性$o^{(c_i)}$都会被用作决定一条评论可不可靠的关键特征。</p>
+<p>&emsp;&emsp;假设数据集$\{(x_i,y_i)|i=1,\cdot \cdot \cdot,N\}$总计有N个评论单元，其中$x_i \in \mathbb{R}^Q$代表从第i个评论单元提取的<strong>tf-idf</strong>文本特征；$Q$代表词汇表的大小，$y_i \in \{-1,1\}$是分类标签。该分类模型的预测函数可以记作：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/61515528-640be300-aa35-11e9-9aba-982d7145ec09.PNG" alt="prediction function"></p>
+<p>&emsp;&emsp;和其他通用的文本分类模型相比，比如SVMS，我们选择度为2的FM来实现分类函数$g(\cdot)$。理由是FM不仅可以缓解文本特征高维带来的影响，也可以捕捉通过建模低秩分解下高维特征间的成对交互的基本语言学的一些方面。</p>
+<p>&emsp;&emsp;基于提取的特征，FM模型定义如下：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/61515530-65d5a680-aa35-11e9-9481-66fe1af4f2a7.PNG" alt="FM"></p>
+<p>&emsp;&emsp;公式（2）的左边包含一个偏置项和每一个特征$x_i$和目标的一元交互，同逻辑斯蒂回归相似。然而，在公式的右边，是所有特征$x_i$和$x_j$的成对交互的和（这里的特征$x_i$应该是值一个维度上的特征）。不使用独立的参数$w_{x,j}$，FM使用因子参数$<v_i,v_j>$来建模特征之间的成对交互。因此，FM可以估计这种交互，即使是带有巨大稀疏性的问题。</v_i,v_j></p>
+<p>&emsp;&emsp;回到意见分类任务，对特征成对间交互的建模和因子分解参数是FM优于其他分类模型的主要地方。</p>
+<p>&emsp;&emsp;我们使用随机梯度下降方法和<strong>adaptive regularization</strong>来学习FM模型的参数。超参数k使用交叉验证得到。最后，分类模型被表示如下：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/61515535-68380080-aa35-11e9-90dc-b92044cab1d2.PNG" alt="classificaton model"></p>
+<p>&emsp;&emsp;在每一个$c_i$的意见极性$o^{(c_i)}$通过$o^{(c_i)}=g(d^{(c_i)})$决定后，我们计算评论的可靠性标签$r^{(c_i)}$以供评论序列构造。</p>
+<p>首先，$t^{(c_i)}$用来对齐股票价格和股票评论数据。然后，计算$r^{(c_i)}$：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/61515538-69692d80-aa35-11e9-8b66-af65ede6a189.PNG" alt="reliability"></p>
+<p>其中$sp(t)$记作day t 的股票价格，最终，评论序列构造完成。</p>
+<h4 id="Prediction-of-Stock-Time-Series"><a href="#Prediction-of-Stock-Time-Series" class="headerlink" title="Prediction of Stock Time-Series"></a>Prediction of Stock Time-Series</h4><p>&emsp;&emsp;除了意见极性之外，股票价格的未来趋势也是决定一条评论单元是否可靠的关键因素。此外，股票价格作为一种时序数据，可以使用TSA模型在某种程度上预测它。因此，方法的第二步是股票价格的时间序列预测。</p>
+<p>&emsp;&emsp;首先，我们使用股票价格来构造时间序列。特别的，对每一股票，每天的股票价格被用来构造一个时间序列，其中一个节点代表的是一天的收盘价格。接着，我们使用自回归滑动平均——一种有名的TSA模型，来执行预测。给定时间序列数据$X_t$，ARMA模型如下：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/61515543-6c641e00-aa35-11e9-951f-d8b0554f3b75.PNG" alt="ARMA"></p>
+<p>&emsp;&emsp;上述的参数可以通过最大似然估计计算得到。另外，p 和 q 由贝叶斯信息准则（BIC）得到。在历史的价格序列上训练ARMA模型后，对于每一个具有时间戳$t^{(c_t)}$的评论单元$c_i$，该模型基于历史的序列$sp(t_1),sp(t_2),\cdot \cdot \cdot,sp(t^{c_t})$预测下一个交易日$\hat{sp}(t^{(c_t)}+1)$。最终，$\hat{sp}(c_i)=\hat{sp}(t^{c_t}+1)$，并且它的标准误差$err(c_i) = err(t^{(c_t)}+1)$，也就是公式（5）中$\epsilon$的方差，被作为<strong>Table 2</strong>中的股票趋势的特征。</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/61515547-6e2de180-aa35-11e9-84e2-167bfa6db442.PNG" alt="table 2"></p>
+<h4 id="Ranking-of-Comment-Reliability"><a href="#Ranking-of-Comment-Reliability" class="headerlink" title="Ranking of Comment Reliability"></a>Ranking of Comment Reliability</h4><p>&emsp;&emsp;方法的第三步是股票评论的可靠性排名。首先，我们将一个评论单元$c_i$分类为可靠（$r^{(c_t)}=1$）或是不可靠（$r^{(c_t)}=-1$）。当我们获得评论的意见极性和股票价格的趋势之后，基于前面的观察，我们提取相应的多因素特征并将其分类到<strong>Table 2</strong>所示的四类。</p>
+<p>&emsp;&emsp;基于提取的特征，我们使用一种集成学习方法用于可靠性分类。具体的，我们联合 SVMs 和 ARMA ，组成一个权重投票分类框架。</p>
+<p>&emsp;&emsp;注意到这里我们选择 SVMs，而不是前面所述的 FM，因为我们其他的实验显示这两种模型在可靠性分类中具有相当的性能。这可以解释为当特征是高维稀疏时，FM模型的优越性更突出。</p>
+<p>&emsp;&emsp;具体的，就SVM部分而言，使用径向基函数（RBf）核，$k(x_1,x_2)=&lt;\phi(c_1),\phi(x_2)&gt;=e^{-\gamma|x_1-x_2|^2}$。</p>
+<p>注意到$\phi(\cdot)$将原始特征映射到一个更高维的核空间，其中最优决策超平面$\hat{h_1}(c_i)=&lt;\omega,\phi(c_i)&gt;+b$可以被计算。</p>
+<p>&emsp;&emsp;为了计算最优的$\omega$和$b$，我们优化：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/61515549-6ff7a500-aa35-11e9-87d7-f53eb7a3f658.PNG" alt="svm"></p>
+<p>其中$C$折衷训练样本的误分类和决策超平面的简单性。</p>
+<p>&emsp;&emsp;对于 ARMA 部分，我们使用上一小节的预测结果来计算分类函数：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/61515552-71c16880-aa35-11e9-8318-2c3ac7655cf7.PNG" alt="ARMA prediction"></p>
+<p>&emsp;&emsp;因此，最终的分类模型如下：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/61515559-738b2c00-aa35-11e9-8fbb-43531be1ad4a.PNG" alt="final classification"></p>
+<p>不说该模型的简洁性，我们发现这样的线性组合在实践中总是可以获得很好的结果。我们在实验部分测试了不同$u$对结果的影响。另外，我们还尝试了使用其他的非线性组合，包括logarithm，quadratic或是在$\hat{h_1}(c_i)$和$\hat{h_2}(c_i)$上被组合到一起之前的正则操作。这些方案没有一种可以大幅改进其性能。</p>
+<p>&emsp;&emsp;最终，带有预测可靠性标签的评论单元按照它们的分类概率：$rv(c_i)=|\hat{h}(c_i)|$排名，我们称其为可靠值或是置信度。注意$\hat{h}(\cdot)$是公式（9）中的分类函数。</p>
+<h3 id="CONCLUSION-1"><a href="#CONCLUSION-1" class="headerlink" title="CONCLUSION"></a>CONCLUSION</h3><p>&emsp;&emsp;我们开发了一种建模股票评论可靠性的方法。沿着这条线，我们第一次以一种时间演化的方式分析了股票评论，并且揭示了关于分析师意见和其意见转移模式一致性特质的重要发现。接着，我们从股票价格，评论文本和分析师行为提出多因素特征。这些特征对于建模股票评论可靠性来说很关键。然后，我们设计了一种混合模型来组合SVM和ARMA的优点。最后，我们通过在真实世界的数据上的实验证实了我们模型识别可靠和不可靠模型的效用。特别的，我们在我们的交易仿真中展示了识别出来的评论可以用来构建交易策略和产生有形的收益。</p>
+<p>&emsp;&emsp;进一步的工作可以侧重于方法的扩展，如使用递归神经网络（RNN）来利用连续评论的时间依赖性。另外，如何基于股票评论预测每周的和每月的股票趋势依然是一项挑战，因为现在我们只考虑每日的预测并且假设评论中的意见是短期的。同样，如何拓展该方法用于建模基于分析师的评论建模分析师的画像，如测量分析师的相似性用于聚类，也是一项有趣的挑战。最后，我们的方法可以用于多种应用中，比如智能推荐，金融事件检测，观点挖掘，商业机会发现和用户画像。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/文献汇报/" rel="tag"># 文献汇报</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/19/A Stock AI Assistant for Reliability Modeling of Stock Comments/" rel="next" title="A Stock AI Assistant for Reliability Modeling of Stock Comments">
+                <i class="fa fa-chevron-left"></i> A Stock AI Assistant for Reliability Modeling of Stock Comments
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">plato</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#工作概述"><span class="nav-number">1.</span> <span class="nav-text">工作概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Learning-Dynamics-of-Decision-Boundaries-without-Additional-Labeled-Data"><span class="nav-number">2.</span> <span class="nav-text">Learning Dynamics of Decision Boundaries without Additional Labeled Data</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#导读"><span class="nav-number">2.1.</span> <span class="nav-text">导读</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ABSTRACT"><span class="nav-number">2.2.</span> <span class="nav-text">ABSTRACT</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#INTRODUCTION"><span class="nav-number">2.3.</span> <span class="nav-text">INTRODUCTION</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PROPOSED-METHOD"><span class="nav-number">2.4.</span> <span class="nav-text">PROPOSED METHOD</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Probabilistic-Model-for-Dynamics-of-Decision-Boundary"><span class="nav-number">2.4.1.</span> <span class="nav-text">Probabilistic Model for Dynamics of Decision Boundary</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#RegBayes-Framework-with-Entropy-Posterior-Regularization"><span class="nav-number">2.4.2.</span> <span class="nav-text">RegBayes Framework with Entropy Posterior Regularization</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Inference"><span class="nav-number">2.4.3.</span> <span class="nav-text">Inference</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Prediction"><span class="nav-number">2.4.4.</span> <span class="nav-text">Prediction</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CONCLUSION"><span class="nav-number">2.5.</span> <span class="nav-text">CONCLUSION</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#A-Stock-AI-Assistant-for-Reliability-Modeling-of-Stock-Comments"><span class="nav-number">3.</span> <span class="nav-text">A Stock AI Assistant for Reliability Modeling of Stock Comments</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#导读-1"><span class="nav-number">3.1.</span> <span class="nav-text">导读</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ABSTRACT-1"><span class="nav-number">3.2.</span> <span class="nav-text">ABSTRACT</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#INTRODUCTION-1"><span class="nav-number">3.3.</span> <span class="nav-text">INTRODUCTION</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DATA-DESCRIPTION"><span class="nav-number">3.4.</span> <span class="nav-text">DATA DESCRIPTION</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#OBSERVATION-OF-ANALYST-BEHAVIORS"><span class="nav-number">3.5.</span> <span class="nav-text">OBSERVATION OF ANALYST BEHAVIORS</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Distribution-of-Opinion-and-Reliability"><span class="nav-number">3.5.1.</span> <span class="nav-text">Distribution of Opinion and Reliability</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Characteristics-of-Opinion-Coherence"><span class="nav-number">3.5.2.</span> <span class="nav-text">Characteristics of Opinion Coherence</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Patterns-of-Opinion-Shift"><span class="nav-number">3.5.3.</span> <span class="nav-text">Patterns of Opinion Shift</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#METHOD"><span class="nav-number">3.6.</span> <span class="nav-text">METHOD</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Classification-of-Comment-Opinions"><span class="nav-number">3.6.1.</span> <span class="nav-text">Classification of Comment Opinions</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Prediction-of-Stock-Time-Series"><span class="nav-number">3.6.2.</span> <span class="nav-text">Prediction of Stock Time-Series</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Ranking-of-Comment-Reliability"><span class="nav-number">3.6.3.</span> <span class="nav-text">Ranking of Comment Reliability</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CONCLUSION-1"><span class="nav-number">3.7.</span> <span class="nav-text">CONCLUSION</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">plato</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>

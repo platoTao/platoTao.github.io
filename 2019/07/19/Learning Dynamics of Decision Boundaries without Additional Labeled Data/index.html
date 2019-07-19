@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="半监督学习,迁移学习,概念漂移," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="导读&amp;emsp;&amp;emsp;在本论文中，作者的目的是使用新获得的无标注数据和之前收集的标注数据来预测分类器参数，使分类器能够长时间维持较好的性能。作者使用逻辑斯蒂回归作为分类器，使用高斯过程来建模分类器参数的分布，即对分类器参数做回归。当训练数据的数量很小或者长期预测需要执行时，预测出来的分类器的不确定性就会很高。通过使用贝叶斯框架，该方法能够考虑到这种不确定性，并学习决策边界的动态，这令分类器更">
+<meta name="keywords" content="半监督学习,迁移学习,概念漂移">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Learning Dynamics of Decision Boundaries without Additional Labeled Data">
+<meta property="og:url" content="www.platot.site/2019/07/19/Learning Dynamics of Decision Boundaries without Additional Labeled Data/index.html">
+<meta property="og:site_name" content="心远地自偏">
+<meta property="og:description" content="导读&amp;emsp;&amp;emsp;在本论文中，作者的目的是使用新获得的无标注数据和之前收集的标注数据来预测分类器参数，使分类器能够长时间维持较好的性能。作者使用逻辑斯蒂回归作为分类器，使用高斯过程来建模分类器参数的分布，即对分类器参数做回归。当训练数据的数量很小或者长期预测需要执行时，预测出来的分类器的不确定性就会很高。通过使用贝叶斯框架，该方法能够考虑到这种不确定性，并学习决策边界的动态，这令分类器更">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/61115008-1850bb00-a4c4-11e9-808f-67c8cabee725.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/61115073-3d452e00-a4c4-11e9-98f1-897c4308583c.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/61115075-3fa78800-a4c4-11e9-958c-677224a60a1d.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/61115245-a0cf5b80-a4c4-11e9-8b4f-97c33b926b41.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/61115109-5352ee80-a4c4-11e9-82bc-361840d0fc3a.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/61115299-be042a00-a4c4-11e9-96ca-b4107ea84c69.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/61115303-c0668400-a4c4-11e9-83e5-bc5a2410dd24.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/61115326-cd837300-a4c4-11e9-80d3-d7f97d4e2ac6.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/61115332-d116fa00-a4c4-11e9-9f5a-ef3d0a74e5c0.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/61115359-e1c77000-a4c4-11e9-981f-60bbcb3b2d3e.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/61115361-e2f89d00-a4c4-11e9-94d6-f0f8313c28db.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/61115365-e4c26080-a4c4-11e9-829a-be6458b41194.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/61115369-e5f38d80-a4c4-11e9-952f-1fbd509108b8.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/61115373-e7bd5100-a4c4-11e9-935d-3cdd6de9314f.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/61115428-058ab600-a4c5-11e9-9e40-9880f426302e.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/61115458-15a29580-a4c5-11e9-9263-15d434c2eb1b.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/61115463-1804ef80-a4c5-11e9-92d1-f67b287fe4e7.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/61115510-34089100-a4c5-11e9-96ec-0a29adf8a6d7.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/61115515-366aeb00-a4c5-11e9-953d-8c7674997b18.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/61115547-4682ca80-a4c5-11e9-9d13-473f17d71b15.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/61115550-484c8e00-a4c5-11e9-8788-660fcd9c16d7.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/61115551-4a165180-a4c5-11e9-9f6e-d023650fb248.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/61115556-4f739c00-a4c5-11e9-9239-31ad18b2e1c4.PNG">
+<meta property="og:updated_time" content="2019-07-19T09:58:51.126Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Learning Dynamics of Decision Boundaries without Additional Labeled Data">
+<meta name="twitter:description" content="导读&amp;emsp;&amp;emsp;在本论文中，作者的目的是使用新获得的无标注数据和之前收集的标注数据来预测分类器参数，使分类器能够长时间维持较好的性能。作者使用逻辑斯蒂回归作为分类器，使用高斯过程来建模分类器参数的分布，即对分类器参数做回归。当训练数据的数量很小或者长期预测需要执行时，预测出来的分类器的不确定性就会很高。通过使用贝叶斯框架，该方法能够考虑到这种不确定性，并学习决策边界的动态，这令分类器更">
+<meta name="twitter:image" content="https://user-images.githubusercontent.com/23336589/61115008-1850bb00-a4c4-11e9-808f-67c8cabee725.PNG">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="www.platot.site/2019/07/19/Learning Dynamics of Decision Boundaries without Additional Labeled Data/"/>
+
+
+
+
+
+  <title>Learning Dynamics of Decision Boundaries without Additional Labeled Data | 心远地自偏</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">心远地自偏</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="www.platot.site/2019/07/19/Learning Dynamics of Decision Boundaries without Additional Labeled Data/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="plato">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="心远地自偏">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Learning Dynamics of Decision Boundaries without Additional Labeled Data</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-19T17:53:59+08:00">
+                2019-07-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据流挖掘/" itemprop="url" rel="index">
+                    <span itemprop="name">数据流挖掘</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="导读"><a href="#导读" class="headerlink" title="导读"></a>导读</h2><p>&emsp;&emsp;在本论文中，作者的目的是使用新获得的无标注数据和之前收集的标注数据来预测分类器参数，使分类器能够长时间维持较好的性能。作者使用逻辑斯蒂回归作为分类器，使用高斯过程来建模分类器参数的分布，即对分类器参数做回归。当训练数据的数量很小或者长期预测需要执行时，预测出来的分类器的不确定性就会很高。通过使用贝叶斯框架，该方法能够考虑到这种不确定性，并学习决策边界的动态，这令分类器更加鲁棒。另外，为了利用无标注数据关于决策边界的信息，作者使用熵最小原则将其整合到提出的模型中，即决策边界不应该穿过样本的高密度区域，而应该位于低密度区域。<br>&emsp;&emsp;<a href="https://www.kdd.org/kdd2018/accepted-papers/view/learning-dynamics-of-decision-boundaries-without-additional-labeled-data" target="_blank" rel="noopener">论文地址。</a></p>
+<h2 id="ABSTRACT"><a href="#ABSTRACT" class="headerlink" title="ABSTRACT"></a>ABSTRACT</h2><p>&emsp;&emsp;我们提出一种不使用额外的标注数据但能维持分能器性能的方法，该方法学习决策边界的动态(dynamics)。在许多应用中，比如欺诈邮件分类，决策边界随着时间改变。对应的，分类器的性能很快就恶化，除非分类器使用额外的标注数据重新训练。然而，连续准备标注数据是相当昂贵，甚至不可能做到。该论文提出的方法使用新获得的无标签数据和之前收集的标注数据缓解了这种恶化。在该方法中，高斯过程用来建模决策边界的动态。为了压榨来自于无标注数据的决策边界的信息，低密度分离标准，即决策边界不应该穿过样本的高密度区域，而应该位于低密度区域，被整合到该论文提出的方法中。我们以一种有原则的方式将此标准纳入到我们的框架中，通过引入在通用正则贝叶斯框架基础上对分类器参数施加熵后验正则化。我们基于变分贝叶斯推断为该模型发展了一种高效推断算法。该论文提出方法的效用通过在两种人工和四种真实世界的数据集上的实验得以证明。</p>
+<h2 id="INTRODUCTION"><a href="#INTRODUCTION" class="headerlink" title="INTRODUCTION"></a>INTRODUCTION</h2><p>&emsp;&emsp;在某些应用中，决策边界随着时间动态变化。比如，在网站分类中，恶意网站连续不断的被创建来诈骗用户。因此，用来将一个网站分类为恶意或者无恶意的决策边界在不同时间就不同。在使用传感器进行活动识别时，决策边界也会随着时间改变，因为用户的活动模式动态变化。在推荐系统中，为用户呈现一件商品或信息是否合适的决策边界也会随着时间改变，因为用户的兴趣动态发生变化。但如果我们不重新训练分类器，当分类器用于决策边界随着时间变化的任务，分类性能很快就恶化了。<br>&emsp;&emsp;许多方法被提出，用于重新训练分类器以维持分类性能，比如在线学习，遗忘算法，时间窗口方法，集成学习和主动学习。这些方法要求额外的标注数据来重训练分类器。然而，连续准备标注数据是很昂贵甚至不可能的，因为标签需要领域内专家手动标注。<br>&emsp;&emsp;为了克服这个问题，给定当前之前收集的标注数据，预测将来的决策边界的方法被提出来。这些方法使用给定的标注数据，学习决策边界的动态。通过使用学得的动态，这些方法可以预测将来的决策边界，其可以对将来获得的样本正确地分类，并且不使用额外的数据。尽管这些方法被设计用来维持分类器的性能，但其在长时间内很难保持预测正确的决策边界，因为真实世界应用中，决策边界会发生出乎意料的改变。<br>&emsp;&emsp;尽管收集标注数据很困难，无标注数据比标注数据更容易收集，因为它们不需要标签。比如，在网站分类中，新创建的网站将被通过爬虫轻易的获得，用于学习。因为无标注数据包含丰富的决策边界的信息，半监督学习方法可以使用无标注数据来改善分类性能。然而，当决策边界随着时间改变时，这些方法会变得不准确。<br>&emsp;&emsp;在该论文中，我们提出一种学习决策边界的动态以维持分类性能的方法，该方法利用新到达的无标注数据和之前收集的标注数据。在该方法下，一种决策边界由分类器的参数定义，并且使用高斯过程建模每一个参数的动态，这是一个非线性无参数的回归模型。通过处理每一个参数的动态，我们的方法可以反映出每一特征的特性。尽管标注数据被直接用于学习分类器参数和每一个参数的动态，如何使用无标注数据并非是不重要的。为了压榨来自于无标注数据的决策边界的信息，低密度分离标准，即决策边界不应该穿过高密度区域，而应该位于低密度区域，被整合到该论文提出的方法中。我们以一种有原则的方式将此标准纳入到我们的框架中，通过引入在通用正则贝叶斯框架基础上对分类器参数施加熵后验正则化。因为无标注数据包含丰富的决策边界的信息，该方法可以改善当标注数据不可用时学习决策边界的动态的能力，因此能在长时间内保持分类器的性能。该方法同样涉及我们发展的一种基于变分贝叶斯推断的推断算法，该算法用于同时优化分类器参数和高斯过程的超参数。当训练数据的数量很小或者长期预测需要执行时，预测的分类器的不确定性就会很高。通过使用贝叶斯框架，该方法能够考虑到这种不确定性，并学习决策边界的动态，这令分类器更加鲁棒。</p>
+<h2 id="PROPOSED-METHOD"><a href="#PROPOSED-METHOD" class="headerlink" title="PROPOSED METHOD"></a>PROPOSED METHOD</h2><p>&emsp;&emsp;我们下面介绍在本论文中使用的符号并定义我们研究的任务。令$\mathcal{D}^L_t:=\{(x_n^t,y_n^t)\}^{N_t}_{n=1}$为在时间 t 收集的标注数据的集合，其中$x_n^t \in \mathbb{R}^D$是在时间 t 的第 n 个样本的 D 维特征向量，$y_n^t \in \{0,1\}$是其类标签，$N_t$是在时间 t 收集的标注数据的数目。尽管本论文提出的方法可以直接用于多类别分类，但我们为了简洁使用二分类。术语$t^L:=(t_1,\cdot \cdot \cdot,t_L)$,其中$t_1 &lt; t_2 &lt; \cdot \cdot \cdot &lt; t_L$,表示收集标注数据的时间。同理，$\mathcal{D}^U_t:=\{x_m^t\}^{M_t}_{m=1}$是在时间 t 收集$M_t$个无标注数据的集合。术语$t^U:=(t_{L+1},\cdot \cdot \cdot,t_{L+U})$,其中$t_L &lt; t_{L+1} &lt; \cdot \cdot \cdot &lt; t_{L+U}$,表示获得无标注数据的时间。注意所有无标注数据的收集都发生在标注数据收集之后，并且每一个样本获得的间隔是不规律的。<br>&emsp;&emsp;我们的目标是找到分类器$h_t : \mathbb{R}^D \to \{0,1\},\forall t &gt; t_L$，可以精确地分类时间 t 的样本，给定标注数据和无标注数据的集合，$\mathcal{D} := \mathcal{D}^L \cup \mathcal{D}^U$，其中$\mathcal{D}^L := \{\mathcal{D}_t^L\}_{t \in t^L}$，$\mathcal{D}^U := \{\mathcal{D}_t^L\}_{t \in t^U}$。本论文提出的方法可以预测任意时间 t 的分类器，即使在时间 t 没有标注或是未标注的训练数据。 <strong>Figure 1</strong>阐释了我们的方法。使用时间 $t_1\  to \  t_L$的标注数据和$t_{L+1}\  to \ t_{L+U}$的无标注数据，每一时间的决策边界，其由分类器$h_t$所定义，和决策边界的动态被学得。<br><img src="https://user-images.githubusercontent.com/23336589/61115008-1850bb00-a4c4-11e9-808f-67c8cabee725.PNG" alt="Figure 1"></p>
+<h3 id="Probabilistic-Model-for-Dynamics-of-Decision-Boundary"><a href="#Probabilistic-Model-for-Dynamics-of-Decision-Boundary" class="headerlink" title="Probabilistic Model for Dynamics of Decision Boundary"></a>Probabilistic Model for Dynamics of Decision Boundary</h3><p>&emsp;&emsp;我们的概率模型假设给定特征向量$x_n^t$，标签$y_n^t$的概率由 <strong>logistic</strong>回归所建模，如下所示，<br><img src="https://user-images.githubusercontent.com/23336589/61115073-3d452e00-a4c4-11e9-98f1-897c4308583c.PNG" alt="logistic regression"><br>&emsp;&emsp;我们的概率模型假设分类器参数的第 d 个成分$w_{td}$是使用一个非线性函数映射输入时间 t生成的，<br><img src="https://user-images.githubusercontent.com/23336589/61115075-3fa78800-a4c4-11e9-958c-677224a60a1d.PNG" alt="mapping t"><br>我们对$f_d$的先验分布使用高斯过程。特别的，给定任意有限的输入时间$t:=(t_1,\cdot \cdot \cdot,t_{L+U})$，对应输出$f_d:=(f_d(t_1),\cdot \cdot \cdot,f_d(t_{L+U}))$的先验概率被表征为 t 上的零均值多元高斯分布，<br><img src="https://user-images.githubusercontent.com/23336589/61115245-a0cf5b80-a4c4-11e9-8b4f-97c33b926b41.PNG" alt="Gaussian distribution"><br>（ps：其中核函数刻画的是变量 t 之间的关系，只要我们对整个空间给定一个对距离相关性的度量标准，那么我们因为这个度量标准可以推测出别处的数据(可能的)分布，这就是核函数）。通常核函数依赖于控制$f_d$的平滑性质的某些超参数。在本论文中，我们使用如下的高斯核和额外的常数项和线性项作为核函数，<br><img src="https://user-images.githubusercontent.com/23336589/61115109-5352ee80-a4c4-11e9-82bc-361840d0fc3a.PNG" alt="kernel function"><br>这个核函数广泛用于高斯过程回归和高效描述具有平滑形状的时间序列。通过整合出来$f_d$，我们获得处于时间 t 的分类器的第 d 个成分的概率，$w_{\cdot d}:=(w_{t_1d},\cdot \cdot \cdot,w_{t_{L+U}d}) \in \mathbb{R}^{L+U}$，如下所示，<br><img src="https://user-images.githubusercontent.com/23336589/61115299-be042a00-a4c4-11e9-96ca-b4107ea84c69.PNG" alt="probability of d-th"><br>&emsp;&emsp;标注数据$\mathcal{D}^L$和分类器在时间 t 的参数的联合分布，$W := (w_{t_1}，\cdot \cdot \cdot,w_{t_{L+U}})$，被写为：<br><img src="https://user-images.githubusercontent.com/23336589/61115303-c0668400-a4c4-11e9-83e5-bc5a2410dd24.PNG" alt="joint distribution"><br>当$\alpha$无限大，$\gamma$和$\zeta$为零时，不同时间点的分类器的参数时独立的（ps：这时对应的协方差函数为零）。这对应于独立地学习每一个时间点的分类器。当$\alpha$和$\zeta$为零，并且$\beta$或者$\gamma$是无限大时，分类器参数几乎随着时间变化是固定的（ps：这是对应的协方差函数无限大，但？）。这对应于学习一个适用于所有时间点的单个分类器，通过使用所有数据并忽略它们的时间戳。我们的概率模型可以表征各种决策边界的动态，通过改变核超参数的值。尽管许多时间序列模型，比如向量自回归模型要求数据按照规律的间隔不中断地收集，由于高斯过程的特性，概率模型并不要求这点。注意尽管我们使用logistic回归作为分类器，但其他的分类器比如神经网络也可用于我们的框架。</p>
+<h3 id="RegBayes-Framework-with-Entropy-Posterior-Regularization"><a href="#RegBayes-Framework-with-Entropy-Posterior-Regularization" class="headerlink" title="RegBayes Framework with Entropy Posterior Regularization"></a>RegBayes Framework with Entropy Posterior Regularization</h3><p>&emsp;&emsp;为了获得后验分布$p(W|\mathcal{D}^L;\theta)$和超参数$\theta$，我们需要计算模型证据（model evidence）$p(\mathcal{D}^L;\theta) = \int p(\mathcal{D}^L;\theta)dW$。然而，不幸的是，这是很困难的。因此，我们求解下确界（ELBO），这是$p(\mathcal{D}^L;\theta)$的下界。具体的，ELBO 定义如下<br><img src="https://user-images.githubusercontent.com/23336589/61115326-cd837300-a4c4-11e9-80d3-d7f97d4e2ac6.PNG" alt="ELBO"><br>我们可以通过最大化关于q 的ELBO来获得$q(W)$，因为最小化$q(W)$和$p(W|\mathcal{D}^L;\theta)$之间的KL散度等价于最大化ELBO。超参数$\theta$可以通过最大化关于$\theta$的ELBO来获得。注意到该ELBO并不依赖于无标注数据$\mathcal{D}^U$。<br>&emsp;&emsp;为了将无标注数据中的有用信息整合到我们模型中，我们使用熵最小原则，其鼓励决策边界位于低密度区域。具体的，我们定义对于$t \in t^U$的分类器参数$w_t$的熵后验正则项如下<br><img src="https://user-images.githubusercontent.com/23336589/61115332-d116fa00-a4c4-11e9-9f5a-ef3d0a74e5c0.PNG" alt="entropy posterior regu"><br>因为公式（10）当样本$x_m^t$位于远离决策边界$w_t$的位置时，取得较小值。熵最小原则广泛用于半监督学习并在多种任务中具有较好的表现。因此，我们选择该正则将无标注数据整合到我们模型中。当然，使用其他正则，比如manifold正则也是可以的。因为在时间$t^U$是没有标注数据的，分类器参数$\{w_t\}_{t \in t^U}$的不确定性会变得很高。为了适当的处理这种不确定性，该论文提出的方法在公式（9）采取关于$W$的熵函数的期望。通过最小化关于$q(w_t)$的公式（9）,分类器参数$w_t$被学得以便穿过无标注数据样本的低密度区域，同时遵循决策边界的动态。<br>&emsp;&emsp;通过使用熵后验正则作为一个后验正则项$R(q):=\sum_{t=t_{L+1}}^{t_{L+U}} {R_t(q)}$，我们考虑如下的 <strong>RegBayes framework</strong>：<br><img src="https://user-images.githubusercontent.com/23336589/61115359-e1c77000-a4c4-11e9-981f-60bbcb3b2d3e.PNG" alt="RegBayes framework"><br>高斯过程先验$p(W;\theta)$具有连接分类器参数$\{w_t\}_{t \in t^L}$的效果，其主要是从标注数据估计得到的，分类器参数$\{w_t\}_{t \in t^U}$主要是从无标注数据估计得到的。注意，当$p = 0$，熵后验正则被模型忽略并且目标函数等价于[Atsutoshi Kumagai and Tomoharu Iwata. 2017. Learning non-linear dynamics of<br>decision boundaries for maintaining classification performance. In AAAI.]，除了高斯过程先验依赖于$\{w_t\}_{t \in t^U}$,同依赖于$\{w_t\}_{t \in t^L}$一样。因此，我们的方法是其的一种自然而然的半监督扩展。</p>
+<h3 id="Inference"><a href="#Inference" class="headerlink" title="Inference"></a>Inference</h3><p>&emsp;&emsp;我们对提出的模型基于变分贝叶斯推断提出一种高效的推断算法(ps:因为后验分布很难求出，因此我们求其近似分布，变分贝叶斯推断正为此服务)。我们假设变分后验分布$q(W)$可以被分解为(can be factorized)：<br><img src="https://user-images.githubusercontent.com/23336589/61115361-e2f89d00-a4c4-11e9-94d6-f0f8313c28db.PNG" alt="variational posterior q"><br>对于$t \in t^U$的情况，我们假设$q(w_{td})$的函数形式是一个高斯分布，$q(w_{td}) = \mathcal{N}(w_{td}|\mu_{td},\sigma_{td}^2)$，其中$\mu_{td}$是均值，$\sigma_{td}^2$是方差。在变分贝叶斯推断中，本论文提出的方法最大化公式（11）中的目标函数，通过迭代地更新每一个变分后验分布$q(w_{td})$和核超参数$\theta$。<br>&emsp;&emsp;首先，我们考虑推导对$\{q(w_t)\}_{t \in t^L}$的更新规则。因为变分后验分布$\{q(w_t)\}_{t \in t^L}$仅仅依赖于公式（11）中的$\mathcal{L}^L(q;\theta)$，我们可以通过计算$\mathcal{L}^L(q;\theta)$关于$\{q(w_t)\}_{t \in t^L}$的导数推导$\{q(w_t)\}_{t \in t^L}$的更新规则。然而，这是不可能的，因为$p(y_n^t|x_n^t,w_t)$的非共轭性(ps:不懂)。为了克服这个问题，我们使用如下的不等式，<br><img src="https://user-images.githubusercontent.com/23336589/61115365-e4c26080-a4c4-11e9-829a-be6458b41194.PNG" alt="inequality"><br>通过令$\mathcal{L}^L(q;\theta)$减去公式（13）的右部，我们获得$\mathcal{L}^L(q;\theta)$新的下界$\mathcal{L}^L(q;\theta,\xi)$，增加$\mathcal{L}^L(q;\theta,\xi)$的值导致$\mathcal{L}^L(q;\theta)$的值也增加。通过计算$\mathcal{L}^L(q;\theta,\xi)$关于$\{q(w_t)\}_{t \in t^L}$和$\xi_n^t$的导数，我们发现$q(w_{td})$对于$t \in t^L$和$d = 1,\cdot \cdot \cdot,D$具有如下的形式，<br><img src="https://user-images.githubusercontent.com/23336589/61115369-e5f38d80-a4c4-11e9-952f-1fbd509108b8.PNG" alt="alt text"><br>对于$\mu_{td},\lambda_{td},\xi_t^n$的更新规则如下，<br><img src="https://user-images.githubusercontent.com/23336589/61115373-e7bd5100-a4c4-11e9-935d-3cdd6de9314f.PNG" alt="update rules 1"><br>&emsp;&emsp;第二，我们考虑更新$\{q(w_t)\}_{t \in t^U}$。因为熵后验正则项$R(q)$是难以处理的，分析获得目标函数$\mathcal{L}(q;\theta,\xi):=\mathcal{L}^L(q;\theta,\xi)-\frac {p} {M}R(q)$关于$\{q(w_t)\}_{t \in t^U}$的导数是不可能的。为了解决这个问题，我们使用重参数技巧，该技术用于得到具有低方差的期望。该技巧将一个连续随机变量$w$表示为一个确定性变量$w = g_{\phi}(\epsilon)$，其中$\epsilon$是一个带有$p(\epsilon)$的辅助变量，$g_{\phi}$是一些由$\phi$参数化的vector-valued 函数。通过这个表达式，关于$w$的期望值就被转换为关于$\epsilon$的期望值。因为$\epsilon$和$\phi$是不相关的，通过从$p(\epsilon)$抽样得到的近似期望值关于$\phi$是可微的。因为我们假设对于$t \in t^U$，$q(w_t)$是高斯分布，重参数技巧可以用于熵后验正则项$R(q)$。具体的，通过使用等式：<br><img src="https://user-images.githubusercontent.com/23336589/61115428-058ab600-a4c5-11e9-9e40-9880f426302e.PNG" alt="alt"><br>我们引入新的变量$v_{td}$使得满足等式$v_{td} = log\sigma_{td}$。通过关于参数$\mu_t$和$v_t:=(v_{t1,\cdot \cdot \cdot,v_{tD}})$最大化公式（16）,我们获得对于$t \in t^U$的更新后的分布$q(w_t)$。为了实现这一点，我们使用拟牛顿法(<strong>quasi-Newton method</strong>)，该方法需要公式（16）的梯度信息。这些关于$\mu_{td}$和$v_{td}$的梯度表示如下：<br><img src="https://user-images.githubusercontent.com/23336589/61115458-15a29580-a4c5-11e9-9263-15d434c2eb1b.PNG" alt="gradients"><br><img src="https://user-images.githubusercontent.com/23336589/61115463-1804ef80-a4c5-11e9-92d1-f67b287fe4e7.PNG" alt="ps"><br>&emsp;&emsp;最后，我们考虑通过最大化关于$\theta$的$\mathcal{L}(q;\theta,\xi)$来更新$\theta$，使用拟牛顿法。在目标函数$\mathcal{L}(q;\theta,\xi)$中依赖于$\theta$的项表示如下，<br><img src="https://user-images.githubusercontent.com/23336589/61115510-34089100-a4c5-11e9-96ec-0a29adf8a6d7.PNG" alt="alt"><br>$\mathcal{L}(\theta)$关于$\theta_d$的梯度，其表示$\alpha_d,\beta_d,\zeta_d$和$\eta$其中一个，表示如下，<br><img src="https://user-images.githubusercontent.com/23336589/61115515-366aeb00-a4c5-11e9-953d-8c7674997b18.PNG" alt="alt"><br><img src="https://user-images.githubusercontent.com/23336589/61115547-4682ca80-a4c5-11e9-9d13-473f17d71b15.PNG" alt="alt"><br><img src="https://user-images.githubusercontent.com/23336589/61115550-484c8e00-a4c5-11e9-8788-660fcd9c16d7.PNG" alt="alt"><br>&emsp;&emsp;ps：这一节我没搞懂，todo…</p>
+<h3 id="Prediction"><a href="#Prediction" class="headerlink" title="Prediction"></a>Prediction</h3><p>&emsp;&emsp;我们解释使用学得的模型获得任意时间的分类器。当我们打算分类在时间$t_<em> \in t^U$的样本，我们可以使用变分后验分布$q(w_</em>)$作为分类器参数的分布。当分类的样本是时间$t_<em> \notin t$,此时没有标注还是无标注训练数据，我们可以获得通常的高斯过程行为的分类器参数相应的分布$q(w_{t_</em>})$。具体的，$w_{t_<em>} = (w_{t_</em>1},\cdot \cdot \cdot,w_{t_<em>D})$被表示为如下：<br><img src="https://user-images.githubusercontent.com/23336589/61115551-4a165180-a4c5-11e9-9f6e-d023650fb248.PNG" alt="alt"><br>为了分类在时间$t_</em>$的样本，我们使用贝叶逻辑斯蒂回归，该方法用于分类时会将$p(w_{t_<em>})$的方差考虑进去。给定样本$x_n^{t_</em>}$，标签$y_n^{t_*}$的后验概率如下，<br><img src="https://user-images.githubusercontent.com/23336589/61115556-4f739c00-a4c5-11e9-9239-31ad18b2e1c4.PNG" alt="lable probability"><br>&emsp;&emsp;ps：这一节我也没搞懂，todo…</p>
+<h2 id="CONCLUSION"><a href="#CONCLUSION" class="headerlink" title="CONCLUSION"></a>CONCLUSION</h2><p>&emsp;&emsp;我们提出一种方法用于学习决策边界的动态以维持分类器的性能，该方法使用新获得的无标注数据和之前收集的标注数据。在该方法中，高斯过程用来建模决策边界的动态。为了将无标注数据整合到我们的概率模型中，本方法在通用的贝叶斯回归框架的基础上引入熵后验正则项。另外，我们提出一种基于变分贝叶斯推断的高效推断算法。经过实验证明，本方法与其他方法相比能更好维持分类器性能。对于将来的工作，我们将应用其他的正则到我们的框架中，比如<strong>manifold regularization</strong>。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/半监督学习/" rel="tag"># 半监督学习</a>
+          
+            <a href="/tags/迁移学习/" rel="tag"># 迁移学习</a>
+          
+            <a href="/tags/概念漂移/" rel="tag"># 概念漂移</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/21/文献汇报三/" rel="next" title="文献汇报三">
+                <i class="fa fa-chevron-left"></i> 文献汇报三
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/19/A Stock AI Assistant for Reliability Modeling of Stock Comments/" rel="prev" title="A Stock AI Assistant for Reliability Modeling of Stock Comments">
+                A Stock AI Assistant for Reliability Modeling of Stock Comments <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">plato</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#导读"><span class="nav-number">1.</span> <span class="nav-text">导读</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ABSTRACT"><span class="nav-number">2.</span> <span class="nav-text">ABSTRACT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#INTRODUCTION"><span class="nav-number">3.</span> <span class="nav-text">INTRODUCTION</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PROPOSED-METHOD"><span class="nav-number">4.</span> <span class="nav-text">PROPOSED METHOD</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Probabilistic-Model-for-Dynamics-of-Decision-Boundary"><span class="nav-number">4.1.</span> <span class="nav-text">Probabilistic Model for Dynamics of Decision Boundary</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RegBayes-Framework-with-Entropy-Posterior-Regularization"><span class="nav-number">4.2.</span> <span class="nav-text">RegBayes Framework with Entropy Posterior Regularization</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Inference"><span class="nav-number">4.3.</span> <span class="nav-text">Inference</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Prediction"><span class="nav-number">4.4.</span> <span class="nav-text">Prediction</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CONCLUSION"><span class="nav-number">5.</span> <span class="nav-text">CONCLUSION</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">plato</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>

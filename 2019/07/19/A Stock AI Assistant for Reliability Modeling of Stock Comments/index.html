@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="时间序列," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="导读&amp;emsp;&amp;emsp;这篇论文提出的方法是用于建模股票评论的可靠性，用的技术都不复杂，比如FM，ARMA，SVM这些。但这篇论文提取特征的思路很值得学习。首先是以一种时间演化的方式分析股票评论，即考虑分析师的历史表现，基于作者对分析师行为的观察，构造出反映分析师可靠程度的指标，分析师可靠程度又与其发布的评论的可靠性挂钩。另一个是考虑到股票趋势对评论可靠性的影响构造特征。&amp;emsp;&amp;emsp">
+<meta name="keywords" content="时间序列">
+<meta property="og:type" content="article">
+<meta property="og:title" content="A Stock AI Assistant for Reliability Modeling of Stock Comments">
+<meta property="og:url" content="www.platot.site/2019/07/19/A Stock AI Assistant for Reliability Modeling of Stock Comments/index.html">
+<meta property="og:site_name" content="心远地自偏">
+<meta property="og:description" content="导读&amp;emsp;&amp;emsp;这篇论文提出的方法是用于建模股票评论的可靠性，用的技术都不复杂，比如FM，ARMA，SVM这些。但这篇论文提取特征的思路很值得学习。首先是以一种时间演化的方式分析股票评论，即考虑分析师的历史表现，基于作者对分析师行为的观察，构造出反映分析师可靠程度的指标，分析师可靠程度又与其发布的评论的可靠性挂钩。另一个是考虑到股票趋势对评论可靠性的影响构造特征。&amp;emsp;&amp;emsp">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/61515423-24dd9200-aa35-11e9-8da2-034e1db19607.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/61515472-450d5100-aa35-11e9-9a64-58e54554cbaa.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/61515491-4fc7e600-aa35-11e9-8e65-571bfb8ec1dc.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/61515495-522a4000-aa35-11e9-8ee3-91331346d924.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/61515496-53f40380-aa35-11e9-969b-2e684fbe3a45.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/61515505-58b8b780-aa35-11e9-8aba-ebe68279e9bb.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/61515506-5c4c3e80-aa35-11e9-92bf-61eb4ef29fc5.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/61515513-5eae9880-aa35-11e9-9f11-d59807bf26b5.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/61515518-60785c00-aa35-11e9-966b-2e901ad12951.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/61515522-62421f80-aa35-11e9-8342-7fe31956ef87.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/61515528-640be300-aa35-11e9-9aba-982d7145ec09.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/61515530-65d5a680-aa35-11e9-9481-66fe1af4f2a7.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/61515535-68380080-aa35-11e9-90dc-b92044cab1d2.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/61515538-69692d80-aa35-11e9-8b66-af65ede6a189.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/61515543-6c641e00-aa35-11e9-951f-d8b0554f3b75.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/61515547-6e2de180-aa35-11e9-84e2-167bfa6db442.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/61515549-6ff7a500-aa35-11e9-87d7-f53eb7a3f658.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/61515552-71c16880-aa35-11e9-8318-2c3ac7655cf7.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/61515559-738b2c00-aa35-11e9-8fbb-43531be1ad4a.PNG">
+<meta property="og:updated_time" content="2019-07-19T10:03:24.538Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="A Stock AI Assistant for Reliability Modeling of Stock Comments">
+<meta name="twitter:description" content="导读&amp;emsp;&amp;emsp;这篇论文提出的方法是用于建模股票评论的可靠性，用的技术都不复杂，比如FM，ARMA，SVM这些。但这篇论文提取特征的思路很值得学习。首先是以一种时间演化的方式分析股票评论，即考虑分析师的历史表现，基于作者对分析师行为的观察，构造出反映分析师可靠程度的指标，分析师可靠程度又与其发布的评论的可靠性挂钩。另一个是考虑到股票趋势对评论可靠性的影响构造特征。&amp;emsp;&amp;emsp">
+<meta name="twitter:image" content="https://user-images.githubusercontent.com/23336589/61515423-24dd9200-aa35-11e9-8da2-034e1db19607.PNG">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="www.platot.site/2019/07/19/A Stock AI Assistant for Reliability Modeling of Stock Comments/"/>
+
+
+
+
+
+  <title>A Stock AI Assistant for Reliability Modeling of Stock Comments | 心远地自偏</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">心远地自偏</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="www.platot.site/2019/07/19/A Stock AI Assistant for Reliability Modeling of Stock Comments/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="plato">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="心远地自偏">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">A Stock AI Assistant for Reliability Modeling of Stock Comments</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-19T17:54:27+08:00">
+                2019-07-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/机器学习/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="导读"><a href="#导读" class="headerlink" title="导读"></a>导读</h2><p>&emsp;&emsp;这篇论文提出的方法是用于建模股票评论的可靠性，用的技术都不复杂，比如FM，ARMA，SVM这些。但这篇论文提取特征的思路很值得学习。首先是以一种时间演化的方式分析股票评论，即考虑分析师的历史表现，基于作者对分析师行为的观察，构造出反映分析师可靠程度的指标，分析师可靠程度又与其发布的评论的可靠性挂钩。另一个是考虑到股票趋势对评论可靠性的影响构造特征。<br>&emsp;&emsp;方法大概框架可见<strong>Figure 2</strong>，大概步骤可见结论部分。<a href="https://www.kdd.org/kdd2018/accepted-papers/view/stockassistant-a-stock-ai-assistant-for-reliability-modeling-of-stock-comme" target="_blank" rel="noopener">论文地址</a>。</p>
+<h2 id="ABSTRACT"><a href="#ABSTRACT" class="headerlink" title="ABSTRACT"></a>ABSTRACT</h2><p>&emsp;&emsp;来自分析师的股票评论对于投资者预见股票波动和市场趋势来说包含重要顾问信息。对股票评论的现存研究往往集中在捕获粗粒度的意见极性或是理解市场基本面上。然而，由于大量的带有巨大噪音和模糊意见的评论，投资者往往不知所措和困惑。因此，需要一种细粒度的股票评论分析工具来识别更可靠的股票评论。为此，这篇论文提供了一种解决方案，称为<strong>StockAssIstant</strong>，该解决方案考虑多种因素，比如股票价格趋势，评论文本和分析师的表现，以一种整体的方式来建模股票评论的可靠性。具体的，我们第一次根据历史评论分析了分析师的意见动态的模式。然后，我们使用评论文本中的语义信息、股票价格和分析师的历史表现构造时间序列，从中提取关键的特征。基于这些特征，我们提出一种基于集成学习的方法用于测量评论的可靠性。最后，我们进行了扩展实验并且提供了在真实世界股票数据的交易仿真。实验结果和在12个月周期的交易仿真中的收益清晰地证明了我们方法用于建模股票评论可靠性的效用。</p>
+<h2 id="INTRODUCTION"><a href="#INTRODUCTION" class="headerlink" title="INTRODUCTION"></a>INTRODUCTION</h2><p>&emsp;&emsp;股票论坛上，越来越多的股票评论正变的可用。股票评论是指分析师对某一个股票的分析和走势的预测。股票评论对于投资者理解市场趋势和股票波动已经是丰富的信息资源了。比如，研究者努力研究探索股票评论发布者活动和股票交易活动的关系。这些研究通常集中于捕获粗粒度意见极性或是理解评论对市场走向的主要影响。一些其他工作使用分类模型比如<strong>SVMs</strong>通过压榨股票评论的情感特征来明确预测股票趋势。<br>&emsp;&emsp;然而，可靠地预测股票趋势是一项挑战，正如<strong>Figure 4</strong>所阐述的那样，这归结于股票价格受许多不确定的经济-政策因素影响的事实。因此，由于股票评论天然的噪声和偏见，股票评论的可靠性受到投资者们的热切关注。因此，需要一种细粒度的股票评论分析工具来识别更可靠的股票评论，其可以帮助投资者更好地理解市场状态，并指引投资者建立可盈利的投资策略。然而，决定一个评论是否可靠是很困难的，尤其是在真实市场中，在其中投资者会被冲突的或是模棱两可的意见搞的不知所措。<br>&emsp;&emsp;如<strong>Figure 1</strong>所示，为了测量股票评论的可靠性，应该考虑一些因素，比如历史股票价格，现在的市场状态和评论文本中隐藏的意见极性。还有，分析师的历史表现，比如他们的预测准确度和动态意见转移行为，也是很关键的因素。实际上，分析师的意见也随着动态的市场状态在演化。他们坚持同样的意见或是转移到对立的方向。比如，如果之前的判断和现在的市场状态不一致，一些分析师更可能改变他们关于对市场趋势的意见。因此，股票评论的可靠性应该以一种随时间演化的方式来建模。然而，之前的研究很少在捕获分析师的意见转移模式上做出努力。因此，如何建模意见动态和整合以上所有因素到一个统一的框架依然是一项挑战。<br><img src="https://user-images.githubusercontent.com/23336589/61515423-24dd9200-aa35-11e9-8da2-034e1db19607.PNG" alt="Figure 1"><br>&emsp;&emsp;为此，我们第一次以一种随时间演化的方式分析了历史股票评论，并且揭示了一些关于分析师意见和意见转移模式的一致性特质的现象。然后，我们提供了一种建模每个股票评论可靠性的系统方案。<strong>Figure 2</strong>展示了这种方案的框架。具体的，我们先用因子分解机(factorization machines)来检测股票评论的意见极性。接着，我们使用评论文本中的语义信息、股票价格和分析师的历史表现构造时间序列，从中提取关键的特征。最后，我们提出一种基于集成学习的方案，可以利用分类模型和时间序列分析模型的优势，比如，支持向量机和自回归滑动平均模型，来测量每一个股票评论的可靠性。使用确定了的可靠评论，我们可以建立可盈利的交易策略。为了验证我们方案的效用，我们在真实世界数据上进行了广泛的实验并且提供了股票交易模拟。实验结果和模拟交易达到的盈利水平显示我们的方案在建模股票评论的可靠性上是高效的并且可以应用在各种金融相关的业务上，比如经济趋势预测，盈利管理和自动交易。<br><img src="https://user-images.githubusercontent.com/23336589/61515472-450d5100-aa35-11e9-9a64-58e54554cbaa.PNG" alt="Figure 2"><br>&emsp;&emsp;据我们所知，这是第一次尝试提供对股票评论可靠性的细粒度的分析。这篇论文的主要贡献如下所示：</p>
+<ol>
+<li>分析师意见和意见转移模式的一致性特质的发现。</li>
+<li>自股票评论文本、股票价格和分析师行为的多因素特征选择</li>
+<li>基于集成学习的建模股票评论可靠性的框架</li>
+<li>基于股票可靠性建模的高效股票交易策略的制定</li>
+</ol>
+<h2 id="DATA-DESCRIPTION"><a href="#DATA-DESCRIPTION" class="headerlink" title="DATA DESCRIPTION"></a>DATA DESCRIPTION</h2><p>&emsp;&emsp;<strong>股票评论数据</strong>。<strong>Figure 3</strong>显示了来自于<a href="http://finance.yahoo.com/" target="_blank" rel="noopener">Yahoo！Finance message board</a>的一个样本。它表明一位叫做allan的在线分析师八天前表示看好IBM股票的看涨意见，并且给出了他的理由：有一个支持。因此，一个股票评论通常包含五个元素：分析师，股票代码，意见极性，评论文本和发布时间戳。<br><img src="https://user-images.githubusercontent.com/23336589/61515491-4fc7e600-aa35-11e9-8e65-571bfb8ec1dc.PNG" alt="Figure 3"><br>&emsp;&emsp;这里我们正式的将股票评论数据集表示为$C = \{c_1,c_2,\cdot \cdot<br>cdot,c_{|C|} \}$，股票代码的集合为$S = \{s_1,s_2,\cdot \cdot \cdot,s_{|S|}\}$，分析师的集合为$A = \{a_1,a_2,\cdot \cdot \cdot,a_{|A|}\}$。请注意$|\cdot|$代表集合的大小。基于这些，我们给出每一个评论的定义。<br><img src="https://user-images.githubusercontent.com/23336589/61515495-522a4000-aa35-11e9-8ee3-91331346d924.PNG" alt="definition 2.l.1"><br><img src="https://user-images.githubusercontent.com/23336589/61515496-53f40380-aa35-11e9-969b-2e684fbe3a45.PNG" alt="definition 2.1.2"><br>&emsp;&emsp;这里$o^{(c_i)}$和$r^{(c_i)}$是两个我们需要去预测的未知变量。另外，$o^{(c_i)}$是布尔变量，不是看涨(1)就是看跌(-1)；$r^{(c_i)}$也是布尔变量，不是可靠(1)就是不可靠(-1)。当目标股票价格在下一个交易日增加时并且意见极性是看涨，则$r^{(c_i)}$被设置为1，否则会-1；当股票价格下跌并且意见极性是看跌时，$r^{(c_i)}$被设置为1，否则为-1。<br>&emsp;&emsp;注意到我们选择下一日的股票趋势来评估一个评论是否可靠，因为无论是对于人类（分析师）还是算法，短期预测(一日)的表现通常比长期预测（一周或是一月）的好。实际上，多数评论并没有明确的指示其预测窗口的宽度，比如一日\一周\一月。另外，一条评论甚至在不同窗口做出了多条预测。  因此，要定量地确认一条评论的粒度，即如果它与短期或长期预测有关，相当困难（即使是人类）。所以，作为第一次建模股票评论的可靠性的尝试，我们现在不考虑粒度，简单地将其当作短期预测来对待。然而，未来的工作会集中在识别评论的粒度并使用它来实现准确的预测。<br>&emsp;&emsp;基于<strong>comment unit</strong>的定义，我们给出另外一个定义：<strong>comment sequence</strong>。<strong>Figure 1</strong>展示了一个例子。<br><img src="https://user-images.githubusercontent.com/23336589/61515505-58b8b780-aa35-11e9-8aba-ebe68279e9bb.PNG" alt="definition 2.2"></p>
+<p>&emsp;&emsp;我们从<strong>Sina Financial Planner</strong>收集了由1154名分析师发布的187782条股票评论，其中被分析的股票有2969个。时间跨度为2014年8月到2016年10月。我们将原始评论转换为评论序列，并且移除长度小于5的评论序列以避免数据稀疏问题。持中立观点的评论也被移除，因为它们对投资者做出交易决策并没有用。<br>&emsp;&emsp;<strong>股票相关数据</strong>。股票价格数据是调整过的收盘价格。股票行业数据包含十个行业的公司股票数据，如$Table 1$所示。<br><img src="https://user-images.githubusercontent.com/23336589/61515506-5c4c3e80-aa35-11e9-92bf-61eb4ef29fc5.PNG" alt="Table 1"></p>
+<h2 id="OBSERVATION-OF-ANALYST-BEHAVIORS"><a href="#OBSERVATION-OF-ANALYST-BEHAVIORS" class="headerlink" title="OBSERVATION OF ANALYST BEHAVIORS"></a>OBSERVATION OF ANALYST BEHAVIORS</h2><p>&emsp;&emsp;在这一部分，我们以随时间演化的视角分析评论序列，并且观察到一些关于分析师意见和意见转移模式一致性特质的有趣现象。<br>&emsp;&emsp;在开始探索前，我们列出了三个问题，有助于解释分析师表达的意见和分析师发布的股票评论可靠性之间的关系：</p>
+<ol>
+<li>在一条评论中，分析师倾向于表达哪一种意见极性；并且这些极性在多大程度上是可靠的？</li>
+<li>对于一个股票，分析师倾向于保持一致意见还是频繁转移他们的意见？</li>
+<li>在何种条件下，分析师倾向于保持\转移他们的意见；保持\转移意见是否是一项好的策略？</li>
+</ol>
+<h3 id="Distribution-of-Opinion-and-Reliability"><a href="#Distribution-of-Opinion-and-Reliability" class="headerlink" title="Distribution of Opinion and Reliability"></a>Distribution of Opinion and Reliability</h3><p>&emsp;&emsp;对于第一个问题，<strong>Figure 4(a)</strong>描画了分析师评论的意见和可靠性分布。我们可以看见接近65%的评论看涨，这意味着分析师倾向于表达看涨意见。这种现象可以被解释为分析师倾向于鼓励交易者购买股票。<br>&emsp;&emsp;另一方面，只有一半的评论是可靠的，不管其表达的是何种意见极性。这显示了可靠的预测股票趋势不是一件容易的任务。尤其是<strong>Figure 4(b)</strong>显示了只有很小的一部分分析师的可靠比率大于0.8。作为对照，大多数分析师的预测准确率在0.5左右。这里可靠率指的是可靠评论的比率。<br><img src="https://user-images.githubusercontent.com/23336589/61515513-5eae9880-aa35-11e9-9f11-d59807bf26b5.PNG" alt="figure 4"></p>
+<h3 id="Characteristics-of-Opinion-Coherence"><a href="#Characteristics-of-Opinion-Coherence" class="headerlink" title="Characteristics of Opinion Coherence"></a>Characteristics of Opinion Coherence</h3><p>&emsp;&emsp;对第二个问题，<strong>Figure 5(a)</strong>给出了答案，其中基于他们的可靠性，分析师被划分为四个组：最可靠，可靠，不可靠，最不可靠。它显示大多数分析师的平均转移率(OSRations)低于0.3。这里<strong>OSRatios</strong>指的是由一名分析师发布的评论的比率，这些评论表达的意见极性和该评论序列中前一个评论的意见极性不同。因此，当讨论一个股票时，分析师倾向于保持一致的意见，而不是频繁地转移意见。另外，我们观察到具有更高可靠率的分析师具有更低的<strong>OSRatios</strong>，这意味着平均OSRatio可以被考虑当作决定一名分析师是否可靠的指示器或者特征。</p>
+<h3 id="Patterns-of-Opinion-Shift"><a href="#Patterns-of-Opinion-Shift" class="headerlink" title="Patterns of Opinion Shift"></a>Patterns of Opinion Shift</h3><p>&emsp;&emsp;对最后一个问题，我们分析了分析师意见和他们的可靠率的关系。<br>&emsp;&emsp;何时转移？我们探索了在何种条件下一名分析师的转移行为会发生：在一次成功的预测或是一次失败的预测之后。换句话说，当上一个评论单元$C_{i-1}$分别是可靠的或是不可靠的，我们测量现在的评论单元$c_{i}$是否表达的意见极性和$C_{i-1}$的相反。<strong>Figure 5(b)</strong>展示了观察结果，其中 TSRatio（the ratio of True-then-Shift）和 FSRatio（the ratio of False-then-Shift分别表示当上一个预测是正确的或是不正确的情况下意见转移行为发生的比率。通常，分析师的 FSRatios 大于他们的 TSRatios。这意味着当他们之前做出了错误的决策时他们更可能改变他们对市场趋势的意见，尤其是那些可靠率小于0.3的分析师。然而，可靠率大于0.8的分析师是例外：他们的TSRatios略超过FSRatios。这一现象可能用这一点来解释，这些分析师不是根据之前的预测来改变他们的观点的，而是根据他们自己对市场趋势的判断来的。因此， TSRatio 和 FSRatio 可以被当作两个指标来区分可靠的分析师和不可靠的分析师。</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/61515518-60785c00-aa35-11e9-966b-2e901ad12951.PNG" alt="Figure 5"></p>
+<p>&emsp;&emsp;转移是否是一个好的策略？我们探索是否一次意见转移行为会导致更好的预测。在<strong>Figure 6</strong>中，展示了两种情况：上一次预测是正确的或是不正确的。</p>
+<p>&emsp;&emsp;最开始，当上一次预测是正确的，<strong>Figure 6(a)</strong>展示TCTRatio总是比TSTRatio大，其中TCTRatio（the reliability ratio of Ture-then-Constant）和TSTRatio（the reliability ratio of Ture-then-Shift）分别代表当上一次预测是正确是保持或是转移意见的可靠率。可以看出，意见转移行为更可能会导致一次错误的预测。因此，对于分析师来说一个好的策略就是保持同样的观点。</p>
+<p>&emsp;&emsp;第二，当上一次预测不正确时，<strong>Figure 6(b)</strong>显示不同可靠率的分析师具有不同的模式。对于最可靠的分析师，他们的FCTRatios（The reliability ratio of False-then-Constant）远超过FSTRatios（The reliability ratio of False-then-Shift）。另外，对于可靠率在0.5-0.8的分析师，他们的FCTRatios略大于FSTRatios。但是对那些可靠率小于0.5的不可靠分析师，他们的FCTRatios小于FSTRatios。因此，FCTRatios和FSTRatios可以被当作区分分析师可不可靠的指标。</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/61515522-62421f80-aa35-11e9-8342-7fe31956ef87.PNG" alt="Figure 6"></p>
+<p>&emsp;&emsp;上述提到的观察证实了分析师的意见动态和他们的可靠率之间有明显的关系。因此，对于准确的建模分析师的意见动态，OSRatio，TSRatio，FSRatio，FCTRatio和FSTRatio可以作为预测股票评论可靠性的关键特征。</p>
+<h2 id="METHOD"><a href="#METHOD" class="headerlink" title="METHOD"></a>METHOD</h2><p>&emsp;&emsp;基于上述的观察，这一部分介绍我们用于建模股票评论可靠性的方法的关键成分。<strong>Figure 2</strong>展示了该方法的大致框架。具体的，我们先使用FM模型来将历史评论单元的意见极性分类为看涨或是看跌。然后，我们根据提取的评论意见和历史股票价格的时间序列构建评论序列。此外，我们使用TSA模型（Time-Series Analysis），ARMA，来预测股票价格的未来趋势。接着，我们使用一种集成学习方法，该方法将SVM和ARMA整合到一块来预测每一条新到达的评论的可靠性，基于从评论序列和价格趋势提取的特征。最后，我们基于可靠值对股票评论排序，用于盈利建议。</p>
+<h3 id="Classification-of-Comment-Opinions"><a href="#Classification-of-Comment-Opinions" class="headerlink" title="Classification of Comment Opinions"></a>Classification of Comment Opinions</h3><p>&emsp;&emsp;方法的第一步是评论意见的分类。目的是通过分析评论文本$d^{(c_t)}$决定一个评论单元$c_i$的意见极性$o^{(c_i)}$。每一个评论单元$c_i$的意见极性$o^{(c_i)}$都会被用作决定一条评论可不可靠的关键特征。</p>
+<p>&emsp;&emsp;假设数据集$\{(x_i,y_i)|i=1,\cdot \cdot \cdot,N\}$总计有N个评论单元，其中$x_i \in \mathbb{R}^Q$代表从第i个评论单元提取的<strong>tf-idf</strong>文本特征；$Q$代表词汇表的大小，$y_i \in \{-1,1\}$是分类标签。该分类模型的预测函数可以记作：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/61515528-640be300-aa35-11e9-9aba-982d7145ec09.PNG" alt="prediction function"></p>
+<p>&emsp;&emsp;和其他通用的文本分类模型相比，比如SVMS，我们选择度为2的FM来实现分类函数$g(\cdot)$。理由是FM不仅可以缓解文本特征高维带来的影响，也可以捕捉通过建模低秩分解下高维特征间的成对交互的基本语言学的一些方面。</p>
+<p>&emsp;&emsp;基于提取的特征，FM模型定义如下：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/61515530-65d5a680-aa35-11e9-9481-66fe1af4f2a7.PNG" alt="FM"></p>
+<p>&emsp;&emsp;公式（2）的左边包含一个偏置项和每一个特征$x_i$和目标的一元交互，同逻辑斯蒂回归相似。然而，在公式的右边，是所有特征$x_i$和$x_j$的成对交互的和（这里的特征$x_i$应该是值一个维度上的特征）。不使用独立的参数$w_{x,j}$，FM使用因子参数$<v_i,v_j>$来建模特征之间的成对交互。因此，FM可以估计这种交互，即使是带有巨大稀疏性的问题。</v_i,v_j></p>
+<p>&emsp;&emsp;回到意见分类任务，对特征成对间交互的建模和因子分解参数是FM优于其他分类模型的主要地方。</p>
+<p>&emsp;&emsp;我们使用随机梯度下降方法和<strong>adaptive regularization</strong>来学习FM模型的参数。超参数k使用交叉验证得到。最后，分类模型被表示如下：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/61515535-68380080-aa35-11e9-90dc-b92044cab1d2.PNG" alt="classificaton model"></p>
+<p>&emsp;&emsp;在每一个$c_i$的意见极性$o^{(c_i)}$通过$o^{(c_i)}=g(d^{(c_i)})$决定后，我们计算评论的可靠性标签$r^{(c_i)}$以供评论序列构造。</p>
+<p>首先，$t^{(c_i)}$用来对齐股票价格和股票评论数据。然后，计算$r^{(c_i)}$：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/61515538-69692d80-aa35-11e9-8b66-af65ede6a189.PNG" alt="reliability"></p>
+<p>其中$sp(t)$记作day t 的股票价格，最终，评论序列构造完成。</p>
+<h3 id="Prediction-of-Stock-Time-Series"><a href="#Prediction-of-Stock-Time-Series" class="headerlink" title="Prediction of Stock Time-Series"></a>Prediction of Stock Time-Series</h3><p>&emsp;&emsp;除了意见极性之外，股票价格的未来趋势也是决定一条评论单元是否可靠的关键因素。此外，股票价格作为一种时序数据，可以使用TSA模型在某种程度上预测它。因此，方法的第二步是股票价格的时间序列预测。</p>
+<p>&emsp;&emsp;首先，我们使用股票价格来构造时间序列。特别的，对每一股票，每天的股票价格被用来构造一个时间序列，其中一个节点代表的是一天的收盘价格。接着，我们使用自回归滑动平均——一种有名的TSA模型，来执行预测。给定时间序列数据$X_t$，ARMA模型如下：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/61515543-6c641e00-aa35-11e9-951f-d8b0554f3b75.PNG" alt="ARMA"></p>
+<p>&emsp;&emsp;上述的参数可以通过最大似然估计计算得到。另外，p 和 q 由贝叶斯信息准则（BIC）得到。在历史的价格序列上训练ARMA模型后，对于每一个具有时间戳$t^{(c_t)}$的评论单元$c_i$，该模型基于历史的序列$sp(t_1),sp(t_2),\cdot \cdot \cdot,sp(t^{c_t})$预测下一个交易日$\hat{sp}(t^{(c_t)}+1)$。最终，$\hat{sp}(c_i)=\hat{sp}(t^{c_t}+1)$，并且它的标准误差$err(c_i) = err(t^{(c_t)}+1)$，也就是公式（5）中$\epsilon$的方差，被作为<strong>Table 2</strong>中的股票趋势的特征。</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/61515547-6e2de180-aa35-11e9-84e2-167bfa6db442.PNG" alt="table 2"></p>
+<h3 id="Ranking-of-Comment-Reliability"><a href="#Ranking-of-Comment-Reliability" class="headerlink" title="Ranking of Comment Reliability"></a>Ranking of Comment Reliability</h3><p>&emsp;&emsp;方法的第三步是股票评论的可靠性排名。首先，我们将一个评论单元$c_i$分类为可靠（$r^{(c_t)}=1$）或是不可靠（$r^{(c_t)}=-1$）。当我们获得评论的意见极性和股票价格的趋势之后，基于前面的观察，我们提取相应的多因素特征并将其分类到<strong>Table 2</strong>所示的四类。</p>
+<p>&emsp;&emsp;基于提取的特征，我们使用一种集成学习方法用于可靠性分类。具体的，我们联合 SVMs 和 ARMA ，组成一个权重投票分类框架。</p>
+<p>&emsp;&emsp;注意到这里我们选择 SVMs，而不是前面所述的 FM，因为我们其他的实验显示这两种模型在可靠性分类中具有相当的性能。这可以解释为当特征是高维稀疏时，FM模型的优越性更突出。</p>
+<p>&emsp;&emsp;具体的，就SVM部分而言，使用径向基函数（RBf）核，$k(x_1,x_2)=&lt;\phi(c_1),\phi(x_2)&gt;=e^{-\gamma|x_1-x_2|^2}$。</p>
+<p>注意到$\phi(\cdot)$将原始特征映射到一个更高维的核空间，其中最优决策超平面$\hat{h_1}(c_i)=&lt;\omega,\phi(c_i)&gt;+b$可以被计算。</p>
+<p>&emsp;&emsp;为了计算最优的$\omega$和$b$，我们优化：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/61515549-6ff7a500-aa35-11e9-87d7-f53eb7a3f658.PNG" alt="svm"></p>
+<p>其中$C$折衷训练样本的误分类和决策超平面的简单性。</p>
+<p>&emsp;&emsp;对于 ARMA 部分，我们使用上一小节的预测结果来计算分类函数：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/61515552-71c16880-aa35-11e9-8318-2c3ac7655cf7.PNG" alt="ARMA prediction"></p>
+<p>&emsp;&emsp;因此，最终的分类模型如下：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/61515559-738b2c00-aa35-11e9-8fbb-43531be1ad4a.PNG" alt="final classification"></p>
+<p>不说该模型的简洁性，我们发现这样的线性组合在实践中总是可以获得很好的结果。我们在实验部分测试了不同$u$对结果的影响。另外，我们还尝试了使用其他的非线性组合，包括logarithm，quadratic或是在$\hat{h_1}(c_i)$和$\hat{h_2}(c_i)$上被组合到一起之前的正则操作。这些方案没有一种可以大幅改进其性能。</p>
+<p>&emsp;&emsp;最终，带有预测可靠性标签的评论单元按照它们的分类概率：$rv(c_i)=|\hat{h}(c_i)|$排名，我们称其为可靠值或是置信度。注意$\hat{h}(\cdot)$是公式（9）中的分类函数。</p>
+<h2 id="CONCLUSION"><a href="#CONCLUSION" class="headerlink" title="CONCLUSION"></a>CONCLUSION</h2><p>&emsp;&emsp;我们开发了一种建模股票评论可靠性的方法。沿着这条线，我们第一次以一种时间演化的方式分析了股票评论，并且揭示了关于分析师意见和其意见转移模式一致性特质的重要发现。接着，我们从股票价格，评论文本和分析师行为提出多因素特征。这些特征对于建模股票评论可靠性来说很关键。然后，我们设计了一种混合模型来组合SVM和ARMA的优点。最后，我们通过在真实世界的数据上的实验证实了我们模型识别可靠和不可靠模型的效用。特别的，我们在我们的交易仿真中展示了识别出来的评论可以用来构建交易策略和产生有形的收益。</p>
+<p>&emsp;&emsp;进一步的工作可以侧重于方法的扩展，如使用递归神经网络（RNN）来利用连续评论的时间依赖性。另外，如何基于股票评论预测每周的和每月的股票趋势依然是一项挑战，因为现在我们只考虑每日的预测并且假设评论中的意见是短期的。同样，如何拓展该方法用于建模基于分析师的评论建模分析师的画像，如测量分析师的相似性用于聚类，也是一项有趣的挑战。最后，我们的方法可以用于多种应用中，比如智能推荐，金融事件检测，观点挖掘，商业机会发现和用户画像。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/时间序列/" rel="tag"># 时间序列</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/19/Learning Dynamics of Decision Boundaries without Additional Labeled Data/" rel="next" title="Learning Dynamics of Decision Boundaries without Additional Labeled Data">
+                <i class="fa fa-chevron-left"></i> Learning Dynamics of Decision Boundaries without Additional Labeled Data
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/19/文献汇报四/" rel="prev" title="文献汇报四">
+                文献汇报四 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">plato</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#导读"><span class="nav-number">1.</span> <span class="nav-text">导读</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ABSTRACT"><span class="nav-number">2.</span> <span class="nav-text">ABSTRACT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#INTRODUCTION"><span class="nav-number">3.</span> <span class="nav-text">INTRODUCTION</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DATA-DESCRIPTION"><span class="nav-number">4.</span> <span class="nav-text">DATA DESCRIPTION</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OBSERVATION-OF-ANALYST-BEHAVIORS"><span class="nav-number">5.</span> <span class="nav-text">OBSERVATION OF ANALYST BEHAVIORS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Distribution-of-Opinion-and-Reliability"><span class="nav-number">5.1.</span> <span class="nav-text">Distribution of Opinion and Reliability</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Characteristics-of-Opinion-Coherence"><span class="nav-number">5.2.</span> <span class="nav-text">Characteristics of Opinion Coherence</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Patterns-of-Opinion-Shift"><span class="nav-number">5.3.</span> <span class="nav-text">Patterns of Opinion Shift</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#METHOD"><span class="nav-number">6.</span> <span class="nav-text">METHOD</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Classification-of-Comment-Opinions"><span class="nav-number">6.1.</span> <span class="nav-text">Classification of Comment Opinions</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Prediction-of-Stock-Time-Series"><span class="nav-number">6.2.</span> <span class="nav-text">Prediction of Stock Time-Series</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Ranking-of-Comment-Reliability"><span class="nav-number">6.3.</span> <span class="nav-text">Ranking of Comment Reliability</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CONCLUSION"><span class="nav-number">7.</span> <span class="nav-text">CONCLUSION</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">plato</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>
