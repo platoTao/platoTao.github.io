@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="数据流挖掘," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="ABSTRACT&amp;emsp;&amp;emsp;每一天，传感器、交易和网络产生连续的大量的数据，这被视为数据流，其需要在数据到达时对数据做在线分析。流数据可以被视为是所谓大数据的一个主要来源。尽管对数据流和大数据的预测建模在过去十年受到了极大的关注，许多研究方法通常是为表现良好的受控问题设置设计的，而忽视了真实世界应用强加的重要的挑战。这篇文章讨论了关于数据流挖掘的八大开放挑战。我们的目标是确定当前研究和">
+<meta name="keywords" content="数据流挖掘">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Open Challenges for Data Stream Mining Research">
+<meta property="og:url" content="www.platot.site/2019/08/02/Open Challenges for Data Steam Mining Research/index.html">
+<meta property="og:site_name" content="心远地自偏">
+<meta property="og:description" content="ABSTRACT&amp;emsp;&amp;emsp;每一天，传感器、交易和网络产生连续的大量的数据，这被视为数据流，其需要在数据到达时对数据做在线分析。流数据可以被视为是所谓大数据的一个主要来源。尽管对数据流和大数据的预测建模在过去十年受到了极大的关注，许多研究方法通常是为表现良好的受控问题设置设计的，而忽视了真实世界应用强加的重要的挑战。这篇文章讨论了关于数据流挖掘的八大开放挑战。我们的目标是确定当前研究和">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/62099856-03489a00-b2c2-11e9-8482-573878894745.PNG">
+<meta property="og:updated_time" content="2019-08-02T12:35:16.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Open Challenges for Data Stream Mining Research">
+<meta name="twitter:description" content="ABSTRACT&amp;emsp;&amp;emsp;每一天，传感器、交易和网络产生连续的大量的数据，这被视为数据流，其需要在数据到达时对数据做在线分析。流数据可以被视为是所谓大数据的一个主要来源。尽管对数据流和大数据的预测建模在过去十年受到了极大的关注，许多研究方法通常是为表现良好的受控问题设置设计的，而忽视了真实世界应用强加的重要的挑战。这篇文章讨论了关于数据流挖掘的八大开放挑战。我们的目标是确定当前研究和">
+<meta name="twitter:image" content="https://user-images.githubusercontent.com/23336589/62099856-03489a00-b2c2-11e9-8482-573878894745.PNG">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="www.platot.site/2019/08/02/Open Challenges for Data Steam Mining Research/"/>
+
+
+
+
+
+  <title>Open Challenges for Data Stream Mining Research | 心远地自偏</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">心远地自偏</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="www.platot.site/2019/08/02/Open Challenges for Data Steam Mining Research/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="plato">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="心远地自偏">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Open Challenges for Data Stream Mining Research</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-02T20:31:39+08:00">
+                2019-08-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="ABSTRACT"><a href="#ABSTRACT" class="headerlink" title="ABSTRACT"></a>ABSTRACT</h2><p>&emsp;&emsp;每一天，传感器、交易和网络产生连续的大量的数据，这被视为数据流，其需要在数据到达时对数据做在线分析。流数据可以被视为是所谓大数据的一个主要来源。尽管对数据流和大数据的预测建模在过去十年受到了极大的关注，许多研究方法通常是为表现良好的受控问题设置设计的，而忽视了真实世界应用强加的重要的挑战。这篇文章讨论了关于数据流挖掘的八大开放挑战。我们的目标是确定当前研究和有意义的应用之间的差距，突出开放问题，并为数据流挖掘定义一种新的应用相关的研究方向。确定的挑战包括这些问题：保护数据隐私，处理遗留系统，处理不完整和延迟信息，复杂数据的分析，评估流挖掘算法。得到的分析结果通过实际应用来说明并且提供流数据挖掘未来研究的有关路线的一般建议。</p>
+<p>&emsp;&emsp;<a href="https://dl.acm.org/citation.cfm?id=2674028" target="_blank" rel="noopener">论文地址。</a></p>
+<p><img src="https://user-images.githubusercontent.com/23336589/62099856-03489a00-b2c2-11e9-8482-573878894745.PNG" alt="CRISP"></p>
+<h2 id="DATA-STREAM-MINING"><a href="#DATA-STREAM-MINING" class="headerlink" title="DATA STREAM MINING"></a>DATA STREAM MINING</h2><p>&emsp;&emsp;挖掘大数据流面临三个主要的挑战：规模（volume），速度（velocity）和挥发性（volatility）。规模和速度要求大规模的数据在有限的时间内处理完成。从第一个到达的实例开始，可用数据的数量一直增加，从零到无穷。这要求可以在数据到达时整合信息的增量方法，并且如果不是所有数据都可被保留，还需要在线处理。挥发性，在另一方面，对应具有不断改变模式的动态环境。这里，旧数据的用途有限，即使它可以被保存并且稍后再处理一次。这是因为改变会以多种方式影响数据挖掘模型：目标变量的改变，可用特征信息的改变和漂移。</p>
+<p>&emsp;&emsp;目标变量的改变发生在，比如信用评分，当分类目标”违约“的定义变为”不违约“，由于商业或规则要求。可用特征信息的改变发生在当一种新的特征变得可用时，比如由于一种新的传感器或仪器。类似的，现有特征可能需要被排除，由于规则要求或者一种特征它的尺度发生变化，如果来自更精确仪器的数据变得可用。最后，漂移是一种当特征分布和目标标量随时间变化的现象。漂移带来的挑战一直受到广泛的研究。因此这里我们仅仅提供简明的归类。</p>
+<p>&emsp;&emsp;在有监督学习中，漂移会影响后验分布$P(y|x)$，条件特征分布$P(x|y)$，特征分布$P(x)$和类先验分布$P(y)$。区分基于假定哪一种分布受到影响和哪一种分布是静态的，服务于评估方法对特定任务的适用性。值得注意的是，在数据流的无监督学习中也存在分布改变的问题。<br>&emsp;&emsp;进一步的漂移分类可以通过：</p>
+<ol>
+<li>概念转变的平滑性：概念之间的转变可以是陡峭的也就是渐变的。</li>
+<li>单数的或重复的上下文：在前一种情况，当其上下文被新的上下文取代时，该模型就永远过时了。在后一种情况，该模型可能会在以后重新出现，比如由于商业周期或是季节性，因此，过时的模型可能恢复价值。</li>
+<li>系统的或是非系统的：在前一种情况，在分布变化的方式中存在模式，可以利用这些模式来预测变化并执行更快的模型适应。例子是可以识别的，并显示出不同的，可追踪的进化模式的子群体。 在后一种情况下，不存在这样的模式，并且看似随机地发生漂移。 后者的一个例子是变幻无常的概念漂移。</li>
+<li>真实的或是虚拟的。前一种要求模型去适应；后一种对应观察异常点或是噪声，这些不应被整合到模型中。</li>
+</ol>
+<p>&emsp;&emsp;流挖掘方法通常解决由数据的规模、速度和挥发性提出的挑战。但是，在真实世界应用中，这三个挑战常常与其他迄今尚未充分考虑的挑战吻合。</p>
+<p>&emsp;&emsp;接下来的部分讨论数据流挖掘中确认的八大挑战，以真实世界应用例子来阐述，并且为接下来的研究提出建议。</p>
+<h2 id="PROTECTING-PRIVACY-AND-CONFIDENTIALITY"><a href="#PROTECTING-PRIVACY-AND-CONFIDENTIALITY" class="headerlink" title="PROTECTING PRIVACY AND CONFIDENTIALITY"></a>PROTECTING PRIVACY AND CONFIDENTIALITY</h2><p>&emsp;&emsp;关于在数据挖掘中隐私保护和保密，数据流呈现出新的挑战和机遇。隐私保护数据挖掘已经得到超过十年的研究。其主要的目标是发展这样的数据挖掘技术，其不会披露会违背保密和隐私义务的信息或是模式。建模可以在原始数据或是匿名数据上完成，但一旦模型发布，它不应该包含会违背保密或是隐私的信息。这通常通过对敏感数据修改其值或是增加噪音来实现。</p>
+<p>&emsp;&emsp;我们为数据流挖掘中的隐私保护确认了两种主要的挑战。第一个挑战是信息不完整。数据分块到达并且模型在线更新。因此，模型永不会是最终的并且它很难在看见所有数据之前就评估隐私保护。另一方面，数据流挖掘算法具有一些固有的隐私保护性质，由于它们不需要立刻就看见所有用于建模的数据并且能够使用分块的数据增量更新这一事实。探究现有的数据流挖掘算法的隐私保护性质是将来研究的另一个有意义的方向。对于隐私保护，第二个挑战是概念漂移。数据可能随着时间演化，固定的隐私保护规则可能不会一直有效。因此，将来研究的一个重要方向就是发展可调整隐私保护机制，其能够检测概念漂移并在新环境里调整自身。</p>
+<h2 id="STREAMED-DATA-MANAGEMENT"><a href="#STREAMED-DATA-MANAGEMENT" class="headerlink" title="STREAMED DATA MANAGEMENT"></a>STREAMED DATA MANAGEMENT</h2><p>&emsp;&emsp;大多数数据流研究集中于发展解决简单场景中问题的预测模型，在这些简单场景中，数据早已经过预处理，是完整并且可以无代价的立刻获取。然而，成功的业务实现强烈依赖于使用的机器学习算法、商业目标和可利用数据的对齐。这一部分会讨论流数据相关经常被忽略的挑战。</p>
+<h3 id="Streamed-Preprocessing"><a href="#Streamed-Preprocessing" class="headerlink" title="Streamed Preprocessing"></a>Streamed Preprocessing</h3><p>&emsp;&emsp;数据预处理在所有真实世界数据分析应用中都是重要的一步，因为数据来自于复杂的环境，可能带有噪声，冗余，包含异常值或缺失值。由许多用于离线数据预处理的标准程序，但数据流引入了新的挑战，目前这些挑战还未受到足够的研究关注。</p>
+<p>&emsp;&emsp;在传统离线分析中数据预处理是一个一次性过程，通常由一名人类专家完成，但在数据流场景中，手动过程行不通，因为新数据连续不断地到来。流数据需要完全自动的预处理方法，其可以自主地优化参数和操作。此外，预处理模型需要能够随着演化的数据自动地更新自身。更进一步，预处理程序的所有更新都需要和随后的预测模型保持同步，否则预处理程序的更新导致数据表征变化，这样之前使用的预测模型就变的无用。</p>
+<p>&emsp;&emsp;数据流中预处理的问题之所以是一项挑战，这是因为数据本身固有的挑战性（连续不断地到达并且演化）。一名分析师不能够确定的知道，哪一种数据在将来会出现，并且不能够列举可能的行动。因此，不仅是模型，程序本身也需要是全自动的。</p>
+<p>&emsp;&emsp;这个研究问题可以从几个角度来解决。一种方法是研究现有数据流预测模型，并试图将它们和有选择的数据预处理方法整合在一起（比如，特征选择，离群定义和删除）。</p>
+<p>&emsp;&emsp;另一种方式是系统的刻画现有的离线预处理方法，尝试找到这些方法到数据流背景下问题的映射，并像传统预测模型扩展到数据流背景下一样，将这些方法扩展到数据流背景下的问题。</p>
+<p>&emsp;&emsp;不管是哪一种情况，为数据流中的预处理问题发展出单独的方法和方法学，都将填补数据流挖掘的真是应用中的一个重要缝隙。</p>
+<h3 id="Timing-and-Availability-of-Information"><a href="#Timing-and-Availability-of-Information" class="headerlink" title="Timing and Availability of Information"></a>Timing and Availability of Information</h3><p>&emsp;&emsp;为演化的数据流提出的大多数算法对信息的时效和可用性做出简化的假设。特别的，它们假设信息是完整的，立即可用的，并且被动免费的获取。这些假设在真实世界应用中往往并不成立，比如病人监护、机器人视觉或是市场营销。这一部分致力于讨论这三个假设和由于它们缺席带来的挑战。对这些挑战，在离线、静态数据挖掘中对应的情形早已有解决方案。我们将简要地指出这种已知解决方案到在线，不断演化的流背景的映射是否容易可行，例如通过应用窗口技术。 但是，我们将关注那些不存在这种简单映射的问题，因此这些问题在流挖掘中是开放的挑战。</p>
+<h4 id="Handling-Incomplete-Information"><a href="#Handling-Incomplete-Information" class="headerlink" title="Handling Incomplete Information"></a>Handling Incomplete Information</h4><p>&emsp;&emsp;信息的完整性假设所有变量的真实值，也就是特征和目标变量的，最终都会展示给挖掘算法。</p>
+<p>&emsp;&emsp;缺失值的问题，对应于特征的不完整，在离线静态背景下已经得到了广泛的讨论。然而，只有一小部分工作解决流背景下的此类问题，尤其是演化的数据流。因此几种开放的挑战仍然存在，包括：如何解决发生缺失值的频率不可预测，但很大程度上影响了估算质量的问题？ 如何（自动）选择最佳插补技术？ 如何在速度和统计精度之间进行权衡？</p>
+<p>&emsp;&emsp;另一个问题是目标变量的缺失。该问题在静态背景下作为半监督学习被广泛研究。应用半监督学习技术的一个要求就是至少一些来自于最近分布的数据是可用的。</p>
+<h4 id="Dealing-with-Skewed-Distribution"><a href="#Dealing-with-Skewed-Distribution" class="headerlink" title="Dealing with Skewed Distribution"></a>Dealing with Skewed Distribution</h4><p>&emsp;&emsp;类别不平衡，其中少数类别的类先验概率和多数类的相比很小，也是真实世界应用中常见的问题，例如欺诈检测和信用评分。</p>
+<h4 id="Handling-Delayed-Information"><a href="#Handling-Delayed-Information" class="headerlink" title="Handling Delayed Information"></a>Handling Delayed Information</h4><p>&emsp;&emsp;延迟意味着信息延迟一段时间后才变得可用。比如，在所谓的确认延迟的情形中，先前实例的目标变量的值在下一个实例必须被预测时并不可用。在不断演化的数据流中，这不仅仅是特征流和目标流之间的流数据集成的问题，因为概念漂移模式显示了时间局部性。 这意味着当前预测的反馈不可用于改进后续预测，但最终只能用于更晚的预测。 因此，没有最近的标记数据的样本与最近的未标记数据相对应，半监督学习方法不能直接应用。静态离线数据挖掘中的相关问题已得到解决，通过无监督转导迁移学习（或无监督域适应）：给定来自源域的标记数据，寻找相关目标域的预测模型，其中没有标记数据可用。 原则上，迁移学习的想法可用于解决演化数据流中的延迟，例如通过在基于块的方法中使用它们。然而，调整它们以用于演化数据流还从未有人尝试过，依然是一个非平凡的开放的任务，因为在数据流中的调整必须是快速和全自动的，因此不能够依赖于人类专家的反复小心的调整。此外，连续块构成几个域，因此这些连续块间的转移可能会提供系统漂移的模式。</p>
+<h4 id="Active-Selection-from-Costly-Information"><a href="#Active-Selection-from-Costly-Information" class="headerlink" title="Active Selection from Costly Information"></a>Active Selection from Costly Information</h4><p>&emsp;&emsp;在昂贵的信息片段之间智能选择的挑战是主动学习研究的主题。基于流的主动选择采样描述了一种场景，其中实例一个接一个的到来。尽管实例的特征向量可以免费得到，获取它们真实的目标值确实昂贵的，在处理下一个实例前必须做出是否获取这个目标值的决定。这对应于数据流，但对于演化的数据流并不是必须的。因此，基于流的选择采样算法只有一小部分适用于非静止环境。</p>
+<h2 id="MINING-ENTITIES-AND-EVENTS"><a href="#MINING-ENTITIES-AND-EVENTS" class="headerlink" title="MINING ENTITIES AND EVENTS"></a>MINING ENTITIES AND EVENTS</h2><p>&emsp;&emsp;传统流挖掘算法通过抵达实体的单个流进行学习。我们先介绍实体流挖掘（entity stream mining）的范式，这里构成流的实体和其他（further）流的实例（结构信息片段）相链接。在这个范式中模型学习涉及整合流信息到实体流中。学习任务包括聚类进化，实体从一种状态迁移到另一种状态，分类适应（一种实体以另一种标签重新出现）。</p>
+<p>&emsp;&emsp;然后，我们研究一种特殊的情形，其中实体与时间的发生相关联。然后，模型学习意味着识别实体上事件发生的时刻。这种场景可被视为实体流挖掘的一种特殊情形，因为一个事件可以被视为包含单个值（时间的发生）的退化的实例。</p>
+<h3 id="Enity-Stream-Mining"><a href="#Enity-Stream-Mining" class="headerlink" title="Enity Stream Mining"></a>Enity Stream Mining</h3><p>&emsp;&emsp;令$T$是实体的流，比如，一家公司的顾客或一家医院的病人。我们随着时间观察实体，比如，在一家公司的网站上或是一家医院的入口附近：一个实体在离散的时间点上出现和再次出现，新的实体出现。在时间点$t$，一个实体$e \in T$和不同的信息片段链接，比如顾客的购买信息和评分信息，病人的药物测试和诊断记录。</p>
+<h4 id="Challenges-of-Aggregation"><a href="#Challenges-of-Aggregation" class="headerlink" title="Challenges of Aggregation"></a>Challenges of Aggregation</h4><p>&emsp;&emsp;实体流挖掘任务的第一个挑战涉及信息摘要：如何将其他流中可用的信息聚合到每一个时间点t的每个实体e上？应该为每一个实体存储哪些信息？如何处理不同流的速度不一致的问题？如何有效地在流上学习？回答这些问题将会使得我们能够发展出用于聚合后的实体流挖掘的传统流挖掘方法。</p>
+<h4 id="Challenges-of-Learning"><a href="#Challenges-of-Learning" class="headerlink" title="Challenges of Learning"></a>Challenges of Learning</h4><p>&emsp;&emsp;即使在流$T_1,\cdot \cdot \cdot,T_m$上的信息聚合智能地完成，实体流挖掘依然需要更多不只是传统流挖掘的方法。理由是因为流$T$中的实体可能会在流中重新出现或是演化。具体来说，在无监督背景下，实体可以在每个时间点链接到概念上不同的实例，例如， 反映客户的偏好变化。 在监督环境中，一个实体<br>可能会改变其标签; 例如，客户对风险的亲和力可能改变以应对市场变化或家庭状况的变化。这对应于实体漂移，比如，一种超越传统概念漂移的新类型的漂移附属于模型。因此，如何追踪实体漂移，如何捕捉实体漂移和模型漂移之间的相互作用？</p>
+<h3 id="Analyzing-Event-Data"><a href="#Analyzing-Event-Data" class="headerlink" title="Analyzing Event Data"></a>Analyzing Event Data</h3><p>&emsp;&emsp;事件是一个常见但目前很少在数据流背景中分析的一个例子。在静态环境中，事件通常通过event history analysis（EHA）来研究，这是一种静态的方法，用于建模特定对象在生命周期与其关联的事件的时间分布。具体的，EHA关注于时间的持续时间，或是同一个时间出现的间隔时间，或是两个事件之间的时间。</p>
+<h2 id="EVALUATION-OF-DATA-STREAM-ALGORITHMS"><a href="#EVALUATION-OF-DATA-STREAM-ALGORITHMS" class="headerlink" title="EVALUATION OF DATA STREAM ALGORITHMS"></a>EVALUATION OF DATA STREAM ALGORITHMS</h2><p>&emsp;&emsp;单一的评估准则很难反映出其性能，但为数据流挖掘算法创造复杂的评估方法的问题在于数据流自身的尺寸和演化性质。评估和可视化相当的苦难，举个例子，如果评估必须在线完成，仅使用有限的资源，并且分类任务随着时间改变。实际上，算法调整适应的能力是另一个需要评估的方面，尽管用以执行该评估的信息不总是可用的。评估中另一个困难包括处理复杂关系的流和处理类分别演化的类别不平衡。最后，我们不仅需要评估数据流挖掘算法的单个方面，还需要联合其他几个方面到一个全局评估模型中，这还会考虑到专家知识和用户偏好。</p>
+<h2 id="FROM-ALGORITHMS-TO-DECISION-SUPPORT-SYSTEMS"><a href="#FROM-ALGORITHMS-TO-DECISION-SUPPORT-SYSTEMS" class="headerlink" title="FROM ALGORITHMS TO DECISION SUPPORT SYSTEMS"></a>FROM ALGORITHMS TO DECISION SUPPORT SYSTEMS</h2><p>&emsp;&emsp;尽管许多用于数据流的算法可用，将其部署在具有真实流数据的现实应用中却提出了新的挑战。这部分指出了两个挑战：令模型变得更简单和处理遗留系统。</p>
+<h3 id="Making-model-simple，more-reactive，and-more-specialized"><a href="#Making-model-simple，more-reactive，and-more-specialized" class="headerlink" title="Making model simple，more reactive，and more specialized"></a>Making model simple，more reactive，and more specialized</h3><p>&emsp;&emsp;在这一部分，我们讨论一些方面，比如模型的简化，它其中离线部分和在线部分的合适结合，它应用域的自定义要求。</p>
+<h4 id="Minimizing-parameter-dependence"><a href="#Minimizing-parameter-dependence" class="headerlink" title="Minimizing parameter dependence"></a>Minimizing parameter dependence</h4><p>&emsp;&emsp;自适应预测系统本质上是参数化的。 在大多数情况下，设置这些参数或调整它们是一项艰巨的任务，这反过来又会对这些系统的可用性产生负面影响。 因此，强烈希望系统具有尽可能少的用户可调节参数。</p>
+<h4 id="Combining-offline-and-online-models"><a href="#Combining-offline-and-online-models" class="headerlink" title="Combining offline and online models"></a>Combining offline and online models</h4><p>&emsp;&emsp;在线学习，逐个处理实例并逐步建立模型，在数据处理和模型适应方面都很快。离线（或批量）学习允许使用更复杂的挖掘技术，可能会耗费更多时间或需要人类专家。</p>
+<p>&emsp;&emsp;它们的组合可以在挖掘过程的许多步骤中进行，例如数据准备和预处理步骤。 举个例子，在大数据上，离线学习可以使用批量处理和大量并行从数据中提取基本和可持续的趋势。 然后，在线学习可以从在线事件中获取实时决策，以优化即时支付。</p>
+<h4 id="Solving-the-right-problem"><a href="#Solving-the-right-problem" class="headerlink" title="Solving the right problem"></a>Solving the right problem</h4><p>&emsp;&emsp;领域知识可能有助于解决此论文中提出的许多问题，系统地利用应用领域的特殊性。 但是，这很少被典型的数据流方法考虑，它们被创建来处理各种各样的域。但是，建立的预测模型系统地纳入域知识或域特定信息需要选择正确的优化标准。</p>
+<p>&emsp;&emsp;我们需要发展一种学习方法，其在最小化目标函数的同时，还需要考虑到：内存消耗，预测性能，反应性，自我监测和调整，和自适应。数据流研究缺乏用于形成和优化这些准则的方法论。</p>
+<p>&emsp;&emsp;因此，模型应该简单，它们不需要依赖于一系列需要小心调整的参数。另外，它们需要联合离线和在线技术来接触大规模快速数据中的挑战。它们需要解决正确的问题。这些构成了一个需要解决多准则优化的任务。最后，它们必须可以从小规模数据中学习，且具有很小的方差，并且能快速地对漂移反应。</p>
+<h3 id="Dealing-with-Legacy-System"><a href="#Dealing-with-Legacy-System" class="headerlink" title="Dealing with Legacy System"></a>Dealing with Legacy System</h3><p>&emsp;&emsp;在许多应用程序环境中，例如金融服务或医疗保健系统，关键业务应用程序已经运行了几十年。 由于这些应用程序产生大量的数据，通过实时流挖掘方法处理这些数据量变得非常有希望。 但是，通常不可能为了充分引入成熟的流挖掘系统，而改变现有的基础设施。 不改变现有的基础设施，需要将流挖掘方法整合到遗留系统的技术。 一般来说，有关遗留系统的问题是特定于域的，并且包含技术和程序问题。</p>
+<h2 id="CONCLUDING-REMARKS"><a href="#CONCLUDING-REMARKS" class="headerlink" title="CONCLUDING REMARKS"></a>CONCLUDING REMARKS</h2><p>&emsp;&emsp;在本论文中，我们讨论了来源于真实世界的关于数据流的研究挑战。我们分析的问题涉及隐私，信息可用性，关系和事件流，预处理，模型复杂度，评估和遗留系统。这些被讨论的问题通过实际的例子得到阐述，包括GPS系统，推特分析，地政预测，消费者侧写和空间站监控。对现实世界问题的研究突出了现有方法的缺点，并展示了以前未解决的研究问题。</p>
+<p>&emsp;&emsp;因此，我们呼吁数据流挖掘社区需要考虑数据流研究的以下行动要点：</p>
+<ol>
+<li>发展确保隐私的方法（数据到达时信息不完整），同时考虑到数据演化的本质。</li>
+<li>考虑信息的可用性，通过发展模型处理不完整的、延迟的或是有代价的反馈。</li>
+<li>利用流实体之间的关系。</li>
+<li>为审查数据发展事件检测方法和预测模型。</li>
+<li>为流预处理发展系统的方法。</li>
+<li>通过多目标优化创建标准创建更简单的模型，不仅考虑准确性，还考虑计算资源，诊断，反应性，可解释性。</li>
+<li>建立面向评估的多准则视角，处理缺乏关于数据如何变化的基本事实。</li>
+<li>开发在线监控系统，确保任何更新的可靠性，并平衡资源分配。</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/数据流挖掘/" rel="tag"># 数据流挖掘</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/08/02/A Survey on Concept Drift Adaptation/" rel="next" title="A Survey on Concept Drift Adaptation">
+                <i class="fa fa-chevron-left"></i> A Survey on Concept Drift Adaptation
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/08/02/文献汇报五/" rel="prev" title="文献汇报五">
+                文献汇报五 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">plato</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ABSTRACT"><span class="nav-number">1.</span> <span class="nav-text">ABSTRACT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DATA-STREAM-MINING"><span class="nav-number">2.</span> <span class="nav-text">DATA STREAM MINING</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PROTECTING-PRIVACY-AND-CONFIDENTIALITY"><span class="nav-number">3.</span> <span class="nav-text">PROTECTING PRIVACY AND CONFIDENTIALITY</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#STREAMED-DATA-MANAGEMENT"><span class="nav-number">4.</span> <span class="nav-text">STREAMED DATA MANAGEMENT</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Streamed-Preprocessing"><span class="nav-number">4.1.</span> <span class="nav-text">Streamed Preprocessing</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Timing-and-Availability-of-Information"><span class="nav-number">4.2.</span> <span class="nav-text">Timing and Availability of Information</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Handling-Incomplete-Information"><span class="nav-number">4.2.1.</span> <span class="nav-text">Handling Incomplete Information</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Dealing-with-Skewed-Distribution"><span class="nav-number">4.2.2.</span> <span class="nav-text">Dealing with Skewed Distribution</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Handling-Delayed-Information"><span class="nav-number">4.2.3.</span> <span class="nav-text">Handling Delayed Information</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Active-Selection-from-Costly-Information"><span class="nav-number">4.2.4.</span> <span class="nav-text">Active Selection from Costly Information</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MINING-ENTITIES-AND-EVENTS"><span class="nav-number">5.</span> <span class="nav-text">MINING ENTITIES AND EVENTS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Enity-Stream-Mining"><span class="nav-number">5.1.</span> <span class="nav-text">Enity Stream Mining</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Challenges-of-Aggregation"><span class="nav-number">5.1.1.</span> <span class="nav-text">Challenges of Aggregation</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Challenges-of-Learning"><span class="nav-number">5.1.2.</span> <span class="nav-text">Challenges of Learning</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Analyzing-Event-Data"><span class="nav-number">5.2.</span> <span class="nav-text">Analyzing Event Data</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#EVALUATION-OF-DATA-STREAM-ALGORITHMS"><span class="nav-number">6.</span> <span class="nav-text">EVALUATION OF DATA STREAM ALGORITHMS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FROM-ALGORITHMS-TO-DECISION-SUPPORT-SYSTEMS"><span class="nav-number">7.</span> <span class="nav-text">FROM ALGORITHMS TO DECISION SUPPORT SYSTEMS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Making-model-simple，more-reactive，and-more-specialized"><span class="nav-number">7.1.</span> <span class="nav-text">Making model simple，more reactive，and more specialized</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Minimizing-parameter-dependence"><span class="nav-number">7.1.1.</span> <span class="nav-text">Minimizing parameter dependence</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Combining-offline-and-online-models"><span class="nav-number">7.1.2.</span> <span class="nav-text">Combining offline and online models</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Solving-the-right-problem"><span class="nav-number">7.1.3.</span> <span class="nav-text">Solving the right problem</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Dealing-with-Legacy-System"><span class="nav-number">7.2.</span> <span class="nav-text">Dealing with Legacy System</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CONCLUDING-REMARKS"><span class="nav-number">8.</span> <span class="nav-text">CONCLUDING REMARKS</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">plato</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>

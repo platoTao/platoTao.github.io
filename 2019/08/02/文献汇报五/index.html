@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="文献汇报," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="工作概述&amp;emsp;&amp;emsp;本次阅读学习了三篇论文，都是关于数据流挖掘的综述文献。这些文章主要概述是的对流数据挖掘中概念漂移的处理，这包括增量学习，概念漂移检测和适应，但对数据流挖掘中的聚类和异常点检测没有介绍。另外，关于数据流挖掘的半监督和无监督方法，及验证延迟也着墨较少。&amp;emsp;&amp;emsp; 一些思考&amp;emsp;&amp;emsp;1. 由于概念漂移，算法要求具有遗忘机制，常见的遗忘机制有窗口">
+<meta name="keywords" content="文献汇报">
+<meta property="og:type" content="article">
+<meta property="og:title" content="文献汇报五">
+<meta property="og:url" content="www.platot.site/2019/08/02/文献汇报五/index.html">
+<meta property="og:site_name" content="心远地自偏">
+<meta property="og:description" content="工作概述&amp;emsp;&amp;emsp;本次阅读学习了三篇论文，都是关于数据流挖掘的综述文献。这些文章主要概述是的对流数据挖掘中概念漂移的处理，这包括增量学习，概念漂移检测和适应，但对数据流挖掘中的聚类和异常点检测没有介绍。另外，关于数据流挖掘的半监督和无监督方法，及验证延迟也着墨较少。&amp;emsp;&amp;emsp; 一些思考&amp;emsp;&amp;emsp;1. 由于概念漂移，算法要求具有遗忘机制，常见的遗忘机制有窗口">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/62099856-03489a00-b2c2-11e9-8482-573878894745.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/62263819-1d17e780-b450-11e9-89f8-0928d51fca63.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/62263820-1db07e00-b450-11e9-8443-d1210d4cc1b7.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/62263822-1db07e00-b450-11e9-8e9e-f6bbe49db152.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/62263823-1e491480-b450-11e9-8cbb-fdbe19a2d488.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/62263825-1e491480-b450-11e9-933a-e51060df2c36.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/62263827-1ee1ab00-b450-11e9-8356-b96b9a3eea00.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/62263828-1ee1ab00-b450-11e9-8ff1-6af917e51db1.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/62263830-1ee1ab00-b450-11e9-99ca-cbed2de6820e.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/62263813-1be6ba80-b450-11e9-877e-da80ff934850.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/62263814-1be6ba80-b450-11e9-9292-7d63be2fbfec.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/62263816-1c7f5100-b450-11e9-87cb-1eee0bcfa32b.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/62263818-1d17e780-b450-11e9-9b1d-5f6c7aa9a3fa.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/62353853-22536000-b53e-11e9-89e9-cfdf09f8935a.PNG">
+<meta property="og:updated_time" content="2019-08-02T12:32:06.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="文献汇报五">
+<meta name="twitter:description" content="工作概述&amp;emsp;&amp;emsp;本次阅读学习了三篇论文，都是关于数据流挖掘的综述文献。这些文章主要概述是的对流数据挖掘中概念漂移的处理，这包括增量学习，概念漂移检测和适应，但对数据流挖掘中的聚类和异常点检测没有介绍。另外，关于数据流挖掘的半监督和无监督方法，及验证延迟也着墨较少。&amp;emsp;&amp;emsp; 一些思考&amp;emsp;&amp;emsp;1. 由于概念漂移，算法要求具有遗忘机制，常见的遗忘机制有窗口">
+<meta name="twitter:image" content="https://user-images.githubusercontent.com/23336589/62099856-03489a00-b2c2-11e9-8482-573878894745.PNG">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="www.platot.site/2019/08/02/文献汇报五/"/>
+
+
+
+
+
+  <title>文献汇报五 | 心远地自偏</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">心远地自偏</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="www.platot.site/2019/08/02/文献汇报五/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="plato">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="心远地自偏">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">文献汇报五</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-02T20:31:39+08:00">
+                2019-08-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="工作概述"><a href="#工作概述" class="headerlink" title="工作概述"></a>工作概述</h2><p>&emsp;&emsp;本次阅读学习了三篇论文，都是关于数据流挖掘的综述文献。这些文章主要概述是的对流数据挖掘中概念漂移的处理，这包括增量学习，概念漂移检测和适应，但对数据流挖掘中的聚类和异常点检测没有介绍。另外，关于数据流挖掘的半监督和无监督方法，及验证延迟也着墨较少。<br>&emsp;&emsp;</p>
+<h2 id="一些思考"><a href="#一些思考" class="headerlink" title="一些思考"></a>一些思考</h2><p>&emsp;&emsp;1. 由于概念漂移，算法要求具有遗忘机制，常见的遗忘机制有窗口化，样本权重和采样。这些方法都是在数据或是数据特征上使用遗忘机制，有没有可能使模型本身（参数）更新就使用遗忘机制，类似LSTM那样的遗忘更新机制。<br>&emsp;&emsp;2. 元学习我了解很少，仅知道是学习关于如何学习，仅需要很少都样本就可以完成学习。那利用元学习可以完美的解决的概念漂移的问题，因为只需要很少的样本就可以完成模型的重训练。<br>&emsp;&emsp;3. 是否可以将概念漂移看作是噪声（各种不同的噪声），对发生变化的数据执行去噪处理，换句话说保持数据的分布不变？</p>
+<p>&emsp;&emsp;4. 基于隐藏上下文去检测概念漂移是一个很好的研究方向，初略猜想，这需要特定领域的专家知识。</p>
+<h2 id="Open-Challenges-for-Data-Stream-Mining-Research"><a href="#Open-Challenges-for-Data-Stream-Mining-Research" class="headerlink" title="Open Challenges for Data Stream Mining Research"></a>Open Challenges for Data Stream Mining Research</h2><h3 id="ABSTRACT"><a href="#ABSTRACT" class="headerlink" title="ABSTRACT"></a>ABSTRACT</h3><p>&emsp;&emsp;每一天，传感器、交易和网络产生连续的大量的数据，这被视为数据流，其需要在数据到达时对数据做在线分析。流数据可以被视为是所谓大数据的一个主要来源。尽管对数据流和大数据的预测建模在过去十年受到了极大的关注，许多研究方法通常是为表现良好的受控问题设置设计的，而忽视了真实世界应用强加的重要的挑战。这篇文章讨论了关于数据流挖掘的八大开放挑战。我们的目标是确定当前研究和有意义的应用之间的差距，突出开放问题，并为数据流挖掘定义一种新的应用相关的研究方向。确定的挑战包括这些问题：保护数据隐私，处理遗留系统，处理不完整和延迟信息，复杂数据的分析，评估流挖掘算法。得到的分析结果通过实际应用来说明并且提供流数据挖掘未来研究的有关路线的一般建议。</p>
+<p>&emsp;&emsp;<a href="https://dl.acm.org/citation.cfm?id=2674028" target="_blank" rel="noopener">论文地址</a></p>
+<p><img src="https://user-images.githubusercontent.com/23336589/62099856-03489a00-b2c2-11e9-8482-573878894745.PNG" alt="CRISP"></p>
+<h3 id="DATA-STREAM-MINING"><a href="#DATA-STREAM-MINING" class="headerlink" title="DATA STREAM MINING"></a>DATA STREAM MINING</h3><p>&emsp;&emsp;挖掘大数据流面临三个主要的挑战：规模（volume），速度（velocity）和挥发性（volatility）。规模和速度要求大规模的数据在有限的时间内处理完成。从第一个到达的实例开始，可用数据的数量一直增加，从零到无穷。这要求可以在数据到达时整合信息的增量方法，并且如果不是所有数据都可被保留，还需要在线处理。挥发性，在另一方面，对应具有不断改变模式的动态环境。这里，旧数据的用途有限，即使它可以被保存并且稍后再处理一次。这是因为改变会以多种方式影响数据挖掘模型：目标变量的改变，可用特征信息的改变和漂移。</p>
+<p>&emsp;&emsp;目标变量的改变发生在，比如信用评分，当分类目标”违约“的定义变为”不违约“，由于商业或规则要求。可用特征信息的改变发生在当一种新的特征变得可用时，比如由于一种新的传感器或仪器。类似的，现有特征可能需要被排除，由于规则要求或者一种特征它的尺度发生变化，如果来自更精确仪器的数据变得可用。最后，漂移是一种当特征分布和目标标量随时间变化的现象。漂移带来的挑战一直受到广泛的研究。因此这里我们仅仅提供简明的归类。</p>
+<p>&emsp;&emsp;在有监督学习中，漂移会影响后验分布$P(y|x)$，条件特征分布$P(x|y)$，特征分布$P(x)$和类先验分布$P(y)$。区分基于假定哪一种分布受到影响和哪一种分布是静态的，服务于评估方法对特定任务的适用性。值得注意的是，在数据流的无监督学习中也存在分布改变的问题。<br>&emsp;&emsp;进一步的漂移分类可以通过：</p>
+<ol>
+<li>概念转变的平滑性：概念之间的转变可以是陡峭的也就是渐变的。</li>
+<li>单数的或重复的上下文：在前一种情况，当其上下文被新的上下文取代时，该模型就永远过时了。在后一种情况，该模型可能会在以后重新出现，比如由于商业周期或是季节性，因此，过时的模型可能恢复价值。</li>
+<li>系统的或是非系统的：在前一种情况，在分布变化的方式中存在模式，可以利用这些模式来预测变化并执行更快的模型适应。例子是可以识别的，并显示出不同的，可追踪的进化模式的子群体。 在后一种情况下，不存在这样的模式，并且看似随机地发生漂移。 后者的一个例子是变幻无常的概念漂移。</li>
+<li>真实的或是虚拟的。前一种要求模型去适应；后一种对应观察异常点或是噪声，这些不应被整合到模型中。</li>
+</ol>
+<p>&emsp;&emsp;流挖掘方法通常解决由数据的规模、速度和挥发性提出的挑战。但是，在真实世界应用中，这三个挑战常常与其他迄今尚未充分考虑的挑战吻合。</p>
+<p>&emsp;&emsp;接下来的部分讨论数据流挖掘中确认的八大挑战，以真实世界应用例子来阐述，并且为接下来的研究提出建议。</p>
+<h3 id="PROTECTING-PRIVACY-AND-CONFIDENTIALITY"><a href="#PROTECTING-PRIVACY-AND-CONFIDENTIALITY" class="headerlink" title="PROTECTING PRIVACY AND CONFIDENTIALITY"></a>PROTECTING PRIVACY AND CONFIDENTIALITY</h3><p>&emsp;&emsp;关于在数据挖掘中隐私保护和保密，数据流呈现出新的挑战和机遇。隐私保护数据挖掘已经得到超过十年的研究。其主要的目标是发展这样的数据挖掘技术，其不会披露会违背保密和隐私义务的信息或是模式。建模可以在原始数据或是匿名数据上完成，但一旦模型发布，它不应该包含会违背保密或是隐私的信息。这通常通过对敏感数据修改其值或是增加噪音来实现。</p>
+<p>&emsp;&emsp;我们为数据流挖掘中的隐私保护确认了两种主要的挑战。第一个挑战是信息不完整。数据分块到达并且模型在线更新。因此，模型永不会是最终的并且它很难在看见所有数据之前就评估隐私保护。另一方面，数据流挖掘算法具有一些固有的隐私保护性质，由于它们不需要立刻就看见所有用于建模的数据并且能够使用分块的数据增量更新这一事实。探究现有的数据流挖掘算法的隐私保护性质是将来研究的另一个有意义的方向。对于隐私保护，第二个挑战是概念漂移。数据可能随着时间演化，固定的隐私保护规则可能不会一直有效。因此，将来研究的一个重要方向就是发展可调整隐私保护机制，其能够检测概念漂移并在新环境里调整自身。</p>
+<h3 id="STREAMED-DATA-MANAGEMENT"><a href="#STREAMED-DATA-MANAGEMENT" class="headerlink" title="STREAMED DATA MANAGEMENT"></a>STREAMED DATA MANAGEMENT</h3><p>&emsp;&emsp;大多数数据流研究集中于发展解决简单场景中问题的预测模型，在这些简单场景中，数据早已经过预处理，是完整并且可以无代价的立刻获取。然而，成功的业务实现强烈依赖于使用的机器学习算法、商业目标和可利用数据的对齐。这一部分会讨论流数据相关经常被忽略的挑战。</p>
+<h4 id="Streamed-Preprocessing"><a href="#Streamed-Preprocessing" class="headerlink" title="Streamed Preprocessing"></a>Streamed Preprocessing</h4><p>&emsp;&emsp;数据预处理在所有真实世界数据分析应用中都是重要的一步，因为数据来自于复杂的环境，可能带有噪声，冗余，包含异常值或缺失值。由许多用于离线数据预处理的标准程序，但数据流引入了新的挑战，目前这些挑战还未受到足够的研究关注。</p>
+<p>&emsp;&emsp;在传统离线分析中数据预处理是一个一次性过程，通常由一名人类专家完成，但在数据流场景中，手动过程行不通，因为新数据连续不断地到来。流数据需要完全自动的预处理方法，其可以自主地优化参数和操作。此外，预处理模型需要能够随着演化的数据自动地更新自身。更进一步，预处理程序的所有更新都需要和随后的预测模型保持同步，否则预处理程序的更新导致数据表征变化，这样之前使用的预测模型就变的无用。</p>
+<p>&emsp;&emsp;数据流中预处理的问题之所以是一项挑战，这是因为数据本身固有的挑战性（连续不断地到达并且演化）。一名分析师不能够确定的知道，哪一种数据在将来会出现，并且不能够列举可能的行动。因此，不仅是模型，程序本身也需要是全自动的。</p>
+<p>&emsp;&emsp;这个研究问题可以从几个角度来解决。一种方法是研究现有数据流预测模型，并试图将它们和有选择的数据预处理方法整合在一起（比如，特征选择，离群定义和删除）。</p>
+<p>&emsp;&emsp;另一种方式是系统的刻画现有的离线预处理方法，尝试找到这些方法到数据流背景下问题的映射，并像传统预测模型扩展到数据流背景下一样，将这些方法扩展到数据流背景下的问题。</p>
+<p>&emsp;&emsp;不管是哪一种情况，为数据流中的预处理问题发展出单独的方法和方法学，都将填补数据流挖掘的真是应用中的一个重要缝隙。</p>
+<h4 id="Timing-and-Availability-of-Information"><a href="#Timing-and-Availability-of-Information" class="headerlink" title="Timing and Availability of Information"></a>Timing and Availability of Information</h4><p>&emsp;&emsp;为演化的数据流提出的大多数算法对信息的时效和可用性做出简化的假设。特别的，它们假设信息是完整的，立即可用的，并且被动免费的获取。这些假设在真实世界应用中往往并不成立，比如病人监护、机器人视觉或是市场营销。这一部分致力于讨论这三个假设和由于它们缺席带来的挑战。对这些挑战，在离线、静态数据挖掘中对应的情形早已有解决方案。我们将简要地指出这种已知解决方案到在线，不断演化的流背景的映射是否容易可行，例如通过应用窗口技术。 但是，我们将关注那些不存在这种简单映射的问题，因此这些问题在流挖掘中是开放的挑战。</p>
+<h5 id="Handling-Incomplete-Information"><a href="#Handling-Incomplete-Information" class="headerlink" title="Handling Incomplete Information"></a>Handling Incomplete Information</h5><p>&emsp;&emsp;信息的完整性假设所有变量的真实值，也就是特征和目标变量的，最终都会展示给挖掘算法。</p>
+<p>&emsp;&emsp;缺失值的问题，对应于特征的不完整，在离线静态背景下已经得到了广泛的讨论。然而，只有一小部分工作解决流背景下的此类问题，尤其是演化的数据流。因此几种开放的挑战仍然存在，包括：如何解决发生缺失值的频率不可预测，但很大程度上影响了估算质量的问题？ 如何（自动）选择最佳插补技术？ 如何在速度和统计精度之间进行权衡？</p>
+<p>&emsp;&emsp;另一个问题是目标变量的缺失。该问题在静态背景下作为半监督学习被广泛研究。应用半监督学习技术的一个要求就是至少一些来自于最近分布的数据是可用的。</p>
+<h5 id="Dealing-with-Skewed-Distribution"><a href="#Dealing-with-Skewed-Distribution" class="headerlink" title="Dealing with Skewed Distribution"></a>Dealing with Skewed Distribution</h5><p>&emsp;&emsp;类别不平衡，其中少数类别的类先验概率和多数类的相比很小，也是真实世界应用中常见的问题，例如欺诈检测和信用评分。</p>
+<h5 id="Handling-Delayed-Information"><a href="#Handling-Delayed-Information" class="headerlink" title="Handling Delayed Information"></a>Handling Delayed Information</h5><p>&emsp;&emsp;延迟意味着信息延迟一段时间后才变得可用。比如，在所谓的确认延迟的情形中，先前实例的目标变量的值在下一个实例必须被预测时并不可用。在不断演化的数据流中，这不仅仅是特征流和目标流之间的流数据集成的问题，因为概念漂移模式显示了时间局部性。 这意味着当前预测的反馈不可用于改进后续预测，但最终只能用于更晚的预测。 因此，没有最近的标记数据的样本与最近的未标记数据相对应，半监督学习方法不能直接应用。静态离线数据挖掘中的相关问题已得到解决，通过无监督转导迁移学习（或无监督域适应）：给定来自源域的标记数据，寻找相关目标域的预测模型，其中没有标记数据可用。 原则上，迁移学习的想法可用于解决演化数据流中的延迟，例如通过在基于块的方法中使用它们。然而，调整它们以用于演化数据流还从未有人尝试过，依然是一个非平凡的开放的任务，因为在数据流中的调整必须是快速和全自动的，因此不能够依赖于人类专家的反复小心的调整。此外，连续块构成几个域，因此这些连续块间的转移可能会提供系统漂移的模式。</p>
+<h5 id="Active-Selection-from-Costly-Information"><a href="#Active-Selection-from-Costly-Information" class="headerlink" title="Active Selection from Costly Information"></a>Active Selection from Costly Information</h5><p>&emsp;&emsp;在昂贵的信息片段之间智能选择的挑战是主动学习研究的主题。基于流的主动选择采样描述了一种场景，其中实例一个接一个的到来。尽管实例的特征向量可以免费得到，获取它们真实的目标值确实昂贵的，在处理下一个实例前必须做出是否获取这个目标值的决定。这对应于数据流，但对于演化的数据流并不是必须的。因此，基于流的选择采样算法只有一小部分适用于非静止环境。</p>
+<h3 id="MINING-ENTITIES-AND-EVENTS"><a href="#MINING-ENTITIES-AND-EVENTS" class="headerlink" title="MINING ENTITIES AND EVENTS"></a>MINING ENTITIES AND EVENTS</h3><p>&emsp;&emsp;传统流挖掘算法通过抵达实体的单个流进行学习。我们先介绍实体流挖掘（entity stream mining）的范式，这里构成流的实体和其他（further）流的实例（结构信息片段）相链接。在这个范式中模型学习涉及整合流信息到实体流中。学习任务包括聚类进化，实体从一种状态迁移到另一种状态，分类适应（一种实体以另一种标签重新出现）。</p>
+<p>&emsp;&emsp;然后，我们研究一种特殊的情形，其中实体与时间的发生相关联。然后，模型学习意味着识别实体上事件发生的时刻。这种场景可被视为实体流挖掘的一种特殊情形，因为一个事件可以被视为包含单个值（时间的发生）的退化的实例。</p>
+<h4 id="Enity-Stream-Mining"><a href="#Enity-Stream-Mining" class="headerlink" title="Enity Stream Mining"></a>Enity Stream Mining</h4><p>&emsp;&emsp;令$T$是实体的流，比如，一家公司的顾客或一家医院的病人。我们随着时间观察实体，比如，在一家公司的网站上或是一家医院的入口附近：一个实体在离散的时间点上出现和再次出现，新的实体出现。在时间点$t$，一个实体$e \in T$和不同的信息片段链接，比如顾客的购买信息和评分信息，病人的药物测试和诊断记录。</p>
+<h5 id="Challenges-of-Aggregation"><a href="#Challenges-of-Aggregation" class="headerlink" title="Challenges of Aggregation"></a>Challenges of Aggregation</h5><p>&emsp;&emsp;实体流挖掘任务的第一个挑战涉及信息摘要：如何将其他流中可用的信息聚合到每一个时间点t的每个实体e上？应该为每一个实体存储哪些信息？如何处理不同流的速度不一致的问题？如何有效地在流上学习？回答这些问题将会使得我们能够发展出用于聚合后的实体流挖掘的传统流挖掘方法。</p>
+<h5 id="Challenges-of-Learning"><a href="#Challenges-of-Learning" class="headerlink" title="Challenges of Learning"></a>Challenges of Learning</h5><p>&emsp;&emsp;即使在流$T_1,\cdot \cdot \cdot,T_m$上的信息聚合智能地完成，实体流挖掘依然需要更多不只是传统流挖掘的方法。理由是因为流$T$中的实体可能会在流中重新出现或是演化。具体来说，在无监督背景下，实体可以在每个时间点链接到概念上不同的实例，例如， 反映客户的偏好变化。 在监督环境中，一个实体<br>可能会改变其标签; 例如，客户对风险的亲和力可能改变以应对市场变化或家庭状况的变化。这对应于实体漂移，比如，一种超越传统概念漂移的新类型的漂移附属于模型。因此，如何追踪实体漂移，如何捕捉实体漂移和模型漂移之间的相互作用？</p>
+<h4 id="Analyzing-Event-Data"><a href="#Analyzing-Event-Data" class="headerlink" title="Analyzing Event Data"></a>Analyzing Event Data</h4><p>&emsp;&emsp;事件是一个常见但目前很少在数据流背景中分析的一个例子。在静态环境中，事件通常通过event history analysis（EHA）来研究，这是一种静态的方法，用于建模特定对象在生命周期与其关联的事件的时间分布。具体的，EHA关注于时间的持续时间，或是同一个时间出现的间隔时间，或是两个事件之间的时间。</p>
+<h3 id="EVALUATION-OF-DATA-STREAM-ALGORITHMS"><a href="#EVALUATION-OF-DATA-STREAM-ALGORITHMS" class="headerlink" title="EVALUATION OF DATA STREAM ALGORITHMS"></a>EVALUATION OF DATA STREAM ALGORITHMS</h3><p>&emsp;&emsp;单一的评估准则很难反映出其性能，但为数据流挖掘算法创造复杂的评估方法的问题在于数据流自身的尺寸和演化性质。评估和可视化相当的苦难，举个例子，如果评估必须在线完成，仅使用有限的资源，并且分类任务随着时间改变。实际上，算法调整适应的能力是另一个需要评估的方面，尽管用以执行该评估的信息不总是可用的。评估中另一个困难包括处理复杂关系的流和处理类分别演化的类别不平衡。最后，我们不仅需要评估数据流挖掘算法的单个方面，还需要联合其他几个方面到一个全局评估模型中，这还会考虑到专家知识和用户偏好。</p>
+<h3 id="FROM-ALGORITHMS-TO-DECISION-SUPPORT-SYSTEMS"><a href="#FROM-ALGORITHMS-TO-DECISION-SUPPORT-SYSTEMS" class="headerlink" title="FROM ALGORITHMS TO DECISION SUPPORT SYSTEMS"></a>FROM ALGORITHMS TO DECISION SUPPORT SYSTEMS</h3><p>&emsp;&emsp;尽管许多用于数据流的算法可用，将其部署在具有真实流数据的现实应用中却提出了新的挑战。这部分指出了两个挑战：令模型变得更简单和处理遗留系统。</p>
+<h4 id="Making-model-simple，more-reactive，and-more-specialized"><a href="#Making-model-simple，more-reactive，and-more-specialized" class="headerlink" title="Making model simple，more reactive，and more specialized"></a>Making model simple，more reactive，and more specialized</h4><p>&emsp;&emsp;在这一部分，我们讨论一些方面，比如模型的简化，它其中离线部分和在线部分的合适结合，它应用域的自定义要求。</p>
+<h5 id="Minimizing-parameter-dependence"><a href="#Minimizing-parameter-dependence" class="headerlink" title="Minimizing parameter dependence"></a>Minimizing parameter dependence</h5><p>&emsp;&emsp;自适应预测系统本质上是参数化的。 在大多数情况下，设置这些参数或调整它们是一项艰巨的任务，这反过来又会对这些系统的可用性产生负面影响。 因此，强烈希望系统具有尽可能少的用户可调节参数。</p>
+<h5 id="Combining-offline-and-online-models"><a href="#Combining-offline-and-online-models" class="headerlink" title="Combining offline and online models"></a>Combining offline and online models</h5><p>&emsp;&emsp;在线学习，逐个处理实例并逐步建立模型，在数据处理和模型适应方面都很快。离线（或批量）学习允许使用更复杂的挖掘技术，可能会耗费更多时间或需要人类专家。</p>
+<p>&emsp;&emsp;它们的组合可以在挖掘过程的许多步骤中进行，例如数据准备和预处理步骤。 举个例子，在大数据上，离线学习可以使用批量处理和大量并行从数据中提取基本和可持续的趋势。 然后，在线学习可以从在线事件中获取实时决策，以优化即时支付。</p>
+<h5 id="Solving-the-right-problem"><a href="#Solving-the-right-problem" class="headerlink" title="Solving the right problem"></a>Solving the right problem</h5><p>&emsp;&emsp;领域知识可能有助于解决此论文中提出的许多问题，系统地利用应用领域的特殊性。 但是，这很少被典型的数据流方法考虑，它们被创建来处理各种各样的域。但是，建立的预测模型系统地纳入域知识或域特定信息需要选择正确的优化标准。</p>
+<p>&emsp;&emsp;我们需要发展一种学习方法，其在最小化目标函数的同时，还需要考虑到：内存消耗，预测性能，反应性，自我监测和调整，和自适应。数据流研究缺乏用于形成和优化这些准则的方法论。</p>
+<p>&emsp;&emsp;因此，模型应该简单，它们不需要依赖于一系列需要小心调整的参数。另外，它们需要联合离线和在线技术来接触大规模快速数据中的挑战。它们需要解决正确的问题。这些构成了一个需要解决多准则优化的任务。最后，它们必须可以从小规模数据中学习，且具有很小的方差，并且能快速地对漂移反应。</p>
+<h4 id="Dealing-with-Legacy-System"><a href="#Dealing-with-Legacy-System" class="headerlink" title="Dealing with Legacy System"></a>Dealing with Legacy System</h4><p>&emsp;&emsp;在许多应用程序环境中，例如金融服务或医疗保健系统，关键业务应用程序已经运行了几十年。 由于这些应用程序产生大量的数据，通过实时流挖掘方法处理这些数据量变得非常有希望。 但是，通常不可能为了充分引入成熟的流挖掘系统，而改变现有的基础设施。 不改变现有的基础设施，需要将流挖掘方法整合到遗留系统的技术。 一般来说，有关遗留系统的问题是特定于域的，并且包含技术和程序问题。</p>
+<h3 id="CONCLUDING-REMARKS"><a href="#CONCLUDING-REMARKS" class="headerlink" title="CONCLUDING REMARKS"></a>CONCLUDING REMARKS</h3><p>&emsp;&emsp;在本论文中，我们讨论了来源于真实世界的关于数据流的研究挑战。我们分析的问题涉及隐私，信息可用性，关系和事件流，预处理，模型复杂度，评估和遗留系统。这些被讨论的问题通过实际的例子得到阐述，包括GPS系统，推特分析，地政预测，消费者侧写和空间站监控。对现实世界问题的研究突出了现有方法的缺点，并展示了以前未解决的研究问题。</p>
+<p>&emsp;&emsp;因此，我们呼吁数据流挖掘社区需要考虑数据流研究的以下行动要点：</p>
+<ol>
+<li>发展确保隐私的方法（数据到达时信息不完整），同时考虑到数据演化的本质。</li>
+<li>考虑信息的可用性，通过发展模型处理不完整的、延迟的或是有代价的反馈。</li>
+<li>利用流实体之间的关系。</li>
+<li>为审查数据发展事件检测方法和预测模型。</li>
+<li>为流预处理发展系统的方法。</li>
+<li>通过多目标优化创建标准创建更简单的模型，不仅考虑准确性，还考虑计算资源，诊断，反应性，可解释性。</li>
+<li>建立面向评估的多准则视角，处理缺乏关于数据如何变化的基本事实。</li>
+<li>开发在线监控系统，确保任何更新的可靠性，并平衡资源分配。</li>
+</ol>
+<h2 id="A-Survey-on-Concept-Drift-Adaptation"><a href="#A-Survey-on-Concept-Drift-Adaptation" class="headerlink" title="A Survey on Concept Drift Adaptation"></a>A Survey on Concept Drift Adaptation</h2><h3 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h3><p>&emsp;&emsp;概念漂移是指动态改变的环境中，数据的分布随着时间发生变化这一现象。概念漂移主要是指，在线监督学习场景中，输入数据和目标变量的关系随着时间发生变化。对概念漂移通常的假设是其发生不可期望也不可预测。</p>
+<p>&emsp;&emsp;这篇论文描述了自适应学习过程（在线更新预测模型以对概念漂移做出反应），对现有的处理概念漂移的策略分类，概述了最具有代表性，最独特，最受欢迎的技术和算法，讨论了自适应算法的评估方法学，并且提出了一系列阐述用例。这篇调查以一种整合的方式报道了现有的分散的最佳算法中概念漂移的不同面。</p>
+<p>&emsp;&emsp;<a href="https://dl.acm.org/citation.cfm?id=2523813" target="_blank" rel="noopener">论文地址</a></p>
+<h3 id="ADAPTIVE-LEARNING-ALGORITHMS"><a href="#ADAPTIVE-LEARNING-ALGORITHMS" class="headerlink" title="ADAPTIVE LEARNING ALGORITHMS"></a>ADAPTIVE LEARNING ALGORITHMS</h3><p>&emsp;&emsp;由于数据流连续快速到达的特点，我们必须实时对到达的数据做出分析。由于数据会随着时间演化，我们的模型还需要对这种改变做出反应，因此需要整合新到达的数据的信息来更新模型。在线学习处理连续到达的数据，他们一开始制作一个模型并立即投入使用，在还没有全部的训练数据集时。增量学习算法的限制比在线学习的更少，它们一个接一个（或一个批次的）处理数据并且在收到每一个样本以后更新决策模型。增量算法可以随机的使用之前的样本或具有代表性的或是选择的样本。</p>
+<p>&emsp;&emsp;在时间点$t_0$和$t_1$之间，概念漂移形式化的定义如下：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/62263819-1d17e780-b450-11e9-89f8-0928d51fca63.PNG" alt="defintion of cd"></p>
+<p>数据的改变也可以被描述为这种关系的成分的改变，换句话说：</p>
+<p>— 类先验分布$p(y)$可能改变，</p>
+<p>— 类条件概率$p(X|y)$可能改变</p>
+<p>— 作为结果，类后验概率$p(y|x)$可能改变，影响了预测。</p>
+<p>&emsp;&emsp;作者认为从预测的角度，仅影响预测结果的改变需要适应，因此区分了两种类型的漂移：</p>
+<ol>
+<li>真实概念漂移，指的是$p(y|x)$改变，这可能和$p(x)$的变化有关或无关。</li>
+<li>虚假概念漂移，指的是到来的数据的分布发生变化，但不影响预测结果。</li>
+</ol>
+<p>这篇调查主要集中于处理真实概念漂移，其并不能从输入数据的分布中可见。处理真实概念漂移的技术通常依赖于预测表现的反馈。</p>
+<p>&emsp;&emsp;数据分布随着时间的改变，有图<strong>Figure 2</strong>所示的几种形式：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/62263820-1db07e00-b450-11e9-8443-d1210d4cc1b7.PNG" alt="forms of cd"></p>
+<p>&emsp;&emsp;在动态改变的环境中，预测模型需要满足如下要求：</p>
+<ol>
+<li>尽可能的检测概念漂移，如果需要就适应</li>
+<li>区分漂移和噪声，并且适应漂移，但对噪声鲁棒。</li>
+<li>比样本到达时间更少的运作并使用不超出固定内存的容量。</li>
+</ol>
+<p>&emsp;&emsp;在线自适应学习有三个步骤：</p>
+<ol>
+<li>预测。当样本$X_t$到达时，使用现在的模型$\mathcal{L}_t$预测它的$\hat{y}_t$。</li>
+<li>诊断。一段时间事件后，我们收集到真实标签$y_t$并可以估计loss$f(\hat{y},y)$</li>
+<li>更新。我们使用样本$(X_t,y_t)$来更新模型获得$\mathcal{L}_{t+1}$。</li>
+</ol>
+<p><strong>Figure 3</strong>描述了在线自适应学习的拥有方案。</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/62263822-1db07e00-b450-11e9-8e9e-f6bbe49db152.PNG" alt="figure 3"></p>
+<h3 id="TAXONOMY-OF-METHODS-FOR-CONCEPT-DRIFT-ADAPTATION"><a href="#TAXONOMY-OF-METHODS-FOR-CONCEPT-DRIFT-ADAPTATION" class="headerlink" title="TAXONOMY OF METHODS FOR CONCEPT DRIFT ADAPTATION"></a>TAXONOMY OF METHODS FOR CONCEPT DRIFT ADAPTATION</h3><p>&emsp;&emsp;在这一部分作者对自适应算法（从具有未知动态的演化数据中学习预测模型）提出了一种新分类。这一部分，作者讨论一系列实现了自适应策略的具有代表性和流行的算法。讨论围绕自适应学习的四个模块进行：memory，change detection，learning，loss estimation，如<strong>Figure 4</strong>所示。因为作者认为自适应算法的这四个模块可以相互混合和相互结合。</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/62263823-1e491480-b450-11e9-8cbb-fdbe19a2d488.PNG" alt="Figure 4"></p>
+<h4 id="Memory"><a href="#Memory" class="headerlink" title="Memory"></a>Memory</h4><p>&emsp;&emsp;在会发生概念漂移的情况下学习，不仅要求使用新数据更新模型，也需要遗忘掉旧信息。作者认为有两种记忆：短期记忆表示为数据，长期记忆表示为数据的泛化——模型。在这一部分，如<strong>Figure 5</strong>所述，作者从两个维度分析短期记忆：数据管理，这指用什么数据来学习；遗忘机制，指旧数据被丢弃的方式。</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/62263825-1e491480-b450-11e9-933a-e51060df2c36.PNG" alt="Figure 5"></p>
+<p>&emsp;&emsp;<strong>数据管理</strong>。基于大多数自适应学习算法背后的假设是：越是最近的数据，拥有用以现在预测更多的信息。因此，数据管理通常旨在从最近的数据学习：不管是从单个样本还是多个样本。</p>
+<p>&emsp;&emsp;1. 单个样本。仅在内存中保留单个样本这一信念已经根植于在线学习，它从一个时间点上的单个样本中学习，并不访问之前的样本。大多是在线学习是基于错误驱动的。在线学习的学习机制是使用最近的样本持续更新模型，这使其可被视为是对演化分布的天然的自适应算法。然而，在线学习没有显示的遗忘机制，它的自适应仅发生在由于新数据到来，旧概念被清除这一情况下。</p>
+<p>&emsp;&emsp;2. 多个样本。另一种数据管理的方式是使用多个最近样本来维护预测模型。这通常使用滑动窗口。在每一个训练步骤，使用滑动窗口中的样本来建立一个新的模型。关键的挑战是如何选择一个合适的窗口尺寸。较小的窗口可以更准确的反应当前的分布，因此可确保更快的适应新的概念漂移，但在稳定时期，较小的窗口会令系统的性能变差；一个大的窗口在稳定时期会使系统表现的更好，但对概念漂移反应更慢。</p>
+<p>&emsp;&emsp;窗口尺寸可以是固定也可是变化的。变化的窗口尺寸通常取决于一个变化检测器的指示，一个简单直接的方法是当发现变化是就缩小窗口，否则增大窗口。</p>
+<p>&emsp;&emsp;依赖窗口化之后的假设是数据的新旧程度关联它的相关性和重要性。但这个假设不是在每一种情形下都成立的。比如，当数据是噪声或者概念重复出现时，数据的新旧程度并不意味相关性。另外，如果变化很慢并且持续时间超过窗口大小，窗口化也会失败。</p>
+<p>&emsp;&emsp;<strong>遗忘机制</strong>。处理从具有未知动态的过程中生成的演化数据的最常见方法就是遗忘过时的样本。遗忘机制的选择取决于我们对数据分布变化的期望和对系统的反应性和对噪声鲁棒性之间权衡的要求。遗忘的越陡峭，反应越快，捕捉到噪声的风险也就越高。</p>
+<p>&emsp;&emsp;1. 陡峭遗忘（Abrupt Forgetting）。陡峭遗忘，或部分记忆，指的是给定的样本在训练窗口中或是在其之外的机制。有两种基本的滑动窗口模型：基于序列的，窗口大小由观察样本的数量刻画；基于时间戳的，窗口大小由持续时间定义。基于序列的窗口有两种模型：尺寸为 j 的滑动窗口 和 landmark windows。滑动窗口使用最近的样本构成一个先进先出数据结构。landmark window存储给定时间戳之后的所有样本，其尺寸是变化的。基于时间戳的尺寸为 t 的窗口包括所有 t 个单位时间到现在这个时间内到达的样本。</p>
+<p>&emsp;&emsp;克服窗口化，尤其是固定尺寸的窗口，另一个选择是采样。目标是总结数据流在长时间内的基本特征，以便从流中均匀地抽取每个包含的样本。</p>
+<p>&emsp;&emsp;2. 逐渐遗忘。这种方法会在内存中保存所有样本。在内存中的每一个样本都和一个反映其年龄的权重关联。样本权重基于这样一个简单的直觉，训练集中样本的重要性应该随着它的年龄增大而减小。</p>
+<p>&emsp;&emsp;<strong>Table 1</strong>总结了记忆方法（memory methods）。</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/62263827-1ee1ab00-b450-11e9-8356-b96b9a3eea00.PNG" alt="Table 1"></p>
+<h4 id="Change-Detection"><a href="#Change-Detection" class="headerlink" title="Change Detection"></a>Change Detection</h4><p>&emsp;&emsp;变化检测成分指的是用于检测明显的漂移和变化的技术和机制。它通过识别变化点或是变化发生时的小时间间隔来刻画和量化概念漂移。如<strong>Figure 6</strong>所示，作者按如下维度对变化检测方法分类：（1）基于序列分析的方法（2）基于控制图的方法（3）基于两个分布之间的不同的方法（4）启发式方法。显示检测变化的优点是可以提供关于产生数据过程的动态的信息。</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/62263828-1ee1ab00-b450-11e9-8ff1-6af917e51db1.PNG" alt="Figure 6"></p>
+<p>&emsp;&emsp;1. 基于序列分析的检测器。这类方法依赖于一个在线阈值，只要计算出来的统计量大于预先设置的阈值，就视为检测到一个变化。这类检测方法的准确度取决于误报警率和误检测率。</p>
+<p>&emsp;&emsp;2. 基于统计过程控制的检测器。这类方法将学习视作一个过程，监控这个过程的演化。其主要思想是计算当前的对错误率的估计，使用错误率的估计构造统计量。如果没有发生概念漂移，则统计量的概率分布不会发生变化。于是根据假设检验的方式来判断有无变化发生。</p>
+<p>&emsp;&emsp;3. 监控两种不同<strong>time-windows</strong>之上的分布。这些方法通常使用一个固定的参照窗口，其总结过去的信息，和一个在最近样本上的滑动窗口。这两个窗口上的分布使用带有零假设的统计量测试相互比较。如果零假设被拒绝，则申明在检测窗口的开始出检测到变化。比较两个窗口上的分布有多种方法，如切尔诺夫边界，KL散度，熵，样本类别分布等。还有的方法使用不同窗口上模型的准确度来比较分布差异。如使用两个模型，一个稳定预测模型使用长期历史数据，一个反应模型使用最近的样本构建。该方法使用稳定模型来预测，而使用反应模型来作为概念漂移的指示器。如果稳定模型的表现比反应模型的表现更差，就认为发现了概念漂移，这时需要替换现在的稳定模型。另一方法是比较所有时期上样本的准确率和滑动窗口上样本的准确率，如果最近准确率显著下降了，就发出概念漂移信号。这类监控两个窗口上的分布不同的方法的主要限制是内存要求，因为需要保存两个窗口上的样本。主要的优点是可以更精确地定位变化点。</p>
+<p>&emsp;&emsp;4. 上下文方法。</p>
+<p>&emsp;&emsp;Splice system 提出了一种元学习技术，实现了上下文敏感批量学习。它的主要思想是将样本的时间戳作为特征输入到一批分类器中。在第一阶段，样本使用时间戳特征得到增强，学习到一个决策树。如果该决策树找到了在时间戳特征上的一个划分，该特征上的划分显示了不同的上下文。在第二阶段，在每一个划分上使用 C4.5 来寻找临时概念。</p>
+<p>&emsp;&emsp;不管时间窗口化有没有使用，一个鲁棒的方法通常需要在动态的环境中寻求增量学习和遗忘的平衡。这一思想被运用在 IFCS 算法中，该算法在一个分类上下文中维持一系列原型。也就是，一个类被表征为许多的簇。该算法使用三种机制：staleness，penalization，和 overall accuracy。前两个指标接触模型复杂度和逐渐漂移的问题。果两个测量值中的一个低于一个非常小的阈值，称为移除 阈值，原型被移除。最后一个是用来处理渐进的和突然的漂移。staleness 追踪原型关于新数据的归属决定的活动。根据每一个原型上一次活跃到当前的时间决定原型的陈旧度，然后根据该值判断原型是否被遗忘。penalization 聚焦于处理原型做出决策的准确率，因此，在与最近输入模式的一致性方面观察模型的演变。overall accuracy就是前面介绍的统计量过程控制，旨在通过模型学习预测的错误率来处理渐变的和突变的漂移。</p>
+<p>&emsp;&emsp;<strong>Table II</strong>总结了提出的变化检测算法的性质。<strong>Table III</strong>总结了这些变化检测方法。</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/62263830-1ee1ab00-b450-11e9-99ca-cbed2de6820e.PNG" alt="Table 2"></p>
+<p><img src="https://user-images.githubusercontent.com/23336589/62263813-1be6ba80-b450-11e9-877e-da80ff934850.PNG" alt="Table 3"></p>
+<h4 id="Learning"><a href="#Learning" class="headerlink" title="Learning"></a>Learning</h4><p>&emsp;&emsp;学习成分指的是泛化样本和从演化数据中更新预测模型的机制。这一部分按照如下组织：（1）学习模式，指的是当新数据点可用是如何更新模型。（2）模型自适应分析预测模型在随时间演化的数据上的行为。（3）模型管理指的是维持活跃预测模型的技术。</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/62263814-1be6ba80-b450-11e9-9292-7d63be2fbfec.PNG" alt="Figure 7"></p>
+<p>&emsp;&emsp;1. 学习模式。作者比较两种不同的学习模式：重训练学习模式和增量学习模式。重训练学习模式在一开始使用所有可用的模型训练，当新数据到达时，之前的模型被丢弃，新数据和之前的数据合并，在其上训练新的模型。增量方法一个接一个的处理输入样本，并当接受到每个样本后更新存储在模型中的足够的统计信息，它们可能会访问之前的样本或是样本的提炼信息。在线学习模式使用最近的样本更新模型，它们通常以错误驱动的方式更新现在的模型。流算法是用于处理高速连续数据流的在线算法。这类算法使用有限的空间并且需要控制可用空间。</p>
+<p>&emsp;&emsp;2. 自适应方法。自适应策略管理预测模型的自适应。它们可以归类为两种主要的类型：盲目的和知情的。</p>
+<p>&emsp;&emsp;盲目自适应策略在没有显示检测到变化时就调整模型。盲目自适应通常使用如固定尺寸滑动窗口，并不适的在最近的窗口之中的样本上重训练模型。盲目策略是主动的，它基于损失函数来更新模型。它的主要限制是对数据中的概念漂移反应较慢。它以固定的速度遗忘旧概念，不管变化是否发生。</p>
+<p>&emsp;&emsp;知情策略是反应的，它们的行动取决于触发器是否反转。触发器可以是变化检测器或是一种特定的数据描述。知情策略下对模型的更新有两种方式，全局置换（旧模型被丢弃，新模型被构建）和局部置换（可分解的模型只需要调整那些包含被概念漂移影响的数据空间区域的节点）。</p>
+<p>&emsp;&emsp;3. 模型管理。集成学习在内存中维持多个模型的集成，它们可以做出联合预测。自适应集成通常由这样的假设所激励，在变化期间，数据是从混合分布中产生的，这可视为带有权重的分布的联合刻画了目标概念，每一个模型建模一种分布。最后的预测通常是每一个预测的权重平均，其中权重反映了每一个模型在最近数据上的表现。</p>
+<p>&emsp;&emsp;用于动态变化数据的集成方法可以归类为如下三种：（1）动态组合，基本的学习器提前训练并通过修改组合规则来动态组合以响应环境的变化。（2）学习器的连续更新，每一个学习器使用最近的批次重训练或是使用新数据在线更新。（3）结构化更新。新学习器被加入或激活，低效的学习器被移除或沉睡。这三种方法并不是互斥的。</p>
+<h4 id="Loss-estimation"><a href="#Loss-estimation" class="headerlink" title="Loss estimation"></a>Loss estimation</h4><p>&emsp;&emsp;有监督自适应系统依赖于基于环境反馈的损失估计。有使用SVM 的性质，使用某种估计方法来得到泛化错误。也有维持两个窗口，一个小窗口，包含最近的信息，一个大窗口作为参照，包含更多的也更远的最近的信息，其中也包含小窗口的数据。当变化发生时，使用从小窗口计算得到的统计量会比大窗口的更快的捕捉到变化。还有一种遗忘机制，使用衰减因子，在两种错误估计上执行PH test：长期错误估计和短期错误估计。当短期错误估计比长期错误估计显著高时，意味着发生了漂移。</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/62263816-1c7f5100-b450-11e9-87cb-1eee0bcfa32b.PNG" alt="Figure 8"></p>
+<p><img src="https://user-images.githubusercontent.com/23336589/62263818-1d17e780-b450-11e9-9b1d-5f6c7aa9a3fa.PNG" alt="Table 5"></p>
+<h4 id="Discussion"><a href="#Discussion" class="headerlink" title="Discussion"></a>Discussion</h4><p>&emsp;&emsp;有监督自适应学习算法依赖于反馈（真实标签）的立即到达。在现实中，标签可能在做出预测之后的下一个时间点才立即变得可知。然而，反馈能以不可控制的延迟后到达，能不可信，带有偏见或是昂贵的。标签可以在固定的范围内或可变时间内到达。或者，可以按需获得标签。</p>
+<h3 id="CONCLUSIONS"><a href="#CONCLUSIONS" class="headerlink" title="CONCLUSIONS"></a>CONCLUSIONS</h3><p>&emsp;&emsp;关于概念漂移的许多工作都假设变化处于隐藏的上下文中，对自适应学习系统是不可见的。因此，概念漂移被认为是不可预测，检测和处理它是反应的。但是，存在各种应用设置，其中概念漂移预期随着时间线和在建模域种的不同对象之间出现。外部上下文的可用信息和从预测特征提取的隐藏上下文可以帮助更好的处理循环的概念漂移。另外，在不同上下文之间的转移学习也是一条隐藏的研究线路。</p>
+<p>&emsp;&emsp;时间关系挖掘可以用来识别相关的漂移。在所有设置中，更准确，更主动，更透明的变化检测也许是可能的。</p>
+<p>&emsp;&emsp;这篇调查中概述的关于概念漂移的绝大部分工作并没有解决这一问题，自适应系统强制或建议特定行为的表征偏差的问题。每当存在强化反馈或闭环控制的学习机制时，我们就无法通过重放历史数据来评估和比较概念漂移处理技术的性能。因此，我们可以推测，将有更多的研究尝试将概念漂移处理技术嵌入到实际操作设置中，用于适当的验证。在演化数据之上的无监督学习问题，有监督学习上的延迟或按需标注问题，变化检测验证和自适应机制才刚开始被研究。</p>
+<p>&emsp;&emsp;概念漂移研究的下一个挑战包括：提高可扩展性，稳健性和可靠性，从所谓的黑盒适配转向更可解释的适应，减少对及时和准确反馈（真实标签）的依赖，并从自适应算法转向自适应系统，其除了自动调整决策模型之外，还可以自动完成整个知识发现过程。</p>
+<p>&emsp;&emsp;研究如何将专家知识整合到概念漂移处理和如何与领域专家交互带来了新的挑战。</p>
+<h2 id="Learning-in-Nonstationary-Environments-A-Survey"><a href="#Learning-in-Nonstationary-Environments-A-Survey" class="headerlink" title="Learning in Nonstationary Environments: A Survey"></a>Learning in Nonstationary Environments: A Survey</h2><h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>&emsp;&emsp;之前许多方法基于这样的假设，产生流数据的过程是静态的，数据是从某一个固定未知的概率分布产生的。但这个假设不仅是简单的也不是正确的。产生数据流的潜在过程可被某种非静态（演化或漂移）的现象刻画。这篇论文主要是对处理概念漂移问题而提出来的方法做一次全面的概述。作者从两个核心视角对非静态环境中学习的问题做描述：主动和被动方法。此外，这篇文献还覆盖了从初始有标注非静态环境学习，从类被不平衡的非静态环境中学习这两类问题的最新的研究。</p>
+<p>&emsp;&emsp;<a href="https://ieeexplore.ieee.org/document/7296710" target="_blank" rel="noopener">论文地址</a></p>
+<p>&emsp;&emsp;作者行文组织如下：</p>
+<ol>
+<li>形式化在非静态环境中学习用于分类任务的过程，提出可以归入非静态环境框架的场景</li>
+<li>作者描述了两种广泛的用于学习概念漂移的策略家族：主动和被动</li>
+<li>作者描述了当前和未来在非静态环境中学习的开放问题，并提供了一些关于非静态环境学习的工具和数据集资料。</li>
+</ol>
+<p><img src="https://user-images.githubusercontent.com/23336589/62353853-22536000-b53e-11e9-89e9-cfdf09f8935a.PNG" alt="mind"></p>
+<h3 id="非静态环境学习框架"><a href="#非静态环境学习框架" class="headerlink" title="非静态环境学习框架"></a>非静态环境学习框架</h3><h4 id="数据生成过程"><a href="#数据生成过程" class="headerlink" title="数据生成过程"></a>数据生成过程</h4><p>&emsp;&emsp;这一小结介绍了概念漂移的概念和类型。</p>
+<h4 id="非静态环境学习的算法考虑"><a href="#非静态环境学习的算法考虑" class="headerlink" title="非静态环境学习的算法考虑"></a>非静态环境学习的算法考虑</h4><p>&emsp;&emsp;这一小节，作者描述了为动态环境学习设计算法应该考虑三方面的因素。一个是数据分布会变化并且数据长度是无穷的。这要求算法是增量的，并且可以处理这种分布变化。一个是验证延迟的问题。另一个是通过隐藏上下文感知概念漂移。</p>
+<h4 id="在非静态环境学习框架下的相关问题"><a href="#在非静态环境学习框架下的相关问题" class="headerlink" title="在非静态环境学习框架下的相关问题"></a>在非静态环境学习框架下的相关问题</h4><p>&emsp;&emsp;在非静态环境学习可以被视为是一个框架，在这个框架之下，几种机器学习概念和问题域可以被列出。</p>
+<p>&emsp;&emsp;第一个是学习模式选择的问题，可以是监督学习，半监督学习和无监督学习。</p>
+<p>&emsp;&emsp;covariate shift，域适应和迁移学习的一个共同特点是，训练集和测试集之上的概率分布有漂移。covariate shift描述这样一种改变，训练集和测试级上，$p_{train}(y|x) = p_{test}(y|x)$,但是$p_{train}(x) \ne p_{test}(x)$。迁移学习解决这样的问题，训练数据和将来数据必须处于同样的特征空间，具有同样的分布。在域适应中，训练数据和测试数据是从不同但相关的域中分别采样的。</p>
+<h3 id="主动和被动方法"><a href="#主动和被动方法" class="headerlink" title="主动和被动方法"></a>主动和被动方法</h3><p>&emsp;&emsp;在概念漂移会出现下学习的自适应算法主要是基于两种方法：主动和被动。主动方法旨在检测概念漂移，但被动方法旨在当新数据出现时连续的更新模型，不管概念漂移是否出现。</p>
+<p>&emsp;&emsp;在实践中，两种方法都有用，但选择哪一种方法应该根据应用来定。实际上，在选择用于非静态环境学习的特定算法之前，考虑学习场景的动态是很重要的，比如，漂移率，数据在线还是批量到来，可用的计算资源和关于数据分布的任何假设。</p>
+<p>&emsp;&emsp;通常来说，被动方法可以更好的处理渐变漂移和循环漂移，而主动方法能够更好的处理突变的漂移。被动方法更适合于批量学习，而主动方法更适用于在线学习。</p>
+<p>&emsp;&emsp;其他相关的挑战包括类别不平衡和验证延迟，还有迁移学习在其中的应用等。</p>
+<h3 id="未来研究的主题"><a href="#未来研究的主题" class="headerlink" title="未来研究的主题"></a>未来研究的主题</h3><p>&emsp;&emsp;1. 学习的理论框架。非静态环境学习领域可以收益于对通用框架的更深一步的理论分析，在这个框架中，可以建立于漂移类型和几率相关的性能边界。</p>
+<p>&emsp;&emsp;2.  非静态共识最大化。当数据流里混合标注数据和未标注数据是应该怎么做？共识最大化旨在提供一种框架，可以建立和联合多个有监督或是无监督模型用于预测。一个有意义的研究方向，就是研究共识最大化在非静态环境中的使用。</p>
+<p>&emsp;&emsp;3. 无结构或异质数据流。从大数据中挖掘的一个关键问题就是适应无结构的或是异质数据（文本，图像，图）。此外，为学习而获取的数据可以具有不同的特征，例如多维度，多标签，多尺度和空间关系。正在进行的对概念漂移的应对的研究应该为这样的新数据提出新的建模和适应策略。</p>
+<p>&emsp;&emsp;4. 有限的或渐变的漂移的定义。有限的或渐变的漂移是在非静态环境中学习的算法的主要假设之一，尤其是对无监督或半监督方法。但是，什么构成了有限制的漂移的形式化定义却不在其中。作者认为当有限的漂移假设被违反时，我们不仅没有已经建立的方法来解决这些情况，我们甚至没有简明扼要的有限漂移的正式定义的数学公式。数学定义将允许社区更好地理解算法在非静态环境中的局限性。</p>
+<p>&emsp;&emsp;5. 短暂概念漂移和有限数据。该设置指的一种演化环境，概念漂移是短暂的，并且与平稳性变化相关的实例的数量可能非常有限。这是特别具有挑战性的，因为用于变化检测机制的实例非常少，并为非静态分布的参数的置信学习增加了额外的难度。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/文献汇报/" rel="tag"># 文献汇报</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/08/02/Open Challenges for Data Steam Mining Research/" rel="next" title="Open Challenges for Data Stream Mining Research">
+                <i class="fa fa-chevron-left"></i> Open Challenges for Data Stream Mining Research
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">plato</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#工作概述"><span class="nav-number">1.</span> <span class="nav-text">工作概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一些思考"><span class="nav-number">2.</span> <span class="nav-text">一些思考</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Open-Challenges-for-Data-Stream-Mining-Research"><span class="nav-number">3.</span> <span class="nav-text">Open Challenges for Data Stream Mining Research</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ABSTRACT"><span class="nav-number">3.1.</span> <span class="nav-text">ABSTRACT</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DATA-STREAM-MINING"><span class="nav-number">3.2.</span> <span class="nav-text">DATA STREAM MINING</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PROTECTING-PRIVACY-AND-CONFIDENTIALITY"><span class="nav-number">3.3.</span> <span class="nav-text">PROTECTING PRIVACY AND CONFIDENTIALITY</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#STREAMED-DATA-MANAGEMENT"><span class="nav-number">3.4.</span> <span class="nav-text">STREAMED DATA MANAGEMENT</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Streamed-Preprocessing"><span class="nav-number">3.4.1.</span> <span class="nav-text">Streamed Preprocessing</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Timing-and-Availability-of-Information"><span class="nav-number">3.4.2.</span> <span class="nav-text">Timing and Availability of Information</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Handling-Incomplete-Information"><span class="nav-number">3.4.2.1.</span> <span class="nav-text">Handling Incomplete Information</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Dealing-with-Skewed-Distribution"><span class="nav-number">3.4.2.2.</span> <span class="nav-text">Dealing with Skewed Distribution</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Handling-Delayed-Information"><span class="nav-number">3.4.2.3.</span> <span class="nav-text">Handling Delayed Information</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Active-Selection-from-Costly-Information"><span class="nav-number">3.4.2.4.</span> <span class="nav-text">Active Selection from Costly Information</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MINING-ENTITIES-AND-EVENTS"><span class="nav-number">3.5.</span> <span class="nav-text">MINING ENTITIES AND EVENTS</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Enity-Stream-Mining"><span class="nav-number">3.5.1.</span> <span class="nav-text">Enity Stream Mining</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Challenges-of-Aggregation"><span class="nav-number">3.5.1.1.</span> <span class="nav-text">Challenges of Aggregation</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Challenges-of-Learning"><span class="nav-number">3.5.1.2.</span> <span class="nav-text">Challenges of Learning</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Analyzing-Event-Data"><span class="nav-number">3.5.2.</span> <span class="nav-text">Analyzing Event Data</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#EVALUATION-OF-DATA-STREAM-ALGORITHMS"><span class="nav-number">3.6.</span> <span class="nav-text">EVALUATION OF DATA STREAM ALGORITHMS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FROM-ALGORITHMS-TO-DECISION-SUPPORT-SYSTEMS"><span class="nav-number">3.7.</span> <span class="nav-text">FROM ALGORITHMS TO DECISION SUPPORT SYSTEMS</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Making-model-simple，more-reactive，and-more-specialized"><span class="nav-number">3.7.1.</span> <span class="nav-text">Making model simple，more reactive，and more specialized</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Minimizing-parameter-dependence"><span class="nav-number">3.7.1.1.</span> <span class="nav-text">Minimizing parameter dependence</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Combining-offline-and-online-models"><span class="nav-number">3.7.1.2.</span> <span class="nav-text">Combining offline and online models</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Solving-the-right-problem"><span class="nav-number">3.7.1.3.</span> <span class="nav-text">Solving the right problem</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Dealing-with-Legacy-System"><span class="nav-number">3.7.2.</span> <span class="nav-text">Dealing with Legacy System</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CONCLUDING-REMARKS"><span class="nav-number">3.8.</span> <span class="nav-text">CONCLUDING REMARKS</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#A-Survey-on-Concept-Drift-Adaptation"><span class="nav-number">4.</span> <span class="nav-text">A Survey on Concept Drift Adaptation</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#摘要"><span class="nav-number">4.1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ADAPTIVE-LEARNING-ALGORITHMS"><span class="nav-number">4.2.</span> <span class="nav-text">ADAPTIVE LEARNING ALGORITHMS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TAXONOMY-OF-METHODS-FOR-CONCEPT-DRIFT-ADAPTATION"><span class="nav-number">4.3.</span> <span class="nav-text">TAXONOMY OF METHODS FOR CONCEPT DRIFT ADAPTATION</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Memory"><span class="nav-number">4.3.1.</span> <span class="nav-text">Memory</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Change-Detection"><span class="nav-number">4.3.2.</span> <span class="nav-text">Change Detection</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Learning"><span class="nav-number">4.3.3.</span> <span class="nav-text">Learning</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Loss-estimation"><span class="nav-number">4.3.4.</span> <span class="nav-text">Loss estimation</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Discussion"><span class="nav-number">4.3.5.</span> <span class="nav-text">Discussion</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CONCLUSIONS"><span class="nav-number">4.4.</span> <span class="nav-text">CONCLUSIONS</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Learning-in-Nonstationary-Environments-A-Survey"><span class="nav-number">5.</span> <span class="nav-text">Learning in Nonstationary Environments: A Survey</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简介"><span class="nav-number">5.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#非静态环境学习框架"><span class="nav-number">5.2.</span> <span class="nav-text">非静态环境学习框架</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#数据生成过程"><span class="nav-number">5.2.1.</span> <span class="nav-text">数据生成过程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#非静态环境学习的算法考虑"><span class="nav-number">5.2.2.</span> <span class="nav-text">非静态环境学习的算法考虑</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#在非静态环境学习框架下的相关问题"><span class="nav-number">5.2.3.</span> <span class="nav-text">在非静态环境学习框架下的相关问题</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#主动和被动方法"><span class="nav-number">5.3.</span> <span class="nav-text">主动和被动方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#未来研究的主题"><span class="nav-number">5.4.</span> <span class="nav-text">未来研究的主题</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">plato</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>

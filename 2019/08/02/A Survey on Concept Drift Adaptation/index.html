@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="数据流挖掘," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="摘要&amp;emsp;&amp;emsp;概念漂移是指动态改变的环境中，数据的分布随着时间发生变化这一现象。概念漂移主要是指，在线监督学习场景中，输入数据和目标变量的关系随着时间发生变化。对概念漂移通常的假设是其发生不可期望也不可预测。 &amp;emsp;&amp;emsp;这篇论文描述了自适应学习过程（在线更新预测模型以对概念漂移做出反应），对现有的处理概念漂移的策略分类，概述了最具有代表性，最独特，最受欢迎的技术和算法，">
+<meta name="keywords" content="数据流挖掘">
+<meta property="og:type" content="article">
+<meta property="og:title" content="A Survey on Concept Drift Adaptation">
+<meta property="og:url" content="www.platot.site/2019/08/02/A Survey on Concept Drift Adaptation/index.html">
+<meta property="og:site_name" content="心远地自偏">
+<meta property="og:description" content="摘要&amp;emsp;&amp;emsp;概念漂移是指动态改变的环境中，数据的分布随着时间发生变化这一现象。概念漂移主要是指，在线监督学习场景中，输入数据和目标变量的关系随着时间发生变化。对概念漂移通常的假设是其发生不可期望也不可预测。 &amp;emsp;&amp;emsp;这篇论文描述了自适应学习过程（在线更新预测模型以对概念漂移做出反应），对现有的处理概念漂移的策略分类，概述了最具有代表性，最独特，最受欢迎的技术和算法，">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/62263819-1d17e780-b450-11e9-89f8-0928d51fca63.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/62263820-1db07e00-b450-11e9-8443-d1210d4cc1b7.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/62263822-1db07e00-b450-11e9-8e9e-f6bbe49db152.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/62263823-1e491480-b450-11e9-8cbb-fdbe19a2d488.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/62263825-1e491480-b450-11e9-933a-e51060df2c36.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/62263827-1ee1ab00-b450-11e9-8356-b96b9a3eea00.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/62263828-1ee1ab00-b450-11e9-8ff1-6af917e51db1.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/62263830-1ee1ab00-b450-11e9-99ca-cbed2de6820e.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/62263813-1be6ba80-b450-11e9-877e-da80ff934850.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/62263814-1be6ba80-b450-11e9-9292-7d63be2fbfec.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/62263816-1c7f5100-b450-11e9-87cb-1eee0bcfa32b.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/62263818-1d17e780-b450-11e9-9b1d-5f6c7aa9a3fa.PNG">
+<meta property="og:updated_time" content="2019-08-02T12:35:44.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="A Survey on Concept Drift Adaptation">
+<meta name="twitter:description" content="摘要&amp;emsp;&amp;emsp;概念漂移是指动态改变的环境中，数据的分布随着时间发生变化这一现象。概念漂移主要是指，在线监督学习场景中，输入数据和目标变量的关系随着时间发生变化。对概念漂移通常的假设是其发生不可期望也不可预测。 &amp;emsp;&amp;emsp;这篇论文描述了自适应学习过程（在线更新预测模型以对概念漂移做出反应），对现有的处理概念漂移的策略分类，概述了最具有代表性，最独特，最受欢迎的技术和算法，">
+<meta name="twitter:image" content="https://user-images.githubusercontent.com/23336589/62263819-1d17e780-b450-11e9-89f8-0928d51fca63.PNG">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="www.platot.site/2019/08/02/A Survey on Concept Drift Adaptation/"/>
+
+
+
+
+
+  <title>A Survey on Concept Drift Adaptation | 心远地自偏</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">心远地自偏</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="www.platot.site/2019/08/02/A Survey on Concept Drift Adaptation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="plato">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="心远地自偏">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">A Survey on Concept Drift Adaptation</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-02T20:31:39+08:00">
+                2019-08-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>&emsp;&emsp;概念漂移是指动态改变的环境中，数据的分布随着时间发生变化这一现象。概念漂移主要是指，在线监督学习场景中，输入数据和目标变量的关系随着时间发生变化。对概念漂移通常的假设是其发生不可期望也不可预测。</p>
+<p>&emsp;&emsp;这篇论文描述了自适应学习过程（在线更新预测模型以对概念漂移做出反应），对现有的处理概念漂移的策略分类，概述了最具有代表性，最独特，最受欢迎的技术和算法，讨论了自适应算法的评估方法学，并且提出了一系列阐述用例。这篇调查以一种整合的方式报道了现有的分散的最佳算法中概念漂移的不同面。</p>
+<p>&emsp;&emsp;<a href="https://dl.acm.org/citation.cfm?id=2523813" target="_blank" rel="noopener">论文地址</a></p>
+<h2 id="ADAPTIVE-LEARNING-ALGORITHMS"><a href="#ADAPTIVE-LEARNING-ALGORITHMS" class="headerlink" title="ADAPTIVE LEARNING ALGORITHMS"></a>ADAPTIVE LEARNING ALGORITHMS</h2><p>&emsp;&emsp;由于数据流连续快速到达的特点，我们必须实时对到达的数据做出分析。由于数据会随着时间演化，我们的模型还需要对这种改变做出反应，因此需要整合新到达的数据的信息来更新模型。在线学习处理连续到达的数据，他们一开始制作一个模型并立即投入使用，在还没有全部的训练数据集时。增量学习算法的限制比在线学习的更少，它们一个接一个（或一个批次的）处理数据并且在收到每一个样本以后更新决策模型。增量算法可以随机的使用之前的样本或具有代表性的或是选择的样本。</p>
+<p>&emsp;&emsp;在时间点$t_0$和$t_1$之间，概念漂移形式化的定义如下：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/62263819-1d17e780-b450-11e9-89f8-0928d51fca63.PNG" alt="defintion of cd"></p>
+<p>数据的改变也可以被描述为这种关系的成分的改变，换句话说：</p>
+<p>— 类先验分布$p(y)$可能改变，</p>
+<p>— 类条件概率$p(X|y)$可能改变</p>
+<p>— 作为结果，类后验概率$p(y|x)$可能改变，影响了预测。</p>
+<p>&emsp;&emsp;作者认为从预测的角度，仅影响预测结果的改变需要适应，因此区分了两种类型的漂移：</p>
+<ol>
+<li>真实概念漂移，指的是$p(y|x)$改变，这可能和$p(x)$的变化有关或无关。</li>
+<li>虚假概念漂移，指的是到来的数据的分布发生变化，但不影响预测结果。</li>
+</ol>
+<p>这篇调查主要集中于处理真实概念漂移，其并不能从输入数据的分布中可见。处理真实概念漂移的技术通常依赖于预测表现的反馈。</p>
+<p>&emsp;&emsp;数据分布随着时间的改变，有图<strong>Figure 2</strong>所示的几种形式：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/62263820-1db07e00-b450-11e9-8443-d1210d4cc1b7.PNG" alt="forms of cd"></p>
+<p>&emsp;&emsp;在动态改变的环境中，预测模型需要满足如下要求：</p>
+<ol>
+<li>尽可能的检测概念漂移，如果需要就适应</li>
+<li>区分漂移和噪声，并且适应漂移，但对噪声鲁棒。</li>
+<li>比样本到达时间更少的运作并使用不超出固定内存的容量。</li>
+</ol>
+<p>&emsp;&emsp;在线自适应学习有三个步骤：</p>
+<ol>
+<li>预测。当样本$X_t$到达时，使用现在的模型$\mathcal{L}_t$预测它的$\hat{y}_t$。</li>
+<li>诊断。一段时间事件后，我们收集到真实标签$y_t$并可以估计loss$f(\hat{y},y)$</li>
+<li>更新。我们使用样本$(X_t,y_t)$来更新模型获得$\mathcal{L}_{t+1}$。</li>
+</ol>
+<p><strong>Figure 3</strong>描述了在线自适应学习的拥有方案。</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/62263822-1db07e00-b450-11e9-8e9e-f6bbe49db152.PNG" alt="figure 3"></p>
+<h2 id="TAXONOMY-OF-METHODS-FOR-CONCEPT-DRIFT-ADAPTATION"><a href="#TAXONOMY-OF-METHODS-FOR-CONCEPT-DRIFT-ADAPTATION" class="headerlink" title="TAXONOMY OF METHODS FOR CONCEPT DRIFT ADAPTATION"></a>TAXONOMY OF METHODS FOR CONCEPT DRIFT ADAPTATION</h2><p>&emsp;&emsp;在这一部分作者对自适应算法（从具有未知动态的演化数据中学习预测模型）提出了一种新分类。这一部分，作者讨论一系列实现了自适应策略的具有代表性和流行的算法。讨论围绕自适应学习的四个模块进行：memory，change detection，learning，loss estimation，如<strong>Figure 4</strong>所示。因为作者认为自适应算法的这四个模块可以相互混合和相互结合。</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/62263823-1e491480-b450-11e9-8cbb-fdbe19a2d488.PNG" alt="Figure 4"></p>
+<h3 id="Memory"><a href="#Memory" class="headerlink" title="Memory"></a>Memory</h3><p>&emsp;&emsp;在会发生概念漂移的情况下学习，不仅要求使用新数据更新模型，也需要遗忘掉旧信息。作者认为有两种记忆：短期记忆表示为数据，长期记忆表示为数据的泛化——模型。在这一部分，如<strong>Figure 5</strong>所述，作者从两个维度分析短期记忆：数据管理，这指用什么数据来学习；遗忘机制，指旧数据被丢弃的方式。</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/62263825-1e491480-b450-11e9-933a-e51060df2c36.PNG" alt="Figure 5"></p>
+<p>&emsp;&emsp;<strong>数据管理</strong>。基于大多数自适应学习算法背后的假设是：越是最近的数据，拥有用以现在预测更多的信息。因此，数据管理通常旨在从最近的数据学习：不管是从单个样本还是多个样本。</p>
+<p>&emsp;&emsp;1. 单个样本。仅在内存中保留单个样本这一信念已经根植于在线学习，它从一个时间点上的单个样本中学习，并不访问之前的样本。大多是在线学习是基于错误驱动的。在线学习的学习机制是使用最近的样本持续更新模型，这使其可被视为是对演化分布的天然的自适应算法。然而，在线学习没有显示的遗忘机制，它的自适应仅发生在由于新数据到来，旧概念被清除这一情况下。</p>
+<p>&emsp;&emsp;2. 多个样本。另一种数据管理的方式是使用多个最近样本来维护预测模型。这通常使用滑动窗口。在每一个训练步骤，使用滑动窗口中的样本来建立一个新的模型。关键的挑战是如何选择一个合适的窗口尺寸。较小的窗口可以更准确的反应当前的分布，因此可确保更快的适应新的概念漂移，但在稳定时期，较小的窗口会令系统的性能变差；一个大的窗口在稳定时期会使系统表现的更好，但对概念漂移反应更慢。</p>
+<p>&emsp;&emsp;窗口尺寸可以是固定也可是变化的。变化的窗口尺寸通常取决于一个变化检测器的指示，一个简单直接的方法是当发现变化是就缩小窗口，否则增大窗口。</p>
+<p>&emsp;&emsp;依赖窗口化之后的假设是数据的新旧程度关联它的相关性和重要性。但这个假设不是在每一种情形下都成立的。比如，当数据是噪声或者概念重复出现时，数据的新旧程度并不意味相关性。另外，如果变化很慢并且持续时间超过窗口大小，窗口化也会失败。</p>
+<p>&emsp;&emsp;<strong>遗忘机制</strong>。处理从具有未知动态的过程中生成的演化数据的最常见方法就是遗忘过时的样本。遗忘机制的选择取决于我们对数据分布变化的期望和对系统的反应性和对噪声鲁棒性之间权衡的要求。遗忘的越陡峭，反应越快，捕捉到噪声的风险也就越高。</p>
+<p>&emsp;&emsp;1. 陡峭遗忘（Abrupt Forgetting）。陡峭遗忘，或部分记忆，指的是给定的样本在训练窗口中或是在其之外的机制。有两种基本的滑动窗口模型：基于序列的，窗口大小由观察样本的数量刻画；基于时间戳的，窗口大小由持续时间定义。基于序列的窗口有两种模型：尺寸为 j 的滑动窗口 和 landmark windows。滑动窗口使用最近的样本构成一个先进先出数据结构。landmark window存储给定时间戳之后的所有样本，其尺寸是变化的。基于时间戳的尺寸为 t 的窗口包括所有 t 个单位时间到现在这个时间内到达的样本。</p>
+<p>&emsp;&emsp;克服窗口化，尤其是固定尺寸的窗口，另一个选择是采样。目标是总结数据流在长时间内的基本特征，以便从流中均匀地抽取每个包含的样本。</p>
+<p>&emsp;&emsp;2. 逐渐遗忘。这种方法会在内存中保存所有样本。在内存中的每一个样本都和一个反映其年龄的权重关联。样本权重基于这样一个简单的直觉，训练集中样本的重要性应该随着它的年龄增大而减小。</p>
+<p>&emsp;&emsp;<strong>Table 1</strong>总结了记忆方法（memory methods）。</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/62263827-1ee1ab00-b450-11e9-8356-b96b9a3eea00.PNG" alt="Table 1"></p>
+<h3 id="Change-Detection"><a href="#Change-Detection" class="headerlink" title="Change Detection"></a>Change Detection</h3><p>&emsp;&emsp;变化检测成分指的是用于检测明显的漂移和变化的技术和机制。它通过识别变化点或是变化发生时的小时间间隔来刻画和量化概念漂移。如<strong>Figure 6</strong>所示，作者按如下维度对变化检测方法分类：（1）基于序列分析的方法（2）基于控制图的方法（3）基于两个分布之间的不同的方法（4）启发式方法。显示检测变化的优点是可以提供关于产生数据过程的动态的信息。</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/62263828-1ee1ab00-b450-11e9-8ff1-6af917e51db1.PNG" alt="Figure 6"></p>
+<p>&emsp;&emsp;1. 基于序列分析的检测器。这类方法依赖于一个在线阈值，只要计算出来的统计量大于预先设置的阈值，就视为检测到一个变化。这类检测方法的准确度取决于误报警率和误检测率。</p>
+<p>&emsp;&emsp;2. 基于统计过程控制的检测器。这类方法将学习视作一个过程，监控这个过程的演化。其主要思想是计算当前的对错误率的估计，使用错误率的估计构造统计量。如果没有发生概念漂移，则统计量的概率分布不会发生变化。于是根据假设检验的方式来判断有无变化发生。</p>
+<p>&emsp;&emsp;3. 监控两种不同<strong>time-windows</strong>之上的分布。这些方法通常使用一个固定的参照窗口，其总结过去的信息，和一个在最近样本上的滑动窗口。这两个窗口上的分布使用带有零假设的统计量测试相互比较。如果零假设被拒绝，则申明在检测窗口的开始出检测到变化。比较两个窗口上的分布有多种方法，如切尔诺夫边界，KL散度，熵，样本类别分布等。还有的方法使用不同窗口上模型的准确度来比较分布差异。如使用两个模型，一个稳定预测模型使用长期历史数据，一个反应模型使用最近的样本构建。该方法使用稳定模型来预测，而使用反应模型来作为概念漂移的指示器。如果稳定模型的表现比反应模型的表现更差，就认为发现了概念漂移，这时需要替换现在的稳定模型。另一方法是比较所有时期上样本的准确率和滑动窗口上样本的准确率，如果最近准确率显著下降了，就发出概念漂移信号。这类监控两个窗口上的分布不同的方法的主要限制是内存要求，因为需要保存两个窗口上的样本。主要的优点是可以更精确地定位变化点。</p>
+<p>&emsp;&emsp;4. 上下文方法。</p>
+<p>&emsp;&emsp;Splice system 提出了一种元学习技术，实现了上下文敏感批量学习。它的主要思想是将样本的时间戳作为特征输入到一批分类器中。在第一阶段，样本使用时间戳特征得到增强，学习到一个决策树。如果该决策树找到了在时间戳特征上的一个划分，该特征上的划分显示了不同的上下文。在第二阶段，在每一个划分上使用 C4.5 来寻找临时概念。</p>
+<p>&emsp;&emsp;不管时间窗口化有没有使用，一个鲁棒的方法通常需要在动态的环境中寻求增量学习和遗忘的平衡。这一思想被运用在 IFCS 算法中，该算法在一个分类上下文中维持一系列原型。也就是，一个类被表征为许多的簇。该算法使用三种机制：staleness，penalization，和 overall accuracy。前两个指标接触模型复杂度和逐渐漂移的问题。果两个测量值中的一个低于一个非常小的阈值，称为移除 阈值，原型被移除。最后一个是用来处理渐进的和突然的漂移。staleness 追踪原型关于新数据的归属决定的活动。根据每一个原型上一次活跃到当前的时间决定原型的陈旧度，然后根据该值判断原型是否被遗忘。penalization 聚焦于处理原型做出决策的准确率，因此，在与最近输入模式的一致性方面观察模型的演变。overall accuracy就是前面介绍的统计量过程控制，旨在通过模型学习预测的错误率来处理渐变的和突变的漂移。</p>
+<p>&emsp;&emsp;<strong>Table II</strong>总结了提出的变化检测算法的性质。<strong>Table III</strong>总结了这些变化检测方法。</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/62263830-1ee1ab00-b450-11e9-99ca-cbed2de6820e.PNG" alt="Table 2"></p>
+<p><img src="https://user-images.githubusercontent.com/23336589/62263813-1be6ba80-b450-11e9-877e-da80ff934850.PNG" alt="Table 3"></p>
+<h3 id="Learning"><a href="#Learning" class="headerlink" title="Learning"></a>Learning</h3><p>&emsp;&emsp;学习成分指的是泛化样本和从演化数据中更新预测模型的机制。这一部分按照如下组织：（1）学习模式，指的是当新数据点可用是如何更新模型。（2）模型自适应分析预测模型在随时间演化的数据上的行为。（3）模型管理指的是维持活跃预测模型的技术。</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/62263814-1be6ba80-b450-11e9-9292-7d63be2fbfec.PNG" alt="Figure 7"></p>
+<p>&emsp;&emsp;1. 学习模式。作者比较两种不同的学习模式：重训练学习模式和增量学习模式。重训练学习模式在一开始使用所有可用的模型训练，当新数据到达时，之前的模型被丢弃，新数据和之前的数据合并，在其上训练新的模型。增量方法一个接一个的处理输入样本，并当接受到每个样本后更新存储在模型中的足够的统计信息，它们可能会访问之前的样本或是样本的提炼信息。在线学习模式使用最近的样本更新模型，它们通常以错误驱动的方式更新现在的模型。流算法是用于处理高速连续数据流的在线算法。这类算法使用有限的空间并且需要控制可用空间。</p>
+<p>&emsp;&emsp;2. 自适应方法。自适应策略管理预测模型的自适应。它们可以归类为两种主要的类型：盲目的和知情的。</p>
+<p>&emsp;&emsp;盲目自适应策略在没有显示检测到变化时就调整模型。盲目自适应通常使用如固定尺寸滑动窗口，并不适的在最近的窗口之中的样本上重训练模型。盲目策略是主动的，它基于损失函数来更新模型。它的主要限制是对数据中的概念漂移反应较慢。它以固定的速度遗忘旧概念，不管变化是否发生。</p>
+<p>&emsp;&emsp;知情策略是反应的，它们的行动取决于触发器是否反转。触发器可以是变化检测器或是一种特定的数据描述。知情策略下对模型的更新有两种方式，全局置换（旧模型被丢弃，新模型被构建）和局部置换（可分解的模型只需要调整那些包含被概念漂移影响的数据空间区域的节点）。</p>
+<p>&emsp;&emsp;3. 模型管理。集成学习在内存中维持多个模型的集成，它们可以做出联合预测。自适应集成通常由这样的假设所激励，在变化期间，数据是从混合分布中产生的，这可视为带有权重的分布的联合刻画了目标概念，每一个模型建模一种分布。最后的预测通常是每一个预测的权重平均，其中权重反映了每一个模型在最近数据上的表现。</p>
+<p>&emsp;&emsp;用于动态变化数据的集成方法可以归类为如下三种：（1）动态组合，基本的学习器提前训练并通过修改组合规则来动态组合以响应环境的变化。（2）学习器的连续更新，每一个学习器使用最近的批次重训练或是使用新数据在线更新。（3）结构化更新。新学习器被加入或激活，低效的学习器被移除或沉睡。这三种方法并不是互斥的。</p>
+<h3 id="Loss-estimation"><a href="#Loss-estimation" class="headerlink" title="Loss estimation"></a>Loss estimation</h3><p>&emsp;&emsp;有监督自适应系统依赖于基于环境反馈的损失估计。有使用SVM 的性质，使用某种估计方法来得到泛化错误。也有维持两个窗口，一个小窗口，包含最近的信息，一个大窗口作为参照，包含更多的也更远的最近的信息，其中也包含小窗口的数据。当变化发生时，使用从小窗口计算得到的统计量会比大窗口的更快的捕捉到变化。还有一种遗忘机制，使用衰减因子，在两种错误估计上执行PH test：长期错误估计和短期错误估计。当短期错误估计比长期错误估计显著高时，意味着发生了漂移。</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/62263816-1c7f5100-b450-11e9-87cb-1eee0bcfa32b.PNG" alt="Figure 8"></p>
+<p><img src="https://user-images.githubusercontent.com/23336589/62263818-1d17e780-b450-11e9-9b1d-5f6c7aa9a3fa.PNG" alt="Table 5"></p>
+<h3 id="Discussion"><a href="#Discussion" class="headerlink" title="Discussion"></a>Discussion</h3><p>&emsp;&emsp;有监督自适应学习算法依赖于反馈（真实标签）的立即到达。在现实中，标签可能在做出预测之后的下一个时间点才立即变得可知。然而，反馈能以不可控制的延迟后到达，能不可信，带有偏见或是昂贵的。标签可以在固定的范围内或可变时间内到达。或者，可以按需获得标签。</p>
+<h2 id="CONCLUSIONS"><a href="#CONCLUSIONS" class="headerlink" title="CONCLUSIONS"></a>CONCLUSIONS</h2><p>&emsp;&emsp;关于概念漂移的许多工作都假设变化处于隐藏的上下文中，对自适应学习系统是不可见的。因此，概念漂移被认为是不可预测，检测和处理它是反应的。但是，存在各种应用设置，其中概念漂移预期随着时间线和在建模域种的不同对象之间出现。外部上下文的可用信息和从预测特征提取的隐藏上下文可以帮助更好的处理循环的概念漂移。另外，在不同上下文之间的转移学习也是一条隐藏的研究线路。</p>
+<p>&emsp;&emsp;时间关系挖掘可以用来识别相关的漂移。在所有设置中，更准确，更主动，更透明的变化检测也许是可能的。</p>
+<p>&emsp;&emsp;这篇调查中概述的关于概念漂移的绝大部分工作并没有解决这一问题，自适应系统强制或建议特定行为的表征偏差的问题。每当存在强化反馈或闭环控制的学习机制时，我们就无法通过重放历史数据来评估和比较概念漂移处理技术的性能。因此，我们可以推测，将有更多的研究尝试将概念漂移处理技术嵌入到实际操作设置中，用于适当的验证。在演化数据之上的无监督学习问题，有监督学习上的延迟或按需标注问题，变化检测验证和自适应机制才刚开始被研究。</p>
+<p>&emsp;&emsp;概念漂移研究的下一个挑战包括：提高可扩展性，稳健性和可靠性，从所谓的黑盒适配转向更可解释的适应，减少对及时和准确反馈（真实标签）的依赖，并从自适应算法转向自适应系统，其除了自动调整决策模型之外，还可以自动完成整个知识发现过程。</p>
+<p>&emsp;&emsp;研究如何将专家知识整合到概念漂移处理和如何与领域专家交互带来了新的挑战。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/数据流挖掘/" rel="tag"># 数据流挖掘</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/19/文献汇报四/" rel="next" title="文献汇报四">
+                <i class="fa fa-chevron-left"></i> 文献汇报四
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/08/02/Open Challenges for Data Steam Mining Research/" rel="prev" title="Open Challenges for Data Stream Mining Research">
+                Open Challenges for Data Stream Mining Research <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">plato</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#摘要"><span class="nav-number">1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ADAPTIVE-LEARNING-ALGORITHMS"><span class="nav-number">2.</span> <span class="nav-text">ADAPTIVE LEARNING ALGORITHMS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TAXONOMY-OF-METHODS-FOR-CONCEPT-DRIFT-ADAPTATION"><span class="nav-number">3.</span> <span class="nav-text">TAXONOMY OF METHODS FOR CONCEPT DRIFT ADAPTATION</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Memory"><span class="nav-number">3.1.</span> <span class="nav-text">Memory</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Change-Detection"><span class="nav-number">3.2.</span> <span class="nav-text">Change Detection</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Learning"><span class="nav-number">3.3.</span> <span class="nav-text">Learning</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Loss-estimation"><span class="nav-number">3.4.</span> <span class="nav-text">Loss estimation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Discussion"><span class="nav-number">3.5.</span> <span class="nav-text">Discussion</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CONCLUSIONS"><span class="nav-number">4.</span> <span class="nav-text">CONCLUSIONS</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">plato</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>
