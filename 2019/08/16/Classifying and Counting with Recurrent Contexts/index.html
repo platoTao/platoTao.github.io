@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="数据流挖掘," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="简介&amp;emsp;&amp;emsp;分类和量化（计数）是两个不同但又紧密相关的数据挖掘任务。它们可以相互获益。我们可以通过分类和计数每一个样本来量化样本。相反，我们也可以使用量化结果来调整分类的决策阈值，来改善具有不同类分别的应用中的分类准确度。 &amp;emsp;&amp;emsp;这篇论文中，作者假设：（1）数据可以被（近似）描述为一系列反复出现的概念（context） （2）尽管一些潜在的因素会造成概念漂移，但可">
+<meta name="keywords" content="数据流挖掘">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Classifying and Counting with Recurrent Contexts">
+<meta property="og:url" content="www.platot.site/2019/08/16/Classifying and Counting with Recurrent Contexts/index.html">
+<meta property="og:site_name" content="心远地自偏">
+<meta property="og:description" content="简介&amp;emsp;&amp;emsp;分类和量化（计数）是两个不同但又紧密相关的数据挖掘任务。它们可以相互获益。我们可以通过分类和计数每一个样本来量化样本。相反，我们也可以使用量化结果来调整分类的决策阈值，来改善具有不同类分别的应用中的分类准确度。 &amp;emsp;&amp;emsp;这篇论文中，作者假设：（1）数据可以被（近似）描述为一系列反复出现的概念（context） （2）尽管一些潜在的因素会造成概念漂移，但可">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/63159538-5eaeb200-c04e-11e9-9e9c-5dcff002c0c0.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/63159539-60787580-c04e-11e9-8c4a-042b15d3e4ff.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/63159542-61a9a280-c04e-11e9-8cea-8ab57e0caab4.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/63159549-62dacf80-c04e-11e9-9882-11f313165d5d.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/63159555-653d2980-c04e-11e9-8e50-60b26f185c5b.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/63159567-6b330a80-c04e-11e9-925f-3e0ddeab5cbf.PNG">
+<meta property="og:updated_time" content="2019-08-16T14:32:42.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Classifying and Counting with Recurrent Contexts">
+<meta name="twitter:description" content="简介&amp;emsp;&amp;emsp;分类和量化（计数）是两个不同但又紧密相关的数据挖掘任务。它们可以相互获益。我们可以通过分类和计数每一个样本来量化样本。相反，我们也可以使用量化结果来调整分类的决策阈值，来改善具有不同类分别的应用中的分类准确度。 &amp;emsp;&amp;emsp;这篇论文中，作者假设：（1）数据可以被（近似）描述为一系列反复出现的概念（context） （2）尽管一些潜在的因素会造成概念漂移，但可">
+<meta name="twitter:image" content="https://user-images.githubusercontent.com/23336589/63159538-5eaeb200-c04e-11e9-9e9c-5dcff002c0c0.PNG">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="www.platot.site/2019/08/16/Classifying and Counting with Recurrent Contexts/"/>
+
+
+
+
+
+  <title>Classifying and Counting with Recurrent Contexts | 心远地自偏</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">心远地自偏</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="www.platot.site/2019/08/16/Classifying and Counting with Recurrent Contexts/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="plato">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="心远地自偏">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Classifying and Counting with Recurrent Contexts</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-16T20:31:20+08:00">
+                2019-08-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>&emsp;&emsp;分类和量化（计数）是两个不同但又紧密相关的数据挖掘任务。它们可以相互获益。我们可以通过分类和计数每一个样本来量化样本。相反，我们也可以使用量化结果来调整分类的决策阈值，来改善具有不同类分别的应用中的分类准确度。</p>
+<p>&emsp;&emsp;这篇论文中，作者假设：（1）数据可以被（近似）描述为一系列反复出现的概念（context） （2）尽管一些潜在的因素会造成概念漂移，但可观测变量的更小的集合和这些潜在因素是相关的。（3）在训练期间可用的变量，作者并不假设其在之后也可用。作者研究的是：在具有验证延迟的非稳态环境，如何准确地识别数据样本正确的上下文，同时估计正类的比例。</p>
+<p>&emsp;&emsp;<a href="https://www.kdd.org/kdd2018/accepted-papers/view/classifying-and-counting-with-recurrent-contexts" target="_blank" rel="noopener">原文地址</a></p>
+<p>&emsp;&emsp;<strong>作者动机。</strong>作者的实验室为飞虫设计了一个传感器，其使用红外线捕捉飞虫的翅膀动作和机器学习根据飞虫信号分类它的物种和性别。这个传感器可以增强现有的捕蚊设别，这样的设备对于蚊虫控制和监控是很有价值的工作。分类是控制的首要任务，量化是监控的首要任务。由这些捕蚊设备收集的数据会呈现出漂移。有许多因素会影响昆虫的飞行行为，如温度、适度、气压、食物等。但一个严重的问题是：类分布是未知的并且是高度变化的。它取决于两个首要的因素：感兴趣物种的当地可用性（数量）和昆虫的昼夜节律。</p>
+<p>&emsp;&emsp;在实验室作者可以控制各种变量使用虫箱（带有传感器的容器）来收集训练数据，这些数据可以确定所有经常性行为模式（context）的合理部分。每一个虫箱维持某一单一物种的昆虫。但是训练数据提供的是关于类分别$P(Y)$的有限的信息。在实验里，类分别取决于每一个虫箱里昆虫的数量和其昼夜节律；但在野外，类分别取决于昆虫当地分布和其昼夜节律。另外，实验人员可以评估许多会影响昆虫行为的因素，但他们想要移除一些非必要的因素。</p>
+<h2 id="提出的方法"><a href="#提出的方法" class="headerlink" title="提出的方法"></a>提出的方法</h2><p>&emsp;&emsp;作者提出了两种方法，它们可以识别一个样本所属的上下文，同时估计正样本类比率。作者提出的方法适合处理二分类和量化任务。</p>
+<p>&emsp;&emsp;作者假设一个样本在某时间点仅属于一个上下文。尽管其算法接受一个样本作为输入，这可块可以视为是在数据流上的一个滑窗。</p>
+<p>&emsp;&emsp;<strong>背景知识。</strong>HDy 是一种依赖于分类器为正面和负面事件输出的分数之间的统计差异的方法。其建立两个正则直方图，$H_+$和$H_-$，是由分类器分别在只包含正样本和负样本的验证集获得的分数的直方图。当出现未标注的测试数据集时，该算法使用同样的分类器在其上建立$H_?$。然后，使用如下的公式计算正样本比率：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/63159538-5eaeb200-c04e-11e9-9e9c-5dcff002c0c0.PNG" alt="HDY"></p>
+<p>HD 是 <strong>Hellinger Distance</strong>，它可以量化两个分布之间的相似性，其中每一个直方图有 B 个区间，由一个 B 维向量表示。HD公式如下：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/63159539-60787580-c04e-11e9-8c4a-042b15d3e4ff.PNG" alt="HD"></p>
+<p>两个直方图之间的差值可以代表另一种分布。</p>
+<h3 id="SMR-HDy"><a href="#SMR-HDy" class="headerlink" title="SMR-HDy"></a>SMR-HDy</h3><p>&emsp;&emsp;这个算法是解决该问题的一个简单方法，是第二个算法的基准。</p>
+<p>&emsp;&emsp;考虑有上下文的集合$C = \{1,2,…,|C|\}$。对每一个上下文$i \in C$，都有可用的事件训练集$T_i \in T$和事件验证集$V_i \in V$。在这些集合中的每一个事件都关联一个类标签$y \in \{+,-\}$。令$V_i^y \subseteq V_i$是$V_i$的子集，其包含$V_i$中所有标签是$y$的样本。</p>
+<p>&emsp;&emsp;从训练集$T_i$，作者推理得到分类模型$M_i$（ps：对每一个上下文单独训练一个分类器）。该算法接着计算在验证集$V_i$上由$M_i$获得的分数的正则直方图$H_i^y,y\in \{+,-\}$。</p>
+<p>&emsp;&emsp;最后，给定事件$U$的无标注测试集，计算在测试集$U$上由分类器$M_i$获得的分数的正则直方图$H_i^U$。接着我们考虑对$U$最可能的上下文：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/63159542-61a9a280-c04e-11e9-8cea-8ab57e0caab4.PNG" alt="context"></p>
+<p>&emsp;&emsp;换句话说，$\hat{c}_s$是最小化分类器$M_{\hat{c}_s}$在验证集$V_{\hat{c}_s}$和测试集$U$获得分数的分布之间的散度的上下文。SMR-HDy背后的基本原理是验证集的直方图代表了分数的预期行为。比如，$H_1^+$代表的是对于使用$M_1$在context 1的正事件上取得分数所期望的行为。最后，<strong>HDy</strong>算法提供一个插值参数（在该论文中，即是正类比率的估计），该参数可以最小化测试直方图和两个训练直方图插值之间的散度。另外，该算法的一个副产品是，我们得到一种比较不同的上下文的测量方法。</p>
+<p>&emsp;&emsp;值得注意的是，作者指出，在<strong>SMR-HDy</strong>算法中，我们期望的分数的行为，分数是由每个模型在仅属于它（模型）对应的上下文的事件上产生的。这是一种简单的方法，实际上作者认为这样会丢弃有用信息：分数的预期行为，当分数是由分类器$M_i$在验证集$V_j$上取得的且$i \ne j$。</p>
+<h3 id="XO-HDy"><a href="#XO-HDy" class="headerlink" title="XO-HDy"></a>XO-HDy</h3><p>&emsp;&emsp;作者提出的第二个方法是Crossed Opinions HDy（XO-HDy），该算法考虑了当来自一个事件的分数是由对应不同上下文的分类器所获得是，该分数如何预期行为。</p>
+<p>&emsp;&emsp;考虑$H_{i,j}^y$是由分类器$M_i$在验证集$V_j^y$上所获得分数的正则直方图。另外$\alpha_{i,j}$如下所示：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/63159549-62dacf80-c04e-11e9-9882-11f313165d5d.PNG" alt="alpha_ij"></p>
+<p>&emsp;&emsp;对$U$而言，最可能的上下文如下所示：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/63159555-653d2980-c04e-11e9-8e50-60b26f185c5b.PNG" alt="XO"></p>
+<p><strong>Figure 3</strong>提供了在该算法中数据分数在 Hellinger Distance 内的计算的视觉阐述。</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/63159567-6b330a80-c04e-11e9-925f-3e0ddeab5cbf.PNG" alt="Figure 3"></p>
+<p>该算法提供的$a_{\hat{c}_x}$，即是正类比率的估计。</p>
+<h3 id="分类调整"><a href="#分类调整" class="headerlink" title="分类调整"></a>分类调整</h3><p>&emsp;&emsp;作者指出，一旦获得了推断上下文$\hat{c}$和正类比率的估计$\hat{a}$，我们就可以使用一个新的阈值重调分类器，并重新分类$U$中的事件。作者期望$\hat{a}$%的样本属于正类。因此，可以将分类阈值设为获得分数的$(1-\hat{a})$%。</p>
+<h3 id="三条限制"><a href="#三条限制" class="headerlink" title="三条限制"></a>三条限制</h3><ol>
+<li>只适用于二分类问题。</li>
+<li>上下文纯洁性假设，也就是，相邻实例属于同一个上下文。</li>
+<li>假设我们已知所有上下文。</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/数据流挖掘/" rel="tag"># 数据流挖掘</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/08/02/Open Challenges for Data Steam Mining Research/" rel="next" title="Open Challenges for Data Stream Mining Research">
+                <i class="fa fa-chevron-left"></i> Open Challenges for Data Stream Mining Research
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/08/16/Graph Neural Networks/" rel="prev" title="Graph Neural Networks ,A Review of Methods and Applications">
+                Graph Neural Networks ,A Review of Methods and Applications <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">plato</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">28</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#提出的方法"><span class="nav-number">2.</span> <span class="nav-text">提出的方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SMR-HDy"><span class="nav-number">2.1.</span> <span class="nav-text">SMR-HDy</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#XO-HDy"><span class="nav-number">2.2.</span> <span class="nav-text">XO-HDy</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分类调整"><span class="nav-number">2.3.</span> <span class="nav-text">分类调整</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三条限制"><span class="nav-number">2.4.</span> <span class="nav-text">三条限制</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">plato</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>

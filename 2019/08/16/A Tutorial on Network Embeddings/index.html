@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Network Embedding," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="介绍&amp;emsp;&amp;emsp;原文地址 &amp;emsp;&amp;emsp;NE（network embedding）的中心思想是找到一种映射函数，可以将网络中的每一个节点转换为一个低维潜在表示。这些表示可以作为特征，用于在图上的一般任务，如分裂，聚类，链路预测和可视化。  &amp;emsp;&amp;emsp;目标：  适应性。  真正的网络在不断演化。不应要求重复学习过程。   可扩展。  真正的网络通常很巨大，因此网络">
+<meta name="keywords" content="Network Embedding">
+<meta property="og:type" content="article">
+<meta property="og:title" content="A Tutorial on Network Embeddings">
+<meta property="og:url" content="www.platot.site/2019/08/16/A Tutorial on Network Embeddings/index.html">
+<meta property="og:site_name" content="心远地自偏">
+<meta property="og:description" content="介绍&amp;emsp;&amp;emsp;原文地址 &amp;emsp;&amp;emsp;NE（network embedding）的中心思想是找到一种映射函数，可以将网络中的每一个节点转换为一个低维潜在表示。这些表示可以作为特征，用于在图上的一般任务，如分裂，聚类，链路预测和可视化。  &amp;emsp;&amp;emsp;目标：  适应性。  真正的网络在不断演化。不应要求重复学习过程。   可扩展。  真正的网络通常很巨大，因此网络">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/62848314-ae6b4180-bd0d-11e9-8d99-710b7df0a211.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/62848315-ae6b4180-bd0d-11e9-822b-38a919290e30.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/62848316-af03d800-bd0d-11e9-86b9-4d83f3386aca.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/62848317-af03d800-bd0d-11e9-9f79-a3d1a1159b62.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/62848319-af9c6e80-bd0d-11e9-80a7-5438b710dacf.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/62848320-af9c6e80-bd0d-11e9-8114-3ce0c78f439f.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/62848321-b0350500-bd0d-11e9-9bbd-a86df8dcf7a1.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/62848322-b0350500-bd0d-11e9-96a4-418b8f5ab649.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/62848323-b0cd9b80-bd0d-11e9-89e0-1fc479204f7e.PNG">
+<meta property="og:updated_time" content="2019-08-16T14:31:42.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="A Tutorial on Network Embeddings">
+<meta name="twitter:description" content="介绍&amp;emsp;&amp;emsp;原文地址 &amp;emsp;&amp;emsp;NE（network embedding）的中心思想是找到一种映射函数，可以将网络中的每一个节点转换为一个低维潜在表示。这些表示可以作为特征，用于在图上的一般任务，如分裂，聚类，链路预测和可视化。  &amp;emsp;&amp;emsp;目标：  适应性。  真正的网络在不断演化。不应要求重复学习过程。   可扩展。  真正的网络通常很巨大，因此网络">
+<meta name="twitter:image" content="https://user-images.githubusercontent.com/23336589/62848314-ae6b4180-bd0d-11e9-8d99-710b7df0a211.PNG">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="www.platot.site/2019/08/16/A Tutorial on Network Embeddings/"/>
+
+
+
+
+
+  <title>A Tutorial on Network Embeddings | 心远地自偏</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">心远地自偏</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="www.platot.site/2019/08/16/A Tutorial on Network Embeddings/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="plato">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="心远地自偏">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">A Tutorial on Network Embeddings</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-16T20:31:39+08:00">
+                2019-08-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>&emsp;&emsp;<a href="https://arxiv.org/abs/1808.02590" target="_blank" rel="noopener">原文地址</a></p>
+<p>&emsp;&emsp;NE（network embedding）的中心思想是找到一种映射函数，可以将网络中的每一个节点转换为一个低维潜在表示。这些表示可以作为特征，用于在图上的一般任务，如分裂，聚类，链路预测和可视化。</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/62848314-ae6b4180-bd0d-11e9-8d99-710b7df0a211.PNG" alt="Alt text"></p>
+<p>&emsp;&emsp;<strong>目标</strong>：</p>
+<ol>
+<li><p>适应性。</p>
+<ul>
+<li>真正的网络在不断演化。不应要求重复学习过程。</li>
+</ul>
+</li>
+<li><p>可扩展。</p>
+<ul>
+<li>真正的网络通常很巨大，因此网络嵌入算法应该在短时间内处理大规模的网络。</li>
+</ul>
+</li>
+<li><p>社区感知。</p>
+<ul>
+<li>潜在表示之间的距离应该用以表示对应的节点之间的相似性度量。</li>
+</ul>
+</li>
+<li><p>低维。</p>
+<ul>
+<li>当标注数据稀缺时，低维模型泛化的更好，并能加速收敛和推理。</li>
+</ul>
+</li>
+<li><p>连续性。</p>
+<ul>
+<li>要求在连续空间内，潜在表示能建模部分社区成员关系。除了提供社区成员关系的细微视角外，连续的表示在社区间具有平滑的决策边界，令分类更鲁棒。</li>
+</ul>
+<p><strong>此文包含</strong>：</p>
+<ul>
+<li>网络嵌入的概述</li>
+<li>无监督网络嵌入方法在无特征同质网络上的应用</li>
+<li>在特征网络和部分标注网络上的嵌入方法</li>
+<li>讨论异质网络嵌入算法</li>
+</ul>
+</li>
+</ol>
+<h2 id="网络嵌入的简短历史"><a href="#网络嵌入的简短历史" class="headerlink" title="网络嵌入的简短历史"></a>网络嵌入的简短历史</h2><h3 id="传统意义的网络嵌入"><a href="#传统意义的网络嵌入" class="headerlink" title="传统意义的网络嵌入"></a>传统意义的网络嵌入</h3><p>&emsp;&emsp;传统意义上，图嵌入被视为降维。</p>
+<ol>
+<li>PCA</li>
+<li>多维缩放（MDS）<ul>
+<li>将 M 的每一行投影到 k 维向量，同时在 k 维空间中保留 不同对象在原始特征矩阵 M 中的距离。</li>
+</ul>
+</li>
+<li>Isomap<ul>
+<li>Isomap是 MDS 的扩展，通过将每个节点与特定距离内的节点连接构造邻域图，在邻域图上使用 MDS ，以保持非线性流形的整体结构</li>
+</ul>
+</li>
+<li>局部线性嵌入（LLE）<ul>
+<li>仅压榨数据点的局部邻域，不试图估计遥远数据点之间的距离。LLE 假设输入数据本质上是从某种潜在流行上采样得到的，一个数据点可以被重建为它邻居们的线性组合。</li>
+</ul>
+</li>
+</ol>
+<p>&emsp;&emsp;方法1，2只能够捕捉线性结构信息，不能发现输入数据之间的非线性。通常来说，以上方法能在小网络上有很好的表现。然而，这些方法的时间复杂度至少是二次，无法在大规模网络上运行。</p>
+<h3 id="深度学习时代"><a href="#深度学习时代" class="headerlink" title="深度学习时代"></a>深度学习时代</h3><p>&emsp;&emsp;DeepWalk是被提出的第一个使用深度学习方法的网络嵌入方法。DeepWalk将节点当作单词，生成短的随机行走作为句子，弥合了网络嵌入和词嵌入之间的差距。然后，神经语言模型如 Skip-gram 可以应用在这些随机行走上获得网络嵌入。</p>
+<p>DeepWalk范式的三个步骤：</p>
+<ol>
+<li>选择一个和输入图关联的矩阵。</li>
+<li>图采样，节点序列从选中的矩阵中采样得到。这一步是可选的。</li>
+<li>从生成的序列（或是第一步选的矩阵）中学习节点嵌入。</li>
+</ol>
+<p>DeepWalk范式是高度灵活的，其可从两方面被扩展：</p>
+<ol>
+<li>被建模的图的复杂性可以被扩展。</li>
+<li>DeepWalk的两个关键成分的方法，即用于从潜在矩阵中采样序列和从采样的序列学习节点嵌入，都可被扩展。</li>
+</ol>
+<p><img src="https://user-images.githubusercontent.com/23336589/62848315-ae6b4180-bd0d-11e9-822b-38a919290e30.PNG" alt="DeepWalk"></p>
+<h2 id="无监督网络嵌入"><a href="#无监督网络嵌入" class="headerlink" title="无监督网络嵌入"></a>无监督网络嵌入</h2><h3 id="无向图嵌入"><a href="#无向图嵌入" class="headerlink" title="无向图嵌入"></a>无向图嵌入</h3><p>&emsp;&emsp;DeepWalk 提出一种学习网络嵌入的两阶段算法。第一阶段是决定每一个节点得到上下文节点。通过在网络中生成截断的随机行走，上下文节点 v 可被定义为每一个随机行走序列中一个大小为 k 窗口内的节点。一旦上下文节点确定好了，第二步同 Skip-gram 模型一样：最大化预测上下文节点的似然概率来学习嵌入。</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/62848316-af03d800-bd0d-11e9-86b9-4d83f3386aca.PNG" alt="Algorithm 1"></p>
+<p>&emsp;&emsp;许多后续的在图嵌入的工作都追随 DeepWalk 中提出的两阶段框架，在每个阶段各有不同。下表总结了一些网络嵌入方法，按照它们对上下文节点的定义和用于学习嵌入的方法分类。</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/62848317-af03d800-bd0d-11e9-9f79-a3d1a1159b62.PNG" alt="Table 1"></p>
+<ul>
+<li><p>LINE</p>
+<ul>
+<li><p>为了更好的保存网络的结构信息，提出了一阶相似度和二阶相似度的概念，并在目标函数中结合了两者</p>
+</li>
+<li><p>使用宽度优先策略来产生上下文节点，只有距离给定节点最多两跳的节点才被视为相邻节点</p>
+</li>
+<li>使用 Skip-gram with Negative Sampling</li>
+</ul>
+</li>
+<li><p>Node2vc</p>
+<ul>
+<li>引入有偏向的随机游走，联合了 BFS 和 DFS 探索近邻</li>
+</ul>
+</li>
+<li>Walklets<ul>
+<li>从$A^1,A^2,…,A^k$学习多尺度网络嵌入，由于计算$A^i$的时间复杂度至少是网络中节点数量的平方，Walklets 通过在短随机游走间跳过节点来近似$A^i$。</li>
+<li>从$A$的不同幂次来学习，在不同粒度捕捉网络的结构信息。</li>
+</ul>
+</li>
+<li>GraRep<ul>
+<li>通过将图形邻接矩阵提升到不同的幂来利用不同尺度的节点共现信息，将奇异值分解（SVD）应用于邻接矩阵的幂以获得节点的低维表示</li>
+</ul>
+</li>
+<li>GraphAttention<ul>
+<li>不是预先确定超参数来控制上下文节点分布，而是自动学习对图转换矩阵的幂集数的关注</li>
+<li>通过设置隐藏层，这些层里的节点能够注意其邻近节点的特征，我们能够（隐含地）为邻近的不同节点指定不同的权重，不需要进行成本高昂的矩阵运算（例如反演），也无需事先知道图的结构</li>
+</ul>
+</li>
+<li>SDNE<ul>
+<li>通过深度自动编码器保持 2 跳邻居之间的接近度。它通过最小化它们的表示之间的欧几里德距离来进一步保持相邻节点之间的接近度。</li>
+<li>具有多层非线性函数，从而能够捕获到高度非线性的网络结构。然后使用一阶和二阶邻近关系来保持网络结构。二阶邻近关系被无监督学习用来捕获全局的网络结构，一阶邻近关系使用监督学习来保留网络的局部结构。</li>
+</ul>
+</li>
+<li>DNGR<ul>
+<li>使用随机冲浪来捕捉图结构信息。</li>
+<li>将这些结构信息转换为一个 PPMI 矩阵，使用 层叠降噪自动编码器来嵌入节点。</li>
+</ul>
+</li>
+</ul>
+<h3 id="有向图嵌入"><a href="#有向图嵌入" class="headerlink" title="有向图嵌入"></a>有向图嵌入</h3><p>&emsp;&emsp;前一节介绍的在无向图上操作的方法可以通过使用有向随机行走作为训练数据，自然地泛化到有向图上。</p>
+<ul>
+<li>HOPE<ul>
+<li>是专门为有向图设计的图嵌入方法。</li>
+<li>是保存非对称传递图嵌入的通用框架，整合了一些流行的近似测量如 Katz index</li>
+<li>使用泛化的SVD来优化</li>
+</ul>
+</li>
+</ul>
+<h3 id="边嵌入"><a href="#边嵌入" class="headerlink" title="边嵌入"></a>边嵌入</h3><p>&emsp;&emsp;如链路预测这样的任务要求对图的边准确建模。一种为边$e = (u,v)$构建表示的无监督方式是在$\phi(u)$和$\phi(v)$上运用二元算子：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/62848319-af9c6e80-bd0d-11e9-80a7-5438b710dacf.PNG" alt="binary operator"></p>
+<p>在node2vec中，考虑了一些二元算子，如平均数，Hardmard product，L1距离和L2距离。然而，这些对称二元算子总是对边$(u,v)$和$(v,u)$赋予相同的值，忽略了边的方向。</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/62848320-af9c6e80-bd0d-11e9-8114-3ce0c78f439f.PNG" alt="figure 5"></p>
+<p>&emsp;&emsp;为了缓和这个问题，Abu-El-Haija等人一种通过低秩对称投影的边表示学习方法。他们的方法由三部分组成。如<strong>Figure 5</strong>所示。</p>
+<h3 id="签名图嵌入"><a href="#签名图嵌入" class="headerlink" title="签名图嵌入"></a>签名图嵌入</h3><p>&emsp;&emsp;签名图中每一条边都有一个权重$w \in \{1,-1\}$，具有权重1的边代表节点之间的积极连结，反之则为负面连结。</p>
+<ul>
+<li>SiNE<ul>
+<li>基于结构平衡理论，一个节点同敌人相比，于朋友更接近。SiNE通过最大化朋友的嵌入相似性和敌人的嵌入相似性之间的间距来保持这个性质。</li>
+<li>负连结很系数时，引入一个虚拟节点来保持这种性质。</li>
+</ul>
+</li>
+<li>SNE<ul>
+<li>通过连个一个节点的上下文节点的表示来预测该节点的表示。</li>
+</ul>
+</li>
+</ul>
+<h3 id="子图嵌入"><a href="#子图嵌入" class="headerlink" title="子图嵌入"></a>子图嵌入</h3><p>&emsp;&emsp;另一个研究分支是关于图的大规模成分的嵌入，如图的子结构或整个图。Yanardag 和 Vishwanathan提出深度图核，是一种建模图中子结构相似性的通用框架。两个图$\mathcal{G}$和$\mathcal{G}’$之间的核如下：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/62848321-b0350500-bd0d-11e9-9bbd-a86df8dcf7a1.PNG" alt="graph kernel "></p>
+<p>但这些表示不能揭示两个不同但相似子结构之间的相似性。也就是，即使两个图仅仅有一条边或是一个顶点不同，它们被视为完全是不同的。这种核定义导致了对角优势问题：一个图只能与它自己相似，而不能和其他图相似。为了克服这个问题，Yanardag 和 Vishwanathan提出了另一种核定义：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/62848322-b0350500-bd0d-11e9-96a4-418b8f5ab649.PNG" alt="alternative graph kernel"></p>
+<p>为了构建$\mathcal{M}$，他们的算法首先生成图子结构的共现矩阵。然后使用Skip-gram模型在共现矩阵上训练过的子结构的潜在表示，使用其来计算$\mathcal{M}$。</p>
+<h3 id="使用元策略来改进网络嵌入"><a href="#使用元策略来改进网络嵌入" class="headerlink" title="使用元策略来改进网络嵌入"></a>使用元策略来改进网络嵌入</h3><p>&emsp;&emsp;至今用于网络嵌入的神经方法，都具有一些相同的弱点。首先，它们都是局部方法——受限于节点周围的结构。这种聚焦于局部结构的方法忽略了远距离的全局关系。其次，它们都依靠非收敛的优化目标，这往往使用随机梯度下降，而其会导致困在局部最小值。换句话说，这些方法学习的嵌入配置，可能会丢弃输入图的重要结构特征。</p>
+<p>&emsp;&emsp;HARP递归的合并原始图中的点和边，成功得到一系列具有相似结构的更小的图。这些合并图，每一个都有不同的粒度，提供我们原始图全局结构的视角。从最简单的形式开始，每一个图学习一系列初始表示，可以作为嵌入下一个更细节的图的良好初始。重复这个过程，直到我们得到原始图中每一个节点的嵌入。</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/62848323-b0cd9b80-bd0d-11e9-89e0-1fc479204f7e.PNG" alt="Figure 6"></p>
+<h2 id="属性网络嵌入"><a href="#属性网络嵌入" class="headerlink" title="属性网络嵌入"></a>属性网络嵌入</h2><p>&emsp;&emsp;在真实世界中，节点或边通常会关联额外的特征，称其为属性。例如在诸如 Twitter 的社交网络站点中，用户（节点）发布的文本内容是可用的。因此期望网络嵌入方法还从节点属性和边属性中的丰富内容中学习。这一部分仅讨论节点属性的工作。对不同类型的属性，有不同的策略。特别的，研究对两类属性感兴趣：高层次特征，比如文本和图片；和节点标签。</p>
+<p>&emsp;&emsp;挑战：高维稀疏特征，及如何将其整合到现有的网络嵌入方法。</p>
+<p>&emsp;&emsp;<strong>方法：</strong></p>
+<ul>
+<li><p>TADW</p>
+<ul>
+<li><p>研究节点与文本特征相关联情况</p>
+</li>
+<li><p>第一次证明 DeepWalk 将转移概率矩阵 分解为两个低维矩阵，受此启发将文本特征矩阵合并到矩阵分解过程中。</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>&emsp;&emsp;<strong>联合建模网络结构和节点特征</strong>（除了强制节点之间具有嵌入相似性，还应使具有相似特征向量的节点具有嵌入相似性）</p>
+<ul>
+<li>CENE<ul>
+<li>将文本内容视为特殊类型的节点，并利用节点-节点链接和节点内容链接进行节点嵌入。</li>
+<li>优化目标是共同最小化两种类型链路的损失。</li>
+</ul>
+</li>
+</ul>
+<p>&emsp;&emsp;对于节点标签，整合标签信息的典型方法是联合优化产生节点嵌入和预测节点标签的损失。</p>
+<ul>
+<li>GENE</li>
+</ul>
+<h2 id="异构网络嵌入"><a href="#异构网络嵌入" class="headerlink" title="异构网络嵌入"></a>异构网络嵌入</h2><p>&emsp;&emsp;异构网络具有多种类型的节点或边。大多数嵌入方法通过联合的最小化在每种模式上的损失来学习节点嵌入。这些方法或者在相同的隐空间直接学习所有节点的嵌入，或为每一种模式构造一种嵌入，然后将其映射到同一个隐空间。</p>
+<h2 id="网络嵌入的应用"><a href="#网络嵌入的应用" class="headerlink" title="网络嵌入的应用"></a>网络嵌入的应用</h2><ol>
+<li>知识表示。<ul>
+<li>知识表示的问题是关于使用包含主语、谓语和对象的短句子编码关于世界的事实。</li>
+</ul>
+</li>
+<li>推荐系统。<ul>
+<li>用户之间的交互，用户的查询和事项形成了一个异构网络，其编码了用户潜在的偏好。</li>
+</ul>
+</li>
+<li>自然语言处理。<ul>
+<li>目前最先进的网络嵌入方法大多受自然语言处理领域的启发。反之，网络嵌入方法也可导致更好的建模人类语言。</li>
+</ul>
+</li>
+<li>社交网络分析。</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Network-Embedding/" rel="tag"># Network Embedding</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/08/16/Graph Neural Networks/" rel="next" title="Graph Neural Networks ,A Review of Methods and Applications">
+                <i class="fa fa-chevron-left"></i> Graph Neural Networks ,A Review of Methods and Applications
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/08/16/A Comprehensive Survey on Graph Neural Networks/" rel="prev" title="A Comprehensive Survey on Graph Neural Networks">
+                A Comprehensive Survey on Graph Neural Networks <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">plato</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">28</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#网络嵌入的简短历史"><span class="nav-number">2.</span> <span class="nav-text">网络嵌入的简短历史</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#传统意义的网络嵌入"><span class="nav-number">2.1.</span> <span class="nav-text">传统意义的网络嵌入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#深度学习时代"><span class="nav-number">2.2.</span> <span class="nav-text">深度学习时代</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#无监督网络嵌入"><span class="nav-number">3.</span> <span class="nav-text">无监督网络嵌入</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#无向图嵌入"><span class="nav-number">3.1.</span> <span class="nav-text">无向图嵌入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#有向图嵌入"><span class="nav-number">3.2.</span> <span class="nav-text">有向图嵌入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#边嵌入"><span class="nav-number">3.3.</span> <span class="nav-text">边嵌入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#签名图嵌入"><span class="nav-number">3.4.</span> <span class="nav-text">签名图嵌入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#子图嵌入"><span class="nav-number">3.5.</span> <span class="nav-text">子图嵌入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用元策略来改进网络嵌入"><span class="nav-number">3.6.</span> <span class="nav-text">使用元策略来改进网络嵌入</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#属性网络嵌入"><span class="nav-number">4.</span> <span class="nav-text">属性网络嵌入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#异构网络嵌入"><span class="nav-number">5.</span> <span class="nav-text">异构网络嵌入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#网络嵌入的应用"><span class="nav-number">6.</span> <span class="nav-text">网络嵌入的应用</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">plato</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>

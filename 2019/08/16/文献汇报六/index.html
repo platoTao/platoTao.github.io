@@ -1,0 +1,1369 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="文献汇报," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Classifying and Counting with Recurrent Contexts简介&amp;emsp;&amp;emsp;分类和量化（计数）是两个不同但又紧密相关的数据挖掘任务。它们可以相互获益。我们可以通过分类和计数每一个样本来量化样本。相反，我们也可以使用量化结果来调整分类的决策阈值，来改善具有不同类分别的应用中的分类准确度。 &amp;emsp;&amp;emsp;这篇论文中，作者假设：（1）数据可以被（">
+<meta name="keywords" content="文献汇报">
+<meta property="og:type" content="article">
+<meta property="og:title" content="文献汇报六">
+<meta property="og:url" content="www.platot.site/2019/08/16/文献汇报六/index.html">
+<meta property="og:site_name" content="心远地自偏">
+<meta property="og:description" content="Classifying and Counting with Recurrent Contexts简介&amp;emsp;&amp;emsp;分类和量化（计数）是两个不同但又紧密相关的数据挖掘任务。它们可以相互获益。我们可以通过分类和计数每一个样本来量化样本。相反，我们也可以使用量化结果来调整分类的决策阈值，来改善具有不同类分别的应用中的分类准确度。 &amp;emsp;&amp;emsp;这篇论文中，作者假设：（1）数据可以被（">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/63159538-5eaeb200-c04e-11e9-9e9c-5dcff002c0c0.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/63159539-60787580-c04e-11e9-8c4a-042b15d3e4ff.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/63159542-61a9a280-c04e-11e9-8cea-8ab57e0caab4.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/63159549-62dacf80-c04e-11e9-9882-11f313165d5d.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/63159555-653d2980-c04e-11e9-8e50-60b26f185c5b.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/63159567-6b330a80-c04e-11e9-925f-3e0ddeab5cbf.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/62848314-ae6b4180-bd0d-11e9-8d99-710b7df0a211.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/62848315-ae6b4180-bd0d-11e9-822b-38a919290e30.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/62848316-af03d800-bd0d-11e9-86b9-4d83f3386aca.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/62848317-af03d800-bd0d-11e9-9f79-a3d1a1159b62.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/62848319-af9c6e80-bd0d-11e9-80a7-5438b710dacf.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/62848320-af9c6e80-bd0d-11e9-8114-3ce0c78f439f.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/62848321-b0350500-bd0d-11e9-9bbd-a86df8dcf7a1.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/62848322-b0350500-bd0d-11e9-96a4-418b8f5ab649.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/62848323-b0cd9b80-bd0d-11e9-89e0-1fc479204f7e.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/63068078-7c8ff000-bf44-11e9-9a4c-d3a95100b648.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/63068082-8285d100-bf44-11e9-8351-ec6be2336623.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/63068097-8e719300-bf44-11e9-93c2-3e7153a40fdf.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/63068140-b103ac00-bf44-11e9-8df1-3a9b95e2d6e6.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/63068146-b3fe9c80-bf44-11e9-8253-69c269b50f16.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/63068149-b52fc980-bf44-11e9-8004-75bfa693c3bd.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/63068202-dd1f2d00-bf44-11e9-82ce-392509ca5147.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/63068220-e9a38580-bf44-11e9-9e60-07c35552807c.jpg">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/63068226-ec9e7600-bf44-11e9-916b-80e2eb0fa211.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/63068239-fde78280-bf44-11e9-8157-7e5a32846792.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/63068243-00e27300-bf45-11e9-9391-4f8656cc8306.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/63068248-050e9080-bf45-11e9-8e87-04ec3996e74d.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/63068252-08a21780-bf45-11e9-8413-f1ce25a2a0f7.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/63159076-3f635500-c04d-11e9-9b08-37435359e9cf.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/63159084-42f6dc00-c04d-11e9-962b-79263ced6bd4.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/63159079-412d1880-c04d-11e9-82ec-a092f0ff0655.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/63159094-48542680-c04d-11e9-9742-d32330990722.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/63159105-5013cb00-c04d-11e9-9c6d-afd5862f75fb.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/63159113-543fe880-c04d-11e9-90d5-24f64dd8a514.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/63159115-5609ac00-c04d-11e9-99e2-fc90d0c5a538.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/63159118-57d36f80-c04d-11e9-9101-6f9c3ae8f3af.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/63159126-5a35c980-c04d-11e9-98a9-7beb299b3d9d.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/63159127-5bff8d00-c04d-11e9-84ba-60613d84b674.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/63159135-60c44100-c04d-11e9-8ade-e437386d0916.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/63159149-64f05e80-c04d-11e9-9d3b-07fdda2c861b.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/63159154-6752b880-c04d-11e9-92a3-9fc330c374b3.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/63159164-6c176c80-c04d-11e9-8b02-3433dadcd580.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/63159169-6e79c680-c04d-11e9-8620-8f9dfe6f345b.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/63159174-70438a00-c04d-11e9-96c3-b52c8e0638f3.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/63159176-7174b700-c04d-11e9-951f-253f160883e7.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/63159181-746fa780-c04d-11e9-8227-34d047608271.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/63159184-76396b00-c04d-11e9-8ab8-c8e3863900b7.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/63159187-78032e80-c04d-11e9-8e4f-05499af8750d.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/63159189-79345b80-c04d-11e9-9ea2-4e8873cc956c.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/63159193-7b96b580-c04d-11e9-817f-16014a0efb10.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/63159196-7d607900-c04d-11e9-818e-61f1fca58439.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/63159199-7f2a3c80-c04d-11e9-8cac-fa5591de23ab.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/63159204-80f40000-c04d-11e9-8080-dc6592c51775.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/63160290-011b6500-c050-11e9-8c6b-4305307c3d7f.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/63160294-04165580-c050-11e9-9463-2cc3e65c7967.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/63160303-05e01900-c050-11e9-865b-1fdf266f97ba.PNG">
+<meta property="og:updated_time" content="2019-08-16T14:26:32.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="文献汇报六">
+<meta name="twitter:description" content="Classifying and Counting with Recurrent Contexts简介&amp;emsp;&amp;emsp;分类和量化（计数）是两个不同但又紧密相关的数据挖掘任务。它们可以相互获益。我们可以通过分类和计数每一个样本来量化样本。相反，我们也可以使用量化结果来调整分类的决策阈值，来改善具有不同类分别的应用中的分类准确度。 &amp;emsp;&amp;emsp;这篇论文中，作者假设：（1）数据可以被（">
+<meta name="twitter:image" content="https://user-images.githubusercontent.com/23336589/63159538-5eaeb200-c04e-11e9-9e9c-5dcff002c0c0.PNG">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="www.platot.site/2019/08/16/文献汇报六/"/>
+
+
+
+
+
+  <title>文献汇报六 | 心远地自偏</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">心远地自偏</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="www.platot.site/2019/08/16/文献汇报六/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="plato">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="心远地自偏">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">文献汇报六</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-16T21:31:39+08:00">
+                2019-08-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Classifying-and-Counting-with-Recurrent-Contexts"><a href="#Classifying-and-Counting-with-Recurrent-Contexts" class="headerlink" title="Classifying and Counting with Recurrent Contexts"></a>Classifying and Counting with Recurrent Contexts</h2><h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>&emsp;&emsp;分类和量化（计数）是两个不同但又紧密相关的数据挖掘任务。它们可以相互获益。我们可以通过分类和计数每一个样本来量化样本。相反，我们也可以使用量化结果来调整分类的决策阈值，来改善具有不同类分别的应用中的分类准确度。</p>
+<p>&emsp;&emsp;这篇论文中，作者假设：（1）数据可以被（近似）描述为一系列反复出现的概念（context） （2）尽管一些潜在的因素会造成概念漂移，但可观测变量的更小的集合和这些潜在因素是相关的。（3）在训练期间可用的变量，作者并不假设其在之后也可用。作者研究的是：在具有验证延迟的非稳态环境，如何准确地识别数据样本正确的上下文，同时估计正类的比例。</p>
+<p>&emsp;&emsp;<a href="https://www.kdd.org/kdd2018/accepted-papers/view/classifying-and-counting-with-recurrent-contexts" target="_blank" rel="noopener">原文地址</a></p>
+<p>&emsp;&emsp;<strong>作者动机。</strong>作者的实验室为飞虫设计了一个传感器，其使用红外线捕捉飞虫的翅膀动作和机器学习根据飞虫信号分类它的物种和性别。这个传感器可以增强现有的捕蚊设别，这样的设备对于蚊虫控制和监控是很有价值的工作。分类是控制的首要任务，量化是监控的首要任务。由这些捕蚊设备收集的数据会呈现出漂移。有许多因素会影响昆虫的飞行行为，如温度、适度、气压、食物等。但一个严重的问题是：类分布是未知的并且是高度变化的。它取决于两个首要的因素：感兴趣物种的当地可用性（数量）和昆虫的昼夜节律。</p>
+<p>&emsp;&emsp;在实验室作者可以控制各种变量使用虫箱（带有传感器的容器）来收集训练数据，这些数据可以确定所有经常性行为模式（context）的合理部分。每一个虫箱维持某一单一物种的昆虫。但是训练数据提供的是关于类分别$P(Y)$的有限的信息。在实验里，类分别取决于每一个虫箱里昆虫的数量和其昼夜节律；但在野外，类分别取决于昆虫当地分布和其昼夜节律。另外，实验人员可以评估许多会影响昆虫行为的因素，但他们想要移除一些非必要的因素。</p>
+<h3 id="提出的方法"><a href="#提出的方法" class="headerlink" title="提出的方法"></a>提出的方法</h3><p>&emsp;&emsp;作者提出了两种方法，它们可以识别一个样本所属的上下文，同时估计正样本类比率。作者提出的方法适合处理二分类和量化任务。</p>
+<p>&emsp;&emsp;作者假设一个样本在某时间点仅属于一个上下文。尽管其算法接受一个样本作为输入，这可块可以视为是在数据流上的一个滑窗。</p>
+<p>&emsp;&emsp;<strong>背景知识。</strong>HDy 是一种依赖于分类器为正面和负面事件输出的分数之间的统计差异的方法。其建立两个正则直方图，$H_+$和$H_-$，是由分类器分别在只包含正样本和负样本的验证集获得的分数的直方图。当出现未标注的测试数据集时，该算法使用同样的分类器在其上建立$H_?$。然后，使用如下的公式计算正样本比率：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/63159538-5eaeb200-c04e-11e9-9e9c-5dcff002c0c0.PNG" alt="HDY"></p>
+<p>HD 是 <strong>Hellinger Distance</strong>，它可以量化两个分布之间的相似性，其中每一个直方图有 B 个区间，由一个 B 维向量表示。HD公式如下：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/63159539-60787580-c04e-11e9-8c4a-042b15d3e4ff.PNG" alt="HD"></p>
+<p>两个直方图之间的差值可以代表另一种分布。</p>
+<h4 id="SMR-HDy"><a href="#SMR-HDy" class="headerlink" title="SMR-HDy"></a>SMR-HDy</h4><p>&emsp;&emsp;这个算法是解决该问题的一个简单方法，是第二个算法的基准。</p>
+<p>&emsp;&emsp;考虑有上下文的集合$C = \{1,2,…,|C|\}$。对每一个上下文$i \in C$，都有可用的事件训练集$T_i \in T$和事件验证集$V_i \in V$。在这些集合中的每一个事件都关联一个类标签$y \in \{+,-\}$。令$V_i^y \subseteq V_i$是$V_i$的子集，其包含$V_i$中所有标签是$y$的样本。</p>
+<p>&emsp;&emsp;从训练集$T_i$，作者推理得到分类模型$M_i$（ps：对每一个上下文单独训练一个分类器）。该算法接着计算在验证集$V_i$上由$M_i$获得的分数的正则直方图$H_i^y,y\in \{+,-\}$。</p>
+<p>&emsp;&emsp;最后，给定事件$U$的无标注测试集，计算在测试集$U$上由分类器$M_i$获得的分数的正则直方图$H_i^U$。接着我们考虑对$U$最可能的上下文：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/63159542-61a9a280-c04e-11e9-8cea-8ab57e0caab4.PNG" alt="context"></p>
+<p>&emsp;&emsp;换句话说，$\hat{c}_s$是最小化分类器$M_{\hat{c}_s}$在验证集$V_{\hat{c}_s}$和测试集$U$获得分数的分布之间的散度的上下文。SMR-HDy背后的基本原理是验证集的直方图代表了分数的预期行为。比如，$H_1^+$代表的是对于使用$M_1$在context 1的正事件上取得分数所期望的行为。最后，<strong>HDy</strong>算法提供一个插值参数（在该论文中，即是正类比率的估计），该参数可以最小化测试直方图和两个训练直方图插值之间的散度。另外，该算法的一个副产品是，我们得到一种比较不同的上下文的测量方法。</p>
+<p>&emsp;&emsp;值得注意的是，作者指出，在<strong>SMR-HDy</strong>算法中，我们期望的分数的行为，分数是由每个模型在仅属于它（模型）对应的上下文的事件上产生的。这是一种简单的方法，实际上作者认为这样会丢弃有用信息：分数的预期行为，当分数是由分类器$M_i$在验证集$V_j$上取得的且$i \ne j$。</p>
+<h4 id="XO-HDy"><a href="#XO-HDy" class="headerlink" title="XO-HDy"></a>XO-HDy</h4><p>&emsp;&emsp;作者提出的第二个方法是Crossed Opinions HDy（XO-HDy），该算法考虑了当来自一个事件的分数是由对应不同上下文的分类器所获得是，该分数如何预期行为。</p>
+<p>&emsp;&emsp;考虑$H_{i,j}^y$是由分类器$M_i$在验证集$V_j^y$上所获得分数的正则直方图。另外$\alpha_{i,j}$如下所示：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/63159549-62dacf80-c04e-11e9-9882-11f313165d5d.PNG" alt="alpha_ij"></p>
+<p>&emsp;&emsp;对$U$而言，最可能的上下文如下所示：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/63159555-653d2980-c04e-11e9-8e50-60b26f185c5b.PNG" alt="XO"></p>
+<p><strong>Figure 3</strong>提供了在该算法中数据分数在 Hellinger Distance 内的计算的视觉阐述。</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/63159567-6b330a80-c04e-11e9-925f-3e0ddeab5cbf.PNG" alt="Figure 3"></p>
+<p>该算法提供的$a_{\hat{c}_x}$，即是正类比率的估计。</p>
+<h4 id="分类调整"><a href="#分类调整" class="headerlink" title="分类调整"></a>分类调整</h4><p>&emsp;&emsp;作者指出，一旦获得了推断上下文$\hat{c}$和正类比率的估计$\hat{a}$，我们就可以使用一个新的阈值重调分类器，并重新分类$U$中的事件。作者期望$\hat{a}$%的样本属于正类。因此，可以将分类阈值设为获得分数的$(1-\hat{a})$%。</p>
+<h4 id="三条限制"><a href="#三条限制" class="headerlink" title="三条限制"></a>三条限制</h4><ol>
+<li>只适用于二分类问题。</li>
+<li>上下文纯洁性假设，也就是，相邻实例属于同一个上下文。</li>
+<li>假设我们已知所有上下文。</li>
+</ol>
+<h2 id="A-Tutorial-on-Network-Embeddings"><a href="#A-Tutorial-on-Network-Embeddings" class="headerlink" title="A Tutorial on Network Embeddings"></a>A Tutorial on Network Embeddings</h2><h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><p>&emsp;&emsp;<a href="https://arxiv.org/abs/1808.02590" target="_blank" rel="noopener">原文地址</a></p>
+<p>&emsp;&emsp;NE（network embedding）的中心思想是找到一种映射函数，可以将网络中的每一个节点转换为一个低维潜在表示。这些表示可以作为特征，用于在图上的一般任务，如分裂，聚类，链路预测和可视化。</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/62848314-ae6b4180-bd0d-11e9-8d99-710b7df0a211.PNG" alt="Alt text"></p>
+<p>&emsp;&emsp;<strong>目标</strong>：</p>
+<ol>
+<li><p>适应性。</p>
+<ul>
+<li>真正的网络在不断演化。不应要求重复学习过程。</li>
+</ul>
+</li>
+<li><p>可扩展。</p>
+<ul>
+<li>真正的网络通常很巨大，因此网络嵌入算法应该在短时间内处理大规模的网络。</li>
+</ul>
+</li>
+<li><p>社区感知。</p>
+<ul>
+<li>潜在表示之间的距离应该用以表示对应的节点之间的相似性度量。</li>
+</ul>
+</li>
+<li><p>低维。</p>
+<ul>
+<li>当标注数据稀缺时，低维模型泛化的更好，并能加速收敛和推理。</li>
+</ul>
+</li>
+<li><p>连续性。</p>
+<ul>
+<li>要求在连续空间内，潜在表示能建模部分社区成员关系。除了提供社区成员关系的细微视角外，连续的表示在社区间具有平滑的决策边界，令分类更鲁棒。</li>
+</ul>
+<p><strong>此文包含</strong>：</p>
+<ul>
+<li>网络嵌入的概述</li>
+<li>无监督网络嵌入方法在无特征同质网络上的应用</li>
+<li>在特征网络和部分标注网络上的嵌入方法</li>
+<li>讨论异质网络嵌入算法</li>
+</ul>
+</li>
+</ol>
+<h3 id="网络嵌入的简短历史"><a href="#网络嵌入的简短历史" class="headerlink" title="网络嵌入的简短历史"></a>网络嵌入的简短历史</h3><h4 id="传统意义的网络嵌入"><a href="#传统意义的网络嵌入" class="headerlink" title="传统意义的网络嵌入"></a>传统意义的网络嵌入</h4><p>&emsp;&emsp;传统意义上，图嵌入被视为降维。</p>
+<ol>
+<li>PCA</li>
+<li>多维缩放（MDS）<ul>
+<li>将 M 的每一行投影到 k 维向量，同时在 k 维空间中保留 不同对象在原始特征矩阵 M 中的距离。</li>
+</ul>
+</li>
+<li>Isomap<ul>
+<li>Isomap是 MDS 的扩展，通过将每个节点与特定距离内的节点连接构造邻域图，在邻域图上使用 MDS ，以保持非线性流形的整体结构</li>
+</ul>
+</li>
+<li>局部线性嵌入（LLE）<ul>
+<li>仅压榨数据点的局部邻域，不试图估计遥远数据点之间的距离。LLE 假设输入数据本质上是从某种潜在流行上采样得到的，一个数据点可以被重建为它邻居们的线性组合。</li>
+</ul>
+</li>
+</ol>
+<p>&emsp;&emsp;方法1，2只能够捕捉线性结构信息，不能发现输入数据之间的非线性。通常来说，以上方法能在小网络上有很好的表现。然而，这些方法的时间复杂度至少是二次，无法在大规模网络上运行。</p>
+<h4 id="深度学习时代"><a href="#深度学习时代" class="headerlink" title="深度学习时代"></a>深度学习时代</h4><p>&emsp;&emsp;DeepWalk是被提出的第一个使用深度学习方法的网络嵌入方法。DeepWalk将节点当作单词，生成短的随机行走作为句子，弥合了网络嵌入和词嵌入之间的差距。然后，神经语言模型如 Skip-gram 可以应用在这些随机行走上获得网络嵌入。</p>
+<p>DeepWalk范式的三个步骤：</p>
+<ol>
+<li>选择一个和输入图关联的矩阵。</li>
+<li>图采样，节点序列从选中的矩阵中采样得到。这一步是可选的。</li>
+<li>从生成的序列（或是第一步选的矩阵）中学习节点嵌入。</li>
+</ol>
+<p>DeepWalk范式是高度灵活的，其可从两方面被扩展：</p>
+<ol>
+<li>被建模的图的复杂性可以被扩展。</li>
+<li>DeepWalk的两个关键成分的方法，即用于从潜在矩阵中采样序列和从采样的序列学习节点嵌入，都可被扩展。</li>
+</ol>
+<p><img src="https://user-images.githubusercontent.com/23336589/62848315-ae6b4180-bd0d-11e9-822b-38a919290e30.PNG" alt="DeepWalk"></p>
+<h3 id="无监督网络嵌入"><a href="#无监督网络嵌入" class="headerlink" title="无监督网络嵌入"></a>无监督网络嵌入</h3><h4 id="无向图嵌入"><a href="#无向图嵌入" class="headerlink" title="无向图嵌入"></a>无向图嵌入</h4><p>&emsp;&emsp;DeepWalk 提出一种学习网络嵌入的两阶段算法。第一阶段是决定每一个节点得到上下文节点。通过在网络中生成截断的随机行走，上下文节点 v 可被定义为每一个随机行走序列中一个大小为 k 窗口内的节点。一旦上下文节点确定好了，第二步同 Skip-gram 模型一样：最大化预测上下文节点的似然概率来学习嵌入。</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/62848316-af03d800-bd0d-11e9-86b9-4d83f3386aca.PNG" alt="Algorithm 1"></p>
+<p>&emsp;&emsp;许多后续的在图嵌入的工作都追随 DeepWalk 中提出的两阶段框架，在每个阶段各有不同。下表总结了一些网络嵌入方法，按照它们对上下文节点的定义和用于学习嵌入的方法分类。</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/62848317-af03d800-bd0d-11e9-9f79-a3d1a1159b62.PNG" alt="Table 1"></p>
+<ul>
+<li><p>LINE</p>
+<ul>
+<li><p>为了更好的保存网络的结构信息，提出了一阶相似度和二阶相似度的概念，并在目标函数中结合了两者</p>
+</li>
+<li><p>使用宽度优先策略来产生上下文节点，只有距离给定节点最多两跳的节点才被视为相邻节点</p>
+</li>
+<li>使用 Skip-gram with Negative Sampling</li>
+</ul>
+</li>
+<li><p>Node2vc</p>
+<ul>
+<li>引入有偏向的随机游走，联合了 BFS 和 DFS 探索近邻</li>
+</ul>
+</li>
+<li>Walklets<ul>
+<li>从$A^1,A^2,…,A^k$学习多尺度网络嵌入，由于计算$A^i$的时间复杂度至少是网络中节点数量的平方，Walklets 通过在短随机游走间跳过节点来近似$A^i$。</li>
+<li>从$A$的不同幂次来学习，在不同粒度捕捉网络的结构信息。</li>
+</ul>
+</li>
+<li>GraRep<ul>
+<li>通过将图形邻接矩阵提升到不同的幂来利用不同尺度的节点共现信息，将奇异值分解（SVD）应用于邻接矩阵的幂以获得节点的低维表示</li>
+</ul>
+</li>
+<li>GraphAttention<ul>
+<li>不是预先确定超参数来控制上下文节点分布，而是自动学习对图转换矩阵的幂集数的关注</li>
+<li>通过设置隐藏层，这些层里的节点能够注意其邻近节点的特征，我们能够（隐含地）为邻近的不同节点指定不同的权重，不需要进行成本高昂的矩阵运算（例如反演），也无需事先知道图的结构</li>
+</ul>
+</li>
+<li>SDNE<ul>
+<li>通过深度自动编码器保持 2 跳邻居之间的接近度。它通过最小化它们的表示之间的欧几里德距离来进一步保持相邻节点之间的接近度。</li>
+<li>具有多层非线性函数，从而能够捕获到高度非线性的网络结构。然后使用一阶和二阶邻近关系来保持网络结构。二阶邻近关系被无监督学习用来捕获全局的网络结构，一阶邻近关系使用监督学习来保留网络的局部结构。</li>
+</ul>
+</li>
+<li>DNGR<ul>
+<li>使用随机冲浪来捕捉图结构信息。</li>
+<li>将这些结构信息转换为一个 PPMI 矩阵，使用 层叠降噪自动编码器来嵌入节点。</li>
+</ul>
+</li>
+</ul>
+<h4 id="有向图嵌入"><a href="#有向图嵌入" class="headerlink" title="有向图嵌入"></a>有向图嵌入</h4><p>&emsp;&emsp;前一节介绍的在无向图上操作的方法可以通过使用有向随机行走作为训练数据，自然地泛化到有向图上。</p>
+<ul>
+<li>HOPE<ul>
+<li>是专门为有向图设计的图嵌入方法。</li>
+<li>是保存非对称传递图嵌入的通用框架，整合了一些流行的近似测量如 Katz index</li>
+<li>使用泛化的SVD来优化</li>
+</ul>
+</li>
+</ul>
+<h4 id="边嵌入"><a href="#边嵌入" class="headerlink" title="边嵌入"></a>边嵌入</h4><p>&emsp;&emsp;如链路预测这样的任务要求对图的边准确建模。一种为边$e = (u,v)$构建表示的无监督方式是在$\phi(u)$和$\phi(v)$上运用二元算子：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/62848319-af9c6e80-bd0d-11e9-80a7-5438b710dacf.PNG" alt="binary operator"></p>
+<p>在node2vec中，考虑了一些二元算子，如平均数，Hardmard product，L1距离和L2距离。然而，这些对称二元算子总是对边$(u,v)$和$(v,u)$赋予相同的值，忽略了边的方向。</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/62848320-af9c6e80-bd0d-11e9-8114-3ce0c78f439f.PNG" alt="figure 5"></p>
+<p>&emsp;&emsp;为了缓和这个问题，Abu-El-Haija等人一种通过低秩对称投影的边表示学习方法。他们的方法由三部分组成。如<strong>Figure 5</strong>所示。</p>
+<h4 id="签名图嵌入"><a href="#签名图嵌入" class="headerlink" title="签名图嵌入"></a>签名图嵌入</h4><p>&emsp;&emsp;签名图中每一条边都有一个权重$w \in \{1,-1\}$，具有权重1的边代表节点之间的积极连结，反之则为负面连结。</p>
+<ul>
+<li>SiNE<ul>
+<li>基于结构平衡理论，一个节点同敌人相比，于朋友更接近。SiNE通过最大化朋友的嵌入相似性和敌人的嵌入相似性之间的间距来保持这个性质。</li>
+<li>负连结很系数时，引入一个虚拟节点来保持这种性质。</li>
+</ul>
+</li>
+<li>SNE<ul>
+<li>通过连个一个节点的上下文节点的表示来预测该节点的表示。</li>
+</ul>
+</li>
+</ul>
+<h4 id="子图嵌入"><a href="#子图嵌入" class="headerlink" title="子图嵌入"></a>子图嵌入</h4><p>&emsp;&emsp;另一个研究分支是关于图的大规模成分的嵌入，如图的子结构或整个图。Yanardag 和 Vishwanathan提出深度图核，是一种建模图中子结构相似性的通用框架。两个图$\mathcal{G}$和$\mathcal{G}’$之间的核如下：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/62848321-b0350500-bd0d-11e9-9bbd-a86df8dcf7a1.PNG" alt="graph kernel "></p>
+<p>但这些表示不能揭示两个不同但相似子结构之间的相似性。也就是，即使两个图仅仅有一条边或是一个顶点不同，它们被视为完全是不同的。这种核定义导致了对角优势问题：一个图只能与它自己相似，而不能和其他图相似。为了克服这个问题，Yanardag 和 Vishwanathan提出了另一种核定义：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/62848322-b0350500-bd0d-11e9-96a4-418b8f5ab649.PNG" alt="alternative graph kernel"></p>
+<p>为了构建$\mathcal{M}$，他们的算法首先生成图子结构的共现矩阵。然后使用Skip-gram模型在共现矩阵上训练过的子结构的潜在表示，使用其来计算$\mathcal{M}$。</p>
+<h4 id="使用元策略来改进网络嵌入"><a href="#使用元策略来改进网络嵌入" class="headerlink" title="使用元策略来改进网络嵌入"></a>使用元策略来改进网络嵌入</h4><p>&emsp;&emsp;至今用于网络嵌入的神经方法，都具有一些相同的弱点。首先，它们都是局部方法——受限于节点周围的结构。这种聚焦于局部结构的方法忽略了远距离的全局关系。其次，它们都依靠非收敛的优化目标，这往往使用随机梯度下降，而其会导致困在局部最小值。换句话说，这些方法学习的嵌入配置，可能会丢弃输入图的重要结构特征。</p>
+<p>&emsp;&emsp;HARP递归的合并原始图中的点和边，成功得到一系列具有相似结构的更小的图。这些合并图，每一个都有不同的粒度，提供我们原始图全局结构的视角。从最简单的形式开始，每一个图学习一系列初始表示，可以作为嵌入下一个更细节的图的良好初始。重复这个过程，直到我们得到原始图中每一个节点的嵌入。</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/62848323-b0cd9b80-bd0d-11e9-89e0-1fc479204f7e.PNG" alt="Figure 6"></p>
+<h3 id="属性网络嵌入"><a href="#属性网络嵌入" class="headerlink" title="属性网络嵌入"></a>属性网络嵌入</h3><p>&emsp;&emsp;在真实世界中，节点或边通常会关联额外的特征，称其为属性。例如在诸如 Twitter 的社交网络站点中，用户（节点）发布的文本内容是可用的。因此期望网络嵌入方法还从节点属性和边属性中的丰富内容中学习。这一部分仅讨论节点属性的工作。对不同类型的属性，有不同的策略。特别的，研究对两类属性感兴趣：高层次特征，比如文本和图片；和节点标签。</p>
+<p>&emsp;&emsp;挑战：高维稀疏特征，及如何将其整合到现有的网络嵌入方法。</p>
+<p>&emsp;&emsp;<strong>方法：</strong></p>
+<ul>
+<li><p>TADW</p>
+<ul>
+<li><p>研究节点与文本特征相关联情况</p>
+</li>
+<li><p>第一次证明 DeepWalk 将转移概率矩阵 分解为两个低维矩阵，受此启发将文本特征矩阵合并到矩阵分解过程中。</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>&emsp;&emsp;<strong>联合建模网络结构和节点特征</strong>（除了强制节点之间具有嵌入相似性，还应使具有相似特征向量的节点具有嵌入相似性）</p>
+<ul>
+<li>CENE<ul>
+<li>将文本内容视为特殊类型的节点，并利用节点-节点链接和节点内容链接进行节点嵌入。</li>
+<li>优化目标是共同最小化两种类型链路的损失。</li>
+</ul>
+</li>
+</ul>
+<p>&emsp;&emsp;对于节点标签，整合标签信息的典型方法是联合优化产生节点嵌入和预测节点标签的损失。</p>
+<ul>
+<li>GENE</li>
+</ul>
+<h3 id="异构网络嵌入"><a href="#异构网络嵌入" class="headerlink" title="异构网络嵌入"></a>异构网络嵌入</h3><p>&emsp;&emsp;异构网络具有多种类型的节点或边。大多数嵌入方法通过联合的最小化在每种模式上的损失来学习节点嵌入。这些方法或者在相同的隐空间直接学习所有节点的嵌入，或为每一种模式构造一种嵌入，然后将其映射到同一个隐空间。</p>
+<h3 id="网络嵌入的应用"><a href="#网络嵌入的应用" class="headerlink" title="网络嵌入的应用"></a>网络嵌入的应用</h3><ol>
+<li>知识表示。<ul>
+<li>知识表示的问题是关于使用包含主语、谓语和对象的短句子编码关于世界的事实。</li>
+</ul>
+</li>
+<li>推荐系统。<ul>
+<li>用户之间的交互，用户的查询和事项形成了一个异构网络，其编码了用户潜在的偏好。</li>
+</ul>
+</li>
+<li>自然语言处理。<ul>
+<li>目前最先进的网络嵌入方法大多受自然语言处理领域的启发。反之，网络嵌入方法也可导致更好的建模人类语言。</li>
+</ul>
+</li>
+<li>社交网络分析。</li>
+</ol>
+<h2 id="Graph-Neural-Networks-A-Review-of-Methods-and-Applications"><a href="#Graph-Neural-Networks-A-Review-of-Methods-and-Applications" class="headerlink" title="Graph Neural Networks: A Review of Methods and Applications"></a>Graph Neural Networks: A Review of Methods and Applications</h2><h3 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h3><p>&emsp;&emsp;<a href="https://arxiv.org/abs/1812.08434" target="_blank" rel="noopener">原文地址</a></p>
+<p>&emsp;&emsp;图是一种建模一组节点和它们之间关系的数据结构。近来，使用机器学习分析图的研究受到了越来越多的关注，因为图具有强大的表达能力，比如，图可以被应用在大量种类的系统中，包括社会科学（社交网络），自然科学（物理系统，蛋白质交互网络），知识图和其他研究领域。作为一种独特的非欧几里得的数据结构，对于机器学习来说，图分析集中在节点分类，链路预测和聚类。图神经网络（GNNs）是基于深度学习的方法，其在图域上操作。因为其令人信服的表现和高可解释性，GNN已经成为了广泛应用的图分析方法。<br>&emsp;&emsp;<strong>Motivations：</strong></p>
+<ul>
+<li><p>GNNs的第一个动机根植于CNNs。</p>
+<ul>
+<li>CNNs的关键是：局部连结，参数共享和使用多层网络</li>
+<li>图是最典型的局部连结结构</li>
+<li>和传统的频谱图理论相比，参数共享可以减少计算代价</li>
+<li>多层网络结构是处理层次模式的关键，其可以捕获不同尺寸的特征</li>
+</ul>
+</li>
+<li><p>第二个动机来源于图嵌入（graph embedding）</p>
+<ul>
+<li>基于CNNs和 图嵌入，GNNs被提出来聚合来自于图结构的信息。因此，GNNs可以建包含元素和它们之间关系的输入或是输出。</li>
+<li>此外，GNNs还可以使用 RNN kernel 同时建模图的扩散过程</li>
+</ul>
+</li>
+</ul>
+<p>&emsp;&emsp;<strong>为什么GNNs值得研究：</strong></p>
+<ol>
+<li>像CNN和RNN这样的标准神经网络无法正确处理图形输入，因为它们按特定顺序堆叠节点的特征。而GNNs在每个节点上分别传播，忽略节点的输入顺序。</li>
+<li>图中的边表示两个节点之间的依赖信息。 在标准神经网络中，依赖信息仅被视为节点的特征。 但是，GNN可以通过图结构进行传播，而不是将其用作特征的一部分。</li>
+<li>推理是高级人工智能的一个非常重要的研究课题，人脑中的推理过程几乎都是基于从日常经验中提取的图形。</li>
+</ol>
+<p>&emsp;&emsp;<strong>此文包含：</strong></p>
+<ul>
+<li>GNN的原始模型和其变体，和一些通用框架</li>
+<li>GNNs的应用：结构化场景，非结构化场景和其他场景</li>
+<li>未来研究的四个开放问题</li>
+</ul>
+<h3 id="Model"><a href="#Model" class="headerlink" title="Model"></a>Model</h3><h4 id="Graph-Neural-Network"><a href="#Graph-Neural-Network" class="headerlink" title="Graph Neural Network"></a>Graph Neural Network</h4><p>&emsp;&emsp;这部分介绍原始的图卷积网络，及其在表示能力和训练效率方面的限制。</p>
+<p>&emsp;&emsp;在一个图中，每一个节点自然地由它的特征和相关节点所定义。GNN的目标是学习到状态嵌入（state embedding）$h_v \in \mathbb{R}^s$ ，其包含每个节点的邻居的信息。状态嵌入$h_v$是节点 $v$ 的 $s$ 维向量，可被用来产生输出 $o_v$，比如节点标签。令 $f$ 是参数函数，称为局部转变函数，其在所有节点之中共享，并根据输入的邻居更新节点状态。令 $g$ 为局部输出函数，其描述了输出是如何产生的。然后，$h_v$ 和 $o_v$ 定义如下：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/63068078-7c8ff000-bf44-11e9-9a4c-d3a95100b648.PNG" alt="equal 1 2"></p>
+<p>&emsp;&emsp;令 $H,O,X$ 和 $X_N$ 是分别通过堆叠所有状态，所有输出，所有特征和所有节点特征构造的向量。于是我们得到一种紧凑形式：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/63068082-8285d100-bf44-11e9-8351-ec6be2336623.PNG" alt="equal 3 4"></p>
+<p>&emsp;&emsp;根据巴拿马不动点理论，GNN使用下面的经典迭代方案来计算状态：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/63068097-8e719300-bf44-11e9-93c2-3e7153a40fdf.PNG" alt="equal 5"></p>
+<p>&emsp;&emsp;当我有拥有了GNN框架之后，接下来的问题就是如何学习 $f$ 和 $g$ 的参数。对于监督学习，具有目标信息 $t_v$，损失可被写作如下形式：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/63068140-b103ac00-bf44-11e9-8df1-3a9b95e2d6e6.PNG" alt="equal 6"></p>
+<p>其中 $p$ 是有监督节点的数目。学习算法基于梯度下降策略，由如下步骤组成。</p>
+<ul>
+<li>状态 $h_v^t$ 由 Eq.1 迭代的更新，直到时间 T。它们到达 Eq.3 的不动点解决方案：$H(T) \approx H$</li>
+<li>根据 loss 计算权重 $W$ 的梯度</li>
+<li>根据上一步计算出来的梯度更新权重$W$</li>
+</ul>
+<p>&emsp;&emsp;<strong>Limitations：</strong></p>
+<ol>
+<li>对于不动点，迭代地更新节点的隐藏状态不高效。如果松弛不动点假设，可以设计多层网络的GNN来获得节点及其邻居更稳定的表示</li>
+<li>GNN在迭代中使用相同的参数，然而大多数流行的神经网络在不同层使用不同的参数，作为一个层次特征提取器。此外，节点隐藏状态的更新是顺序过程，不能从RNN kernel受益。</li>
+<li>在边上的信息特征不能被原始GNN 高效建模。</li>
+<li>如果我们聚焦于节点表示而不是图表示的话，使用不动点假设是不合适的，因为在不动点假设中，表示的分布会更在值上更平滑，具有少量信息来区分节点。</li>
+</ol>
+<h4 id="Variants-of-Graph-Neural-Networks"><a href="#Variants-of-Graph-Neural-Networks" class="headerlink" title="Variants of Graph Neural Networks"></a>Variants of Graph Neural Networks</h4><p>&emsp;&emsp;这一部分作者介绍了几种GNN的变体。该部分的第一部分聚焦于在不同图类型上操作的变体，这些变体扩展了原始模型的表示能力；第二部分列出了在传播步骤上的修改（卷积，门机制，注意力机制和跳跃连结）的变体；第三部分描述了使用先进训练方法的变体。</p>
+<p>&emsp;&emsp;图类型：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/63068146-b3fe9c80-bf44-11e9-8253-69c269b50f16.PNG" alt="Graphy Types"></p>
+<p>&emsp;&emsp;传播步骤：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/63068149-b52fc980-bf44-11e9-8004-75bfa693c3bd.PNG" alt="Propagation steps"></p>
+<p>&emsp;&emsp;训练方法</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/63068202-dd1f2d00-bf44-11e9-82ce-392509ca5147.PNG" alt="training methods"></p>
+<p><img src="https://user-images.githubusercontent.com/23336589/63068220-e9a38580-bf44-11e9-9e60-07c35552807c.jpg" alt="Table 2"></p>
+<h4 id="通用框架"><a href="#通用框架" class="headerlink" title="通用框架"></a>通用框架</h4><p>&emsp;&emsp;一些通用框架被提出来旨在将不同的方法整合到单一框架中。message passing neural network（MPNN），统一了各种GNN和GCN 方案；non-local neural network（NLNN），统一了一些自注意风格的方法；graph network（GN）统一了 MPNN，NLNN和其他变体。</p>
+<p>&emsp;&emsp; <strong>Message Passing Neural Networks</strong></p>
+<p>&emsp;&emsp;MPNN框架抽象了几种最流行的图结构数据模型之间的共性，例如图卷积中频谱方法和非光谱方法，门控图神经网络，交互网络，分子图卷积，深张量神经网络等等。</p>
+<p>&emsp;&emsp;该模型包含了两个阶段：信息传递阶段和读出阶段。消息传递阶段（传播步骤）运行 $T$ 个时间步，根据消息函数  $M_t$ 和顶点更新函数 $U_t$ 所定义。使用消息 $m_v^t$ ，隐藏状态 $h_v^t$ 的更新函数如下：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/63068226-ec9e7600-bf44-11e9-916b-80e2eb0fa211.PNG" alt="equal 34"></p>
+<p>读出阶段使用读出函数 $R$ 计算整个图的特征向量：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/63068239-fde78280-bf44-11e9-8157-7e5a32846792.PNG" alt="equal 35"></p>
+<p>消息传递函数，顶点更新函数和读出函数可以具有不同的设置，因此 MPNN 可以泛化到一些不同的模型。</p>
+<p>&emsp;&emsp;<strong>Non-local Neural Networks</strong></p>
+<p>&emsp;&emsp;非局部运算是计算机视觉中经典非局部均值运算的推广。非局部运算将某一位置的响应计算为所有位置特征的加权和。这组位置可以在空间、时间或时空中。 因此，NLNN 可以被视为不同“自注意”方式的统一。</p>
+<p>&emsp;&emsp;遵循非局部平均运算，通用非局部运算定义如下：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/63068243-00e27300-bf45-11e9-9391-4f8656cc8306.PNG" alt="equal 37"></p>
+<p>$i$ 是输出位置的索引，$j$ 是所有可能位置的索引。$f(h_i,h_j)$可以看作是表示两点之间关系的一个标量。$g(h_j)$ 表示输入 $h_j$ 的转换。$\frac{1}{C(h)}$用来为归一化系数。</p>
+<p>&emsp;&emsp;<strong>Graph Networks </strong></p>
+<p>&emsp;&emsp;图定义：在 GN 中，一个图被定义为一个三元组 $G = (u,H,E)$。$u$ 是全局属性，$H = \{h_i\}_{i=1:N^v}$ 是顶点集，其中 $h_i$ 是顶点的属性。$E=\{(e_k,r_k,s_k)\}_{k=1:N^e}$ 是边集合，$e_k$ 是边属性，$r_k$ 和 $s_k$  分别是接受点和发送点的索引。 </p>
+<p>&emsp;&emsp;GN block：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/63068248-050e9080-bf45-11e9-8e87-04ec3996e74d.PNG" alt="GN block"></p>
+<p>&emsp;&emsp;计算步骤：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/63068252-08a21780-bf45-11e9-8413-f1ce25a2a0f7.PNG" alt="Computation steps"></p>
+<p>&emsp;&emsp;注意这里次序并不是严格要求的。</p>
+<h3 id="Applications"><a href="#Applications" class="headerlink" title="Applications"></a>Applications</h3><p>&emsp;&emsp;作者将应用分为三个场景：（1）结构化场景，其中数据具有显示的关系结构，如物理系统，分子结构和知识图谱（2）非结构化场景，其中关系结构并不是显示的，如图片，文本等。（3）其他应用场景如生成模型和和组合优化问题。</p>
+<h4 id="结构化场景"><a href="#结构化场景" class="headerlink" title="结构化场景"></a>结构化场景</h4><ol>
+<li>物理。对现实世界的物理系统进行建模是理解人类智能的最基本方面之一。通过将对象表示为节点，将关系表示为边，我们可以以简化但有效的方式执行关于对象，关系和物理的基于GNN的推理。</li>
+<li>化学和生物学<ul>
+<li>分子手印</li>
+<li>蛋白质界面预测</li>
+</ul>
+</li>
+<li>知识图谱</li>
+</ol>
+<h4 id="非结构化场景"><a href="#非结构化场景" class="headerlink" title="非结构化场景"></a>非结构化场景</h4><ol>
+<li>图片<ul>
+<li>图片分类</li>
+<li>视觉推理</li>
+<li>语义分割</li>
+</ul>
+</li>
+<li>文本<ul>
+<li>文本分类</li>
+<li>序列标注</li>
+<li>神经机器翻译</li>
+<li>关系抽取</li>
+<li>事件抽取</li>
+</ul>
+</li>
+</ol>
+<h4 id="其他场景"><a href="#其他场景" class="headerlink" title="其他场景"></a>其他场景</h4><ol>
+<li>生成模型<ul>
+<li>建模社交交互</li>
+<li>发现新的化学结构</li>
+<li>构建知识图谱</li>
+</ul>
+</li>
+<li>组合优化问题<ul>
+<li>TSP</li>
+<li>二次分配问题，如衡量两个图的相似性</li>
+</ul>
+</li>
+</ol>
+<h3 id="Open-problems"><a href="#Open-problems" class="headerlink" title="Open problems"></a>Open problems</h3><ol>
+<li>浅结构<ul>
+<li>堆叠多层GCN 网络层会导致过平滑问题（over-smooth），也就是所有顶点会收敛到相同值</li>
+</ul>
+</li>
+<li>动态图<ul>
+<li>如何处理具有动态结构的图</li>
+<li>当点或边出现或消失时，GNN不能适应性改变</li>
+</ul>
+</li>
+<li>非结构场景<ul>
+<li>没有从原始数据中生成图的最佳方法</li>
+</ul>
+</li>
+<li>可扩展性<ul>
+<li>在大数据环境下，GNN的许多核心步骤都具有很大的计算开销。</li>
+</ul>
+</li>
+</ol>
+<h2 id="A-Comprehensive-Survey-on-Graph-Neural-Networks"><a href="#A-Comprehensive-Survey-on-Graph-Neural-Networks" class="headerlink" title="A Comprehensive Survey on Graph Neural Networks"></a>A Comprehensive Survey on Graph Neural Networks</h2><h3 id="Introduction-1"><a href="#Introduction-1" class="headerlink" title="Introduction"></a>Introduction</h3><p>&emsp;&emsp;在这篇综述中，作者对图神经网络做了全面的概述。作者提出了一种新的分类，将图神经网络分为五类，分别是：图卷积网络，图注意力网络，图自动编码器，图生成网络和图时空网络（graph spatial-temporal networks）。作者对这些分类之内或之外的方法做了彻底的评论，比较和总结。然后，作者介绍了图神经网络广泛的应用，总结了关于图神经网络的数据集，开源代码和基准。最后，作者关于图神经网络的未来方向给出了建议。</p>
+<p>&emsp;&emsp;<a href="https://arxiv.org/abs/1901.00596" target="_blank" rel="noopener">原文地址</a></p>
+<h3 id="Categorization-and-Frameworks"><a href="#Categorization-and-Frameworks" class="headerlink" title="Categorization and Frameworks"></a>Categorization and Frameworks</h3><p>&emsp;&emsp;图卷积网络在捕捉图结构依赖上扮演了一个中心角色。下面，简要介绍每一种分类。</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/63159076-3f635500-c04d-11e9-9b08-37435359e9cf.PNG" alt="fig 3"></p>
+<p><img src="https://user-images.githubusercontent.com/23336589/63159084-42f6dc00-c04d-11e9-962b-79263ced6bd4.PNG" alt="Table 1"></p>
+<h4 id="Taxonomy-of-GNNs"><a href="#Taxonomy-of-GNNs" class="headerlink" title="Taxonomy of GNNs"></a>Taxonomy of GNNs</h4><p>&emsp;&emsp;<strong>图卷积网络</strong>将传统数据上的卷积操作推广到图数据上。其关键是学得一个函数 $f$ 生成 节点  $v_i$ 的表示，通过聚合节点自己的特征和邻居的特征。</p>
+<p>&emsp;&emsp;<strong>图注意力网络</strong>同GCNs一样寻找一个整合函数来融合邻居节点，随机行走和候选模型来学得一个新的表示。关键的不同是，图注意力网络使用注意力机制，其对重要的节点，随机行走和模型赋予更大的权值。注意力参数和神经网络参数是在一个端到端框架中一起学得的。</p>
+<p>&emsp;&emsp;<strong>图自动编码器</strong>是一种无监督学习框架，其旨在学习低维节点向量，先通过一个编码器，然后使用解码器来重构图数据。图自动编码器不管是对有无属性的网络来说，都是学习图嵌入的流行方式。</p>
+<p>&emsp;&emsp;<strong>图生成网络</strong>旨在从数据中生成似是而非的结构。给定图经验分布生成图具有根本的挑战性，主要是因为图是复杂的数据结构。为了解决这个问题，研究者们将生成过程分解为交替生成点和边，并引入生成对抗训练。</p>
+<p>&emsp;&emsp;<strong>图时空网络</strong>旨在从时空图中学习看不见的模式，其在许多应用中越来越重要，如交通预测和人类活动预测。图时空网络的关键思想是同时考虑空间依赖和时间依赖。</p>
+<h4 id="Frameworks"><a href="#Frameworks" class="headerlink" title="Frameworks"></a>Frameworks</h4><p>&emsp;&emsp;图神经网络，尤其是图卷积网络，试图在图数据上复制 CNN 的成功，通过以频谱理论或空间位置来定义图卷积。使用图结构和节点内容信息作为输入，GCN 的输出使用一下的机制之一聚焦于不同的图分析任务：</p>
+<ul>
+<li><strong>Node-level</strong>  输出是关于节点回归和分类任务。因为图卷积模块直接给出节点的隐表达，一个多层感知机或是一个softmax 层用来作为 GCN 的最有一层。</li>
+<li><strong>Edge-level</strong> 输出关于边分类和链路预测。为了预测边的标签或是连接强度，一个额外的函数使用来自于图卷积模块的两个节点的隐表示作为输出。</li>
+<li><strong>Graph-level</strong> 输出关于图分类任务。为了获得图级的紧凑表示，池化模块被用来将图粗粒化为子图或是求和/平均所有节点的表示。</li>
+</ul>
+<p>&emsp;&emsp;端到端训练框架。图卷积网络可以在端到端框架之内使用监督或半监督或无监督的方式训练，这取决于学习的任务和手中可用的标签信息。</p>
+<ul>
+<li><strong>Semi-supervised learning for node-level classification</strong> 给定一个图，其中仅部分节点有标签，图卷积网络可以学到一个鲁棒的模型，其可以有效识别未标注节点的类标签。为此，可以通过堆叠一些图卷积层，后跟 softmax 层来构建多类分类的端到端框架。</li>
+<li><strong>Supervised learning for graph-level classification</strong> 给定一个图数据集，图级的分类旨在为整个图预测类标签。对这个任务的端到端学习可以联合图卷积层和池化过程。特别的，通过使用图卷积层，我们可以在单个图上为每个节点获得固定数目的表示。然后，我们可以获得整个图的表示，通过池化操作。最后，使用线性层和 softmax 层，我们就可以构建一个用于图分类的端到端框架。</li>
+<li><strong>Unsupervised learning for graph embedding</strong> 当图中无可用的类标签信息时，我们可以纯无监督的方式学习图嵌入，在端到端框架中。这些算法在利用边级信息有两种方式。一种简单的方式是采用自动编码器框架。另一种方式是使用负采样方法，其中采样节点对的一部分作为负样本，而现有的具有连结的节点对作为正样本。然后，在卷积层后使用 logistic 回归层，用于端到端学习。</li>
+</ul>
+<h3 id="Graph-Convolutional-Networks"><a href="#Graph-Convolutional-Networks" class="headerlink" title="Graph Convolutional Networks"></a>Graph Convolutional Networks</h3><p>&emsp;&emsp;GCNs 方法可以分为两类，基于频谱的方法和基于空间的方法。基于频谱的方法通过引入来自图信号处理的过滤器来定义图卷积，其中卷积操作被阐释为移除图信号的噪声。基于空间的方法将图卷积定义为整合来自邻居的特征信息。</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/63159079-412d1880-c04d-11e9-82ec-a092f0ff0655.PNG" alt="fig 1"></p>
+<h4 id="Spectral-based-GNNs"><a href="#Spectral-based-GNNs" class="headerlink" title="Spectral-based GNNs"></a>Spectral-based GNNs</h4><p>&emsp;&emsp;背景。在基于频谱的方法中，图被认为是无向的。无向图的一个鲁棒的数学表示是范数图拉普拉斯矩阵：$L = I_n - D^{-\frac{1}{2}}AD^{-\frac{1}{2}}$，其中D是节点度的对角矩阵，$D_{ii} = \sum_j{A_{ij}}$。范数图拉普拉斯矩阵具有真对称半正定性质。具有这个性质，其可以被分解为$L = U\Lambda U^T$，其中$U$是按照特征值排列的特征向量矩阵，$\Lambda$是特征值的对角矩阵，$\Lambda_{ii} = \lambda_i$ 。范数拉普拉斯矩阵的特征向量来自于一个正交空间，也就是$UU^T = I$ 。在图信号处理中，$x \in R^N$ 是图中一个节点的特征向量。对 $x$ 来说，图傅立叶变化被定义为 $\mathcal{G}(x) = U^Tx$，逆图傅立叶变化是$\mathcal{G}^{-1} = U\hat{x}$。为了理解图傅立叶变换，从它的定义我们看到它确实将输入图信号投影到正交空间，其中基由由范数图拉普拉斯算子的特征向量形成。变换信号$\hat{x}$的元素是新空间中图信号的坐标，这样输入信号就被表示为 $x = \sum_i{\hat{x}_iU_i}$，这恰恰就是逆傅里叶变换。现在，对于输入信号$x$，具有一个过滤器$g \in R^N$的图卷积定义如下：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/63159094-48542680-c04d-11e9-9742-d32330990722.PNG" alt="equal 1"></p>
+<p>如果我们将过滤器记为$g_\theta = diag(U^Tg)$ ，图卷积可以简化为：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/63159105-5013cb00-c04d-11e9-9c6d-afd5862f75fb.PNG" alt="equal 2"></p>
+<p>（ps：Eq.1 等于 Eq.2）</p>
+<p>基于频谱的图卷积网络都遵循这个定义。关键的不同在于对过滤器$g_\theta$的选择。</p>
+<p>&emsp;&emsp;基于频谱的 GCNs的方法：</p>
+<p>&emsp;&emsp;<strong>Spectral CNN:</strong></p>
+<p>假设过滤器 $g_\theta = \Theta_{i,j}^k$是一组可学习的参数，并认为图信号是多维的，其将图卷积层定义为：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/63159113-543fe880-c04d-11e9-90d5-24f64dd8a514.PNG" alt="equal 3"> </p>
+<p>&emsp;&emsp; <strong>Chebyshev Spectral CNN（ChebNet）：</strong></p>
+<p>将过滤器定义为特征值的对角矩阵的切比雪夫多项式，也就是</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/63159115-5609ac00-c04d-11e9-99e2-fc90d0c5a538.PNG" alt="chebyshev"></p>
+<p>切比雪夫多项式由$T_k(x) = 2xT_{k-1}(x)-T_{k-2}{x}$，$T_0(x) = 1,T_1(x) = x$所递归的定义。</p>
+<p>作为结果，图信号 $x$ 的带有过滤器$g_\theta$ 卷积被定义如下：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/63159118-57d36f80-c04d-11e9-9101-6f9c3ae8f3af.PNG" alt="eq4"></p>
+<p>&emsp;&emsp;<strong>First order of ChebNet （1stChebNet：</strong></p>
+<p>是对 ChebNet的一阶近似。假设 K = 1 和 $\lambda_{max} = 2$，Eq.4. 被简化为：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/63159126-5a35c980-c04d-11e9-98a9-7beb299b3d9d.PNG" alt="eq5"></p>
+<p>&emsp;&emsp;为了抑制参数数目和避免过拟合，1stChebNet 进一步假设$\theta = \theta_0 = -\theta$，得到下面的土卷积的定义：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/63159127-5bff8d00-c04d-11e9-84ba-60613d84b674.PNG" alt="eq6"></p>
+<p>&emsp;&emsp;为了处理多维的图输入信号，1stChebNet提出来Eq.6.修改版本：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/63159135-60c44100-c04d-11e9-8ade-e437386d0916.PNG" alt="eq7"></p>
+<p>&emsp;&emsp;由1stChebNet提出的该图卷积是位于空间中的，它弥合了基于频谱方法和基于空间方法之间的裂隙。输出的每一行代表每个节点的潜在表示，该潜在表示是通过对来自节点本身及其相邻节点的聚合信息进行线性变换而获得的，其权重由$\widetilde{A}$的行指定。</p>
+<p>&emsp;&emsp;<strong>Adaptive Graph Convolution Network（AGCN):</strong></p>
+<p>为了利用图拉普拉斯矩阵上不明确的隐式的结构关系，该方法使用一个残差图增强了图，该残差图是计算节点对之间的距离而构建的。</p>
+<p>&emsp;&emsp;总结：</p>
+<ol>
+<li>依赖对范数图拉普拉斯矩阵的特征分解</li>
+<li>任何对图的排列变化会导致特征基的变化</li>
+<li>学习的过滤器是域独立的，不能用于具有其他结构的图上</li>
+<li>特征分解时间复杂度是$O(N^3)$，空间复杂度是$O(N^2)$</li>
+<li>需要将整个图加载进内存中来执行卷积操作</li>
+</ol>
+<h4 id="Spatial-based-GNNs"><a href="#Spatial-based-GNNs" class="headerlink" title="Spatial-based GNNs"></a>Spatial-based GNNs</h4><p>&emsp;&emsp;基于空间的GCNs可以被分类两类：基于循环的方法和基于组合的方法。基于循环的方法使用同一个图卷积层来更新节点的隐表示，而基于组合的方法使用不同的图卷积层来更新隐表示。<strong>Fig. 7</strong>展示了这中不同。</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/63159149-64f05e80-c04d-11e9-9d3b-07fdda2c861b.PNG" alt="fig 7"></p>
+<p>&emsp;&emsp;<strong>Recurrent-based Spatial GCNs：</strong></p>
+<p>&emsp;&emsp;<strong>Graph Neural Networks(GNNs)</strong>作为图神经网络早期工作之一，GNNs循环的更新节点隐表示直到收敛。GNNs的空间图卷积定义如下：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/63159154-6752b880-c04d-11e9-92a3-9fc330c374b3.PNG" alt="eq8"></p>
+<p>为了保证收敛，循环函数$f(\cdot)$必须是收缩映射，其收缩两个点在映射之后的距离。</p>
+<p>&emsp;&emsp;<strong>Gated Graph Neural Networks（GGNNs</strong>使用GRU作为循环函数，减少了循环的次数。</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/63159164-6c176c80-c04d-11e9-8b02-3433dadcd580.PNG" alt="eq9"></p>
+<p>不同于GNNs，GGNNs使用时间后向传播来学习参数。优势是不在需要约束参数确保收敛。缺点是，时间和空间效率受影响。</p>
+<p>&emsp;&emsp;<strong>Stochastic Steady-state Embedding（SSE）</strong>是为了改善学习效率而提出来的，其以异步的方式来随机更新节点隐表示。如<strong>Algorithm 1</strong>所示，SSE通过采样批数据循环的估计节点隐表示和更新参数。为了确保收敛到稳定状态，SSE的循环函数被定义为历史状态和新状态的权重的和：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/63159169-6e79c680-c04d-11e9-8620-8f9dfe6f345b.PNG" alt="eq10"></p>
+<p>尽管求和邻居信息隐示的考虑到了节点度，但这种求和的规模是否会影响算法的稳定性依然是一个问题。</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/63159174-70438a00-c04d-11e9-96c3-b52c8e0638f3.PNG" alt="Algorithm 1"></p>
+<p>&emsp;&emsp;<strong>Composition Based Spatial GCNs ：</strong></p>
+<p>&emsp;&emsp;<strong>Message Passing Neural Networks（MPNNs）</strong>包含两个阶段，消息传递阶段和读出阶段。消息传递阶段实际上运行 T-step 的基于空间的图卷积。图空间卷积由消息函数$M_t(\cdot)$和更新函数$U_t(\cdot)$定义：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/63159176-7174b700-c04d-11e9-951f-253f160883e7.PNG" alt="eq11"></p>
+<p>读出阶段实际上是一个池化操作，其基于每个节点的隐表示得到整个图的表示：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/63159181-746fa780-c04d-11e9-8227-34d047608271.PNG" alt="eq12"></p>
+<p>&emsp;&emsp;<strong>GraphSage</strong>一引入聚合函数来定义图卷积。聚合函数可以集成节点邻居的信息，它必须对节点次序的排列具有不变性，如求和，均值和最大值。图卷积操作定义如下：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/63159184-76396b00-c04d-11e9-8ab8-c8e3863900b7.PNG" alt="eq13"></p>
+<p>GraphSage 提出一种批训练算法。首先，它取样一个节点固定数目的局部的 k-hop 邻居。然后，它通过聚合邻居节点的特征信息得到中央节点最后的状态。最后，它使用中央节点最后的状态来做预测和后向传播错误。这个过程如<strong>Fig 8</strong>所示。</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/63159187-78032e80-c04d-11e9-8e4f-05499af8750d.PNG" alt="fig 8"></p>
+<p>&emsp;&emsp;<strong>Miscellaneous Variants of Spatial GCNs：</strong></p>
+<p>&emsp;&emsp;<strong>Diffusion Convolution Neural Networks(DCNN)</strong>提出了一种图形卷积网络，它封装了图扩散过程。一个隐藏的节点表示通过使用转移概率矩阵的指数系列独立卷积输出而获得。DCNN的扩散卷积运算定义如下：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/63159189-79345b80-c04d-11e9-9ea2-4e8873cc956c.PNG" alt="eq14"></p>
+<p>&emsp;&emsp;<strong>PATCHY-SAN</strong>使用CNN来解决图分类问题。它将图结构的数据转换为网格结构数据。</p>
+<p>&emsp;&emsp;<strong>Large-scale Graph Convolution Networks（LGCN）</strong>提出一种基于节点特征信息的排序算法。</p>
+<p>&emsp;&emsp;<strong>Mixture Model Network(MoNet)</strong>将标准CNN与非欧几里得域上的卷积结构统一起来。MoNet引入伪坐标和权重函数，以使节点邻居的权重由节点与其邻居之间的相对位置（伪坐标）确定。</p>
+<h4 id="Graph-Pooling-Modules"><a href="#Graph-Pooling-Modules" class="headerlink" title="Graph Pooling Modules"></a>Graph Pooling Modules</h4><p>&emsp;&emsp;图池化模块可以减少方差和计算复杂度，通过对原始特征数据下采样。</p>
+<p>&emsp;&emsp;图池化有如下几种方法：</p>
+<ol>
+<li>均值/最大值/求和池化</li>
+<li>ChebNet：对图粗粒化</li>
+<li>DGCNN：对节点根据它们在图中的结构角色排序。</li>
+<li>DIFFPOOL:可以生成图的层次表示</li>
+</ol>
+<h4 id="Comparison-Between-Spectral-and-Spatial-Models"><a href="#Comparison-Between-Spectral-and-Spatial-Models" class="headerlink" title="Comparison Between Spectral and Spatial Models"></a>Comparison Between Spectral and Spatial Models</h4><ol>
+<li>效率上。基于频谱的方法的计算代价随图大小急剧增大，因为需要同时计算特征向量和处理整个图，令平行处理和应对大规模的图很难。</li>
+<li>泛化性。</li>
+<li>灵活性。基于频谱的方法只适用于无向图，因为对有向图的拉普拉斯矩阵还没有清晰的定义。</li>
+</ol>
+<h3 id="Beyond-Graph-Convolutional-Networks"><a href="#Beyond-Graph-Convolutional-Networks" class="headerlink" title="Beyond Graph Convolutional Networks"></a>Beyond Graph Convolutional Networks</h3><h4 id="Graph-Attention-Neworks"><a href="#Graph-Attention-Neworks" class="headerlink" title="Graph Attention Neworks"></a>Graph Attention Neworks</h4><p>&emsp;&emsp;注意力机制的优点是它们能够集中于一个物体上最重要的部分。图神经网络在聚合，整合多个模型的输出和产生面向重要性的随机行走时使用注意力机制，并从中受益。</p>
+<p>&emsp;&emsp;<strong>Methods of Graph Attention NetWorks ：</strong></p>
+<p>&emsp;&emsp;<strong>Graph Attention Newtork(GAT)</strong>在聚合邻居特征信息时使用注意力机制。</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/63159193-7b96b580-c04d-11e9-817f-16014a0efb10.PNG" alt="eq20&amp;21"></p>
+<p>&emsp;&emsp;<strong>Gated Attention Network（GAAN）</strong>提出multi-head注意力机制来更新节点的隐状态，并引入自注意机制来为每个 head 计算权重：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/63159196-7d607900-c04d-11e9-818e-61f1fca58439.PNG" alt="eq22"></p>
+<p>&emsp;&emsp;<strong>Graph Attention Model(GAM)</strong>提出循环神经网络模型来解决图分类问题，其通过访问重要节点序列来处理图的信息部分。模型定义如下：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/63159199-7f2a3c80-c04d-11e9-8cac-fa5591de23ab.PNG" alt="eq23"></p>
+<p>&emsp;&emsp;<strong>Attention Walks</strong>通过随机行走学习节点嵌入。不像deepwalk使用固定的优先级，Attention Walk使用不同的注意力权重来分解共线矩阵：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/63159204-80f40000-c04d-11e9-8080-dc6592c51775.PNG" alt="eq25"></p>
+<h4 id="Graph-Auto-encoders"><a href="#Graph-Auto-encoders" class="headerlink" title="Graph Auto-encoders"></a>Graph Auto-encoders</h4><p>&emsp;&emsp;图自动编码器是学习图嵌入的方法。</p>
+<p>&emsp;&emsp;<strong>Graph Auto-encoder(GAE）</strong>第一次将GCN整合进自动编码器框架。</p>
+<p>&emsp;&emsp;<strong>Adversarially Regularized Graph Autoencoder（ARGA）</strong>引入对抗学习。</p>
+<p>&emsp;&emsp;<strong>Network Representations with Adversarially Regularized Autoencoders(NetRA) </strong>使用sequence-to-sequence 架构重构随机行走的节点序列。</p>
+<p>&emsp;&emsp;<strong>Deep Neural Networks for GraphRepresentations(DNGR)</strong>使用堆叠去噪自动编码器来重构PPMI矩阵。</p>
+<p>&emsp;&emsp;<strong>Structural Deep Network Embedding(SDNE)</strong>使用堆叠自动编码器保留节点的一阶近似和二阶近似。一阶近似被定义为节点节点和它邻居隐表示之间的距离。</p>
+<h4 id="Graph-Generative-Networks"><a href="#Graph-Generative-Networks" class="headerlink" title="Graph Generative Networks"></a>Graph Generative Networks</h4><p>&emsp;&emsp;图生成网络的目标是给定一组观察到的图，然后生成图。许多图生成网络是特定于领域的。</p>
+<p>&emsp;&emsp;方法：</p>
+<ol>
+<li><p>Molecular Generative Adversarial Networks (MolGAN)</p>
+<p>使用GAN 和RL 来生成具有所期望性质的图</p>
+</li>
+<li><p>Deep Generative Models of Graphs (DGMG)</p>
+<ul>
+<li>交替重复增加节点和边的步骤，直至评价标准被激活。</li>
+</ul>
+</li>
+<li><p>GraphRNN</p>
+<ul>
+<li>通过两级的循环神经网络</li>
+<li>graph-level 的RNN 每一时间将一个新节点加入一个节点序列，edge-level RNN 为新节点和之前的节点产生边</li>
+</ul>
+</li>
+<li><p>NetGAN</p>
+<ul>
+<li>联合 LSTM 和 Wasserstein GAN，基于随机行走的方法来生成图。</li>
+</ul>
+</li>
+</ol>
+<h4 id="Graph-Spatial-Temporal-Networks"><a href="#Graph-Spatial-Temporal-Networks" class="headerlink" title="Graph Spatial-Temporal Networks"></a>Graph Spatial-Temporal Networks</h4><p>&emsp;&emsp;图形时空网络同时捕捉时空图的空间依赖和时间依赖。</p>
+<p>&emsp;&emsp;方法：</p>
+<ol>
+<li>Diffusion Convolutional Recurrent Neural Network<br>(DCRNN)<ul>
+<li>引入扩散卷积来捕捉空间依赖，具有GRU的sequence-to-sequence 架构来捕捉时间依赖。</li>
+</ul>
+</li>
+<li>CNN-GCN<ul>
+<li>交替使用GCN和1D-CNN来学习时空图数据</li>
+</ul>
+</li>
+<li>Spatial Temporal GCN (ST-GCN)<ul>
+<li>将时间流扩展为图的边，以便可以使用统一的GCN模型同时提取空间和时间信息。</li>
+</ul>
+</li>
+<li>Structural-RNN<ul>
+<li>旨在在每个时间步预测节点标签</li>
+<li>由两种 RNNs 组成，nodeRNN 和edgeRNN。每个节点的时间信息通过nodeRNN和edgeRNN传递</li>
+<li>为不同的节点和边假设不同的nodeRNN和edgeRNN</li>
+</ul>
+</li>
+</ol>
+<h3 id="Applications-1"><a href="#Applications-1" class="headerlink" title="Applications"></a>Applications</h3><h4 id="Datasets"><a href="#Datasets" class="headerlink" title="Datasets"></a>Datasets</h4><p><img src="https://user-images.githubusercontent.com/23336589/63160290-011b6500-c050-11e9-8c6b-4305307c3d7f.PNG" alt="Table 5"></p>
+<h4 id="Benchmarks-amp-Open-source-Implementations"><a href="#Benchmarks-amp-Open-source-Implementations" class="headerlink" title="Benchmarks &amp; Open-source Implementations"></a>Benchmarks &amp; Open-source Implementations</h4><p><img src="https://user-images.githubusercontent.com/23336589/63160294-04165580-c050-11e9-9463-2cc3e65c7967.PNG" alt="Table 6"><br><img src="https://user-images.githubusercontent.com/23336589/63160303-05e01900-c050-11e9-865b-1fdf266f97ba.PNG" alt="Table 7"></p>
+<h4 id="Practical-Applicatons"><a href="#Practical-Applicatons" class="headerlink" title="Practical Applicatons"></a>Practical Applicatons</h4><ol>
+<li>计算机视觉<ul>
+<li>场景图生成</li>
+<li>点云分类和分割</li>
+<li>动作识别</li>
+<li>人-物交互</li>
+<li>few-shot image classification</li>
+<li>语义分割</li>
+<li>视觉推理和问答</li>
+</ul>
+</li>
+<li>推荐系统<ul>
+<li>链路预测（预测用户和事项之间缺失的连结）</li>
+</ul>
+</li>
+<li>交通预测<ul>
+<li>流量预测</li>
+<li>出租车需求预测</li>
+</ul>
+</li>
+<li>化学<ul>
+<li>分子手印</li>
+<li>预测分子性质</li>
+<li>蛋白质界面推理</li>
+<li>合成化合物</li>
+</ul>
+</li>
+<li>其他<ul>
+<li>程序确认</li>
+<li>程序推理</li>
+<li>社交影响预测</li>
+<li>对抗性攻击避免</li>
+<li>脑网络</li>
+<li>事件检测</li>
+<li>组合优化</li>
+</ul>
+</li>
+</ol>
+<h3 id="Future-Direction"><a href="#Future-Direction" class="headerlink" title="Future Direction"></a>Future Direction</h3><ol>
+<li>变得更深。<ul>
+<li>这是由于图卷积的影响，因为它本质上推动了相邻节点的表示彼此更接近，因此理论上，无限次卷积时，所有节点的表示将收敛到单个点。</li>
+<li>这引发了一个问题，对于学习图结构的数据，变得更深是否是一个更好的策略。</li>
+</ul>
+</li>
+<li>感受野。<ul>
+<li>一些节点具有很多邻居，一些则仅有很少的邻居。</li>
+</ul>
+</li>
+<li>可扩展性。<ul>
+<li>一个节点的最后状态设计大量它的邻居的隐藏状态，这令后向传播很复杂。</li>
+</ul>
+</li>
+<li>动态和异质图。</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/文献汇报/" rel="tag"># 文献汇报</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/08/16/A Comprehensive Survey on Graph Neural Networks/" rel="next" title="A Comprehensive Survey on Graph Neural Networks">
+                <i class="fa fa-chevron-left"></i> A Comprehensive Survey on Graph Neural Networks
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">plato</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">28</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Classifying-and-Counting-with-Recurrent-Contexts"><span class="nav-number">1.</span> <span class="nav-text">Classifying and Counting with Recurrent Contexts</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简介"><span class="nav-number">1.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#提出的方法"><span class="nav-number">1.2.</span> <span class="nav-text">提出的方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#SMR-HDy"><span class="nav-number">1.2.1.</span> <span class="nav-text">SMR-HDy</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#XO-HDy"><span class="nav-number">1.2.2.</span> <span class="nav-text">XO-HDy</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分类调整"><span class="nav-number">1.2.3.</span> <span class="nav-text">分类调整</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#三条限制"><span class="nav-number">1.2.4.</span> <span class="nav-text">三条限制</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#A-Tutorial-on-Network-Embeddings"><span class="nav-number">2.</span> <span class="nav-text">A Tutorial on Network Embeddings</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#介绍"><span class="nav-number">2.1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#网络嵌入的简短历史"><span class="nav-number">2.2.</span> <span class="nav-text">网络嵌入的简短历史</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#传统意义的网络嵌入"><span class="nav-number">2.2.1.</span> <span class="nav-text">传统意义的网络嵌入</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#深度学习时代"><span class="nav-number">2.2.2.</span> <span class="nav-text">深度学习时代</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#无监督网络嵌入"><span class="nav-number">2.3.</span> <span class="nav-text">无监督网络嵌入</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#无向图嵌入"><span class="nav-number">2.3.1.</span> <span class="nav-text">无向图嵌入</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#有向图嵌入"><span class="nav-number">2.3.2.</span> <span class="nav-text">有向图嵌入</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#边嵌入"><span class="nav-number">2.3.3.</span> <span class="nav-text">边嵌入</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#签名图嵌入"><span class="nav-number">2.3.4.</span> <span class="nav-text">签名图嵌入</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#子图嵌入"><span class="nav-number">2.3.5.</span> <span class="nav-text">子图嵌入</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用元策略来改进网络嵌入"><span class="nav-number">2.3.6.</span> <span class="nav-text">使用元策略来改进网络嵌入</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#属性网络嵌入"><span class="nav-number">2.4.</span> <span class="nav-text">属性网络嵌入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#异构网络嵌入"><span class="nav-number">2.5.</span> <span class="nav-text">异构网络嵌入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#网络嵌入的应用"><span class="nav-number">2.6.</span> <span class="nav-text">网络嵌入的应用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Graph-Neural-Networks-A-Review-of-Methods-and-Applications"><span class="nav-number">3.</span> <span class="nav-text">Graph Neural Networks: A Review of Methods and Applications</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Introduction"><span class="nav-number">3.1.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Model"><span class="nav-number">3.2.</span> <span class="nav-text">Model</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Graph-Neural-Network"><span class="nav-number">3.2.1.</span> <span class="nav-text">Graph Neural Network</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Variants-of-Graph-Neural-Networks"><span class="nav-number">3.2.2.</span> <span class="nav-text">Variants of Graph Neural Networks</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#通用框架"><span class="nav-number">3.2.3.</span> <span class="nav-text">通用框架</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Applications"><span class="nav-number">3.3.</span> <span class="nav-text">Applications</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#结构化场景"><span class="nav-number">3.3.1.</span> <span class="nav-text">结构化场景</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#非结构化场景"><span class="nav-number">3.3.2.</span> <span class="nav-text">非结构化场景</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#其他场景"><span class="nav-number">3.3.3.</span> <span class="nav-text">其他场景</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Open-problems"><span class="nav-number">3.4.</span> <span class="nav-text">Open problems</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#A-Comprehensive-Survey-on-Graph-Neural-Networks"><span class="nav-number">4.</span> <span class="nav-text">A Comprehensive Survey on Graph Neural Networks</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Introduction-1"><span class="nav-number">4.1.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Categorization-and-Frameworks"><span class="nav-number">4.2.</span> <span class="nav-text">Categorization and Frameworks</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Taxonomy-of-GNNs"><span class="nav-number">4.2.1.</span> <span class="nav-text">Taxonomy of GNNs</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Frameworks"><span class="nav-number">4.2.2.</span> <span class="nav-text">Frameworks</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Graph-Convolutional-Networks"><span class="nav-number">4.3.</span> <span class="nav-text">Graph Convolutional Networks</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Spectral-based-GNNs"><span class="nav-number">4.3.1.</span> <span class="nav-text">Spectral-based GNNs</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Spatial-based-GNNs"><span class="nav-number">4.3.2.</span> <span class="nav-text">Spatial-based GNNs</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Graph-Pooling-Modules"><span class="nav-number">4.3.3.</span> <span class="nav-text">Graph Pooling Modules</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Comparison-Between-Spectral-and-Spatial-Models"><span class="nav-number">4.3.4.</span> <span class="nav-text">Comparison Between Spectral and Spatial Models</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Beyond-Graph-Convolutional-Networks"><span class="nav-number">4.4.</span> <span class="nav-text">Beyond Graph Convolutional Networks</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Graph-Attention-Neworks"><span class="nav-number">4.4.1.</span> <span class="nav-text">Graph Attention Neworks</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Graph-Auto-encoders"><span class="nav-number">4.4.2.</span> <span class="nav-text">Graph Auto-encoders</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Graph-Generative-Networks"><span class="nav-number">4.4.3.</span> <span class="nav-text">Graph Generative Networks</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Graph-Spatial-Temporal-Networks"><span class="nav-number">4.4.4.</span> <span class="nav-text">Graph Spatial-Temporal Networks</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Applications-1"><span class="nav-number">4.5.</span> <span class="nav-text">Applications</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Datasets"><span class="nav-number">4.5.1.</span> <span class="nav-text">Datasets</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Benchmarks-amp-Open-source-Implementations"><span class="nav-number">4.5.2.</span> <span class="nav-text">Benchmarks &amp; Open-source Implementations</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Practical-Applicatons"><span class="nav-number">4.5.3.</span> <span class="nav-text">Practical Applicatons</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Future-Direction"><span class="nav-number">4.6.</span> <span class="nav-text">Future Direction</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">plato</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>

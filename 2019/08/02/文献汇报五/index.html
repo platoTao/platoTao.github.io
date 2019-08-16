@@ -101,7 +101,7 @@
 <meta property="og:image" content="https://user-images.githubusercontent.com/23336589/62263816-1c7f5100-b450-11e9-87cb-1eee0bcfa32b.PNG">
 <meta property="og:image" content="https://user-images.githubusercontent.com/23336589/62263818-1d17e780-b450-11e9-9b1d-5f6c7aa9a3fa.PNG">
 <meta property="og:image" content="https://user-images.githubusercontent.com/23336589/62353853-22536000-b53e-11e9-89e9-cfdf09f8935a.PNG">
-<meta property="og:updated_time" content="2019-08-02T12:32:06.000Z">
+<meta property="og:updated_time" content="2019-08-02T12:51:18.369Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="文献汇报五">
 <meta name="twitter:description" content="工作概述&amp;emsp;&amp;emsp;本次阅读学习了三篇论文，都是关于数据流挖掘的综述文献。这些文章主要概述是的对流数据挖掘中概念漂移的处理，这包括增量学习，概念漂移检测和适应，但对数据流挖掘中的聚类和异常点检测没有介绍。另外，关于数据流挖掘的半监督和无监督方法，及验证延迟也着墨较少。&amp;emsp;&amp;emsp; 一些思考&amp;emsp;&amp;emsp;1. 由于概念漂移，算法要求具有遗忘机制，常见的遗忘机制有窗口">
@@ -336,8 +336,7 @@
 
       
         <h2 id="工作概述"><a href="#工作概述" class="headerlink" title="工作概述"></a>工作概述</h2><p>&emsp;&emsp;本次阅读学习了三篇论文，都是关于数据流挖掘的综述文献。这些文章主要概述是的对流数据挖掘中概念漂移的处理，这包括增量学习，概念漂移检测和适应，但对数据流挖掘中的聚类和异常点检测没有介绍。另外，关于数据流挖掘的半监督和无监督方法，及验证延迟也着墨较少。<br>&emsp;&emsp;</p>
-<h2 id="一些思考"><a href="#一些思考" class="headerlink" title="一些思考"></a>一些思考</h2><p>&emsp;&emsp;1. 由于概念漂移，算法要求具有遗忘机制，常见的遗忘机制有窗口化，样本权重和采样。这些方法都是在数据或是数据特征上使用遗忘机制，有没有可能使模型本身（参数）更新就使用遗忘机制，类似LSTM那样的遗忘更新机制。<br>&emsp;&emsp;2. 元学习我了解很少，仅知道是学习关于如何学习，仅需要很少都样本就可以完成学习。那利用元学习可以完美的解决的概念漂移的问题，因为只需要很少的样本就可以完成模型的重训练。<br>&emsp;&emsp;3. 是否可以将概念漂移看作是噪声（各种不同的噪声），对发生变化的数据执行去噪处理，换句话说保持数据的分布不变？</p>
-<p>&emsp;&emsp;4. 基于隐藏上下文去检测概念漂移是一个很好的研究方向，初略猜想，这需要特定领域的专家知识。</p>
+<h2 id="一些思考"><a href="#一些思考" class="headerlink" title="一些思考"></a>一些思考</h2><p>&emsp;&emsp;1. 由于概念漂移，算法要求具有遗忘机制，常见的遗忘机制有窗口化，样本权重和采样。这些方法都是在数据或是数据特征上使用遗忘机制，有没有可能使模型本身（参数）更新就使用遗忘机制，类似LSTM那样的遗忘更新机制。<br>&emsp;&emsp;2. 元学习我了解很少，仅知道是学习关于如何学习，仅需要很少都样本就可以完成学习。那利用元学习可以完美的解决的概念漂移的问题，因为只需要很少的样本就可以完成模型的重训练。<br>&emsp;&emsp;3. 是否可以将概念漂移看作是噪声（各种不同的噪声），对发生变化的数据执行去噪处理，换句话说保持数据的分布不变？<br>&emsp;&emsp;4. 基于隐藏上下文去检测概念漂移是一个很好的研究方向，初略猜想，这需要特定领域的专家知识。</p>
 <h2 id="Open-Challenges-for-Data-Stream-Mining-Research"><a href="#Open-Challenges-for-Data-Stream-Mining-Research" class="headerlink" title="Open Challenges for Data Stream Mining Research"></a>Open Challenges for Data Stream Mining Research</h2><h3 id="ABSTRACT"><a href="#ABSTRACT" class="headerlink" title="ABSTRACT"></a>ABSTRACT</h3><p>&emsp;&emsp;每一天，传感器、交易和网络产生连续的大量的数据，这被视为数据流，其需要在数据到达时对数据做在线分析。流数据可以被视为是所谓大数据的一个主要来源。尽管对数据流和大数据的预测建模在过去十年受到了极大的关注，许多研究方法通常是为表现良好的受控问题设置设计的，而忽视了真实世界应用强加的重要的挑战。这篇文章讨论了关于数据流挖掘的八大开放挑战。我们的目标是确定当前研究和有意义的应用之间的差距，突出开放问题，并为数据流挖掘定义一种新的应用相关的研究方向。确定的挑战包括这些问题：保护数据隐私，处理遗留系统，处理不完整和延迟信息，复杂数据的分析，评估流挖掘算法。得到的分析结果通过实际应用来说明并且提供流数据挖掘未来研究的有关路线的一般建议。</p>
 <p>&emsp;&emsp;<a href="https://dl.acm.org/citation.cfm?id=2674028" target="_blank" rel="noopener">论文地址</a></p>
 <p><img src="https://user-images.githubusercontent.com/23336589/62099856-03489a00-b2c2-11e9-8482-573878894745.PNG" alt="CRISP"></p>
@@ -524,8 +523,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/08/02/Open Challenges for Data Steam Mining Research/" rel="next" title="Open Challenges for Data Stream Mining Research">
-                <i class="fa fa-chevron-left"></i> Open Challenges for Data Stream Mining Research
+              <a href="/2019/08/02/A Survey on Concept Drift Adaptation/" rel="next" title="A Survey on Concept Drift Adaptation">
+                <i class="fa fa-chevron-left"></i> A Survey on Concept Drift Adaptation
               </a>
             
           </div>
@@ -533,6 +532,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/08/02/Open Challenges for Data Steam Mining Research/" rel="prev" title="Open Challenges for Data Stream Mining Research">
+                Open Challenges for Data Stream Mining Research <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -609,7 +612,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-count">28</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -631,7 +634,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-count">19</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
