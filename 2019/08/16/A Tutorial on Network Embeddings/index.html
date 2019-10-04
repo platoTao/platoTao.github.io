@@ -79,13 +79,13 @@
 
 
 
-<meta name="description" content="介绍&amp;emsp;&amp;emsp;原文地址 &amp;emsp;&amp;emsp;NE（network embedding）的中心思想是找到一种映射函数，可以将网络中的每一个节点转换为一个低维潜在表示。这些表示可以作为特征，用于在图上的一般任务，如分裂，聚类，链路预测和可视化。  &amp;emsp;&amp;emsp;目标：  适应性。  真正的网络在不断演化。不应要求重复学习过程。   可扩展。  真正的网络通常很巨大，因此网络">
+<meta name="description" content="介绍&amp;emsp;&amp;emsp;原文地址 &amp;emsp;&amp;emsp;NE（network embedding）的中心思想是找到一种映射函数，可以将网络中的每一个节点转换为一个低维潜在表示。这些表示可以作为特征，用于在图上的一般任务，如分类，聚类，链路预测和可视化。  &amp;emsp;&amp;emsp;目标：  适应性。  真正的网络在不断演化。不应要求重复学习过程。   可扩展。  真正的网络通常很巨大，因此网络">
 <meta name="keywords" content="Network Embedding">
 <meta property="og:type" content="article">
 <meta property="og:title" content="A Tutorial on Network Embeddings">
 <meta property="og:url" content="www.platot.site/2019/08/16/A Tutorial on Network Embeddings/index.html">
 <meta property="og:site_name" content="心远地自偏">
-<meta property="og:description" content="介绍&amp;emsp;&amp;emsp;原文地址 &amp;emsp;&amp;emsp;NE（network embedding）的中心思想是找到一种映射函数，可以将网络中的每一个节点转换为一个低维潜在表示。这些表示可以作为特征，用于在图上的一般任务，如分裂，聚类，链路预测和可视化。  &amp;emsp;&amp;emsp;目标：  适应性。  真正的网络在不断演化。不应要求重复学习过程。   可扩展。  真正的网络通常很巨大，因此网络">
+<meta property="og:description" content="介绍&amp;emsp;&amp;emsp;原文地址 &amp;emsp;&amp;emsp;NE（network embedding）的中心思想是找到一种映射函数，可以将网络中的每一个节点转换为一个低维潜在表示。这些表示可以作为特征，用于在图上的一般任务，如分类，聚类，链路预测和可视化。  &amp;emsp;&amp;emsp;目标：  适应性。  真正的网络在不断演化。不应要求重复学习过程。   可扩展。  真正的网络通常很巨大，因此网络">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://user-images.githubusercontent.com/23336589/62848314-ae6b4180-bd0d-11e9-8d99-710b7df0a211.PNG">
 <meta property="og:image" content="https://user-images.githubusercontent.com/23336589/62848315-ae6b4180-bd0d-11e9-822b-38a919290e30.PNG">
@@ -96,10 +96,10 @@
 <meta property="og:image" content="https://user-images.githubusercontent.com/23336589/62848321-b0350500-bd0d-11e9-9bbd-a86df8dcf7a1.PNG">
 <meta property="og:image" content="https://user-images.githubusercontent.com/23336589/62848322-b0350500-bd0d-11e9-96a4-418b8f5ab649.PNG">
 <meta property="og:image" content="https://user-images.githubusercontent.com/23336589/62848323-b0cd9b80-bd0d-11e9-89e0-1fc479204f7e.PNG">
-<meta property="og:updated_time" content="2019-08-16T14:31:42.000Z">
+<meta property="og:updated_time" content="2019-10-04T03:34:29.380Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="A Tutorial on Network Embeddings">
-<meta name="twitter:description" content="介绍&amp;emsp;&amp;emsp;原文地址 &amp;emsp;&amp;emsp;NE（network embedding）的中心思想是找到一种映射函数，可以将网络中的每一个节点转换为一个低维潜在表示。这些表示可以作为特征，用于在图上的一般任务，如分裂，聚类，链路预测和可视化。  &amp;emsp;&amp;emsp;目标：  适应性。  真正的网络在不断演化。不应要求重复学习过程。   可扩展。  真正的网络通常很巨大，因此网络">
+<meta name="twitter:description" content="介绍&amp;emsp;&amp;emsp;原文地址 &amp;emsp;&amp;emsp;NE（network embedding）的中心思想是找到一种映射函数，可以将网络中的每一个节点转换为一个低维潜在表示。这些表示可以作为特征，用于在图上的一般任务，如分类，聚类，链路预测和可视化。  &amp;emsp;&amp;emsp;目标：  适应性。  真正的网络在不断演化。不应要求重复学习过程。   可扩展。  真正的网络通常很巨大，因此网络">
 <meta name="twitter:image" content="https://user-images.githubusercontent.com/23336589/62848314-ae6b4180-bd0d-11e9-8d99-710b7df0a211.PNG">
 
 
@@ -331,7 +331,7 @@
 
       
         <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>&emsp;&emsp;<a href="https://arxiv.org/abs/1808.02590" target="_blank" rel="noopener">原文地址</a></p>
-<p>&emsp;&emsp;NE（network embedding）的中心思想是找到一种映射函数，可以将网络中的每一个节点转换为一个低维潜在表示。这些表示可以作为特征，用于在图上的一般任务，如分裂，聚类，链路预测和可视化。</p>
+<p>&emsp;&emsp;NE（network embedding）的中心思想是找到一种映射函数，可以将网络中的每一个节点转换为一个低维潜在表示。这些表示可以作为特征，用于在图上的一般任务，如分类，聚类，链路预测和可视化。</p>
 <p><img src="https://user-images.githubusercontent.com/23336589/62848314-ae6b4180-bd0d-11e9-8d99-710b7df0a211.PNG" alt="Alt text"></p>
 <p>&emsp;&emsp;<strong>目标</strong>：</p>
 <ol>
