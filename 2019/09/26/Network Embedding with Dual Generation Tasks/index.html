@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Network Embedding," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="前言本次介绍的论文来自 IJCAL 2019。作者研究的问题是：用于内容丰富（content-rich）网络的网络嵌入。对于内容丰富网络的嵌入，其核心问题是学习和整合由网络结构和节点内容所携带的语义信息。 在该论文中，作者提出了一种端到端的模型，Dual GEnerative Network Embedding（DGENE），来利用网络结构和节点内容的补充信息。在该模型中，每一个顶点被视为一个带有">
+<meta name="keywords" content="Network Embedding">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Network Embedding with Dual Generation Tasks">
+<meta property="og:url" content="www.platot.site/2019/09/26/Network Embedding with Dual Generation Tasks/index.html">
+<meta property="og:site_name" content="心远地自偏">
+<meta property="og:description" content="前言本次介绍的论文来自 IJCAL 2019。作者研究的问题是：用于内容丰富（content-rich）网络的网络嵌入。对于内容丰富网络的嵌入，其核心问题是学习和整合由网络结构和节点内容所携带的语义信息。 在该论文中，作者提出了一种端到端的模型，Dual GEnerative Network Embedding（DGENE），来利用网络结构和节点内容的补充信息。在该模型中，每一个顶点被视为一个带有">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/66621392-a0a34100-ec16-11e9-95d3-3e9ddb2939d5.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/66621393-a13bd780-ec16-11e9-8f01-f2821de0a30e.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/66621396-a1d46e00-ec16-11e9-8870-f0d29299eaed.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/66621398-a26d0480-ec16-11e9-9a3f-773ba0c2f932.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/66621399-a26d0480-ec16-11e9-83d8-b3077b52336b.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/66621400-a3059b00-ec16-11e9-8385-f889c78a92be.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/66621401-a39e3180-ec16-11e9-9b48-6def0f80455b.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/66621403-a436c800-ec16-11e9-8c26-513a2358c111.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/66621404-a4cf5e80-ec16-11e9-9b35-fa8d2524b507.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/66621405-a4cf5e80-ec16-11e9-9c0a-677deea374db.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/66621407-a567f500-ec16-11e9-8649-c29141a4d2cd.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/66621409-a6008b80-ec16-11e9-8363-d4a3289ca526.PNG">
+<meta property="og:updated_time" content="2019-10-11T11:22:38.653Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Network Embedding with Dual Generation Tasks">
+<meta name="twitter:description" content="前言本次介绍的论文来自 IJCAL 2019。作者研究的问题是：用于内容丰富（content-rich）网络的网络嵌入。对于内容丰富网络的嵌入，其核心问题是学习和整合由网络结构和节点内容所携带的语义信息。 在该论文中，作者提出了一种端到端的模型，Dual GEnerative Network Embedding（DGENE），来利用网络结构和节点内容的补充信息。在该模型中，每一个顶点被视为一个带有">
+<meta name="twitter:image" content="https://user-images.githubusercontent.com/23336589/66621392-a0a34100-ec16-11e9-95d3-3e9ddb2939d5.PNG">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="www.platot.site/2019/09/26/Network Embedding with Dual Generation Tasks/"/>
+
+
+
+
+
+  <title>Network Embedding with Dual Generation Tasks | 心远地自偏</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">心远地自偏</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="www.platot.site/2019/09/26/Network Embedding with Dual Generation Tasks/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="plato">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="心远地自偏">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Network Embedding with Dual Generation Tasks</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-26T20:31:39+08:00">
+                2019-09-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本次介绍的<a href="https://www.ijcai.org/proceedings/2019/709" target="_blank" rel="noopener">论文</a>来自 IJCAL 2019。作者研究的问题是：用于内容丰富（content-rich）网络的网络嵌入。对于内容丰富网络的嵌入，其核心问题是学习和整合由网络结构和节点内容所携带的语义信息。</p>
+<p>在该论文中，作者提出了一种端到端的模型，Dual GEnerative Network Embedding（DGENE），来利用网络结构和节点内容的补充信息。在该模型中，每一个顶点被视为一个带有两种模态的对象：node identity 和 textual content。然后作者制定了两种生成任务，一个是 Node Identification(NI) ，其给定节点内容识别节点的身份，另一个是 Content Generation（CG），其给定节点身份生成节点的文本内容。为这两个任务，作者使用特定的 Content2Node 和 Node2Content 模型。在 DGENE 框架下，这两个模型通过分享和整合中间层学习，这使得它们互相增强。</p>
+<h2 id="提出的方法"><a href="#提出的方法" class="headerlink" title="提出的方法"></a>提出的方法</h2><p>表示学习中，content-rich NE 的关键研究问题是：</p>
+<ol>
+<li>节点间的结构级的相似可以是变化的。大多现存的 NE 方法试图保留设计的结构近似，而不是自动学习合适范围的近似。</li>
+<li>对于结构和内容的融合策略还没有得到很好研究。大多现存的方法学习分开的结构和内容向量，然后使用简单的方法来联合它们。</li>
+<li>结构和内容信息都是高度非线性的，这使得浅模型不能高效学习语义表示。<br>作者为解决这些问题提出了 DGENE 框架。</li>
+</ol>
+<p>在一个 content-rich 网络$G = （V，E$中，$V$和$E$分别是顶点集合和边集合，每一个顶点具有两种模态：节点身份$V^i$和文本内容$V^c$。一般来说，节点身份指示这个节点是哪一个节点，节点内容描述节点携带的信息。给定长度为$T$的节点序列$S = \{v_1,v_2,…,v_T\}$，由随机漫步算法采样得到，身份序列为$S^i = \{v_1^i,v_2^i,…,v_t^i\}$，对应的内容序列为$S^c = \{v_1^c,v_2^c,…,v_t^c\}$，这两个序列是平行序列。</p>
+<p>下面先给出内容生成（Content Generation）的定义：对于给定的content-rich network，CG 就是学习对每一对平行序列给定 $S^i$时$S^c$的条件概率，也就是$p(S^c|S^i)$。</p>
+<p>NI 和 CG 具有概率相关性，因为这两个任务都和$S^i$和$S^c$的联合概率相关。给定$S^i$和$S^c$，联合概率可通过两个等式计算：<br><img src="https://user-images.githubusercontent.com/23336589/66621392-a0a34100-ec16-11e9-95d3-3e9ddb2939d5.PNG" alt="eq 1"><br>条件概率分布$p(S^i|S^c)$正是 NI 模型，而$p(S^c|S^i)$正是 CG 模型。因此，作者提出双生成模型来捕捉这两个任务之间的概率相关性并同时解决它们。<br><strong>Figure 1</strong>描述了该方法的概观。<br><img src="https://user-images.githubusercontent.com/23336589/66621393-a13bd780-ec16-11e9-8f01-f2821de0a30e.PNG" alt="Figure 1"></p>
+<p><strong>Figure 2</strong>描述了 DGENE 的详细架构。<br><img src="https://user-images.githubusercontent.com/23336589/66621396-a1d46e00-ec16-11e9-8870-f0d29299eaed.PNG" alt="Figure 2"></p>
+<p>对于<strong>Content2Node</strong>模型，其学习从节点内容表示空间到节点身份空间的跨模态映射,$p(S^i|S^c;\theta^{NI})$。一个节点的内容矩阵是其文本内容中单词的词向量的嵌入，比如，一个节点的文本内容有 $M$ 个单词，词向量的维度为$k_u$，则$U(v_t) \in \mathbb{R}^{M \times k_u}$是节点$v_t$的内容矩阵。，然后，一层 CNN 网络和最大池化操作被用来保留$v_t$的局部语法和语义信息得到$\mathrm{v_t}$。</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/66621398-a26d0480-ec16-11e9-9a3f-773ba0c2f932.PNG" alt="eq3"></p>
+<p>再为了捕捉语义表征序列中的不同节点之间的语义关系，作者使用一个双向 LSTM 层来捕捉全局语义：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/66621399-a26d0480-ec16-11e9-83d8-b3077b52336b.PNG" alt="eq4"></p>
+<p>然后设计一个 LSTM 解码网络来将内容向量$\mathrm{c}^{NI}$解码为预测的节点身份序列 $\hat{S}_i$ ，并使用交叉熵层来测量所有 $S^i$ 和 $\hat{S}_i$ 之间的 NI loss $L^{NI}(\theta^{NI})$/。</p>
+<p>对于<strong>Node2Content </strong>模型，其学习从节点身份空间到节点内容表示空间的跨模态映射，也就是$p(S^c|S^i;\theta^{CG})$。换句话说，它解决的问题是如何根据结构信息来生成节点的文本描述。Node2Content通过节点序列编码，语义编码和文本生成将 $S^i$ 翻译为 $S^c$ 。</p>
+<p>先通过一个 $LookUp^n(S^i,\mathrm{V})$ 得到节点身份编码（结构信息）：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/66621400-a3059b00-ec16-11e9-8385-f889c78a92be.PNG" alt="eq5"></p>
+<p>然后用双向 LSTM 对节点身份编码序列 $\mathrm{S}^i$ 根据它们的结构关系进一步编码，得到上下文向量$\mathrm{c}^{CG}$：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/66621401-a39e3180-ec16-11e9-9b48-6def0f80455b.PNG" alt="eq6"></p>
+<p><strong>语义解码</strong>。有了上面得到的节点序列嵌入 $\mathrm{c}^{CG}$，语义解码步骤序列的生成更高层的语义表示 $\mathrm{d}_t^{CG}$。每一个 $\mathrm{d}_t^{CG}$ 都整合了节点 $v_t$ 的身份信息和它与在 S 中的其他节点的结构关系。作者设计了一个 LSTM 层作为解码函数 $\mathcal{D}(\cdot,\cdot)$:</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/66621403-a436c800-ec16-11e9-8c26-513a2358c111.PNG" alt="eq7"></p>
+<p><strong>内容生成</strong>。最后，有了解码后的语义表示 $\mathrm{d}_t^{CG}$，使用一个文本生成器来将每一个$\mathrm{d}_t^{CG}$转换为单词序列。作者使用一个带有teacher forcing 的LSTM 生成器来生成文本。第 $l$个单词的表示这样生成：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/66621404-a4cf5e80-ec16-11e9-9b35-fa8d2524b507.PNG" alt="eq8"></p>
+<p>其中 $\hat{u}_{t,l-1}$ 在训练阶段是 $v_t^c$ 的第 $l-1$ 个真实单词，而在生成阶段则是上一步预测的第 $l-1$ 个单词的嵌入。生成过程当 $l$ 到达了一个预定义的最大长度时停止。</p>
+<p>当有了 $v_t^c$ 第$l$ 个单词的解码表示 $\mathrm{g}_{t,l}$后，作者使用全连接层和softmax 层来获得其在整个单词表中的概率分布。</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/66621405-a4cf5e80-ec16-11e9-9c0a-677deea374db.PNG" alt="eq9"></p>
+<p>最后，一层交叉熵层测量 GC loss：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/66621407-a567f500-ec16-11e9-8649-c29141a4d2cd.PNG" alt="eq10"></p>
+<p><strong>双任务的学习</strong>。这两个模型通过以一种近似的方式分享它们的中间层，这样它们就可以高效的合作。作者使用线性层来融合它们：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/66621409-a6008b80-ec16-11e9-8363-d4a3289ca526.PNG" alt="eq11"></p>
+<p><strong>节点嵌入</strong>。中间层的表示可以拿来作为节点嵌入。在 DGENE 中，Conten2Node 和 Node2Content 中编码器和解码器的隐藏表示可以作为节点嵌入，也就是 $\mathrm{x}^{NI} = [\mathrm{d}_t^{NI};\vec{h}_t^{NI};\bar{h}_t^{NI}]$，和$\mathrm{x}^{NI} = [\mathrm{d}_t^{CG};\vec{h}_t^{CG};\bar{h}_t^{CG}]$。作者将这两个向量拼接起来作为节点嵌入。</p>
+<h2 id="一些思考"><a href="#一些思考" class="headerlink" title="一些思考"></a>一些思考</h2><ol>
+<li>最后的节点嵌入是两个模型中隐藏表示的拼接，少了浑然天成的味道，应该还有更好的融合策略。</li>
+<li>作者说使用随机漫步可以自动的学习一个合适的近似范围，真的是这样吗？还有其他策略吗，注意力机制沾一点边。是否可以从某一个节点的结构信息中学习到它的特征信息是否需要被整合进邻居节点中，像停用词？</li>
+<li>复杂问题换一种方式思考就变的简单了，比如content-rich network 的节点嵌入被转换为节点身份识别和节点内容生成连个任务的联合学习。</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Network-Embedding/" rel="tag"># Network Embedding</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/08/16/文献汇报六/" rel="next" title="文献汇报六">
+                <i class="fa fa-chevron-left"></i> 文献汇报六
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/10/04/DANE：Domain Adaptive Network Embedding/" rel="prev" title="DANE：Domain Adaptive Network Embedding">
+                DANE：Domain Adaptive Network Embedding <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">plato</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">33</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#提出的方法"><span class="nav-number">2.</span> <span class="nav-text">提出的方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一些思考"><span class="nav-number">3.</span> <span class="nav-text">一些思考</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">plato</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Network Embedding," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Informationtitle：Masked Graph Convolutional Networkauthors：Liang Yang, Fan Wu, Yingkui Wang, Junhua Gu and Yuanfang Guo AbstractSemi-supervised classification is a fundamental technology to process th">
+<meta name="keywords" content="Network Embedding">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Masked Graph Convolutional Network">
+<meta property="og:url" content="www.platot.site/2019/10/04/Masked Graph Convolutional Network/index.html">
+<meta property="og:site_name" content="心远地自偏">
+<meta property="og:description" content="Informationtitle：Masked Graph Convolutional Networkauthors：Liang Yang, Fan Wu, Yingkui Wang, Junhua Gu and Yuanfang Guo AbstractSemi-supervised classification is a fundamental technology to process th">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/66187858-566f0c80-e6b8-11e9-9f2f-662abbb1e4a1.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/66187859-566f0c80-e6b8-11e9-9451-8e80b9ca4c53.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/66187860-5707a300-e6b8-11e9-89b5-70b36dd40d23.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/66187862-57a03980-e6b8-11e9-9683-5b804146447e.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/66187864-5838d000-e6b8-11e9-8c54-6d251a3c9236.PNG">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/66187865-58d16680-e6b8-11e9-97ac-7d17d9c4fc21.PNG">
+<meta property="og:updated_time" content="2019-10-11T11:22:20.703Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Masked Graph Convolutional Network">
+<meta name="twitter:description" content="Informationtitle：Masked Graph Convolutional Networkauthors：Liang Yang, Fan Wu, Yingkui Wang, Junhua Gu and Yuanfang Guo AbstractSemi-supervised classification is a fundamental technology to process th">
+<meta name="twitter:image" content="https://user-images.githubusercontent.com/23336589/66187858-566f0c80-e6b8-11e9-9f2f-662abbb1e4a1.PNG">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="www.platot.site/2019/10/04/Masked Graph Convolutional Network/"/>
+
+
+
+
+
+  <title>Masked Graph Convolutional Network | 心远地自偏</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">心远地自偏</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="www.platot.site/2019/10/04/Masked Graph Convolutional Network/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="plato">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="心远地自偏">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Masked Graph Convolutional Network</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-04T16:31:39+08:00">
+                2019-10-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Information"><a href="#Information" class="headerlink" title="Information"></a>Information</h2><p>title：<br>Masked Graph Convolutional Network<br>authors：<br>Liang Yang, Fan Wu, Yingkui Wang, Junhua Gu and Yuanfang Guo</p>
+<h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>Semi-supervised classification is a fundamental technology to process the structured and unstruc- tured data in machine learning field. The tradi- tional attribute-graph based semi-supervised clas- sification methods propagate labels over the graph which is usually constructed from the data fea- tures, while the graph convolutional neural net- works smooth the node attributes, i.e., propagate the attributes, over the real graph topology. In this paper, they are interpreted from the perspective of propagation, and accordingly categorized into sym- metric and asymmetric propagation based methods. From the perspective of propagation, both the tradi- tional and network based methods are propagating certain objects over the graph. However, different from the label propagation, the intuition “the con- nected data samples tend to be similar in terms of the attributes”, in attribute propagation is only par- tially valid. Therefore, a masked graph convolu- tion network (Masked GCN) is proposed by only propagating a certain portion of the attributes to the neighbours according to a masking indicator, which is learned for each node by jointly consid- ering the attribute distributions in local neighbour- hoods and the impact on the classification results. Extensive experiments on transductive and induc- tive node classification tasks have demonstrated the superiority of the proposed method.</p>
+<h2 id="Core-Issue"><a href="#Core-Issue" class="headerlink" title="Core Issue"></a>Core Issue</h2><p>不同于 label propagation，就属性而言，相连的节点倾向于是相似的，这一直觉在属性传播中只是部分合法的。作者提出 masked graph convolution network，根据一个属性指示器（attributes indicator）来决定一个节点要将它的哪些属性传给邻居。考虑到在局部邻居的属性分布和对分类结果的影响，为每一个节点学习一个属性指示器。<br>传统GCNNs和Masked GCN 的比较如下：<br><img src="https://user-images.githubusercontent.com/23336589/66187858-566f0c80-e6b8-11e9-9f2f-662abbb1e4a1.PNG" alt="Figure 1"><br>其中黑色代表值较大。</p>
+<h2 id="Methods"><a href="#Methods" class="headerlink" title="Methods"></a>Methods</h2><p>目标函数如下:<br><img src="https://user-images.githubusercontent.com/23336589/66187859-566f0c80-e6b8-11e9-9451-8e80b9ca4c53.PNG" alt="eq 16"><br>$h_i$是节点$v_i$的属性,$w_{i,j}$由公式15定义。<br><img src="https://user-images.githubusercontent.com/23336589/66187860-5707a300-e6b8-11e9-89b5-70b36dd40d23.PNG" alt="eq 15"><br>根据目标函数，属性更新公式如下：<br><img src="https://user-images.githubusercontent.com/23336589/66187862-57a03980-e6b8-11e9-9683-5b804146447e.PNG" alt="eq 17"><br>mask 的定义如下：<br><img src="https://user-images.githubusercontent.com/23336589/66187864-5838d000-e6b8-11e9-8c54-6d251a3c9236.PNG" alt="eq 18"><br>全连接预测层如下:<br><img src="https://user-images.githubusercontent.com/23336589/66187865-58d16680-e6b8-11e9-97ac-7d17d9c4fc21.PNG" alt="eq 19"></p>
+<h2 id="Innovation"><a href="#Innovation" class="headerlink" title="Innovation"></a>Innovation</h2><p>考虑到在局部邻居的属性分布和对分类结果的影响，为每一个节点学习一个属性指示器。据一个属性指示器（attributes indicator）来决定一个节点要将它的哪些属性传给邻居。</p>
+<h2 id="Future-Work"><a href="#Future-Work" class="headerlink" title="Future Work"></a>Future Work</h2><p>In the future, our Masked GCN will be extended to other heterogeneous networks<br>ps:可考虑为不同类型的邻居学习一个mask indicator。</p>
+<h2 id="Shortcomings"><a href="#Shortcomings" class="headerlink" title="Shortcomings"></a>Shortcomings</h2><p>为每一个节点学得的属性指示器，是一对多关系，可能存在这样的关系，它的某个属性需要传给部分邻居，不传给另一部分邻居。虽然有考虑邻居权重，但依然会存在平均问题（少数服从多数）。<br>PS:但如果学习一个一对一的属性指示器，则可能会令信息太细粒，导致更高阶的结构信息不能很好的抓住。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Network-Embedding/" rel="tag"># Network Embedding</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/10/04/DANE：Domain Adaptive Network Embedding/" rel="next" title="DANE：Domain Adaptive Network Embedding">
+                <i class="fa fa-chevron-left"></i> DANE：Domain Adaptive Network Embedding
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/10/10/Novel Node classification framework/" rel="prev" title="Novel Node classification framework">
+                Novel Node classification framework <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">plato</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">33</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Information"><span class="nav-number">1.</span> <span class="nav-text">Information</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Abstract"><span class="nav-number">2.</span> <span class="nav-text">Abstract</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Core-Issue"><span class="nav-number">3.</span> <span class="nav-text">Core Issue</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Methods"><span class="nav-number">4.</span> <span class="nav-text">Methods</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Innovation"><span class="nav-number">5.</span> <span class="nav-text">Innovation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Future-Work"><span class="nav-number">6.</span> <span class="nav-text">Future Work</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Shortcomings"><span class="nav-number">7.</span> <span class="nav-text">Shortcomings</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">plato</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>
