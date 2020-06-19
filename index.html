@@ -249,6 +249,141 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="www.platot.site/2020/06/19/Adversarial Learning on Heterogeneous Information /">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="plato">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="心远地自偏">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/06/19/Adversarial Learning on Heterogeneous Information /" itemprop="url">Adversarial Learning on Heterogeneous Information</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-19T19:31:50+08:00">
+                2020-06-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          简介论文传送门
+之前的异质网络嵌入方法具有如下三个限制：
+
+它们通常使用负采样技术，随机选取现有节点作为负样本。这样的话，它们的负样本就不仅是任意的，也局限于原本网络的空间。
+它们主要集中于捕捉异质网络上丰富的语义，但并没有捕捉节点的潜在分布，因为真实世界的异质网络往往稀疏并且有噪声，因此这些方法缺乏鲁棒性。
+许多方法依赖于合适的元路径来匹配想要的语义，而这通常需要领域知识，而领域知识有时是很主观的并且获取不易。
+
+作者提出了基于对抗的方法，希望学到语义留存和鲁棒的节点表示。为了实现作者的方法，需要解决两个挑战：
+
+如何捕捉多种类型的节点和关系的语义？在现有方法中，仅使用拓扑结构来区分正负样本
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2020/06/19/Adversarial Learning on Heterogeneous Information /#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="www.platot.site/2020/05/31/傅玄诗两首/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1426,157 +1561,6 @@ Categorization and Frameworks&emsp;&emsp;图卷积网络在捕捉
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="www.platot.site/2019/08/16/A Tutorial on Network Embeddings/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="plato">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="心远地自偏">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/08/16/A Tutorial on Network Embeddings/" itemprop="url">A Tutorial on Network Embeddings</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-16T20:31:39+08:00">
-                2019-08-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          介绍&emsp;&emsp;原文地址
-&emsp;&emsp;NE（network embedding）的中心思想是找到一种映射函数，可以将网络中的每一个节点转换为一个低维潜在表示。这些表示可以作为特征，用于在图上的一般任务，如分类，聚类，链路预测和可视化。
-
-&emsp;&emsp;目标：
-
-适应性。
-
-真正的网络在不断演化。不应要求重复学习过程。
-
-
-可扩展。
-
-真正的网络通常很巨大，因此网络嵌入算法应该在短时间内处理大规模的网络。
-
-
-社区感知。
-
-潜在表示之间的距离应该用以表示对应的节点之间的相似性度量。
-
-
-低维。
-
-当标注数据稀缺时，低维模型泛化的更好，并能加速收敛和推理。
-
-
-连
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/08/16/A Tutorial on Network Embeddings/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1627,7 +1611,7 @@ Categorization and Frameworks&emsp;&emsp;图卷积网络在捕捉
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">35</span>
+                  <span class="site-state-item-count">36</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
