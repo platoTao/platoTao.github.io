@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Network Embedding," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="简介论文传送门 之前的异质网络嵌入方法具有如下三个限制：  它们通常使用负采样技术，随机选取现有节点作为负样本。这样的话，它们的负样本就不仅是任意的，也局限于原本网络的空间。 它们主要集中于捕捉异质网络上丰富的语义，但并没有捕捉节点的潜在分布，因为真实世界的异质网络往往稀疏并且有噪声，因此这些方法缺乏鲁棒性。 许多方法依赖于合适的元路径来匹配想要的语义，而这通常需要领域知识，而领域知识有时是很主观">
+<meta name="keywords" content="Network Embedding">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Adversarial Learning on Heterogeneous Information">
+<meta property="og:url" content="www.platot.site/2020/06/19/Adversarial Learning on Heterogeneous Information Networks/index.html">
+<meta property="og:site_name" content="心远地自偏">
+<meta property="og:description" content="简介论文传送门 之前的异质网络嵌入方法具有如下三个限制：  它们通常使用负采样技术，随机选取现有节点作为负样本。这样的话，它们的负样本就不仅是任意的，也局限于原本网络的空间。 它们主要集中于捕捉异质网络上丰富的语义，但并没有捕捉节点的潜在分布，因为真实世界的异质网络往往稀疏并且有噪声，因此这些方法缺乏鲁棒性。 许多方法依赖于合适的元路径来匹配想要的语义，而这通常需要领域知识，而领域知识有时是很主观">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/84782941-3f403700-b01b-11ea-9cd2-4669fad9675f.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/84783010-50894380-b01b-11ea-8360-caf744e22f82.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/84984737-09f82e00-b16e-11ea-8e81-c2a763dc3533.png">
+<meta property="og:updated_time" content="2020-06-19T11:43:16.790Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Adversarial Learning on Heterogeneous Information">
+<meta name="twitter:description" content="简介论文传送门 之前的异质网络嵌入方法具有如下三个限制：  它们通常使用负采样技术，随机选取现有节点作为负样本。这样的话，它们的负样本就不仅是任意的，也局限于原本网络的空间。 它们主要集中于捕捉异质网络上丰富的语义，但并没有捕捉节点的潜在分布，因为真实世界的异质网络往往稀疏并且有噪声，因此这些方法缺乏鲁棒性。 许多方法依赖于合适的元路径来匹配想要的语义，而这通常需要领域知识，而领域知识有时是很主观">
+<meta name="twitter:image" content="https://user-images.githubusercontent.com/23336589/84782941-3f403700-b01b-11ea-9cd2-4669fad9675f.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="www.platot.site/2020/06/19/Adversarial Learning on Heterogeneous Information Networks/"/>
+
+
+
+
+
+  <title>Adversarial Learning on Heterogeneous Information | 心远地自偏</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">心远地自偏</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="www.platot.site/2020/06/19/Adversarial Learning on Heterogeneous Information Networks/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="plato">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="心远地自偏">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Adversarial Learning on Heterogeneous Information</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-19T19:31:50+08:00">
+                2020-06-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p><a href="https://fangyuan1st.github.io/paper/KDD19_HeGAN.pdf" target="_blank" rel="noopener">论文传送门</a></p>
+<p>之前的异质网络嵌入方法具有如下<strong>三个限制</strong>：</p>
+<ol>
+<li>它们通常使用负采样技术，随机选取现有节点作为负样本。这样的话，它们的负样本就不仅是任意的，也局限于原本网络的空间。</li>
+<li>它们主要集中于捕捉异质网络上丰富的语义，但并没有捕捉节点的潜在分布，因为真实世界的异质网络往往稀疏并且有噪声，因此这些方法缺乏鲁棒性。</li>
+<li>许多方法依赖于合适的元路径来匹配想要的语义，而这通常需要领域知识，而领域知识有时是很主观的并且获取不易。</li>
+</ol>
+<p>作者提出了基于对抗的方法，希望学到语义留存和鲁棒的节点表示。为了实现作者的方法，需要解决<strong>两个挑战</strong>：</p>
+<ol>
+<li>如何捕捉多种类型的节点和关系的语义？在现有方法中，仅使用拓扑结构来区分正负样本。因此，有必要设计新式的判别器和生成器，使得可以区分和建模涉及不同关系的真实的和虚假的语义丰富的节点对。</li>
+<li>如何高效地生成虚假样本？在现有方法中，生成器从网络中的节点中学习一个有限离散分布。因此，这要求使用softmax函数，并最终求助于像负采样或graph softmax之类的近似技术。另外，现有方法本质上是根据学习到的分布从原始网络中选取一个节点作为负样本，而这并不能泛化到看不见的节点。也就是说，这些方法并不能产生最具有代表性的虚假节点。因此，设计一个能高效产生隐式的虚假样本的生成器很重要。</li>
+</ol>
+<p>该论文的<strong>洞见和贡献</strong>如下：为了解决上面的挑战，该论文提出了<strong>HeGAN</strong>，一种用于异质网络嵌入的使用基于GAN对抗学习的新奇框架。具体来说，作者提出了新式的判别器和生成器，如Fig.1(b-1)所示。对于第一个挑战，为了区分由不同关系连接的节点，判别器和生成器被设计为关系察觉（relation-aware）的。也就是说，关于任意关系，判别器可以区分一个节点对是真实的还是虚假的，但生成器可以产生模拟真实样本对的虚假样本对。特别是，一个节点对被认为是真实的，仅当（i）基于拓扑结构它是正样本；（ii）该节点对处于正确的关系。对于第二个挑战，作者设计了一个泛化的生成器，其能够直接从连续分布中采样隐节点，这样，（i）不需要softmax计算；（ii）虚假样本不再被限制于现有节点。</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/84782941-3f403700-b01b-11ea-9cd2-4669fad9675f.png" alt="figure 1"></p>
+<p>论文中用到的主要记号见<strong>Table 1</strong></p>
+<p><img src="https://user-images.githubusercontent.com/23336589/84783010-50894380-b01b-11ea-8360-caf744e22f82.png" alt="Table 1"></p>
+<h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><h3 id="HeGAN总体框架"><a href="#HeGAN总体框架" class="headerlink" title="HeGAN总体框架"></a>HeGAN总体框架</h3><p>首先现存的框架仅仅利用GAN，基于拓扑连接来区分一个节点是真实的还是虚假的，并没有考虑到异质网络中的异质性。因此，作者提出来关系感知（relation-aware）的判别器和生成器来区分节点间的不同类型的语义关系。</p>
+<p>其次，现存的研究受限于不能高效的生成样本。它们通常在原始网络中所有节点上使用softmax来建模节点的分布。它们的虚假样本被约束在原始网络的节点中，但是最有代表性的虚假样本可能不在现有节点中。作者们提出的生成器则可以不使用softmax，而是直接采样虚假节点。</p>
+<h3 id="判别器和生成器"><a href="#判别器和生成器" class="headerlink" title="判别器和生成器"></a>判别器和生成器</h3><h4 id="关系察觉的判别器"><a href="#关系察觉的判别器" class="headerlink" title="关系察觉的判别器"></a>关系察觉的判别器</h4><p>在异质网络上，有必要区分在给定关系下的真实和虚假节点。因此，论文提出的关系察觉的判别器$D(e_v|u,r;\theta^D)$评估关于关系$r$的节点对$u$和$v$之间的连接性。具体来说，$u \in \mathcal{V}$是给定的节点，$r \in \mathcal{R}$是给定的在异质网络$\mathcal{G}$中的关系，$e_v$是样本节点$v$的嵌入，节点$v$可以是真实的也可以是虚假的，$\theta^D$记为是判别器$D$的参数。判别器输出在关系$r$下样本$v$和$u$连接的概率，该概率表示如下:</p>
+<script type="math/tex; mode=display">
+D(e_v|u,r;\theta^D) = \frac{1}{1+exp(-e_v^{D^T}M_r^De_v)}</script><p>其中$e_v \in \mathbb{R}^{d\times1}$是样本$v$的输入嵌入，$e_u^D \in \mathbb{R}^{d \times 1}$是节点$u$可学习的嵌入，$M_r^D \in \mathbb{R}^{d \times d}$是对于关系$r$可学习的关系矩阵。$\theta^D=\{e_u^D:u \in \mathcal{V}, M_r^D : r \in \mathcal{R}\}$构成判别器$D$的参数。也就是所有节点的表示和关系矩阵都由$D$学得。</p>
+<p>自然的，当$v$是在关系$r$下关于节点$u$的正样本时，该概率值应该很高，但$v$是负样本是，该概率值应该较低。通常来说，来自一个三元组$<u, v,="" r="">$的的样本$v$和给定的$u$和$r$属于下面三种情况之一。受启发于 条件GAN，每一种情况都为判别器的贡献了一部分损失。</u,></p>
+<p><strong>Case 1: Connected under given relation.</strong>节点$u$和$v$确实在异质网络$\mathcal{G}$上通过关系$r$连接。这样的三元组被视为是正样本，可以通过如下损失建模：</p>
+<script type="math/tex; mode=display">
+\mathcal{L}_1^D = \mathbb{E}_{<u,v,r>\sim P_{\mathcal{G}}}-\log D(e_v^D|u,r).</script><p><strong>Case 2: Connected under incorrect relation.</strong>$u$和$v$在错误的关系$r’ \ne r$。我们期望判别器将这样的三元组视为是负样本，因为它们的连接性并不匹配由给定关系$r$所携带的语义。这部分的损失定义如下：</p>
+<script type="math/tex; mode=display">
+\mathcal{L}_2^D = \mathbb{E}_{<u,>) \sim P_{\mathcal{G}, r' \sim P_{\mathcal{R}'}}}-\log (1-D(e_v^D|u,r'))</script><p>这里依然从原始网络中采样节点对$(u, v)$，但负关系$r’$是从$\mathcal{R}’ = \mathcal{R} \backslash  \{r\} $中均匀采样得到。</p>
+<p><strong>Case 3: Fake node from relation-aware generator.</strong>给定一个节点$u \in \mathcal{V}$，可以和生成器$G(u,r;\theta^G)$提供的节点$v$形成一个样本对。我们后面可以看到，生成器也是关系察觉的，它试图生成一个虚假样本的嵌入，该嵌入模仿在正确关系$r$下与$u$相连接的真实节点。判别器旨在将这样的三元组识别为负样本，形式化表示如下：</p>
+<script type="math/tex; mode=display">
+\mathcal{L}_3^D = \mathbb{E}_{<u,r> \sim P_{\mathcal{G}}, e_v' \sim G(u,r;\theta^G)} - \log(1-D(e_v'|u,r))</script><p>需要注意，虚假样本$v’$的嵌入$e_v’$是从生成器学习到的分布中采样得到的。判别器把该嵌入视为不可学习的参数。</p>
+<p>作者整合以上三个损失和正则项来训练判别器：</p>
+<script type="math/tex; mode=display">
+\mathcal{L}^D = \mathcal{L}_1^D+\mathcal{L}_2^D+\mathcal{L}_3^D
++\lambda^D \parallel \theta^D \parallel_2^2</script><h4 id="关系察觉的、泛化的生成器"><a href="#关系察觉的、泛化的生成器" class="headerlink" title="关系察觉的、泛化的生成器"></a>关系察觉的、泛化的生成器</h4><p>论文中生成器$G(\cdot;\theta^D)$的目标是生成和真实样本尽可能接近的虚假样本。一方面，该生成器和判别器一样是关系察觉的。因此，给定节点$u \in \mathcal{V}$和关系$r \in \mathcal{R}$，生成器$G(u,r;\theta^G)$旨在生成在关系$r$下和节点$u$尽可能连接的负样本。换句话说，节点$v$应该尽可能接近真实节点，比如说$w$。另一方面，该生成器是泛化的，也就是说虚假样本可以是不存在$\mathcal{V}$中的隐式节点。</p>
+<p>为了满足这两点要求，该生成器同样使用了关系特定的矩阵，并且从一个潜在的连续分布中生成样本。具体来讲，论文使用如下的高斯分布：</p>
+<script type="math/tex; mode=display">
+\mathcal{N}(e_u^GM_r^G,\sigma^2I)</script><p>换句话说，这是一个均值为$e_u^{G^T}M_r^G$，方差为$\sigma^2I$的高斯分布。因为神经网络在建模复杂结构方面强大的能力，作者使用多层感知机来加强虚假样本的表示。因此，论文中生成器形式化定义如下：</p>
+<script type="math/tex; mode=display">
+G(u,r;\theta^G) = f(W_L\cdot\cdot\cdot f(W_1e+b_1)+b_L)</script><p>我们从分布，也就是公式(6)中采样得到$e$。生成器的参数集合为$\theta^G=\{e_u^G:u \in \mathcal{V}, M_r^G: r \in \mathcal{R}, W_<em>, b_</em>\}$。</p>
+<p>生成器希望通过生成尽可能接近真是样本的虚假样本来欺骗判别器，使得判别器对虚假样本给予高分数。我们使用如下公式来训练生成器：</p>
+<script type="math/tex; mode=display">
+\mathcal{L}^G = \mathbb{E}_{<u,r> \sim P_{G}, e_v' \sim G(u,r;\theta^G)}
+-\log D(e_v' | u, r)+ \lambda^G \parallel\theta^G\parallel_2^2</script><h2 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h2><p><img src="https://user-images.githubusercontent.com/23336589/84984737-09f82e00-b16e-11ea-8e81-c2a763dc3533.png" alt="algorithm"></p>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>在本论文中，作者提出来一种被称为<strong>HeGAN</strong>的新奇框架，该框架基于对抗原则用于异质网络嵌入。作者精心设计了关系察觉的判别器和生成器来适应异质网络。具体的，关于一个给定的关系，判别器可以区分出来节点对是真实的还是虚假的，而生成器可以产生模仿真实样本对的虚假样本对。为了更好的改进采样生成的高效性，作者提出了泛化生成器，其可以直接从连续分布中采样隐节点。</p>
+<h2 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h2><ol>
+<li><p>该论文是基于拓扑结构，如果再加项重建损失，就可以迁移到属性网络上。</p>
+</li>
+<li><p>现有的方法往往是知道不同类型的关系的。但如果节点之间的关系是不可知的，我们只知道有边无边，则以无监督的方式去建模节点之间的关系应该是未来的一个大方向。</p>
+</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Network-Embedding/" rel="tag"># Network Embedding</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/05/31/傅玄诗两首/" rel="next" title="傅玄诗两首">
+                <i class="fa fa-chevron-left"></i> 傅玄诗两首
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">plato</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">36</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#方法"><span class="nav-number">2.</span> <span class="nav-text">方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#HeGAN总体框架"><span class="nav-number">2.1.</span> <span class="nav-text">HeGAN总体框架</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#判别器和生成器"><span class="nav-number">2.2.</span> <span class="nav-text">判别器和生成器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#关系察觉的判别器"><span class="nav-number">2.2.1.</span> <span class="nav-text">关系察觉的判别器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#关系察觉的、泛化的生成器"><span class="nav-number">2.2.2.</span> <span class="nav-text">关系察觉的、泛化的生成器</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#优化"><span class="nav-number">3.</span> <span class="nav-text">优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结论"><span class="nav-number">4.</span> <span class="nav-text">结论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#思考"><span class="nav-number">5.</span> <span class="nav-text">思考</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">plato</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>
