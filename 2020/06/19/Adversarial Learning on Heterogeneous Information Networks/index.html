@@ -90,7 +90,7 @@
 <meta property="og:image" content="https://user-images.githubusercontent.com/23336589/84782941-3f403700-b01b-11ea-9cd2-4669fad9675f.png">
 <meta property="og:image" content="https://user-images.githubusercontent.com/23336589/84783010-50894380-b01b-11ea-8360-caf744e22f82.png">
 <meta property="og:image" content="https://user-images.githubusercontent.com/23336589/84984737-09f82e00-b16e-11ea-8e81-c2a763dc3533.png">
-<meta property="og:updated_time" content="2020-06-19T11:43:16.790Z">
+<meta property="og:updated_time" content="2020-07-02T06:36:03.879Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Adversarial Learning on Heterogeneous Information">
 <meta name="twitter:description" content="简介论文传送门 之前的异质网络嵌入方法具有如下三个限制：  它们通常使用负采样技术，随机选取现有节点作为负样本。这样的话，它们的负样本就不仅是任意的，也局限于原本网络的空间。 它们主要集中于捕捉异质网络上丰富的语义，但并没有捕捉节点的潜在分布，因为真实世界的异质网络往往稀疏并且有噪声，因此这些方法缺乏鲁棒性。 许多方法依赖于合适的元路径来匹配想要的语义，而这通常需要领域知识，而领域知识有时是很主观">
@@ -344,7 +344,7 @@
 <p>其次，现存的研究受限于不能高效的生成样本。它们通常在原始网络中所有节点上使用softmax来建模节点的分布。它们的虚假样本被约束在原始网络的节点中，但是最有代表性的虚假样本可能不在现有节点中。作者们提出的生成器则可以不使用softmax，而是直接采样虚假节点。</p>
 <h3 id="判别器和生成器"><a href="#判别器和生成器" class="headerlink" title="判别器和生成器"></a>判别器和生成器</h3><h4 id="关系察觉的判别器"><a href="#关系察觉的判别器" class="headerlink" title="关系察觉的判别器"></a>关系察觉的判别器</h4><p>在异质网络上，有必要区分在给定关系下的真实和虚假节点。因此，论文提出的关系察觉的判别器$D(e_v|u,r;\theta^D)$评估关于关系$r$的节点对$u$和$v$之间的连接性。具体来说，$u \in \mathcal{V}$是给定的节点，$r \in \mathcal{R}$是给定的在异质网络$\mathcal{G}$中的关系，$e_v$是样本节点$v$的嵌入，节点$v$可以是真实的也可以是虚假的，$\theta^D$记为是判别器$D$的参数。判别器输出在关系$r$下样本$v$和$u$连接的概率，该概率表示如下:</p>
 <script type="math/tex; mode=display">
-D(e_v|u,r;\theta^D) = \frac{1}{1+exp(-e_v^{D^T}M_r^De_v)}</script><p>其中$e_v \in \mathbb{R}^{d\times1}$是样本$v$的输入嵌入，$e_u^D \in \mathbb{R}^{d \times 1}$是节点$u$可学习的嵌入，$M_r^D \in \mathbb{R}^{d \times d}$是对于关系$r$可学习的关系矩阵。$\theta^D=\{e_u^D:u \in \mathcal{V}, M_r^D : r \in \mathcal{R}\}$构成判别器$D$的参数。也就是所有节点的表示和关系矩阵都由$D$学得。</p>
+D(e_v|u,r;\theta^D) = \frac{1}{1+exp(-e_v^{D^T}M_r^De_u)}</script><p>其中$e_v \in \mathbb{R}^{d\times1}$是样本$v$的输入嵌入，$e_u^D \in \mathbb{R}^{d \times 1}$是节点$u$可学习的嵌入，$M_r^D \in \mathbb{R}^{d \times d}$是对于关系$r$可学习的关系矩阵。$\theta^D=\{e_u^D:u \in \mathcal{V}, M_r^D : r \in \mathcal{R}\}$构成判别器$D$的参数。也就是所有节点的表示和关系矩阵都由$D$学得。</p>
 <p>自然的，当$v$是在关系$r$下关于节点$u$的正样本时，该概率值应该很高，但$v$是负样本是，该概率值应该较低。通常来说，来自一个三元组$<u, v,="" r="">$的的样本$v$和给定的$u$和$r$属于下面三种情况之一。受启发于 条件GAN，每一种情况都为判别器的贡献了一部分损失。</u,></p>
 <p><strong>Case 1: Connected under given relation.</strong>节点$u$和$v$确实在异质网络$\mathcal{G}$上通过关系$r$连接。这样的三元组被视为是正样本，可以通过如下损失建模：</p>
 <script type="math/tex; mode=display">
@@ -493,7 +493,7 @@ G(u,r;\theta^G) = f(W_L\cdot\cdot\cdot f(W_1e+b_1)+b_L)</script><p>我们从分�
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-count">38</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
