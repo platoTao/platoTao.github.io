@@ -79,24 +79,23 @@
 
 
 
-<meta name="description" content="简介论文传送门 该论文针对多视图网络表示学习问题（multi-view network representation），即如何为多视图网络中的节点构建低维和信息留存的嵌入的问题，提出来基于生成对抗网络的多视图网络表示框架。来自于真实世界的应用的数据，往往可以用多视图网络表征，其中节点通过多种关系连接。举例来说，在Facebook， 两名用户可以具有朋友关系，入学同一所大学，喜欢或者不喜欢一条动态。">
+<meta name="description" content="简介论文传送门 这是一篇发表于2017年的论文，也是第一次尝试将生成对抗网络应用到图表示学习上的工作。之前的方法主要是将不同的结构性质编码进表示中，比如邻居连接模式，全局结构角色相似性和其他高阶相似性。但作者认为除了捕捉网络结构性质的方法，大多数方法都因为缺少额外的约束而导致不能加强表示的鲁棒性。针对此问题，作者提出对抗网络嵌入（ANE）框架，其充分利用对抗学习原则来正则化表示学习。该框架包含两个">
 <meta name="keywords" content="Network Embedding">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Adversarial Network Embedding">
 <meta property="og:url" content="www.platot.site/2020/07/01/Adversarial Network Embedding/index.html">
 <meta property="og:site_name" content="心远地自偏">
-<meta property="og:description" content="简介论文传送门 该论文针对多视图网络表示学习问题（multi-view network representation），即如何为多视图网络中的节点构建低维和信息留存的嵌入的问题，提出来基于生成对抗网络的多视图网络表示框架。来自于真实世界的应用的数据，往往可以用多视图网络表征，其中节点通过多种关系连接。举例来说，在Facebook， 两名用户可以具有朋友关系，入学同一所大学，喜欢或者不喜欢一条动态。">
+<meta property="og:description" content="简介论文传送门 这是一篇发表于2017年的论文，也是第一次尝试将生成对抗网络应用到图表示学习上的工作。之前的方法主要是将不同的结构性质编码进表示中，比如邻居连接模式，全局结构角色相似性和其他高阶相似性。但作者认为除了捕捉网络结构性质的方法，大多数方法都因为缺少额外的约束而导致不能加强表示的鲁棒性。针对此问题，作者提出对抗网络嵌入（ANE）框架，其充分利用对抗学习原则来正则化表示学习。该框架包含两个">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/85982159-f07d9e80-ba17-11ea-9c58-faa3abddcd24.png">
-<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/85982199-fe332400-ba17-11ea-903d-a0942354d49a.png">
-<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/85982239-1014c700-ba18-11ea-996d-fb77f3a97f79.png">
-<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/85982245-1145f400-ba18-11ea-8161-d338214e2d54.png">
-<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/85982250-130fb780-ba18-11ea-81c7-95a48aa49044.png">
-<meta property="og:updated_time" content="2020-07-02T06:36:58.920Z">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/86197855-dc0ce380-bb88-11ea-89c9-a9ba4242ad53.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/86197937-11b1cc80-bb89-11ea-9ee5-72b58666e1af.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/86197958-22624280-bb89-11ea-8a07-117c4edcd812.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/86197996-36a63f80-bb89-11ea-9183-b8cb0cd5371c.png">
+<meta property="og:updated_time" content="2020-07-02T06:41:27.145Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Adversarial Network Embedding">
-<meta name="twitter:description" content="简介论文传送门 该论文针对多视图网络表示学习问题（multi-view network representation），即如何为多视图网络中的节点构建低维和信息留存的嵌入的问题，提出来基于生成对抗网络的多视图网络表示框架。来自于真实世界的应用的数据，往往可以用多视图网络表征，其中节点通过多种关系连接。举例来说，在Facebook， 两名用户可以具有朋友关系，入学同一所大学，喜欢或者不喜欢一条动态。">
-<meta name="twitter:image" content="https://user-images.githubusercontent.com/23336589/85982159-f07d9e80-ba17-11ea-9c58-faa3abddcd24.png">
+<meta name="twitter:description" content="简介论文传送门 这是一篇发表于2017年的论文，也是第一次尝试将生成对抗网络应用到图表示学习上的工作。之前的方法主要是将不同的结构性质编码进表示中，比如邻居连接模式，全局结构角色相似性和其他高阶相似性。但作者认为除了捕捉网络结构性质的方法，大多数方法都因为缺少额外的约束而导致不能加强表示的鲁棒性。针对此问题，作者提出对抗网络嵌入（ANE）框架，其充分利用对抗学习原则来正则化表示学习。该框架包含两个">
+<meta name="twitter:image" content="https://user-images.githubusercontent.com/23336589/86197855-dc0ce380-bb88-11ea-89c9-a9ba4242ad53.png">
 
 
 
@@ -326,26 +325,19 @@
       
 
       
-        <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p><a href="https://faculty.ist.psu.edu/vhonavar/Papers/IJCAI19.pdf" target="_blank" rel="noopener">论文传送门</a></p>
-<p>该论文针对多视图网络表示学习问题（<strong>multi-view network representation</strong>），即如何为多视图网络中的节点构建低维和信息留存的嵌入的问题，提出来基于<strong>生成对抗网络</strong>的多视图网络表示框架。来自于真实世界的应用的数据，往往可以用多视图网络表征，其中节点通过多种关系连接。举例来说，在Facebook， 两名用户可以具有朋友关系，入学同一所大学，喜欢或者不喜欢一条动态。一个简单的多视图网络如<strong>Figure 1</strong>所示。</p>
-<p><img src="https://user-images.githubusercontent.com/23336589/85982159-f07d9e80-ba17-11ea-9c58-faa3abddcd24.png" alt="figure1"></p>
-<p>相比较单视图网络，使用GAN在多视图网络上做表示学习需要克服一个关键的挑战：在单视图网络中，生成器只需要建模节点对之间的连接性，但在多视图网络中，需要建模的不仅是不同节点之间的连接性，还需要建模不同视图间节点之间的连接性。</p>
-<h3 id="问题定义"><a href="#问题定义" class="headerlink" title="问题定义"></a>问题定义</h3><p>多视图网络被定义为$\mathcal{G} = (\mathcal{V}, \mathcal{E})$，其中$\mathcal{V}=\{v_1, v_2,\cdot\cdot\cdot,v_n \}$记为节点集合，$\mathcal{E}=\{\mathcal{E}^1, \mathcal{E}^2, \cdot\cdot\cdot, \mathcal{E}^k\}$描述了编码 $k$ 种关系类型的边集合。对于给定的关系类型 $l$ ，$\mathcal{E}^{(l)}=\{e_{ij}^{(l)}\}_{i,j=1}^n$ 表示节点 $v_i$ 和 $v_j$ 对应关系的出现。因此，$e_{ij}^{(l)}=1$指示节点 $v_i$ 和 $v_j$ 有一条关系 $l$ 的边，0则反之。我们使用$\mathcal{K}_{ij}=(e_{ij}^{(1)}, \cdot\cdot\cdot,e_{ij}^{(k)})$来表示多视图拓扑中$(v_i, v_j)$的连接性。多视图网络表示学习的目标是学习一个嵌入矩阵$\mathrm{X} \in \mathbb{R}^{n \times d}$, 即多视图网络的低维嵌入，其中$d \ll  n $是嵌入的维度。</p>
-<h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><h3 id="Multi-view-Generative-Adversarial-Network"><a href="#Multi-view-Generative-Adversarial-Network" class="headerlink" title="Multi-view Generative Adversarial Network"></a>Multi-view Generative Adversarial Network</h3><p>不像被设计在单视图网络做嵌入的GAN，这种GAN只需要建模单个视图中节点的连接性，<strong>MEGAN</strong>需要捕捉的不仅有每一种视图中节点之间的连接性，还需要建模视图之间的关联性。为了达到这个目的，给定真实节点对的分布$(v_i, v_j) \sim p_{data}$， <strong>MEGAN</strong>由两个模块组成：一个负责生成（或者选择）一个负样本节点$v_c$，$v_i$与$v_c$之间的连接模式$\mathcal{K}_{ic}$与真实样本对之间的连接模式需要足够相似；一个判别器，负责区分真实样本对$(v_i, v_j)$和虚假样本对$(v_i, v_c)$（ps：这里有一点疑惑，判别器基于什么判断是真实还是虚假，因为都是原图中存在的节点对，已发邮件询问作者）。<strong>Figure2</strong>展示了<strong>MEGAN</strong>的架构。对于节点对$(v_1, v_2)$，生成器产生一个虚假节点$v_4$来形成一个节点对$(v_1, v_4)$来欺骗判别器，并且判别器被训练来区分输入的节点对是真实的还是虚假的。判别器和生成器互相博弈，当收敛时，我们可以学习到生成器用来产生多视图网络所产生的嵌入。在这种情景下，该学习的嵌入可以捕捉到每一种视图中节点之间的连接性，还有不同视图之间的关联性。</p>
-<p><img src="https://user-images.githubusercontent.com/23336589/85982199-fe332400-ba17-11ea-903d-a0942354d49a.png" alt="figure2"></p>
-<h4 id="Multi-view-Generator"><a href="#Multi-view-Generator" class="headerlink" title="Multi-view Generator"></a>Multi-view Generator</h4><p>该论文的多视图网络生成器的目标是（<strong>i</strong>）：生成能欺骗判别器的具有多视图连接性的虚假样本对；（<strong>ii</strong>）：学习一个能捕捉到多视图网络拓扑的嵌入。为此，作者设计的多视图生成器由两部分组成：一个融合生成器$G_f$和$k$个连接性生成器$G^{(l)}$。令$X \in \mathbb{R}^{n \times d}$为我们想要学习到的网络嵌入矩阵，我们可以获得节点$v_i$的嵌入$e_i^TX$，其中$e_i$是一个one-hot向量。融合生成器$G_f$首先融合节点$v_i$和节点$v_j$的表示，旨在捕捉$v_i$和$v_j$之间的关联性。我们使用$G_f(v_i,v_j;X,\theta_f)$记作融合后的表示，其中$\theta_f$是融合生成器的参数。然后，融合后的表示被用来计算每一种视图中节点对之间连接性$e_{ij}^{(l)}\, for \, l = 1, …., k$的概率。这可以形式化写为：</p>
-<script type="math/tex; mode=display">{\}
-G(e_{ij}^{(1)},...,e_{ij}^{(k)}|v_i,v_j,\theta_G)=\prod_{l=1}^kG^{(l)}(e_{ij}^{(l)}|G_f(v_i,v_j;X,\theta_f);\theta^{(l)})</script><p>其中$G^{(l)}$是一个连接性生成器，在给定融合后的表示时，负责生成给定视图$l$中节点对之间的连接性，$\theta^{(l)}$是它的参数。多视图生成器的参数为$\theta_G=\{X, \theta_f, \theta^{(l),l=1,…,k}\}$。</p>
-<p>为了欺骗判别器，对每一$(v_i,v_j)\sim p_{data]}$，其中$p_{data}$代表多视图连接性，然后从$G$中采样一个负样本节点，该节点与$v_i$的连接性相似于$(v_i, v_j)$的相似性，$\tilde{\mathcal{K}_{ic}} = \mathcal{K}_{ij}$，比如，$(v_i,v_c) \sim p_g$，$p_g$代表由生成器建模的分布。在实践中，作者选取具有最高概率的节点$v_c$:</p>
-<script type="math/tex; mode=display">
-\mathop{argmax}_{v_c \in \mathcal{V}}\prod_{l=1}^kG^{(l)}(e_{ic}^{(l)}=e_{ij}^{(l)}|v_i,v_j,G_f(v_i,v_j;X,\theta_f))</script><p>在公式（2）中负采样背后的动机是：如果$\tilde{\mathcal{K}_{ic}}$与正样本对$(v_i,v_j)$的连接性$\mathcal{K}_{ij}$一样，负样本节点对$(v_i,v_c)$就更可能欺骗连接性判别器。生成器$G$的目标是更新网络嵌入和其参数，这样生成器就有更高的机会生成能够欺骗判别器的负样本。ps:这里$v_c$需要经过生成器的前向传播。</p>
-<h4 id="Node-pair-Discriminator"><a href="#Node-pair-Discriminator" class="headerlink" title="Node pair Discriminator"></a>Node pair Discriminator</h4><p>判别器$D$的目标是将来自于多视图网络的正样本节点对和由生成器产生的负样本节点对区分开来，这样可以迫使生成器$G$更准确的拟合多视图网络的连接性的分布。为这一目标，对任意来自于真实数据的节点对，也就是$(v_i, v_j) \sim p_{data}$，判别器应该输出1，以为该采样的节点对是真实的。给定负样本节点对，判别器应该输出0。作者定义判别器D为输入样本对$(v_i,v_j)$的内积的sigmoid函数，如下所示：</p>
-<script type="math/tex; mode=display">
-D(v_i,v_j) = \frac{exp(d_i^T \cdot d_j)}{1+exp(d_i^T \cdot d_j)}</script><h4 id="Efficient-Negative-Node-Sampling"><a href="#Efficient-Negative-Node-Sampling" class="headerlink" title="Efficient Negative Node Sampling"></a>Efficient Negative Node Sampling</h4><p>简而言之，为了减少计算复杂度，负样本节点不是遍历整个节点集合，而是从与$v_i$至少有一条边连接的节点中选取负样本节点。</p>
-<h4 id="Objective-Function-of-MEGAN"><a href="#Objective-Function-of-MEGAN" class="headerlink" title="Objective Function of MEGAN"></a>Objective Function of MEGAN</h4><p><img src="https://user-images.githubusercontent.com/23336589/85982239-1014c700-ba18-11ea-996d-fb77f3a97f79.png" alt="eq4"></p>
-<h4 id="Training-Algorithm-of-MEGAN"><a href="#Training-Algorithm-of-MEGAN" class="headerlink" title="Training Algorithm of MEGAN"></a>Training Algorithm of MEGAN</h4><p><img src="https://user-images.githubusercontent.com/23336589/85982245-1145f400-ba18-11ea-8161-d338214e2d54.png" alt="eq5"><br><img src="https://user-images.githubusercontent.com/23336589/85982250-130fb780-ba18-11ea-81c7-95a48aa49044.png" alt="eq6"></p>
-<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>pass</p>
-<h2 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h2><p>同属性网络表示学习一样，多视图网络表示学习也要整合来自于不同域的信息，这两种方法可以相互借鉴和启发。</p>
+        <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p><a href="https://www.aaai.org/ocs/index.php/AAAI/AAAI18/paper/viewFile/16498/15927" target="_blank" rel="noopener">论文传送门</a></p>
+<p>这是一篇发表于2017年的论文，也是第一次尝试将生成对抗网络应用到图表示学习上的工作。之前的方法主要是将不同的结构性质编码进表示中，比如邻居连接模式，全局结构角色相似性和其他高阶相似性。但作者认为除了捕捉网络结构性质的方法，大多数方法都因为缺少额外的约束而导致不能加强表示的鲁棒性。针对此问题，作者提出对抗网络嵌入（ANE）框架，其充分利用对抗学习原则来正则化表示学习。该框架包含两个部分，一个结构保存成分和一个对抗学习成分。前一个成分旨在捕捉网络结构性质，而后一个成分旨在通过令隐表示的后验分布匹配一个先验分布来学得更鲁棒的表示。</p>
+<h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><p>对于结构保存，作者提出一种归纳式(<strong>inductive</strong>)的DeepWalk（IDW）。IDW依然使用随机游走来获取节点的上下文节点，优化同样的损失函数，但其使用一个参数化的函数$G(\cdot)$来产生嵌入向量。</p>
+<p>对于正则化，对抗学习成分包括两个部分，一个生成器$G(\cdot)$和一个判别器$D(\cdot)$。对抗学习部分作为一个正则器，旨在学习到更稳定和鲁棒的特征提取器，这是通过对抗学习在嵌入向量上强加一个先验分布得到的。具体来说，将生成器产生的嵌入当作负样本，把从先验分布里采样得到的向量作为正样本。这样对抗学习就迫使生成的嵌入拟合该先验分布。值得注意的是，对抗学习成分的生成器和结构保存的生成器是同一个，在训练阶段时，交替更新两个部分。</p>
+<p>算法框架如下：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/86197855-dc0ce380-bb88-11ea-89c9-a9ba4242ad53.png" alt="Figure2"></p>
+<h3 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h3><p>结构保存成分的损失函数同DeepWalk一样，如下所示：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/86197937-11b1cc80-bb89-11ea-9ee5-72b58666e1af.png" alt="eq2"></p>
+<p>对抗学习判别器的损失如下：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/86197958-22624280-bb89-11ea-8a07-117c4edcd812.png" alt="eq3"></p>
+<p>对抗学习生成器的损失如下：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/86197996-36a63f80-bb89-11ea-9183-b8cb0cd5371c.png" alt="eq4"></p>
+<h3 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h3><p>这篇早期论文思想比较简单。</p>
 
       
     </div>
@@ -516,7 +508,7 @@ D(v_i,v_j) = \frac{exp(d_i^T \cdot d_j)}{1+exp(d_i^T \cdot d_j)}</script><h4 id=
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#问题定义"><span class="nav-number">1.1.</span> <span class="nav-text">问题定义</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#方法"><span class="nav-number">2.</span> <span class="nav-text">方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Multi-view-Generative-Adversarial-Network"><span class="nav-number">2.1.</span> <span class="nav-text">Multi-view Generative Adversarial Network</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Multi-view-Generator"><span class="nav-number">2.1.1.</span> <span class="nav-text">Multi-view Generator</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Node-pair-Discriminator"><span class="nav-number">2.1.2.</span> <span class="nav-text">Node pair Discriminator</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Efficient-Negative-Node-Sampling"><span class="nav-number">2.1.3.</span> <span class="nav-text">Efficient Negative Node Sampling</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Objective-Function-of-MEGAN"><span class="nav-number">2.1.4.</span> <span class="nav-text">Objective Function of MEGAN</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Training-Algorithm-of-MEGAN"><span class="nav-number">2.1.5.</span> <span class="nav-text">Training Algorithm of MEGAN</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结论"><span class="nav-number">3.</span> <span class="nav-text">结论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#思考"><span class="nav-number">4.</span> <span class="nav-text">思考</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#方法"><span class="nav-number">2.</span> <span class="nav-text">方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#优化"><span class="nav-number">2.1.</span> <span class="nav-text">优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#思考"><span class="nav-number">2.2.</span> <span class="nav-text">思考</span></a></li></ol></li></ol></div>
             
 
           </div>
