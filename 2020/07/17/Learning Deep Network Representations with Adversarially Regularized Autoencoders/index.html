@@ -79,23 +79,22 @@
 
 
 
-<meta name="description" content="简介论文传送门 这是一篇发表于2017年的论文，也是第一次尝试将生成对抗网络应用到图表示学习上的工作。之前的方法主要是将不同的结构性质编码进表示中，比如邻居连接模式，全局结构角色相似性和其他高阶相似性。但作者认为除了捕捉网络结构性质的方法，大多数方法都因为缺少额外的约束而导致不能加强表示的鲁棒性。针对此问题，作者提出对抗网络嵌入（ANE）框架，其充分利用对抗学习原则来正则化表示学习。该框架包含两个">
+<meta name="description" content="简介论文传送门 许多现存网络嵌入方法，从采样的节点序列中学得节点表示，但由于从网络中采样的序列具有稀疏性质，导致学得的模型不易泛化。解决该稀疏问题的一个理想方法是通过学习一个采样序列上的概率密度函数来产生表示。但在低维流形上分布往往并不存在分析解。在该论文中，作者提出使用对抗正则编码器（NETRA）来学习网络表示。NETRA学习一个正则节点表示，其通过联合考虑局部性留存和全局重建约束，可以很好的捕">
 <meta name="keywords" content="Network Embedding">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Adversarial Network Embedding">
-<meta property="og:url" content="www.platot.site/2020/07/01/Adversarial Network Embedding/index.html">
+<meta property="og:title" content="Learning Deep Network Representations with Adversarially Regularized Autoencoders">
+<meta property="og:url" content="www.platot.site/2020/07/17/Learning Deep Network Representations with Adversarially Regularized Autoencoders/index.html">
 <meta property="og:site_name" content="心远地自偏">
-<meta property="og:description" content="简介论文传送门 这是一篇发表于2017年的论文，也是第一次尝试将生成对抗网络应用到图表示学习上的工作。之前的方法主要是将不同的结构性质编码进表示中，比如邻居连接模式，全局结构角色相似性和其他高阶相似性。但作者认为除了捕捉网络结构性质的方法，大多数方法都因为缺少额外的约束而导致不能加强表示的鲁棒性。针对此问题，作者提出对抗网络嵌入（ANE）框架，其充分利用对抗学习原则来正则化表示学习。该框架包含两个">
+<meta property="og:description" content="简介论文传送门 许多现存网络嵌入方法，从采样的节点序列中学得节点表示，但由于从网络中采样的序列具有稀疏性质，导致学得的模型不易泛化。解决该稀疏问题的一个理想方法是通过学习一个采样序列上的概率密度函数来产生表示。但在低维流形上分布往往并不存在分析解。在该论文中，作者提出使用对抗正则编码器（NETRA）来学习网络表示。NETRA学习一个正则节点表示，其通过联合考虑局部性留存和全局重建约束，可以很好的捕">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/86197855-dc0ce380-bb88-11ea-89c9-a9ba4242ad53.png">
-<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/86197937-11b1cc80-bb89-11ea-9ee5-72b58666e1af.png">
-<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/86197958-22624280-bb89-11ea-8a07-117c4edcd812.png">
-<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/86197996-36a63f80-bb89-11ea-9183-b8cb0cd5371c.png">
-<meta property="og:updated_time" content="2020-07-02T06:41:27.145Z">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/87765263-31fcaf00-c84a-11ea-8aa8-0206defd155f.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/87765337-40e36180-c84a-11ea-8a8a-8e2317ddcaeb.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/87765420-5eb0c680-c84a-11ea-9350-af975b24034f.png">
+<meta property="og:updated_time" content="2020-07-19T07:22:47.842Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Adversarial Network Embedding">
-<meta name="twitter:description" content="简介论文传送门 这是一篇发表于2017年的论文，也是第一次尝试将生成对抗网络应用到图表示学习上的工作。之前的方法主要是将不同的结构性质编码进表示中，比如邻居连接模式，全局结构角色相似性和其他高阶相似性。但作者认为除了捕捉网络结构性质的方法，大多数方法都因为缺少额外的约束而导致不能加强表示的鲁棒性。针对此问题，作者提出对抗网络嵌入（ANE）框架，其充分利用对抗学习原则来正则化表示学习。该框架包含两个">
-<meta name="twitter:image" content="https://user-images.githubusercontent.com/23336589/86197855-dc0ce380-bb88-11ea-89c9-a9ba4242ad53.png">
+<meta name="twitter:title" content="Learning Deep Network Representations with Adversarially Regularized Autoencoders">
+<meta name="twitter:description" content="简介论文传送门 许多现存网络嵌入方法，从采样的节点序列中学得节点表示，但由于从网络中采样的序列具有稀疏性质，导致学得的模型不易泛化。解决该稀疏问题的一个理想方法是通过学习一个采样序列上的概率密度函数来产生表示。但在低维流形上分布往往并不存在分析解。在该论文中，作者提出使用对抗正则编码器（NETRA）来学习网络表示。NETRA学习一个正则节点表示，其通过联合考虑局部性留存和全局重建约束，可以很好的捕">
+<meta name="twitter:image" content="https://user-images.githubusercontent.com/23336589/87765263-31fcaf00-c84a-11ea-8aa8-0206defd155f.png">
 
 
 
@@ -125,13 +124,13 @@
 
 
 
-  <link rel="canonical" href="www.platot.site/2020/07/01/Adversarial Network Embedding/"/>
+  <link rel="canonical" href="www.platot.site/2020/07/17/Learning Deep Network Representations with Adversarially Regularized Autoencoders/"/>
 
 
 
 
 
-  <title>Adversarial Network Embedding | 心远地自偏</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>Learning Deep Network Representations with Adversarially Regularized Autoencoders | 心远地自偏</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -258,7 +257,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="www.platot.site/2020/07/01/Adversarial Network Embedding/">
+    <link itemprop="mainEntityOfPage" href="www.platot.site/2020/07/17/Learning Deep Network Representations with Adversarially Regularized Autoencoders/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="plato">
@@ -275,7 +274,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Adversarial Network Embedding</h1>
+          <h1 class="post-title" itemprop="name headline">Learning Deep Network Representations with Adversarially Regularized Autoencoders</h1>
         
 
         <div class="post-meta">
@@ -287,8 +286,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-07-01T10:25:50+08:00">
-                2020-07-01
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-07-17T10:25:50+08:00">
+                2020-07-17
               </time>
             
 
@@ -325,19 +324,32 @@
       
 
       
-        <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p><a href="https://www.aaai.org/ocs/index.php/AAAI/AAAI18/paper/viewFile/16498/15927" target="_blank" rel="noopener">论文传送门</a></p>
-<p>这是一篇发表于2017年的论文，也是第一次尝试将生成对抗网络应用到图表示学习上的工作。之前的方法主要是将不同的结构性质编码进表示中，比如邻居连接模式，全局结构角色相似性和其他高阶相似性。但作者认为除了捕捉网络结构性质的方法，大多数方法都因为缺少额外的约束而导致不能加强表示的鲁棒性。针对此问题，作者提出对抗网络嵌入（ANE）框架，其充分利用对抗学习原则来正则化表示学习。该框架包含两个部分，一个结构保存成分和一个对抗学习成分。前一个成分旨在捕捉网络结构性质，而后一个成分旨在通过令隐表示的后验分布匹配一个先验分布来学得更鲁棒的表示。</p>
-<h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><p>对于结构保存，作者提出一种归纳式(<strong>inductive</strong>)的DeepWalk（IDW）。IDW依然使用随机游走来获取节点的上下文节点，优化同样的损失函数，但其使用一个参数化的函数$G(\cdot)$来产生嵌入向量。</p>
-<p>对于正则化，对抗学习成分包括两个部分，一个生成器$G(\cdot)$和一个判别器$D(\cdot)$。对抗学习部分作为一个正则器，旨在学习到更稳定和鲁棒的特征提取器，这是通过对抗学习在嵌入向量上强加一个先验分布得到的。具体来说，将生成器产生的嵌入当作负样本，把从先验分布里采样得到的向量作为正样本。这样对抗学习就迫使生成的嵌入拟合该先验分布。值得注意的是，对抗学习成分的生成器和结构保存的生成器是同一个，在训练阶段时，交替更新两个部分。</p>
-<p>算法框架如下：</p>
-<p><img src="https://user-images.githubusercontent.com/23336589/86197855-dc0ce380-bb88-11ea-89c9-a9ba4242ad53.png" alt="Figure2"></p>
-<h3 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h3><p>结构保存成分的损失函数同DeepWalk一样，如下所示：</p>
-<p><img src="https://user-images.githubusercontent.com/23336589/86197937-11b1cc80-bb89-11ea-9ee5-72b58666e1af.png" alt="eq2"></p>
-<p>对抗学习判别器的损失如下：</p>
-<p><img src="https://user-images.githubusercontent.com/23336589/86197958-22624280-bb89-11ea-8a07-117c4edcd812.png" alt="eq3"></p>
-<p>对抗学习生成器的损失如下：</p>
-<p><img src="https://user-images.githubusercontent.com/23336589/86197996-36a63f80-bb89-11ea-9183-b8cb0cd5371c.png" alt="eq4"></p>
-<h3 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h3><p>这篇早期论文思想比较简单。</p>
+        <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p><a href=":https://sites.cs.ucsb.edu/~bzong/doc/kdd-18.pdf">论文传送门</a></p>
+<p>许多现存网络嵌入方法，从采样的节点序列中学得节点表示，但由于从网络中采样的序列具有稀疏性质，导致学得的模型不易泛化。解决该稀疏问题的一个理想方法是通过学习一个采样序列上的概率密度函数来产生表示。但在低维流形上分布往往并不存在分析解。在该论文中，作者提出使用对抗正则编码器（NETRA）来学习网络表示。NETRA学习一个正则节点表示，其通过联合考虑局部性留存和全局重建约束，可以很好的捕捉网络结构。该联合推理可以概述为使用生成对抗训练过程来避免对一个显示先验分布的要求，因此获得更好的泛化性能。</p>
+<p>网络采样的稀疏问题如下图所示：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/87765263-31fcaf00-c84a-11ea-8aa8-0206defd155f.png" alt="Figure 2"></p>
+<p>随机游走采样技术被广泛地用在网络嵌入研究中，但其受稀疏性问题的限制。对给定网络中的每一个节点，如果我们假设平均节点度是$\bar{d}$，行走长度是$l$，采样数目是$k$，于是采样率可以计算如下：</p>
+<script type="math/tex; mode=display">
+p_{frac} \propto \frac{|V|\times k}{|V| \times \bar{d}^l} = \frac{k}{\bar{d}^l} \times 100\%</script><h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><p>NETRA的框架如下图所示：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/87765337-40e36180-c84a-11ea-8a8a-8e2317ddcaeb.png" alt="Figure 1"></p>
+<p>NETRA联合最小化网络局部性留存损失和LSTM自动编码器的重建损失。该联合嵌入推理使用生成对抗训练过程，避免了要求一个显式先验分布。该模型使用离散LSTM自动编码器，其输入是经过独热编码的节点序列，学习连续的节点表示，重建损失使用交叉熵损失函数。在最小化重建损失的同时，模型也在隐藏层最小化局部性留存损失。同时，连续空间生成器被训练，使其与编码器的分布一致。该生成对抗训练可以被视为是对网络嵌入过程的正则过程。</p>
+<p>NETRA具有一个网络嵌入模式想要的两种性质：（1）结构性质留存。NETRA使用LSTM作为编码器来捕捉序列中节点之间的邻居信息。同时，该模型同时使用局部性留存约束来训练。（2）泛化能力。泛化能力要求网络嵌入模型可以在和大多数序列符合同样分布的未看见的节点序列上表现很好。生成对抗训练过程使得该模型平滑地学习正则表示，而不需要要给预定义的显式的密度分布，这就克服了输入节点序列的稀疏性问题。</p>
+<h2 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h2><p>自动编码器的重建损失采用交叉熵损失函数，如下所示：</p>
+<script type="math/tex; mode=display">
+\mathcal{L}_{\mathrm{AE}}(\phi, \psi ; \mathbf{x})=-\mathbb{B}_{\mathbf{x} \sim \mathbb{P}_{\text {data }}(\mathbf{x})}\left[\operatorname{dist}\left(\mathbf{x}, h_{\psi}\left(f_{\phi}(\mathbf{x})\right)\right)\right]</script><p>局部留存性损失函数如下，实践上只计算有连边的节点对：</p>
+<script type="math/tex; mode=display">
+\mathcal{L}_{L E}(\phi ; \mathbf{x})=\sum_{1 \leq i<j \leq n}\left\|f_{\phi}\left(\mathbf{x}^{(i)}\right)-f_{\phi}\left(\mathbf{x}^{(j)} \|^{2} \varphi_{i j}\right.\right.</script><p>对于生成对抗训练过程，NETRA最小化编码器学得表示的分布$f_\phi(x) \sim \mathbb{P}_\phi(x)$和连续生成器模型的表示的分布$g_\theta(z) \sim \mathbb{P}_\theta(z)$之间的距离，对偶形式如下：</p>
+<script type="math/tex; mode=display">
+W\left(\mathbb{P}_{\phi}(\mathbf{x}), \mathbb{P}_{\theta}(\mathbf{z})\right)=\sup _{\|d(\cdot)\|_{L \leq 1}} \mathbb{B}_{\mathbf{y} \sim \mathbb{P}_{\phi}(\mathbf{x})}[d(\mathbf{y})]-\mathbb{E}_{\mathbf{y} \sim \mathbb{P}_{\theta}(\mathbf{z})}[d(\mathbf{y})]</script><p>其中$\parallel d(\cdot)\parallel_{L\leq1}$是利普希茨连续条件约束（Lipschitz continuity constraint。</p>
+<p>对于生成器来说，代价函数定义如下：</p>
+<script type="math/tex; mode=display">
+\mathcal{L}_{\mathrm{GEN}}(\theta ; \mathbf{x}, \mathbf{z})=\mathbb{E}_{\mathbf{x} \sim P_{\text {data }}(\mathbf{x})}\left[d_{\mathbf{w}}\left(f_{\phi}(\mathbf{x})\right)\right]-\mathbb{B}_{\mathbf{z} \sim \mathbb{P}_{g}(z)}\left[d_{w}\left(g_{\theta}(\mathbf{z})\right)\right]</script><p>对于判别器来说，代价函数定义如下：</p>
+<script type="math/tex; mode=display">
+\mathcal{L}_{\mathrm{DIS}}(w ; \mathbf{x}, z)=-\mathbb{B}_{\mathbf{x} \sim P_{\text {data }}(\mathbf{x})}\left[d_{w}\left(f_{\phi}(\mathbf{x})\right)\right]+\mathbb{B}_{\mathbf{z} \sim P_{g}(\mathbf{z})}\left[d_{w}\left(g_{\theta}(\mathbf{z})\right)\right]</script><p>因此，该联合优化问题的目标函数如下：</p>
+<script type="math/tex; mode=display">
+\mathcal{L}_{\mathrm{NETRA}}(\phi, \psi, \theta, w)=\mathcal{L}_{\mathrm{AE}}(\phi, \psi ; \mathbf{x})+\lambda_{1} \mathcal{L}_{\mathrm{LE}}(\phi ; \mathbf{x})+\lambda_{2} W\left(\mathbb{P}_{\phi}(\mathbf{x}), P_{\theta}(\mathrm{z})\right)</script><p>算法流程如<strong>Algorithm 1 </strong>所示：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/87765420-5eb0c680-c84a-11ea-9350-af975b24034f.png" alt="Algorithm 1"></p>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>在该论文中，作者提出NETRA，一种用于将网络中的每一个节点编码成低维向量表示的使用生成对抗正则编码器的深度网络嵌入模型。该模型证明了生成对抗训练过程在提取信息表示方面的能力。该提出的模型具有很好的泛化能力，无须要求一个对隐表示的显式的先验密度分布。另外，作者使用LSTM自动编码器，其使用采样的节点序列作为输入，来学习平滑的节点表示，该表示通过局部留存约束和生成对抗过程来正则。最后的表示对从网络中采样得到的稀疏节点序列鲁棒。</p>
 
       
     </div>
@@ -368,8 +380,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/06/30/A Generative Adversarial Network for Multi-View Network Embedding/" rel="next" title="A Generative Adversarial Network for Multi-View Network Embedding">
-                <i class="fa fa-chevron-left"></i> A Generative Adversarial Network for Multi-View Network Embedding
+              <a href="/2020/07/01/Adversarial Network Embedding/" rel="next" title="Adversarial Network Embedding">
+                <i class="fa fa-chevron-left"></i> Adversarial Network Embedding
               </a>
             
           </div>
@@ -377,10 +389,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/07/17/Learning Deep Network Representations with Adversarially Regularized Autoencoders/" rel="prev" title="Learning Deep Network Representations with Adversarially Regularized Autoencoders">
-                Learning Deep Network Representations with Adversarially Regularized Autoencoders <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -512,7 +520,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#方法"><span class="nav-number">2.</span> <span class="nav-text">方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#优化"><span class="nav-number">2.1.</span> <span class="nav-text">优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#思考"><span class="nav-number">2.2.</span> <span class="nav-text">思考</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#方法"><span class="nav-number">2.</span> <span class="nav-text">方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#优化"><span class="nav-number">3.</span> <span class="nav-text">优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结论"><span class="nav-number">4.</span> <span class="nav-text">结论</span></a></li></ol></div>
             
 
           </div>
