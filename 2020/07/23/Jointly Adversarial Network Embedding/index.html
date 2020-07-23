@@ -79,25 +79,18 @@
 
 
 
-<meta name="description" content="Informationtitle：Masked Graph Convolutional Networkauthors：Liang Yang, Fan Wu, Yingkui Wang, Junhua Gu and Yuanfang Guo AbstractSemi-supervised classification is a fundamental technology to process th">
+<meta name="description" content="简介论文传送门 在这篇文章中，作者分析并质疑了Network Embedding领域中使用对抗机制来正则嵌入表示的方法。作者认为这些方法由于直接比较真实嵌入和直接从先验分布中采样生成的虚假嵌入，相当于强迫嵌入表示符合高斯分布，但些方法不能捕捉隐空间中的语义变化。而GAN能在隐空间中捕捉语义变化的原因是，它比较的是真实数据和虚假样本，并不是比较真实嵌入和虚假嵌入。为了克服该问题，作者提出一种联合对抗">
 <meta name="keywords" content="Network Embedding">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Masked Graph Convolutional Network">
-<meta property="og:url" content="www.platot.site/2019/10/04/Masked Graph Convolutional Network/index.html">
+<meta property="og:title" content="Jointly Adversarial Network Embedding">
+<meta property="og:url" content="www.platot.site/2020/07/23/Jointly Adversarial Network Embedding/index.html">
 <meta property="og:site_name" content="心远地自偏">
-<meta property="og:description" content="Informationtitle：Masked Graph Convolutional Networkauthors：Liang Yang, Fan Wu, Yingkui Wang, Junhua Gu and Yuanfang Guo AbstractSemi-supervised classification is a fundamental technology to process th">
+<meta property="og:description" content="简介论文传送门 在这篇文章中，作者分析并质疑了Network Embedding领域中使用对抗机制来正则嵌入表示的方法。作者认为这些方法由于直接比较真实嵌入和直接从先验分布中采样生成的虚假嵌入，相当于强迫嵌入表示符合高斯分布，但些方法不能捕捉隐空间中的语义变化。而GAN能在隐空间中捕捉语义变化的原因是，它比较的是真实数据和虚假样本，并不是比较真实嵌入和虚假嵌入。为了克服该问题，作者提出一种联合对抗">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/66187858-566f0c80-e6b8-11e9-9f2f-662abbb1e4a1.PNG">
-<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/66187859-566f0c80-e6b8-11e9-9451-8e80b9ca4c53.PNG">
-<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/66187860-5707a300-e6b8-11e9-89b5-70b36dd40d23.PNG">
-<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/66187862-57a03980-e6b8-11e9-9683-5b804146447e.PNG">
-<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/66187864-5838d000-e6b8-11e9-8c54-6d251a3c9236.PNG">
-<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/66187865-58d16680-e6b8-11e9-97ac-7d17d9c4fc21.PNG">
-<meta property="og:updated_time" content="2019-10-11T11:22:20.703Z">
+<meta property="og:updated_time" content="2020-07-23T12:53:00.668Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Masked Graph Convolutional Network">
-<meta name="twitter:description" content="Informationtitle：Masked Graph Convolutional Networkauthors：Liang Yang, Fan Wu, Yingkui Wang, Junhua Gu and Yuanfang Guo AbstractSemi-supervised classification is a fundamental technology to process th">
-<meta name="twitter:image" content="https://user-images.githubusercontent.com/23336589/66187858-566f0c80-e6b8-11e9-9f2f-662abbb1e4a1.PNG">
+<meta name="twitter:title" content="Jointly Adversarial Network Embedding">
+<meta name="twitter:description" content="简介论文传送门 在这篇文章中，作者分析并质疑了Network Embedding领域中使用对抗机制来正则嵌入表示的方法。作者认为这些方法由于直接比较真实嵌入和直接从先验分布中采样生成的虚假嵌入，相当于强迫嵌入表示符合高斯分布，但些方法不能捕捉隐空间中的语义变化。而GAN能在隐空间中捕捉语义变化的原因是，它比较的是真实数据和虚假样本，并不是比较真实嵌入和虚假嵌入。为了克服该问题，作者提出一种联合对抗">
 
 
 
@@ -127,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="www.platot.site/2019/10/04/Masked Graph Convolutional Network/"/>
+  <link rel="canonical" href="www.platot.site/2020/07/23/Jointly Adversarial Network Embedding/"/>
 
 
 
 
 
-  <title>Masked Graph Convolutional Network | 心远地自偏</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>Jointly Adversarial Network Embedding | 心远地自偏</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -260,7 +253,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="www.platot.site/2019/10/04/Masked Graph Convolutional Network/">
+    <link itemprop="mainEntityOfPage" href="www.platot.site/2020/07/23/Jointly Adversarial Network Embedding/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="plato">
@@ -277,7 +270,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Masked Graph Convolutional Network</h1>
+          <h1 class="post-title" itemprop="name headline">Jointly Adversarial Network Embedding</h1>
         
 
         <div class="post-meta">
@@ -289,8 +282,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-04T16:31:39+08:00">
-                2019-10-04
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-07-23T19:31:50+08:00">
+                2020-07-23
               </time>
             
 
@@ -327,13 +320,25 @@
       
 
       
-        <h2 id="Information"><a href="#Information" class="headerlink" title="Information"></a>Information</h2><p>title：<br>Masked Graph Convolutional Network<br>authors：<br>Liang Yang, Fan Wu, Yingkui Wang, Junhua Gu and Yuanfang Guo</p>
-<h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>Semi-supervised classification is a fundamental technology to process the structured and unstruc- tured data in machine learning field. The tradi- tional attribute-graph based semi-supervised clas- sification methods propagate labels over the graph which is usually constructed from the data fea- tures, while the graph convolutional neural net- works smooth the node attributes, i.e., propagate the attributes, over the real graph topology. In this paper, they are interpreted from the perspective of propagation, and accordingly categorized into sym- metric and asymmetric propagation based methods. From the perspective of propagation, both the tradi- tional and network based methods are propagating certain objects over the graph. However, different from the label propagation, the intuition “the con- nected data samples tend to be similar in terms of the attributes”, in attribute propagation is only par- tially valid. Therefore, a masked graph convolu- tion network (Masked GCN) is proposed by only propagating a certain portion of the attributes to the neighbours according to a masking indicator, which is learned for each node by jointly consid- ering the attribute distributions in local neighbour- hoods and the impact on the classification results. Extensive experiments on transductive and induc- tive node classification tasks have demonstrated the superiority of the proposed method.</p>
-<h2 id="Core-Issue"><a href="#Core-Issue" class="headerlink" title="Core Issue"></a>Core Issue</h2><p>不同于 label propagation，就属性而言，相连的节点倾向于是相似的，这一直觉在属性传播中只是部分合法的。作者提出 masked graph convolution network，根据一个属性指示器（attributes indicator）来决定一个节点要将它的哪些属性传给邻居。考虑到在局部邻居的属性分布和对分类结果的影响，为每一个节点学习一个属性指示器。<br>传统GCNNs和Masked GCN 的比较如下：<br><img src="https://user-images.githubusercontent.com/23336589/66187858-566f0c80-e6b8-11e9-9f2f-662abbb1e4a1.PNG" alt="Figure 1"><br>其中黑色代表值较大。</p>
-<h2 id="Methods"><a href="#Methods" class="headerlink" title="Methods"></a>Methods</h2><p>目标函数如下:<br><img src="https://user-images.githubusercontent.com/23336589/66187859-566f0c80-e6b8-11e9-9451-8e80b9ca4c53.PNG" alt="eq 16"><br>$h_i$是节点$v_i$的属性,$w_{i,j}$由公式15定义。<br><img src="https://user-images.githubusercontent.com/23336589/66187860-5707a300-e6b8-11e9-89b5-70b36dd40d23.PNG" alt="eq 15"><br>根据目标函数，属性更新公式如下：<br><img src="https://user-images.githubusercontent.com/23336589/66187862-57a03980-e6b8-11e9-9683-5b804146447e.PNG" alt="eq 17"><br>mask 的定义如下：<br><img src="https://user-images.githubusercontent.com/23336589/66187864-5838d000-e6b8-11e9-8c54-6d251a3c9236.PNG" alt="eq 18"><br>全连接预测层如下:<br><img src="https://user-images.githubusercontent.com/23336589/66187865-58d16680-e6b8-11e9-97ac-7d17d9c4fc21.PNG" alt="eq 19"></p>
-<h2 id="Innovation"><a href="#Innovation" class="headerlink" title="Innovation"></a>Innovation</h2><p>考虑到在局部邻居的属性分布和对分类结果的影响，为每一个节点学习一个属性指示器。据一个属性指示器（attributes indicator）来决定一个节点要将它的哪些属性传给邻居。</p>
-<h2 id="Future-Work"><a href="#Future-Work" class="headerlink" title="Future Work"></a>Future Work</h2><p>In the future, our Masked GCN will be extended to other heterogeneous networks<br>ps:可考虑为不同类型的邻居学习一个mask indicator。</p>
-<h2 id="Shortcomings"><a href="#Shortcomings" class="headerlink" title="Shortcomings"></a>Shortcomings</h2><p>为每一个节点学得的属性指示器，是一对多关系，可能存在这样的关系，它的某个属性需要传给部分邻居，不传给另一部分邻居。虽然有考虑邻居权重，但依然会存在平均问题（少数服从多数）。<br>PS:但如果学习一个一对一的属性指示器，则可能会令信息太细粒，导致更高阶的结构信息不能很好的抓住。</p>
+        <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p><a href="https://www.ijcai.org/Proceedings/2020/192" target="_blank" rel="noopener">论文传送门</a></p>
+<p>在这篇文章中，作者分析并质疑了<strong>Network Embedding</strong>领域中使用对抗机制来正则嵌入表示的方法。作者认为这些方法由于直接比较真实嵌入和直接从先验分布中采样生成的虚假嵌入，相当于强迫嵌入表示符合高斯分布，但些方法不能捕捉隐空间中的语义变化。而GAN能在隐空间中捕捉语义变化的原因是，它比较的是真实数据和虚假样本，并不是比较真实嵌入和虚假嵌入。为了克服该问题，作者提出一种联合对抗网络嵌入框架<strong>JANE</strong>，该框架区分嵌入、拓扑信息和节点特征联合的真假。</p>
+<h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><p>该框架包含三个部分，嵌入模块、生成器和判别器。总体架构如图<strong>Figure 2</strong>s所示。</p>
+<p><img src="" alt="Figure 2"></p>
+<h3 id="判别器模块"><a href="#判别器模块" class="headerlink" title="判别器模块"></a>判别器模块</h3><p>为了使用真实数据修正高斯先验，<strong>JANE</strong>的判别器模块区分拓扑、节点特征和嵌入表示联合的真假，如下所示：</p>
+<script type="math/tex; mode=display">
+\mathbf{R}=(\mathbf{Z}\|\mathbf{A}\| \mathbf{X}), \quad \mathbf{R}^{\prime}=\left(\mathbf{Z}^{\prime}\left\|\mathbf{A}^{\prime}\right\| \mathbf{X}^{\prime}\right),</script><p>其中$\mathbf{A}$和$\mathbf{X}$分别是给定真实的邻接矩阵和节点特征，$\mathbf{Z}$和$\mathbf{Z}^{\prime}$分别是真实和虚假的表示。$|$表示拼接操作。判别器可以使用多层感知机实现。</p>
+<h3 id="嵌入模块"><a href="#嵌入模块" class="headerlink" title="嵌入模块"></a>嵌入模块</h3><p>嵌入模块使用带自注意力机制的GCN，也可以被具有相同功能的其他模型替代。</p>
+<h3 id="生成器模块"><a href="#生成器模块" class="headerlink" title="生成器模块"></a>生成器模块</h3><p>由于判别器的输入是拓扑、节点特征和嵌入表示的联合，所以生成器的目标是基于从高斯分布采样的样本去生成虚假联合。最简单直接的方法是将从高斯分布中生成的向量作为虚假嵌入，然后生成虚假拓扑和虚假节点特征。但是，这种方式在高维输出的情况下太低效。因为采样自高斯分布中的样本倾向于捕捉隐空间中的语义变化，虚假嵌入可以在真实嵌入的基础上构建得到，如下所示：</p>
+<script type="math/tex; mode=display">
+\mathbf{Z}^{\prime}=\mathbf{Z}+\mathbf{Y}</script><p>接下来，虚假节点特征和邻接矩阵可以分别从$\mathbf{Z}^{\prime}$生成。为了阐释，简化如下：虚假特征可以使用多层感知机生成，临界矩阵可以使用虚假嵌入的乘积再经过sigmoid变换得到。</p>
+<h2 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h2><p><strong>JANE</strong>的目标函数可以定义为<strong>min-max</strong>的形式，如下：</p>
+<script type="math/tex; mode=display">
+\min _{G, E} \max _{D} V(D, E, G)</script><p>其中$V(D, E, G)$定义如下：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+V(D, E, G):=\mathbb{E}_{(\mathbf{a}, \mathbf{x}) \sim p_{\mathbf{A}} \mathbf{x}}[\underbrace{\mathbb{E}_{\mathbf{z} \sim p_{E}(\cdot \mid \mathbf{a}, \mathbf{x})}[\log D(\mathbf{z}, \mathbf{a}, \mathbf{x})]}_{\log D(E(\mathbf{a}, \mathbf{x}), \mathbf{a}, \mathbf{x})}] \\
++\mathbb{E}_{\mathbf{z} \sim p_{\mathbf{Z}}}[\underbrace{\mathbb{E}_{(\mathbf{a}, \mathbf{x}) \sim p_{G}(\cdot \mid \mathbf{z})}[\log (1-D(\mathbf{z}, \mathbf{a}, \mathbf{x}))]}_{\log (1-D(\mathbf{z}, G(\mathbf{z})))}]
+\end{aligned}</script><h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>在这篇文章中，现存使用对抗机制的网络嵌入方法被分析和质疑，因为它们不能够捕捉隐空间中的语义变化，这是由于在没有从真实数据修正高斯分布，而直接比较嵌入结果和从高斯分布中采样的样本导致的。为了克服该问题，<strong>JANE</strong>框架被提出来使用对抗机制来做网络嵌入。该框架在链路预测和节点聚类任务上的性能改善证明了该框架可以捕捉隐空间中的语义变化。</p>
 
       
     </div>
@@ -364,8 +369,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/10/04/DANE：Domain Adaptive Network Embedding/" rel="next" title="DANE：Domain Adaptive Network Embedding">
-                <i class="fa fa-chevron-left"></i> DANE：Domain Adaptive Network Embedding
+              <a href="/2020/07/17/Learning Deep Network Representations with Adversarially Regularized Autoencoders/" rel="next" title="Learning Deep Network Representations with Adversarially Regularized Autoencoders">
+                <i class="fa fa-chevron-left"></i> Learning Deep Network Representations with Adversarially Regularized Autoencoders
               </a>
             
           </div>
@@ -373,10 +378,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/10/10/Novel Node classification framework/" rel="prev" title="Novel Node classification framework">
-                Novel Node classification framework <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -508,7 +509,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Information"><span class="nav-number">1.</span> <span class="nav-text">Information</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Abstract"><span class="nav-number">2.</span> <span class="nav-text">Abstract</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Core-Issue"><span class="nav-number">3.</span> <span class="nav-text">Core Issue</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Methods"><span class="nav-number">4.</span> <span class="nav-text">Methods</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Innovation"><span class="nav-number">5.</span> <span class="nav-text">Innovation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Future-Work"><span class="nav-number">6.</span> <span class="nav-text">Future Work</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Shortcomings"><span class="nav-number">7.</span> <span class="nav-text">Shortcomings</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#方法"><span class="nav-number">2.</span> <span class="nav-text">方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#判别器模块"><span class="nav-number">2.1.</span> <span class="nav-text">判别器模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#嵌入模块"><span class="nav-number">2.2.</span> <span class="nav-text">嵌入模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#生成器模块"><span class="nav-number">2.3.</span> <span class="nav-text">生成器模块</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#优化"><span class="nav-number">3.</span> <span class="nav-text">优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结论"><span class="nav-number">4.</span> <span class="nav-text">结论</span></a></li></ol></div>
             
 
           </div>
