@@ -92,7 +92,7 @@
 <meta property="og:image" content="https://user-images.githubusercontent.com/23336589/85982239-1014c700-ba18-11ea-996d-fb77f3a97f79.png">
 <meta property="og:image" content="https://user-images.githubusercontent.com/23336589/85982245-1145f400-ba18-11ea-8161-d338214e2d54.png">
 <meta property="og:image" content="https://user-images.githubusercontent.com/23336589/85982250-130fb780-ba18-11ea-81c7-95a48aa49044.png">
-<meta property="og:updated_time" content="2020-07-02T06:34:41.957Z">
+<meta property="og:updated_time" content="2020-07-27T09:45:57.512Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="A Generative Adversarial Network for Multi-View Network Embedding">
 <meta name="twitter:description" content="简介论文传送门 该论文针对多视图网络表示学习问题（multi-view network representation），即如何为多视图网络中的节点构建低维和信息留存的嵌入的问题，提出来基于生成对抗网络的多视图网络表示框架。来自于真实世界的应用的数据，往往可以用多视图网络表征，其中节点通过多种关系连接。举例来说，在Facebook， 两名用户可以具有朋友关系，入学同一所大学，喜欢或者不喜欢一条动态。">
@@ -334,7 +334,7 @@
 <h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><h3 id="Multi-view-Generative-Adversarial-Network"><a href="#Multi-view-Generative-Adversarial-Network" class="headerlink" title="Multi-view Generative Adversarial Network"></a>Multi-view Generative Adversarial Network</h3><p>不像被设计在单视图网络做嵌入的GAN，这种GAN只需要建模单个视图中节点的连接性，<strong>MEGAN</strong>需要捕捉的不仅有每一种视图中节点之间的连接性，还需要建模视图之间的关联性。为了达到这个目的，给定真实节点对的分布$(v_i, v_j) \sim p_{data}$， <strong>MEGAN</strong>由两个模块组成：一个负责生成（或者选择）一个负样本节点$v_c$，$v_i$与$v_c$之间的连接模式$\mathcal{K}_{ic}$与真实样本对之间的连接模式需要足够相似；一个判别器，负责区分真实样本对$(v_i, v_j)$和虚假样本对$(v_i, v_c)$（ps：这里有一点疑惑，判别器基于什么判断是真实还是虚假，因为都是原图中存在的节点对，已发邮件询问作者）。<strong>Figure2</strong>展示了<strong>MEGAN</strong>的架构。对于节点对$(v_1, v_2)$，生成器产生一个虚假节点$v_4$来形成一个节点对$(v_1, v_4)$来欺骗判别器，并且判别器被训练来区分输入的节点对是真实的还是虚假的。判别器和生成器互相博弈，当收敛时，我们可以学习到生成器用来产生多视图网络所产生的嵌入。在这种情景下，该学习的嵌入可以捕捉到每一种视图中节点之间的连接性，还有不同视图之间的关联性。</p>
 <p><img src="https://user-images.githubusercontent.com/23336589/85982199-fe332400-ba17-11ea-903d-a0942354d49a.png" alt="figure2"></p>
 <h4 id="Multi-view-Generator"><a href="#Multi-view-Generator" class="headerlink" title="Multi-view Generator"></a>Multi-view Generator</h4><p>该论文的多视图网络生成器的目标是（<strong>i</strong>）：生成能欺骗判别器的具有多视图连接性的虚假样本对；（<strong>ii</strong>）：学习一个能捕捉到多视图网络拓扑的嵌入。为此，作者设计的多视图生成器由两部分组成：一个融合生成器$G_f$和$k$个连接性生成器$G^{(l)}$。令$X \in \mathbb{R}^{n \times d}$为我们想要学习到的网络嵌入矩阵，我们可以获得节点$v_i$的嵌入$e_i^TX$，其中$e_i$是一个one-hot向量。融合生成器$G_f$首先融合节点$v_i$和节点$v_j$的表示，旨在捕捉$v_i$和$v_j$之间的关联性。我们使用$G_f(v_i,v_j;X,\theta_f)$记作融合后的表示，其中$\theta_f$是融合生成器的参数。然后，融合后的表示被用来计算每一种视图中节点对之间连接性$e_{ij}^{(l)}\, for \, l = 1, …., k$的概率。这可以形式化写为：</p>
-<script type="math/tex; mode=display">{\}
+<script type="math/tex; mode=display">
 G(e_{ij}^{(1)},...,e_{ij}^{(k)}|v_i,v_j,\theta_G)=\prod_{l=1}^kG^{(l)}(e_{ij}^{(l)}|G_f(v_i,v_j;X,\theta_f);\theta^{(l)})</script><p>其中$G^{(l)}$是一个连接性生成器，在给定融合后的表示时，负责生成给定视图$l$中节点对之间的连接性，$\theta^{(l)}$是它的参数。多视图生成器的参数为$\theta_G=\{X, \theta_f, \theta^{(l),l=1,…,k}\}$。</p>
 <p>为了欺骗判别器，对每一$(v_i,v_j)\sim p_{data]}$，其中$p_{data}$代表多视图连接性，然后从$G$中采样一个负样本节点，该节点与$v_i$的连接性相似于$(v_i, v_j)$的相似性，$\tilde{\mathcal{K}_{ic}} = \mathcal{K}_{ij}$，比如，$(v_i,v_c) \sim p_g$，$p_g$代表由生成器建模的分布。在实践中，作者选取具有最高概率的节点$v_c$:</p>
 <script type="math/tex; mode=display">
@@ -465,7 +465,7 @@ D(v_i,v_j) = \frac{exp(d_i^T \cdot d_j)}{1+exp(d_i^T \cdot d_j)}</script><h4 id=
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-count">41</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

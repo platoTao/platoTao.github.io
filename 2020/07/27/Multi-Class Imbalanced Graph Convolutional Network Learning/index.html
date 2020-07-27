@@ -79,20 +79,21 @@
 
 
 
-<meta name="description" content="简介论文传送门 在这篇文章中，作者分析并质疑了Network Embedding领域中使用对抗机制来正则嵌入表示的方法。作者认为这些方法由于直接比较真实嵌入和直接从先验分布中采样生成的虚假嵌入，相当于强迫嵌入表示符合高斯分布，但些方法不能捕捉隐空间中的语义变化。而GAN能在隐空间中捕捉语义变化的原因是，它比较的是真实数据和虚假样本，并不是比较真实嵌入和虚假嵌入。为了克服该问题，作者提出一种联合对抗">
+<meta name="description" content="简介论文传送门 该工作要解决的问题是图表示学习中的多类不平衡问题，也就是大多数节点属于大类，然后少数节点属于其他小类。当面对不平衡类分布时，现有的网络表示学习倾向于偏向于来自于大类的节点，而使得来自于小类的节点未经过充分训练。存在于一个类或更多类中的类别不平衡学习问题会导致其他类被过度代表，进而导致表示学习方法的性能下降。这是由于下面两个原因造成的：  拓扑交互：除了每个节点关联的特征信息外，不同">
 <meta name="keywords" content="Network Embedding">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Jointly Adversarial Network Embedding">
-<meta property="og:url" content="www.platot.site/2020/07/23/Jointly Adversarial Network Embedding/index.html">
+<meta property="og:title" content="Multi-Class Imbalanced Graph Convolutional Network Learning">
+<meta property="og:url" content="www.platot.site/2020/07/27/Multi-Class Imbalanced Graph Convolutional Network Learning/index.html">
 <meta property="og:site_name" content="心远地自偏">
-<meta property="og:description" content="简介论文传送门 在这篇文章中，作者分析并质疑了Network Embedding领域中使用对抗机制来正则嵌入表示的方法。作者认为这些方法由于直接比较真实嵌入和直接从先验分布中采样生成的虚假嵌入，相当于强迫嵌入表示符合高斯分布，但些方法不能捕捉隐空间中的语义变化。而GAN能在隐空间中捕捉语义变化的原因是，它比较的是真实数据和虚假样本，并不是比较真实嵌入和虚假嵌入。为了克服该问题，作者提出一种联合对抗">
+<meta property="og:description" content="简介论文传送门 该工作要解决的问题是图表示学习中的多类不平衡问题，也就是大多数节点属于大类，然后少数节点属于其他小类。当面对不平衡类分布时，现有的网络表示学习倾向于偏向于来自于大类的节点，而使得来自于小类的节点未经过充分训练。存在于一个类或更多类中的类别不平衡学习问题会导致其他类被过度代表，进而导致表示学习方法的性能下降。这是由于下面两个原因造成的：  拓扑交互：除了每个节点关联的特征信息外，不同">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/88288943-0e90a300-cd27-11ea-81de-f244d01116df.png">
-<meta property="og:updated_time" content="2020-07-23T12:57:18.354Z">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/88527349-b5c75000-d02f-11ea-9dfc-e5d9b0a0d0d3.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/88527357-b829aa00-d02f-11ea-9659-6c6df7418127.png">
+<meta property="og:updated_time" content="2020-07-27T09:44:10.637Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Jointly Adversarial Network Embedding">
-<meta name="twitter:description" content="简介论文传送门 在这篇文章中，作者分析并质疑了Network Embedding领域中使用对抗机制来正则嵌入表示的方法。作者认为这些方法由于直接比较真实嵌入和直接从先验分布中采样生成的虚假嵌入，相当于强迫嵌入表示符合高斯分布，但些方法不能捕捉隐空间中的语义变化。而GAN能在隐空间中捕捉语义变化的原因是，它比较的是真实数据和虚假样本，并不是比较真实嵌入和虚假嵌入。为了克服该问题，作者提出一种联合对抗">
-<meta name="twitter:image" content="https://user-images.githubusercontent.com/23336589/88288943-0e90a300-cd27-11ea-81de-f244d01116df.png">
+<meta name="twitter:title" content="Multi-Class Imbalanced Graph Convolutional Network Learning">
+<meta name="twitter:description" content="简介论文传送门 该工作要解决的问题是图表示学习中的多类不平衡问题，也就是大多数节点属于大类，然后少数节点属于其他小类。当面对不平衡类分布时，现有的网络表示学习倾向于偏向于来自于大类的节点，而使得来自于小类的节点未经过充分训练。存在于一个类或更多类中的类别不平衡学习问题会导致其他类被过度代表，进而导致表示学习方法的性能下降。这是由于下面两个原因造成的：  拓扑交互：除了每个节点关联的特征信息外，不同">
+<meta name="twitter:image" content="https://user-images.githubusercontent.com/23336589/88527349-b5c75000-d02f-11ea-9dfc-e5d9b0a0d0d3.png">
 
 
 
@@ -122,13 +123,13 @@
 
 
 
-  <link rel="canonical" href="www.platot.site/2020/07/23/Jointly Adversarial Network Embedding/"/>
+  <link rel="canonical" href="www.platot.site/2020/07/27/Multi-Class Imbalanced Graph Convolutional Network Learning/"/>
 
 
 
 
 
-  <title>Jointly Adversarial Network Embedding | 心远地自偏</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>Multi-Class Imbalanced Graph Convolutional Network Learning | 心远地自偏</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -255,7 +256,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="www.platot.site/2020/07/23/Jointly Adversarial Network Embedding/">
+    <link itemprop="mainEntityOfPage" href="www.platot.site/2020/07/27/Multi-Class Imbalanced Graph Convolutional Network Learning/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="plato">
@@ -272,7 +273,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Jointly Adversarial Network Embedding</h1>
+          <h1 class="post-title" itemprop="name headline">Multi-Class Imbalanced Graph Convolutional Network Learning</h1>
         
 
         <div class="post-meta">
@@ -284,8 +285,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-07-23T19:31:50+08:00">
-                2020-07-23
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-07-27T17:42:58+08:00">
+                2020-07-27
               </time>
             
 
@@ -322,25 +323,43 @@
       
 
       
-        <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p><a href="https://www.ijcai.org/Proceedings/2020/192" target="_blank" rel="noopener">论文传送门</a></p>
-<p>在这篇文章中，作者分析并质疑了<strong>Network Embedding</strong>领域中使用对抗机制来正则嵌入表示的方法。作者认为这些方法由于直接比较真实嵌入和直接从先验分布中采样生成的虚假嵌入，相当于强迫嵌入表示符合高斯分布，但些方法不能捕捉隐空间中的语义变化。而GAN能在隐空间中捕捉语义变化的原因是，它比较的是真实数据和虚假样本，并不是比较真实嵌入和虚假嵌入。为了克服该问题，作者提出一种联合对抗网络嵌入框架<strong>JANE</strong>，该框架区分嵌入、拓扑信息和节点特征联合的真假。</p>
-<h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><p>该框架包含三个部分，嵌入模块、生成器和判别器。总体架构如图<strong>Figure 2</strong>s所示。</p>
-<p><img src="https://user-images.githubusercontent.com/23336589/88288943-0e90a300-cd27-11ea-81de-f244d01116df.png" alt="Figure 2"></p>
-<h3 id="判别器模块"><a href="#判别器模块" class="headerlink" title="判别器模块"></a>判别器模块</h3><p>为了使用真实数据修正高斯先验，<strong>JANE</strong>的判别器模块区分拓扑、节点特征和嵌入表示联合的真假，如下所示：</p>
+        <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p><a href="https://www.ijcai.org/Proceedings/2020/398" target="_blank" rel="noopener">论文传送门</a></p>
+<p>该工作要解决的问题是图表示学习中的多类不平衡问题，也就是大多数节点属于大类，然后少数节点属于其他小类。当面对不平衡类分布时，现有的网络表示学习倾向于偏向于来自于大类的节点，而使得来自于小类的节点未经过充分训练。存在于一个类或更多类中的类别不平衡学习问题会导致其他类被过度代表，进而导致表示学习方法的性能下降。这是由于下面两个原因造成的：</p>
+<ol>
+<li><strong>拓扑交互：</strong>除了每个节点关联的特征信息外，不同的节点具有与其他节点的拓扑连接，意味着节点的类别赋予不仅被其自身的特征信息决定，还被与其连接的节点决定。</li>
+<li><strong>不清楚的边界：</strong>图数据往往具有多种高度有偏的节点类别，使得很难去平衡表示学习和准确的类别边界识别。因为，特定类别的学习可能会被邻近的类结构所影响，比如，大类可能会主导节点之间的特征传播。</li>
+</ol>
+<p>因此，在这篇论文中，作者提出了双正则的图卷积网络来处理多类不平衡图，其中两种不同的正则方法被用来解决类别不平衡表示学习。为了确保所有类被同等地表示，作者提出以类别为条件的对抗训练过程来处理带标签节点的分离。同时，为了保证训练平衡,作者强迫无标签节点服从于和有标签节点隐分布相似的分布,这是通过最小化两种分布之间的KL散度得到的。</p>
+<h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><p><img src="https://user-images.githubusercontent.com/23336589/88527349-b5c75000-d02f-11ea-9dfc-e5d9b0a0d0d3.png" alt="Figure2"></p>
+<p>首先，作者使用两层的图卷积网络在类被不平衡标签上训练来获得节点表示。该图卷积网络表示如下：</p>
 <script type="math/tex; mode=display">
-\mathbf{R}=(\mathbf{Z}\|\mathbf{A}\| \mathbf{X}), \quad \mathbf{R}^{\prime}=\left(\mathbf{Z}^{\prime}\left\|\mathbf{A}^{\prime}\right\| \mathbf{X}^{\prime}\right),</script><p>其中$\mathbf{A}$和$\mathbf{X}$分别是给定真实的邻接矩阵和节点特征，$\mathbf{Z}$和$\mathbf{Z}^{\prime}$分别是真实和虚假的表示。$|$表示拼接操作。判别器可以使用多层感知机实现。</p>
-<h3 id="嵌入模块"><a href="#嵌入模块" class="headerlink" title="嵌入模块"></a>嵌入模块</h3><p>嵌入模块使用带自注意力机制的GCN，也可以被具有相同功能的其他模型替代。</p>
-<h3 id="生成器模块"><a href="#生成器模块" class="headerlink" title="生成器模块"></a>生成器模块</h3><p>由于判别器的输入是拓扑、节点特征和嵌入表示的联合，所以生成器的目标是基于从高斯分布采样的样本去生成虚假联合。最简单直接的方法是将从高斯分布中生成的向量作为虚假嵌入，然后生成虚假拓扑和虚假节点特征。但是，这种方式在高维输出的情况下太低效。因为采样自高斯分布中的样本倾向于捕捉隐空间中的语义变化，虚假嵌入可以在真实嵌入的基础上构建得到，如下所示：</p>
+O=\tilde{\mathbf{A}} \operatorname{Re} L U\left(\tilde{\mathbf{A}} \mathbf{X} \mathbf{W}_{0}\right) \mathbf{W}_{1}</script><p>该图卷积网络得到表示传入一个softmax分类器来执行多类节点分类训练，如下所示：</p>
 <script type="math/tex; mode=display">
-\mathbf{Z}^{\prime}=\mathbf{Z}+\mathbf{Y}</script><p>接下来，虚假节点特征和邻接矩阵可以分别从$\mathbf{Z}^{\prime}$生成。为了阐释，简化如下：虚假特征可以使用多层感知机生成，临界矩阵可以使用虚假嵌入的乘积再经过sigmoid变换得到。</p>
-<h2 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h2><p><strong>JANE</strong>的目标函数可以定义为<strong>min-max</strong>的形式，如下：</p>
+Z=\operatorname{softmax}(O)=\frac{\exp (O)}{\sum_{i} \exp \left(O_{i}\right)}</script><script type="math/tex; mode=display">
+\mathcal{L}_{g c n}=-\sum_{v_{i} \in \mathbf{V}_{l}} \sum_{j=1}^{d} Y_{i j} \ln Z_{i j}</script><p> 为了令来自不同类的节点的表示更具有区分性，作者整合进去条件对抗雪莲过程来帮助分离不同类的标签节点的表示。该对抗训练的学习目标如下：</p>
 <script type="math/tex; mode=display">
-\min _{G, E} \max _{D} V(D, E, G)</script><p>其中$V(D, E, G)$定义如下：</p>
+\begin{array}{c}
+\min _{G} \max _{D} \mathcal{L}(D, G)=\mathbb{E}_{x \sim p_{\text {data}}(x)} \log D(x \mid y) \\
++\mathbb{E}_{z \sim p_{z}(z)} \log (1-D(G(z \mid y)))
+\end{array}</script><p>另外，为了减少卷积过程中来自于大类的负传播影响，作者训练所有的无标签数据来拟合一个数据分布，该分布相似于得到很好训练的标签节点在学到的表示空间的分布。（ps：假设理解起来不容易，但实验结果来看，该步骤提升比较大），该过程促进了大类和小类之间的平衡训练。</p>
+<p>作者假设有标签空间和无标签空间的表示服从两个d维的多元高斯分布<script type="math/tex">x_{l} \sim \mathcal{N}\left(\mu_{l}, \Sigma_{l}\right)</script>，<script type="math/tex">x_{u} \sim \mathcal{N}\left(\mu_{u}, \Sigma_{u}\right)</script>，它们的概率密度函数如下：</p>
 <script type="math/tex; mode=display">
-\begin{aligned}
-V(D, E, G):=\mathbb{E}_{(\mathbf{a}, \mathbf{x}) \sim p_{\mathbf{A}} \mathbf{x}}[\underbrace{\mathbb{E}_{\mathbf{z} \sim p_{E}(\cdot \mid \mathbf{a}, \mathbf{x})}[\log D(\mathbf{z}, \mathbf{a}, \mathbf{x})]}_{\log D(E(\mathbf{a}, \mathbf{x}), \mathbf{a}, \mathbf{x})}] \\
-+\mathbb{E}_{\mathbf{z} \sim p_{\mathbf{Z}}}[\underbrace{\mathbb{E}_{(\mathbf{a}, \mathbf{x}) \sim p_{G}(\cdot \mid \mathbf{z})}[\log (1-D(\mathbf{z}, \mathbf{a}, \mathbf{x}))]}_{\log (1-D(\mathbf{z}, G(\mathbf{z})))}]
-\end{aligned}</script><h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>在这篇文章中，现存使用对抗机制的网络嵌入方法被分析和质疑，因为它们不能够捕捉隐空间中的语义变化，这是由于在没有从真实数据修正高斯分布，而直接比较嵌入结果和从高斯分布中采样的样本导致的。为了克服该问题，<strong>JANE</strong>框架被提出来使用对抗机制来做网络嵌入。该框架在链路预测和节点聚类任务上的性能改善证明了该框架可以捕捉隐空间中的语义变化。</p>
+p\left(x_{l} ; \mu_{l}, \Sigma_{l}\right)=\frac{\exp \left(-\frac{1}{2}\left(x_{l}-\mu_{l}\right)^{T} \Sigma_{l}^{-1}\left(x_{l}-\mu_{l}\right)\right)}{(2 \pi)^{d / 2}\left|\Sigma_{l}\right|^{1 / 2}}</script><script type="math/tex; mode=display">
+p\left(x_{u} ; \mu_{u}, \Sigma_{u}\right)=\frac{\exp \left(-\frac{1}{2}\left(x_{u}-\mu_{u}\right)^{T} \Sigma_{u}^{-1}\left(x_{u}-\mu_{u}\right)\right)}{(2 \pi)^{d / 2}\left|\Sigma_{u}\right|^{1 / 2}}</script><p>对于类标签之间没有关联的场景，上面的概率密度函数可以被分别被表示为d个独立高斯分布的乘积，如下：</p>
+<script type="math/tex; mode=display">
+p\left(x_{l} ; \mu_{l}, \Sigma_{l}\right)=\prod_{k=1}^{d} \frac{1}{\sqrt{2 \pi} \sigma_{l, k}} \exp \left(-\frac{\left(x_{l, k}-\mu_{l, k}\right)^{2}}{2 \sigma_{l, k}^{2}}\right)</script><script type="math/tex; mode=display">
+p\left(x_{u} ; \mu_{u}, \Sigma_{u}\right)=\prod_{k=1}^{d} \frac{1}{\sqrt{2 \pi} \sigma_{u, k}} \exp \left(-\frac{\left(x_{u, k}-\mu_{u, k}\right)^{2}}{2 \sigma_{u, k}^{2}}\right)</script><p>其中参数可以从有标签样本和无标签样本中近似得到，如下：</p>
+<script type="math/tex; mode=display">
+\mu_{l}=\frac{1}{\left|\mathbf{V}_{l}\right|} \sum_{v_{i} \in \mathbf{V}_{l}} \mathbf{h}_{v_{i}}, \mu_{u}=\frac{1}{\left|\mathbf{V}_{u}\right|} \sum_{v_{j} \in \mathbf{V}_{u}} \mathbf{h}_{v_{j}}</script><script type="math/tex; mode=display">
+\Sigma_{l}=\frac{1}{\left|\mathbf{V}_{l}\right|} \sum_{v_{i} \in \mathbf{V}_{l}}\left(\mathbf{h}_{v_{i}}-\mu_{l}\right)^{2}, \Sigma_{u}=\frac{1}{\left|\mathbf{V}_{u}\right|} \sum_{v_{j} \in \mathbf{V}_{u}}\left(\mathbf{h}_{v_{j}}-\mu_{u}\right)^{2}</script><p>然后基于KL散度最小化$\mathcal{N}\left(\mu_{l}, \Sigma_{l}\right)$和$\mathcal{N}\left(\mu_{u}, \Sigma_{u}\right)$之间的距离：</p>
+<script type="math/tex; mode=display">
+\begin{array}{r}
+\mathcal{L}_{\text {dist}}=\frac{1}{2}\left(\log \frac{\left|\Sigma_{u}\right|}{\left|\Sigma_{l}\right|}-d+\operatorname{tr}\left(\Sigma_{u}^{-1} \Sigma_{l}\right)+\right. \\
+\left.\left(\mu_{u}-\mu_{l}\right)^{T} \Sigma_{u}^{-1}\left(\mu_{u}-\mu_{l}\right)\right)
+\end{array}</script><p>最后，为了避免由分布对齐对卷积学习带来强约束，使用下面的式子平衡二者：</p>
+<script type="math/tex; mode=display">
+\mathcal{L}=(1-\alpha) \mathcal{L}_{g c n}+\alpha \mathcal{L}_{\text {dist}}</script><h2 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h2><p><img src="https://user-images.githubusercontent.com/23336589/88527357-b829aa00-d02f-11ea-9659-6c6df7418127.png" alt="Algorthm"></p>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>真实世界中的图结构数据往往呈现高度有偏的类别分布。当从类被不平衡的图中学习时，最关键的挑战是节点具有很强的拓扑依赖，造成现有的网络表示学习方法在小类上表现不好。在该论文中，作者提出一种双正则的图卷积网络，其中包含了条件对抗训练来加强来自不同类的节点表示分离，和一个分布对齐训练来强迫大类和小类之间的平衡学习。</p>
 
       
     </div>
@@ -371,8 +390,8 @@ V(D, E, G):=\mathbb{E}_{(\mathbf{a}, \mathbf{x}) \sim p_{\mathbf{A}} \mathbf{x}}
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/07/17/Learning Deep Network Representations with Adversarially Regularized Autoencoders/" rel="next" title="Learning Deep Network Representations with Adversarially Regularized Autoencoders">
-                <i class="fa fa-chevron-left"></i> Learning Deep Network Representations with Adversarially Regularized Autoencoders
+              <a href="/2020/07/23/Jointly Adversarial Network Embedding/" rel="next" title="Jointly Adversarial Network Embedding">
+                <i class="fa fa-chevron-left"></i> Jointly Adversarial Network Embedding
               </a>
             
           </div>
@@ -380,10 +399,6 @@ V(D, E, G):=\mathbb{E}_{(\mathbf{a}, \mathbf{x}) \sim p_{\mathbf{A}} \mathbf{x}}
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/07/27/Multi-Class Imbalanced Graph Convolutional Network Learning/" rel="prev" title="Multi-Class Imbalanced Graph Convolutional Network Learning">
-                Multi-Class Imbalanced Graph Convolutional Network Learning <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -515,7 +530,7 @@ V(D, E, G):=\mathbb{E}_{(\mathbf{a}, \mathbf{x}) \sim p_{\mathbf{A}} \mathbf{x}}
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#方法"><span class="nav-number">2.</span> <span class="nav-text">方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#判别器模块"><span class="nav-number">2.1.</span> <span class="nav-text">判别器模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#嵌入模块"><span class="nav-number">2.2.</span> <span class="nav-text">嵌入模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#生成器模块"><span class="nav-number">2.3.</span> <span class="nav-text">生成器模块</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#优化"><span class="nav-number">3.</span> <span class="nav-text">优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结论"><span class="nav-number">4.</span> <span class="nav-text">结论</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#方法"><span class="nav-number">2.</span> <span class="nav-text">方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#优化"><span class="nav-number">3.</span> <span class="nav-text">优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结论"><span class="nav-number">4.</span> <span class="nav-text">结论</span></a></li></ol></div>
             
 
           </div>
