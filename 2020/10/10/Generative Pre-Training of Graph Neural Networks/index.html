@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Network Embedding," />
+  <meta name="keywords" content="图神经网络," />
 
 
 
@@ -79,21 +79,22 @@
 
 
 
-<meta name="description" content="简介论文传送门 该工作要解决的问题是图表示学习中的多类不平衡问题，也就是大多数节点属于大类，然后少数节点属于其他小类。当面对不平衡类分布时，现有的网络表示学习倾向于偏向于来自于大类的节点，而使得来自于小类的节点未经过充分训练。存在于一个类或更多类中的类别不平衡学习问题会导致其他类被过度代表，进而导致表示学习方法的性能下降。这是由于下面两个原因造成的：  拓扑交互：除了每个节点关联的特征信息外，不同">
-<meta name="keywords" content="Network Embedding">
+<meta name="description" content="简介论文传送门 由于图学习的下游任务往往标签数据很稀缺，一个有效减少标注代价的方式就是先使用无监督学习预训练一个图神经网络模型，然后使用少量标注数据将该模型迁移到下游任务上。在该论文中，作者提出GPT-GNN框架，其通过生成预训练的方式来初始化一个图神经网络模型。GPT-GNN 引入一个自监督属性网络生成任务来预训练一个图神经网络，这样它可以捕捉到图的结构和语义性质。该论文将图生成的似然概率分解为">
+<meta name="keywords" content="图神经网络">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Multi-Class Imbalanced Graph Convolutional Network Learning">
-<meta property="og:url" content="www.platot.site/2020/07/27/Multi-Class Imbalanced Graph Convolutional Network Learning/index.html">
+<meta property="og:title" content="Generative Pre-Training of Graph Neural Networks">
+<meta property="og:url" content="www.platot.site/2020/10/10/Generative Pre-Training of Graph Neural Networks/index.html">
 <meta property="og:site_name" content="心远地自偏">
-<meta property="og:description" content="简介论文传送门 该工作要解决的问题是图表示学习中的多类不平衡问题，也就是大多数节点属于大类，然后少数节点属于其他小类。当面对不平衡类分布时，现有的网络表示学习倾向于偏向于来自于大类的节点，而使得来自于小类的节点未经过充分训练。存在于一个类或更多类中的类别不平衡学习问题会导致其他类被过度代表，进而导致表示学习方法的性能下降。这是由于下面两个原因造成的：  拓扑交互：除了每个节点关联的特征信息外，不同">
+<meta property="og:description" content="简介论文传送门 由于图学习的下游任务往往标签数据很稀缺，一个有效减少标注代价的方式就是先使用无监督学习预训练一个图神经网络模型，然后使用少量标注数据将该模型迁移到下游任务上。在该论文中，作者提出GPT-GNN框架，其通过生成预训练的方式来初始化一个图神经网络模型。GPT-GNN 引入一个自监督属性网络生成任务来预训练一个图神经网络，这样它可以捕捉到图的结构和语义性质。该论文将图生成的似然概率分解为">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/88527349-b5c75000-d02f-11ea-9dfc-e5d9b0a0d0d3.png">
-<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/88527357-b829aa00-d02f-11ea-9659-6c6df7418127.png">
-<meta property="og:updated_time" content="2020-07-27T09:44:10.637Z">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/95653471-95d20380-0b2b-11eb-94e9-dad5927e2a83.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/95653480-a4b8b600-0b2b-11eb-80ec-b2cd12c012ce.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/95653485-ac785a80-0b2b-11eb-8b48-adeed2bfeb1a.png">
+<meta property="og:updated_time" content="2020-10-10T12:31:09.304Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Multi-Class Imbalanced Graph Convolutional Network Learning">
-<meta name="twitter:description" content="简介论文传送门 该工作要解决的问题是图表示学习中的多类不平衡问题，也就是大多数节点属于大类，然后少数节点属于其他小类。当面对不平衡类分布时，现有的网络表示学习倾向于偏向于来自于大类的节点，而使得来自于小类的节点未经过充分训练。存在于一个类或更多类中的类别不平衡学习问题会导致其他类被过度代表，进而导致表示学习方法的性能下降。这是由于下面两个原因造成的：  拓扑交互：除了每个节点关联的特征信息外，不同">
-<meta name="twitter:image" content="https://user-images.githubusercontent.com/23336589/88527349-b5c75000-d02f-11ea-9dfc-e5d9b0a0d0d3.png">
+<meta name="twitter:title" content="Generative Pre-Training of Graph Neural Networks">
+<meta name="twitter:description" content="简介论文传送门 由于图学习的下游任务往往标签数据很稀缺，一个有效减少标注代价的方式就是先使用无监督学习预训练一个图神经网络模型，然后使用少量标注数据将该模型迁移到下游任务上。在该论文中，作者提出GPT-GNN框架，其通过生成预训练的方式来初始化一个图神经网络模型。GPT-GNN 引入一个自监督属性网络生成任务来预训练一个图神经网络，这样它可以捕捉到图的结构和语义性质。该论文将图生成的似然概率分解为">
+<meta name="twitter:image" content="https://user-images.githubusercontent.com/23336589/95653471-95d20380-0b2b-11eb-94e9-dad5927e2a83.png">
 
 
 
@@ -123,13 +124,13 @@
 
 
 
-  <link rel="canonical" href="www.platot.site/2020/07/27/Multi-Class Imbalanced Graph Convolutional Network Learning/"/>
+  <link rel="canonical" href="www.platot.site/2020/10/10/Generative Pre-Training of Graph Neural Networks/"/>
 
 
 
 
 
-  <title>Multi-Class Imbalanced Graph Convolutional Network Learning | 心远地自偏</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>Generative Pre-Training of Graph Neural Networks | 心远地自偏</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -256,7 +257,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="www.platot.site/2020/07/27/Multi-Class Imbalanced Graph Convolutional Network Learning/">
+    <link itemprop="mainEntityOfPage" href="www.platot.site/2020/10/10/Generative Pre-Training of Graph Neural Networks/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="plato">
@@ -273,7 +274,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Multi-Class Imbalanced Graph Convolutional Network Learning</h1>
+          <h1 class="post-title" itemprop="name headline">Generative Pre-Training of Graph Neural Networks</h1>
         
 
         <div class="post-meta">
@@ -285,8 +286,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-07-27T17:42:58+08:00">
-                2020-07-27
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-10-10T20:31:50+08:00">
+                2020-10-10
               </time>
             
 
@@ -323,43 +324,40 @@
       
 
       
-        <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p><a href="https://www.ijcai.org/Proceedings/2020/398" target="_blank" rel="noopener">论文传送门</a></p>
-<p>该工作要解决的问题是图表示学习中的多类不平衡问题，也就是大多数节点属于大类，然后少数节点属于其他小类。当面对不平衡类分布时，现有的网络表示学习倾向于偏向于来自于大类的节点，而使得来自于小类的节点未经过充分训练。存在于一个类或更多类中的类别不平衡学习问题会导致其他类被过度代表，进而导致表示学习方法的性能下降。这是由于下面两个原因造成的：</p>
-<ol>
-<li><strong>拓扑交互：</strong>除了每个节点关联的特征信息外，不同的节点具有与其他节点的拓扑连接，意味着节点的类别赋予不仅被其自身的特征信息决定，还被与其连接的节点决定。</li>
-<li><strong>不清楚的边界：</strong>图数据往往具有多种高度有偏的节点类别，使得很难去平衡表示学习和准确的类别边界识别。因为，特定类别的学习可能会被邻近的类结构所影响，比如，大类可能会主导节点之间的特征传播。</li>
+        <h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p><a href="https://www.kdd.org/kdd2020/accepted-papers/view/gpt-gnn-generative-pre-training-of-graph-neural-networks" target="_blank" rel="noopener">论文传送门</a></p>
+<p>由于图学习的下游任务往往标签数据很稀缺，一个有效减少标注代价的方式就是先使用无监督学习预训练一个图神经网络模型，然后使用少量标注数据将该模型迁移到下游任务上。在该论文中，作者提出GPT-GNN框架，其通过生成预训练的方式来初始化一个图神经网络模型。GPT-GNN 引入一个自监督属性网络生成任务来预训练一个图神经网络，这样它可以捕捉到图的结构和语义性质。该论文将图生成的似然概率分解为两个部分：1）属性生成和2）边生成。在生成过程中，通过建模这个部分，GPT-GNN捕捉到节点属性和图结构之间的内在依赖。另外，作者提出了一种高效的策略，通过对节点划分为属性生成节点和边生成节点，可以同时计算每个节点的属性生成损失函数和边生成函数，并且只需要训练一次图神经网络。另外，GPT-GNN可以处理大规模的网络，通过子图采样和自适应的嵌入队列来负采样。</p>
+<h3 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h3><p><img src="https://user-images.githubusercontent.com/23336589/95653471-95d20380-0b2b-11eb-94e9-dad5927e2a83.png" alt="Snipaste_2020-10-10_16-30-10"></p>
+<h4 id="分解属性网络生成"><a href="#分解属性网络生成" class="headerlink" title="分解属性网络生成"></a>分解属性网络生成</h4><ol>
+<li>给定一个输入网络$G = (V, E, X)$ 和一个图神经网络模型 $f_\theta$ ，我们建模该图的似然概率 $p(G, \theta)$:</li>
 </ol>
-<p>因此，在这篇论文中，作者提出了双正则的图卷积网络来处理多类不平衡图，其中两种不同的正则方法被用来解决类别不平衡表示学习。为了确保所有类被同等地表示，作者提出以类别为条件的对抗训练过程来处理带标签节点的分离。同时，为了保证训练平衡,作者强迫无标签节点服从于和有标签节点隐分布相似的分布,这是通过最小化两种分布之间的KL散度得到的。</p>
-<h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><p><img src="https://user-images.githubusercontent.com/23336589/88527349-b5c75000-d02f-11ea-9dfc-e5d9b0a0d0d3.png" alt="Figure2"></p>
-<p>首先，作者使用两层的图卷积网络在类被不平衡标签上训练来获得节点表示。该图卷积网络表示如下：</p>
 <script type="math/tex; mode=display">
-O=\tilde{\mathbf{A}} \operatorname{Re} L U\left(\tilde{\mathbf{A}} \mathbf{X} \mathbf{W}_{0}\right) \mathbf{W}_{1}</script><p>该图卷积网络得到表示传入一个softmax分类器来执行多类节点分类训练，如下所示：</p>
+p(G ; \theta)=\mathbb{E}_{\pi}\left[p_{\theta}\left(X^{\pi}, E^{\pi}\right)\right]</script><p>​        其中$\pi$是节点的所有排列。</p>
+<ol>
+<li><p>给定一个排列顺序，我们将自回归地分解对数似然，也就是迭代的生成每一节点，如下：</p>
 <script type="math/tex; mode=display">
-Z=\operatorname{softmax}(O)=\frac{\exp (O)}{\sum_{i} \exp \left(O_{i}\right)}</script><script type="math/tex; mode=display">
-\mathcal{L}_{g c n}=-\sum_{v_{i} \in \mathbf{V}_{l}} \sum_{j=1}^{d} Y_{i j} \ln Z_{i j}</script><p> 为了令来自不同类的节点的表示更具有区分性，作者整合进去条件对抗雪莲过程来帮助分离不同类的标签节点的表示。该对抗训练的学习目标如下：</p>
+\log p_{\theta}(X, E)=\sum_{i=1}^{|\mathcal{V}|} \log p_{\theta}\left(X_{i}, E_{i} \mid X_{<i}, E_{<i}\right)</script></li>
+<li><p>一种简单的方法是假设$X_i$ 和 $E_i$ 之间是独立的：</p>
 <script type="math/tex; mode=display">
-\begin{array}{c}
-\min _{G} \max _{D} \mathcal{L}(D, G)=\mathbb{E}_{x \sim p_{\text {data}}(x)} \log D(x \mid y) \\
-+\mathbb{E}_{z \sim p_{z}(z)} \log (1-D(G(z \mid y)))
-\end{array}</script><p>另外，为了减少卷积过程中来自于大类的负传播影响，作者训练所有的无标签数据来拟合一个数据分布，该分布相似于得到很好训练的标签节点在学到的表示空间的分布。（ps：假设理解起来不容易，但实验结果来看，该步骤提升比较大），该过程促进了大类和小类之间的平衡训练。</p>
-<p>作者假设有标签空间和无标签空间的表示服从两个d维的多元高斯分布<script type="math/tex">x_{l} \sim \mathcal{N}\left(\mu_{l}, \Sigma_{l}\right)</script>，<script type="math/tex">x_{u} \sim \mathcal{N}\left(\mu_{u}, \Sigma_{u}\right)</script>，它们的概率密度函数如下：</p>
+p_{\theta}\left(X_{i}, E_{i} \mid X_{<i}, E_{<i}\right)=p_{\theta}\left(X_{i} \mid X_{<i}, E_{<i}\right) \cdot p_{\theta}\left(E_{i} \mid X_{<i}, E_{<i}\right)</script><p>但这种简单地分解并能为图神经网络的预训练提供有信息的指引，因此，作者提出依赖察觉机制，用于属性网络生成过程：</p>
 <script type="math/tex; mode=display">
-p\left(x_{l} ; \mu_{l}, \Sigma_{l}\right)=\frac{\exp \left(-\frac{1}{2}\left(x_{l}-\mu_{l}\right)^{T} \Sigma_{l}^{-1}\left(x_{l}-\mu_{l}\right)\right)}{(2 \pi)^{d / 2}\left|\Sigma_{l}\right|^{1 / 2}}</script><script type="math/tex; mode=display">
-p\left(x_{u} ; \mu_{u}, \Sigma_{u}\right)=\frac{\exp \left(-\frac{1}{2}\left(x_{u}-\mu_{u}\right)^{T} \Sigma_{u}^{-1}\left(x_{u}-\mu_{u}\right)\right)}{(2 \pi)^{d / 2}\left|\Sigma_{u}\right|^{1 / 2}}</script><p>对于类标签之间没有关联的场景，上面的概率密度函数可以被分别被表示为d个独立高斯分布的乘积，如下：</p>
+\begin{aligned}
+& p_{\theta}\left(X_{i}, E_{i} \mid X_{<i}, E_{<i}\right) \\
+=& \sum_{o} p_{\theta}\left(X_{i}, E_{i, \neg o} \mid E_{i, o}, X_{<i}, E_{<i}\right) \cdot p_{\theta}\left(E_{i, o} \mid X_{<i}, E_{<i}\right) \\
+=& \mathbb{E}_{o}\left[p_{\theta}\left(X_{i}, E_{i, \neg o} \mid E_{i, o}, X_{<i}, E_{<i}\right)\right] \\
+=& \mathbb{E}_{o}[\underbrace{p_{\theta}\left(X_{i} \mid E_{i, o}, X_{<i}, E_{<i}\right)}_{\text {1) generate attributes }} \cdot \underbrace{p_{\theta}\left(E_{i, \neg o} \mid E_{i, o}, X_{\leq i}, E_{<i}\right)}_{\text {2) generate edges }}
+\end{aligned}</script><p>其中$E_i$表示与节点$i$相连的边。$o$ 代表观察到的边集合，$\neg o$代表未观察到的边。</p>
+</li>
+</ol>
+<p>下面是属性网络生成过程的一个例子：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/95653480-a4b8b600-0b2b-11eb-80ec-b2cd12c012ce.png" alt="Snipaste_2020-10-10_16-45-46"></p>
+<p>(a)首先，我们决定输入网络节点的排列顺序$\pi$。(b)我们随机选择目标节点的一部分边作为被观察到的边$E_{i,o}$，将目标节点剩下的边作为被遮掩边$E_{i,\neg o}$。删除掉图中的遮掩边。(c)将每一个节点划分到属性生成节点或边生成节点，以防止信息泄露。(d) 经历过预处理后，使用修改过的邻接矩阵来节点3，4，5的表示。最后如(d)-(e)所示，我们通过属性生成任务和被遮掩边生成任务来预训练图神经网络。</p>
+<p>属性生成损失函数如下:</p>
 <script type="math/tex; mode=display">
-p\left(x_{l} ; \mu_{l}, \Sigma_{l}\right)=\prod_{k=1}^{d} \frac{1}{\sqrt{2 \pi} \sigma_{l, k}} \exp \left(-\frac{\left(x_{l, k}-\mu_{l, k}\right)^{2}}{2 \sigma_{l, k}^{2}}\right)</script><script type="math/tex; mode=display">
-p\left(x_{u} ; \mu_{u}, \Sigma_{u}\right)=\prod_{k=1}^{d} \frac{1}{\sqrt{2 \pi} \sigma_{u, k}} \exp \left(-\frac{\left(x_{u, k}-\mu_{u, k}\right)^{2}}{2 \sigma_{u, k}^{2}}\right)</script><p>其中参数可以从有标签样本和无标签样本中近似得到，如下：</p>
+\mathcal{L}_{i}^{A t t r}=\text { Distance }\left(\operatorname{Dec}^{\text {Attr}}\left(h_{i}^{\text {Attr}}\right), X_{i}\right)</script><p>遮掩边生成损失函数如下：</p>
 <script type="math/tex; mode=display">
-\mu_{l}=\frac{1}{\left|\mathbf{V}_{l}\right|} \sum_{v_{i} \in \mathbf{V}_{l}} \mathbf{h}_{v_{i}}, \mu_{u}=\frac{1}{\left|\mathbf{V}_{u}\right|} \sum_{v_{j} \in \mathbf{V}_{u}} \mathbf{h}_{v_{j}}</script><script type="math/tex; mode=display">
-\Sigma_{l}=\frac{1}{\left|\mathbf{V}_{l}\right|} \sum_{v_{i} \in \mathbf{V}_{l}}\left(\mathbf{h}_{v_{i}}-\mu_{l}\right)^{2}, \Sigma_{u}=\frac{1}{\left|\mathbf{V}_{u}\right|} \sum_{v_{j} \in \mathbf{V}_{u}}\left(\mathbf{h}_{v_{j}}-\mu_{u}\right)^{2}</script><p>然后基于KL散度最小化$\mathcal{N}\left(\mu_{l}, \Sigma_{l}\right)$和$\mathcal{N}\left(\mu_{u}, \Sigma_{u}\right)$之间的距离：</p>
-<script type="math/tex; mode=display">
-\begin{array}{r}
-\mathcal{L}_{\text {dist}}=\frac{1}{2}\left(\log \frac{\left|\Sigma_{u}\right|}{\left|\Sigma_{l}\right|}-d+\operatorname{tr}\left(\Sigma_{u}^{-1} \Sigma_{l}\right)+\right. \\
-\left.\left(\mu_{u}-\mu_{l}\right)^{T} \Sigma_{u}^{-1}\left(\mu_{u}-\mu_{l}\right)\right)
-\end{array}</script><p>最后，为了避免由分布对齐对卷积学习带来强约束，使用下面的式子平衡二者：</p>
-<script type="math/tex; mode=display">
-\mathcal{L}=(1-\alpha) \mathcal{L}_{g c n}+\alpha \mathcal{L}_{\text {dist}}</script><h2 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h2><p><img src="https://user-images.githubusercontent.com/23336589/88527357-b829aa00-d02f-11ea-9659-6c6df7418127.png" alt="Algorthm"></p>
-<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>真实世界中的图结构数据往往呈现高度有偏的类别分布。当从类被不平衡的图中学习时，最关键的挑战是节点具有很强的拓扑依赖，造成现有的网络表示学习方法在小类上表现不好。在该论文中，作者提出一种双正则的图卷积网络，其中包含了条件对抗训练来加强来自不同类的节点表示分离，和一个分布对齐训练来强迫大类和小类之间的平衡学习。</p>
+p_{\theta}\left(E_{i, \neg o} \mid E_{i, o}, X_{\leq i}, E_{<i}\right)=\prod_{j^{+} \in E_{i, \neg o}} p_{\theta}\left(j^{+} \mid E_{i, o}, X_{\leq i}, E_{<i}\right)</script><script type="math/tex; mode=display">
+\mathcal{L}_{i}^{E d g e}=-\sum_{j^{+} \in E_{i, \neg o}} \log \frac{\exp \left(\operatorname{Dec}^{E d g e}\left(h_{i}^{E d g e}, h_{j^{+}}^{E d g e}\right)\right)}{\sum_{j \in S_{i}^{-} \cup\left\{j^{+}\right\}} \exp \left(\operatorname{Dec}^{E d g e}\left(h_{i}^{E d g e}, h_{j}^{E d g e}\right)\right)}</script><p>算法流程图如下所示：</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/95653485-ac785a80-0b2b-11eb-8b48-adeed2bfeb1a.png" alt="Snipaste_2020-10-10_19-02-09"></p>
 
       
     </div>
@@ -377,7 +375,7 @@ p\left(x_{u} ; \mu_{u}, \Sigma_{u}\right)=\prod_{k=1}^{d} \frac{1}{\sqrt{2 \pi} 
       
         <div class="post-tags">
           
-            <a href="/tags/Network-Embedding/" rel="tag"># Network Embedding</a>
+            <a href="/tags/图神经网络/" rel="tag"># 图神经网络</a>
           
         </div>
       
@@ -390,8 +388,8 @@ p\left(x_{u} ; \mu_{u}, \Sigma_{u}\right)=\prod_{k=1}^{d} \frac{1}{\sqrt{2 \pi} 
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/07/23/Jointly Adversarial Network Embedding/" rel="next" title="Jointly Adversarial Network Embedding">
-                <i class="fa fa-chevron-left"></i> Jointly Adversarial Network Embedding
+              <a href="/2020/10/10/Graph Contrastive Coding for Graph Neural Network Pre-Training /" rel="next" title="Graph Contrastive Coding for Graph Neural Network Pre-Training">
+                <i class="fa fa-chevron-left"></i> Graph Contrastive Coding for Graph Neural Network Pre-Training
               </a>
             
           </div>
@@ -399,10 +397,6 @@ p\left(x_{u} ; \mu_{u}, \Sigma_{u}\right)=\prod_{k=1}^{d} \frac{1}{\sqrt{2 \pi} 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/10/07/爬虫入门一/" rel="prev" title="爬虫入门一">
-                爬虫入门一 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -534,7 +528,7 @@ p\left(x_{u} ; \mu_{u}, \Sigma_{u}\right)=\prod_{k=1}^{d} \frac{1}{\sqrt{2 \pi} 
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#方法"><span class="nav-number">2.</span> <span class="nav-text">方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#优化"><span class="nav-number">3.</span> <span class="nav-text">优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结论"><span class="nav-number">4.</span> <span class="nav-text">结论</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法"><span class="nav-number">2.</span> <span class="nav-text">方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#分解属性网络生成"><span class="nav-number">2.1.</span> <span class="nav-text">分解属性网络生成</span></a></li></ol></li></ol></div>
             
 
           </div>

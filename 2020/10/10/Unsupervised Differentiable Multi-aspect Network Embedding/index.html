@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Network Embedding," />
+  <meta name="keywords" content="图神经网络," />
 
 
 
@@ -79,21 +79,20 @@
 
 
 
-<meta name="description" content="简介论文传送门 该工作要解决的问题是图表示学习中的多类不平衡问题，也就是大多数节点属于大类，然后少数节点属于其他小类。当面对不平衡类分布时，现有的网络表示学习倾向于偏向于来自于大类的节点，而使得来自于小类的节点未经过充分训练。存在于一个类或更多类中的类别不平衡学习问题会导致其他类被过度代表，进而导致表示学习方法的性能下降。这是由于下面两个原因造成的：  拓扑交互：除了每个节点关联的特征信息外，不同">
-<meta name="keywords" content="Network Embedding">
+<meta name="description" content="简介论文传送门 大部分网络嵌入方法都聚焦于学习节点的单个表示，这些方法并不能够建模节点多个方面(aspect)的信息。为了捕捉节点多方面的信息，现有的方法依赖于一个前置的图聚类步骤来得到节点的方面分布。但作者认为这种方法忽略了节点的上下文信息，让节点具有了固定的方面分布，而且也不利于端到端的训练，令最后得到的表示依赖于聚类过程。 在该论文中，作者提出一个基于DeepWalk的多方面网络嵌入的端到端">
+<meta name="keywords" content="图神经网络">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Multi-Class Imbalanced Graph Convolutional Network Learning">
-<meta property="og:url" content="www.platot.site/2020/07/27/Multi-Class Imbalanced Graph Convolutional Network Learning/index.html">
+<meta property="og:title" content="Unsupervised Differentiable Multi-aspect Network Embedding">
+<meta property="og:url" content="www.platot.site/2020/10/10/Unsupervised Differentiable Multi-aspect Network Embedding/index.html">
 <meta property="og:site_name" content="心远地自偏">
-<meta property="og:description" content="简介论文传送门 该工作要解决的问题是图表示学习中的多类不平衡问题，也就是大多数节点属于大类，然后少数节点属于其他小类。当面对不平衡类分布时，现有的网络表示学习倾向于偏向于来自于大类的节点，而使得来自于小类的节点未经过充分训练。存在于一个类或更多类中的类别不平衡学习问题会导致其他类被过度代表，进而导致表示学习方法的性能下降。这是由于下面两个原因造成的：  拓扑交互：除了每个节点关联的特征信息外，不同">
+<meta property="og:description" content="简介论文传送门 大部分网络嵌入方法都聚焦于学习节点的单个表示，这些方法并不能够建模节点多个方面(aspect)的信息。为了捕捉节点多方面的信息，现有的方法依赖于一个前置的图聚类步骤来得到节点的方面分布。但作者认为这种方法忽略了节点的上下文信息，让节点具有了固定的方面分布，而且也不利于端到端的训练，令最后得到的表示依赖于聚类过程。 在该论文中，作者提出一个基于DeepWalk的多方面网络嵌入的端到端">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/88527349-b5c75000-d02f-11ea-9dfc-e5d9b0a0d0d3.png">
-<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/88527357-b829aa00-d02f-11ea-9659-6c6df7418127.png">
-<meta property="og:updated_time" content="2020-07-27T09:44:10.637Z">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/95644627-7ff01e80-0aea-11eb-8b01-c088c135632f.png">
+<meta property="og:updated_time" content="2020-10-10T12:32:21.610Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Multi-Class Imbalanced Graph Convolutional Network Learning">
-<meta name="twitter:description" content="简介论文传送门 该工作要解决的问题是图表示学习中的多类不平衡问题，也就是大多数节点属于大类，然后少数节点属于其他小类。当面对不平衡类分布时，现有的网络表示学习倾向于偏向于来自于大类的节点，而使得来自于小类的节点未经过充分训练。存在于一个类或更多类中的类别不平衡学习问题会导致其他类被过度代表，进而导致表示学习方法的性能下降。这是由于下面两个原因造成的：  拓扑交互：除了每个节点关联的特征信息外，不同">
-<meta name="twitter:image" content="https://user-images.githubusercontent.com/23336589/88527349-b5c75000-d02f-11ea-9dfc-e5d9b0a0d0d3.png">
+<meta name="twitter:title" content="Unsupervised Differentiable Multi-aspect Network Embedding">
+<meta name="twitter:description" content="简介论文传送门 大部分网络嵌入方法都聚焦于学习节点的单个表示，这些方法并不能够建模节点多个方面(aspect)的信息。为了捕捉节点多方面的信息，现有的方法依赖于一个前置的图聚类步骤来得到节点的方面分布。但作者认为这种方法忽略了节点的上下文信息，让节点具有了固定的方面分布，而且也不利于端到端的训练，令最后得到的表示依赖于聚类过程。 在该论文中，作者提出一个基于DeepWalk的多方面网络嵌入的端到端">
+<meta name="twitter:image" content="https://user-images.githubusercontent.com/23336589/95644627-7ff01e80-0aea-11eb-8b01-c088c135632f.png">
 
 
 
@@ -123,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="www.platot.site/2020/07/27/Multi-Class Imbalanced Graph Convolutional Network Learning/"/>
+  <link rel="canonical" href="www.platot.site/2020/10/10/Unsupervised Differentiable Multi-aspect Network Embedding/"/>
 
 
 
 
 
-  <title>Multi-Class Imbalanced Graph Convolutional Network Learning | 心远地自偏</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>Unsupervised Differentiable Multi-aspect Network Embedding | 心远地自偏</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -256,7 +255,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="www.platot.site/2020/07/27/Multi-Class Imbalanced Graph Convolutional Network Learning/">
+    <link itemprop="mainEntityOfPage" href="www.platot.site/2020/10/10/Unsupervised Differentiable Multi-aspect Network Embedding/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="plato">
@@ -273,7 +272,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Multi-Class Imbalanced Graph Convolutional Network Learning</h1>
+          <h1 class="post-title" itemprop="name headline">Unsupervised Differentiable Multi-aspect Network Embedding</h1>
         
 
         <div class="post-meta">
@@ -285,8 +284,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-07-27T17:42:58+08:00">
-                2020-07-27
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-10-10T20:31:50+08:00">
+                2020-10-10
               </time>
             
 
@@ -323,43 +322,36 @@
       
 
       
-        <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p><a href="https://www.ijcai.org/Proceedings/2020/398" target="_blank" rel="noopener">论文传送门</a></p>
-<p>该工作要解决的问题是图表示学习中的多类不平衡问题，也就是大多数节点属于大类，然后少数节点属于其他小类。当面对不平衡类分布时，现有的网络表示学习倾向于偏向于来自于大类的节点，而使得来自于小类的节点未经过充分训练。存在于一个类或更多类中的类别不平衡学习问题会导致其他类被过度代表，进而导致表示学习方法的性能下降。这是由于下面两个原因造成的：</p>
-<ol>
-<li><strong>拓扑交互：</strong>除了每个节点关联的特征信息外，不同的节点具有与其他节点的拓扑连接，意味着节点的类别赋予不仅被其自身的特征信息决定，还被与其连接的节点决定。</li>
-<li><strong>不清楚的边界：</strong>图数据往往具有多种高度有偏的节点类别，使得很难去平衡表示学习和准确的类别边界识别。因为，特定类别的学习可能会被邻近的类结构所影响，比如，大类可能会主导节点之间的特征传播。</li>
-</ol>
-<p>因此，在这篇论文中，作者提出了双正则的图卷积网络来处理多类不平衡图，其中两种不同的正则方法被用来解决类别不平衡表示学习。为了确保所有类被同等地表示，作者提出以类别为条件的对抗训练过程来处理带标签节点的分离。同时，为了保证训练平衡,作者强迫无标签节点服从于和有标签节点隐分布相似的分布,这是通过最小化两种分布之间的KL散度得到的。</p>
-<h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><p><img src="https://user-images.githubusercontent.com/23336589/88527349-b5c75000-d02f-11ea-9dfc-e5d9b0a0d0d3.png" alt="Figure2"></p>
-<p>首先，作者使用两层的图卷积网络在类被不平衡标签上训练来获得节点表示。该图卷积网络表示如下：</p>
+        <h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p><a href="https://www.kdd.org/kdd2020/accepted-papers/view/unsupervised-differentiable-multi-aspect-network-embedding" target="_blank" rel="noopener">论文传送门</a></p>
+<p>大部分网络嵌入方法都聚焦于学习节点的单个表示，这些方法并不能够建模节点多个方面(aspect)的信息。为了捕捉节点多方面的信息，现有的方法依赖于一个前置的图聚类步骤来得到节点的方面分布。但作者认为这种方法忽略了节点的上下文信息，让节点具有了固定的方面分布，而且也不利于端到端的训练，令最后得到的表示依赖于聚类过程。</p>
+<p>在该论文中，作者提出一个基于DeepWalk的多方面网络嵌入的端到端框架，称作<strong>asp2vec</strong>，其中每个节点的方面根据其局部上下文动态的赋予，并使用<strong>Gumbel-Softmax trick</strong>实现方面选择模块的梯度可传导。另外，还引入了一个方面正则框架来根据方面之间的相关程度和多样性来捕捉方面之间的交互。该框架还可以推广到异质网络上。</p>
+<h3 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h3><p><img src="https://user-images.githubusercontent.com/23336589/95644627-7ff01e80-0aea-11eb-8b01-c088c135632f.png" alt="Framework"></p>
+<h4 id="Context-based-Multi-aspect-Network-Embedding"><a href="#Context-based-Multi-aspect-Network-Embedding" class="headerlink" title="Context-based Multi-aspect Network Embedding"></a>Context-based Multi-aspect Network Embedding</h4><script type="math/tex; mode=display">
+\begin{aligned}
+\mathcal{J}_{\text {asp } 2 \text { vec }}^{(\mathbf{w})} &=\sum_{v_{i} \in \mathbf{w}} \sum_{v_{j} \in N\left(v_{i}\right)} \sum_{s=1}^{K} p\left(\delta\left(v_{i}\right)=s\right) \log p\left(v_{j} \mid v_{i}, p\left(\delta\left(v_{i}\right)=s\right)\right) \\
+&=\sum_{v_{i} \in \mathbf{w}} \sum_{v_{j} \in N\left(v_{i}\right)} \sum_{s=1}^{K} p\left(\delta\left(v_{i}\right)=s\right) \log \frac{\exp \left(\left\langle\mathbf{P}_{i}, \mathbf{Q}_{j}^{(s)}\right\rangle\right)}{\sum_{v_{j^{\prime}} \in \mathcal{V}} \exp \left(\left\langle\mathbf{P}_{i}, \mathbf{Q}_{j^{\prime}}^{(s)}\right\rangle\right)}
+\end{aligned}</script><p>其中$\mathbf{P}_i$是节点 $i$ 的中心向量，$\mathbf{Q}^{(s)}_j$ 是节点 $j$ 方面 s 的表示。</p>
+<h4 id="Determining-the-Aspeck-of-the-Center-Node"><a href="#Determining-the-Aspeck-of-the-Center-Node" class="headerlink" title="Determining the Aspeck of the Center Node"></a>Determining the Aspeck of the Center Node</h4><script type="math/tex; mode=display">
+\begin{aligned}
+p\left(\delta\left(v_{i}\right)=s\right) & \equiv p\left(\delta\left(v_{i}\right)=s \mid \mathcal{N}\left(v_{i}\right)\right)=\operatorname{softmax}\left(\left\langle\mathbf{P}_{i}, \text { Readout }^{(s)}\left(\mathcal{N}\left(v_{i}\right)\right)\right\rangle\right) \\
+&=\frac{\exp \left(\left\langle\mathbf{P}_{i}, \operatorname{Readout}^{(s)}\left(\mathcal{N}\left(v_{i}\right)\right)\right\rangle\right)}{\sum_{s^{\prime}=1}^{K} \exp \left(\left\langle\mathbf{P}_{i}, \text { Readout }^{\left(s^{\prime}\right)}\left(\mathcal{N}\left(v_{i}\right)\right)\right\rangle\right)}
+\end{aligned}</script><p> 这里Readout函数采用Average function。</p>
+<h4 id="Modeling-Relationship-Among-Aspects"><a href="#Modeling-Relationship-Among-Aspects" class="headerlink" title="Modeling Relationship Among Aspects"></a>Modeling Relationship Among Aspects</h4><p>我们希望各方面的表示既具有（1）多样性<strong>diverse</strong>，这样可以独立地捕捉各方面内在的性质；但也应该具有（2）关联性<strong>related</strong>，这样可以在一定程度上捕捉不同方面之间共享的一些信息。</p>
+<p>方面正则框架如下：</p>
 <script type="math/tex; mode=display">
-O=\tilde{\mathbf{A}} \operatorname{Re} L U\left(\tilde{\mathbf{A}} \mathbf{X} \mathbf{W}_{0}\right) \mathbf{W}_{1}</script><p>该图卷积网络得到表示传入一个softmax分类器来执行多类节点分类训练，如下所示：</p>
+\operatorname{reg}_{\mathrm{asp}}=\sum_{i=1}^{K-1} \sum_{j=i+1}^{K} \mathrm{A}-\operatorname{sim}\left(\mathrm{Q}_{*}^{(i)}, \mathrm{Q}_{*}^{(j)}\right)</script><script type="math/tex; mode=display">
+\mathrm{A}-\operatorname{sim}\left(\mathrm{Q}_{*}^{(i)}, \mathrm{Q}_{*}^{(j)}\right)=\sum_{h=1}^{|V|} f\left(\mathrm{Q}_{h}^{(i)}, \mathrm{Q}_{h}^{(j)}\right)</script><p>相似性使用余弦距离：</p>
 <script type="math/tex; mode=display">
-Z=\operatorname{softmax}(O)=\frac{\exp (O)}{\sum_{i} \exp \left(O_{i}\right)}</script><script type="math/tex; mode=display">
-\mathcal{L}_{g c n}=-\sum_{v_{i} \in \mathbf{V}_{l}} \sum_{j=1}^{d} Y_{i j} \ln Z_{i j}</script><p> 为了令来自不同类的节点的表示更具有区分性，作者整合进去条件对抗雪莲过程来帮助分离不同类的标签节点的表示。该对抗训练的学习目标如下：</p>
+f\left(Q_{h}^{(i)}, Q_{h}^{(j)}\right)=\frac{\left\langle Q_{h}^{(i)}, Q_{h}^{(j)}\right\rangle}{\left\|Q_{h}^{(i)}\right\|\left\|Q_{h}^{(j)}\right\|}, \quad-1 \leq f\left(Q_{h}^{(i)}, Q_{h}^{(j)}\right) \leq 1</script><p>以上的正则可以鼓励多样性，但我们还应该考虑关联性。因此引入一个二元掩子来根据相似度来选择性的惩罚方面嵌入对:</p>
 <script type="math/tex; mode=display">
-\begin{array}{c}
-\min _{G} \max _{D} \mathcal{L}(D, G)=\mathbb{E}_{x \sim p_{\text {data}}(x)} \log D(x \mid y) \\
-+\mathbb{E}_{z \sim p_{z}(z)} \log (1-D(G(z \mid y)))
-\end{array}</script><p>另外，为了减少卷积过程中来自于大类的负传播影响，作者训练所有的无标签数据来拟合一个数据分布，该分布相似于得到很好训练的标签节点在学到的表示空间的分布。（ps：假设理解起来不容易，但实验结果来看，该步骤提升比较大），该过程促进了大类和小类之间的平衡训练。</p>
-<p>作者假设有标签空间和无标签空间的表示服从两个d维的多元高斯分布<script type="math/tex">x_{l} \sim \mathcal{N}\left(\mu_{l}, \Sigma_{l}\right)</script>，<script type="math/tex">x_{u} \sim \mathcal{N}\left(\mu_{u}, \Sigma_{u}\right)</script>，它们的概率密度函数如下：</p>
+w_{i, j}^{h}=\left\{\begin{array}{l}
+1, \quad\left|f\left(\mathbf{Q}_{h}^{(i)}, \mathbf{Q}_{h}^{(j)}\right)\right| \geq \epsilon \\
+0, \quad \text { otherwise }
+\end{array}\right.</script><p>其中 $\epsilon$ 是一个阈值参数，其可以控制方面嵌入对之间的信息共享的程度：大值鼓励关联性，小值鼓励多样性。</p>
 <script type="math/tex; mode=display">
-p\left(x_{l} ; \mu_{l}, \Sigma_{l}\right)=\frac{\exp \left(-\frac{1}{2}\left(x_{l}-\mu_{l}\right)^{T} \Sigma_{l}^{-1}\left(x_{l}-\mu_{l}\right)\right)}{(2 \pi)^{d / 2}\left|\Sigma_{l}\right|^{1 / 2}}</script><script type="math/tex; mode=display">
-p\left(x_{u} ; \mu_{u}, \Sigma_{u}\right)=\frac{\exp \left(-\frac{1}{2}\left(x_{u}-\mu_{u}\right)^{T} \Sigma_{u}^{-1}\left(x_{u}-\mu_{u}\right)\right)}{(2 \pi)^{d / 2}\left|\Sigma_{u}\right|^{1 / 2}}</script><p>对于类标签之间没有关联的场景，上面的概率密度函数可以被分别被表示为d个独立高斯分布的乘积，如下：</p>
-<script type="math/tex; mode=display">
-p\left(x_{l} ; \mu_{l}, \Sigma_{l}\right)=\prod_{k=1}^{d} \frac{1}{\sqrt{2 \pi} \sigma_{l, k}} \exp \left(-\frac{\left(x_{l, k}-\mu_{l, k}\right)^{2}}{2 \sigma_{l, k}^{2}}\right)</script><script type="math/tex; mode=display">
-p\left(x_{u} ; \mu_{u}, \Sigma_{u}\right)=\prod_{k=1}^{d} \frac{1}{\sqrt{2 \pi} \sigma_{u, k}} \exp \left(-\frac{\left(x_{u, k}-\mu_{u, k}\right)^{2}}{2 \sigma_{u, k}^{2}}\right)</script><p>其中参数可以从有标签样本和无标签样本中近似得到，如下：</p>
-<script type="math/tex; mode=display">
-\mu_{l}=\frac{1}{\left|\mathbf{V}_{l}\right|} \sum_{v_{i} \in \mathbf{V}_{l}} \mathbf{h}_{v_{i}}, \mu_{u}=\frac{1}{\left|\mathbf{V}_{u}\right|} \sum_{v_{j} \in \mathbf{V}_{u}} \mathbf{h}_{v_{j}}</script><script type="math/tex; mode=display">
-\Sigma_{l}=\frac{1}{\left|\mathbf{V}_{l}\right|} \sum_{v_{i} \in \mathbf{V}_{l}}\left(\mathbf{h}_{v_{i}}-\mu_{l}\right)^{2}, \Sigma_{u}=\frac{1}{\left|\mathbf{V}_{u}\right|} \sum_{v_{j} \in \mathbf{V}_{u}}\left(\mathbf{h}_{v_{j}}-\mu_{u}\right)^{2}</script><p>然后基于KL散度最小化$\mathcal{N}\left(\mu_{l}, \Sigma_{l}\right)$和$\mathcal{N}\left(\mu_{u}, \Sigma_{u}\right)$之间的距离：</p>
-<script type="math/tex; mode=display">
-\begin{array}{r}
-\mathcal{L}_{\text {dist}}=\frac{1}{2}\left(\log \frac{\left|\Sigma_{u}\right|}{\left|\Sigma_{l}\right|}-d+\operatorname{tr}\left(\Sigma_{u}^{-1} \Sigma_{l}\right)+\right. \\
-\left.\left(\mu_{u}-\mu_{l}\right)^{T} \Sigma_{u}^{-1}\left(\mu_{u}-\mu_{l}\right)\right)
-\end{array}</script><p>最后，为了避免由分布对齐对卷积学习带来强约束，使用下面的式子平衡二者：</p>
-<script type="math/tex; mode=display">
-\mathcal{L}=(1-\alpha) \mathcal{L}_{g c n}+\alpha \mathcal{L}_{\text {dist}}</script><h2 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h2><p><img src="https://user-images.githubusercontent.com/23336589/88527357-b829aa00-d02f-11ea-9659-6c6df7418127.png" alt="Algorthm"></p>
-<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>真实世界中的图结构数据往往呈现高度有偏的类别分布。当从类被不平衡的图中学习时，最关键的挑战是节点具有很强的拓扑依赖，造成现有的网络表示学习方法在小类上表现不好。在该论文中，作者提出一种双正则的图卷积网络，其中包含了条件对抗训练来加强来自不同类的节点表示分离，和一个分布对齐训练来强迫大类和小类之间的平衡学习。</p>
+    A-\operatorname{sim}\left(Q_{*}^{(i)}, Q_{*}^{(j)}\right)=\sum_{h=1}^{|V|} w_{i, j}^{h}\left|f\left(Q_{h}^{(i)}, Q_{h}^{(j)}\right)\right|</script><h4 id="Task-Link-Predicaton"><a href="#Task-Link-Predicaton" class="headerlink" title="Task: Link Predicaton"></a>Task: Link Predicaton</h4><script type="math/tex; mode=display">
+\mathrm{U}_{i}=\mathrm{P}_{i}+\frac{1}{K} \sum_{s=1}^{K} \mathrm{Q}_{i}^{(s)}</script><h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h3><p>在这篇论文中，作者提出了多方面的网络嵌入方法，称作<strong>asp2vec</strong>，该方法基于节点的上下文信息动态的决定节点的方面。<strong>asp2vec</strong>的主要部件是（1）方面选择模块，其基于<strong>Gumbel-Softmax trick</strong>来近似离散采样方面并能够实现端到端的训练；（2）方面正则模块，其鼓励学习到的方面嵌入具有多样性，并在一定程度上和其他方面相关。作者还论述了如何将该框架扩展到异质网络。</p>
+<h3 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h3><p>在采用skip-gram的步骤中，target node使用中心向量，context node 使用同一个方面的嵌入，这样的假设具有一定合理性，但适用性有限。</p>
 
       
     </div>
@@ -377,7 +369,7 @@ p\left(x_{u} ; \mu_{u}, \Sigma_{u}\right)=\prod_{k=1}^{d} \frac{1}{\sqrt{2 \pi} 
       
         <div class="post-tags">
           
-            <a href="/tags/Network-Embedding/" rel="tag"># Network Embedding</a>
+            <a href="/tags/图神经网络/" rel="tag"># 图神经网络</a>
           
         </div>
       
@@ -390,8 +382,8 @@ p\left(x_{u} ; \mu_{u}, \Sigma_{u}\right)=\prod_{k=1}^{d} \frac{1}{\sqrt{2 \pi} 
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/07/23/Jointly Adversarial Network Embedding/" rel="next" title="Jointly Adversarial Network Embedding">
-                <i class="fa fa-chevron-left"></i> Jointly Adversarial Network Embedding
+              <a href="/2020/10/07/爬虫入门一/" rel="next" title="爬虫入门一">
+                <i class="fa fa-chevron-left"></i> 爬虫入门一
               </a>
             
           </div>
@@ -400,8 +392,8 @@ p\left(x_{u} ; \mu_{u}, \Sigma_{u}\right)=\prod_{k=1}^{d} \frac{1}{\sqrt{2 \pi} 
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2020/10/07/爬虫入门一/" rel="prev" title="爬虫入门一">
-                爬虫入门一 <i class="fa fa-chevron-right"></i>
+              <a href="/2020/10/10/Graph Contrastive Coding for Graph Neural Network Pre-Training /" rel="prev" title="Graph Contrastive Coding for Graph Neural Network Pre-Training">
+                Graph Contrastive Coding for Graph Neural Network Pre-Training <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -534,7 +526,7 @@ p\left(x_{u} ; \mu_{u}, \Sigma_{u}\right)=\prod_{k=1}^{d} \frac{1}{\sqrt{2 \pi} 
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#方法"><span class="nav-number">2.</span> <span class="nav-text">方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#优化"><span class="nav-number">3.</span> <span class="nav-text">优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结论"><span class="nav-number">4.</span> <span class="nav-text">结论</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法"><span class="nav-number">2.</span> <span class="nav-text">方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Context-based-Multi-aspect-Network-Embedding"><span class="nav-number">2.1.</span> <span class="nav-text">Context-based Multi-aspect Network Embedding</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Determining-the-Aspeck-of-the-Center-Node"><span class="nav-number">2.2.</span> <span class="nav-text">Determining the Aspeck of the Center Node</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Modeling-Relationship-Among-Aspects"><span class="nav-number">2.3.</span> <span class="nav-text">Modeling Relationship Among Aspects</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Task-Link-Predicaton"><span class="nav-number">2.4.</span> <span class="nav-text">Task: Link Predicaton</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#结论"><span class="nav-number">3.</span> <span class="nav-text">结论</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#思考"><span class="nav-number">4.</span> <span class="nav-text">思考</span></a></li></ol></div>
             
 
           </div>
