@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="图神经网络," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="简介论文传送门 这份工作第一次研究在不完全网络上的网络嵌入问题。作者认为节点属性编码了与网络拓扑不同类型但是高度相关的信息，将这两者整合到一个统一的学习框架可预期得到更好的表现。从一个视图进行跨视图学习所捕获的一致性能够补全或者完善另一个视图的特征。 作者提出基于深度网络嵌入方法的多视图相关性学习，称作MVC-DNE。作者认为学得的表示向量应该反映出两个视图的特质。作者先使用深度自动编码器获得单个">
+<meta name="keywords" content="图神经网络">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Deep Network Embedding on Incomplete Graphs">
+<meta property="og:url" content="www.platot.site/2020/10/14/Deep Network Embedding on Incomplete Graphs/index.html">
+<meta property="og:site_name" content="心远地自偏">
+<meta property="og:description" content="简介论文传送门 这份工作第一次研究在不完全网络上的网络嵌入问题。作者认为节点属性编码了与网络拓扑不同类型但是高度相关的信息，将这两者整合到一个统一的学习框架可预期得到更好的表现。从一个视图进行跨视图学习所捕获的一致性能够补全或者完善另一个视图的特征。 作者提出基于深度网络嵌入方法的多视图相关性学习，称作MVC-DNE。作者认为学得的表示向量应该反映出两个视图的特质。作者先使用深度自动编码器获得单个">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/96413125-c3026e00-121d-11eb-91ba-149dd5c67057.png">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/96414991-7b311600-1220-11eb-9d44-8b2e47e4898e.png">
+<meta property="og:updated_time" content="2020-10-19T13:57:57.517Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Deep Network Embedding on Incomplete Graphs">
+<meta name="twitter:description" content="简介论文传送门 这份工作第一次研究在不完全网络上的网络嵌入问题。作者认为节点属性编码了与网络拓扑不同类型但是高度相关的信息，将这两者整合到一个统一的学习框架可预期得到更好的表现。从一个视图进行跨视图学习所捕获的一致性能够补全或者完善另一个视图的特征。 作者提出基于深度网络嵌入方法的多视图相关性学习，称作MVC-DNE。作者认为学得的表示向量应该反映出两个视图的特质。作者先使用深度自动编码器获得单个">
+<meta name="twitter:image" content="https://user-images.githubusercontent.com/23336589/96413125-c3026e00-121d-11eb-91ba-149dd5c67057.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="www.platot.site/2020/10/14/Deep Network Embedding on Incomplete Graphs/"/>
+
+
+
+
+
+  <title>Deep Network Embedding on Incomplete Graphs | 心远地自偏</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">心远地自偏</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="www.platot.site/2020/10/14/Deep Network Embedding on Incomplete Graphs/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="plato">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="心远地自偏">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Deep Network Embedding on Incomplete Graphs</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-10-14T20:31:50+08:00">
+                2020-10-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p><a href="https://dl.acm.org/doi/abs/10.1145/3132847.3132975?casa_token=ngIdsh-FfyQAAAAA:9YtdNAvo-ZTYBRGt8LooBV0yignQBq1iirM75smu19rQWL7xJf9clzdUGUCzKaOmQEhAVQgfI6s" target="_blank" rel="noopener">论文传送门</a></p>
+<p>这份工作第一次研究在不完全网络上的网络嵌入问题。作者认为节点属性编码了与网络拓扑不同类型但是高度相关的信息，将这两者整合到一个统一的学习框架可预期得到更好的表现。从一个视图进行跨视图学习所捕获的一致性能够补全或者完善另一个视图的特征。</p>
+<p>作者提出基于深度网络嵌入方法的多视图相关性学习，称作MVC-DNE。作者认为学得的表示向量应该反映出两个视图的特质。作者先使用深度自动编码器获得单个视图的隐表示。接着作者设计了两种不同的框架，分别在编码阶段和解码阶段来学习多个视图之间的关联。除了由深度自动编码器实现的在每一视图中的自我视图学习，该方法还考虑将一个视图的特征作为标签来引导另一视图的编码过程。另外，该方法对于新节点可以直接产生其表示向量。</p>
+<h3 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h3><h4 id="MVC-DNE-DB"><a href="#MVC-DNE-DB" class="headerlink" title="$MVC-DNE_{DB}$"></a>$MVC-DNE_{DB}$</h4><p>因为网络结构视图 $T$ 中的特征和节点性质视图 $P$ 是高度关联的，一个视图的输入特征可能编码进去了一些由另一视图输入所反映的共享的隐信息。所以，该框架通过重建另一个视图特征来捕捉一致性。</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/96413125-c3026e00-121d-11eb-91ba-149dd5c67057.png" alt=""></p>
+<p>损失函数如下：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+L_{D B}(x t, x p ; \theta)=& L_{t}(x t, x p ; \theta)+L_{p}(x t, x p ; \theta) \\
+L_{t}(x t, x p ; \theta)=& \sum_{i=1}^{|V|}\left((1-\alpha)\left\|x t_{i}-x \hat{t}_{i}^{t}\right\|_{2}^{2}\right.\\
+&\left.+\alpha\left\|x t_{i}-x t_{i}^{p}\right\|_{2}^{2}\right) \\
+L_{p}(x t, x p ; \theta)=& \sum_{i=1}^{|V|}\left((1-\alpha)\left\|x p_{i}-x \hat{p}_{i}^{p}\right\|_{2}^{2}\right.\\
+&\left.+\alpha\left\|x p_{i}-x \hat{p}_{i}^{t}\right\|_{2}^{2}\right)
+\end{aligned}</script><h4 id="MVC-DNE-EB"><a href="#MVC-DNE-EB" class="headerlink" title="$MVC-DNE_{EB}$"></a>$MVC-DNE_{EB}$</h4><p>该框架通过加入另一视图的信息来精炼这一视图所反映出来的节点性质。其在编码阶段学习两个视图之间的关联性。$MVC-DNE_{EB}$采用四种类型的编码器来表示两个视图的输入和跨视图编码。自视图编码旨在保存自己视图的特征，跨试图编码旨在整合与其他视图共享的潜在信息。</p>
+<p><img src="https://user-images.githubusercontent.com/23336589/96414991-7b311600-1220-11eb-9d44-8b2e47e4898e.png" alt="Snipaste_2020-10-19_15-33-34"></p>
+<p>当获得四个编码器最后一层的输出 $yt_t^{K}, yt_p^{K}, yp_p^{K}, yp_t^{K}$ ， 视图$T$ 和 $P$ 的最后表示可以按下式计算得到：</p>
+<script type="math/tex; mode=display">
+\begin{array}{l}
+y t^{(K)}=y t_{t}^{(\tilde{K})} + z_{t}\left(y t_{p}^{(K)}, y t_{t}^{(\tilde{K})}\right) \odot y t_{p}^{(K)} \\
+y p^{(K)}=y p_{p}^{(\tilde{K})}+z_{p}\left(y p_{t}^{(K)}, y p_{p}^{(\tilde{K})}\right) \odot y p_{t}^{(K)}
+\end{array}</script><p>其中$y t_{t}^{(\tilde{K})}$ 和 $y p_{p}^{(\tilde{K})}$ 代表$y p_{p}^{(K)}$ 和 $y p_{p}^{(K)}$经过drop-out操作后的输出。作者选择随机丢掉50%。$z_t(z_p)$ 是权重向量，所下：</p>
+<script type="math/tex; mode=display">
+z_{j}(x, C)=\sigma\left(W_{j}^{(X)} \cdot x+W_{j}^{(C)} \cdot C+b_{j}\right), j=t, p</script><p>损失函数如下：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+L_{E B}(x t, x p ; \theta) &=L_{t}(x t, x p ; \theta)+L_{p}(x t, x p ; \theta) \\
+L_{t}(x t, x p ; \theta) &=\sum_{i=1}^{|V|}\left(\left\|x t_{i}-x \hat{t}_{i}^{t}\right\|_{2}^{2}\right.\\
+L_{p}(x t, x p ; \theta) &=\sum_{i=1}^{|V|}\left(\left\|x p_{i}-x \hat{p}_{i}^{p}\right\|_{2}^{2}\right.
+\end{aligned}</script>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/图神经网络/" rel="tag"># 图神经网络</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/10/12/爬虫入门之三/" rel="next" title="爬虫入门三">
+                <i class="fa fa-chevron-left"></i> 爬虫入门三
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/10/15/Structured subspace embedding on attributed networks/" rel="prev" title="Structured subspace embedding on attributed networks">
+                Structured subspace embedding on attributed networks <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">plato</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">51</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法"><span class="nav-number">2.</span> <span class="nav-text">方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#MVC-DNE-DB"><span class="nav-number">2.1.</span> <span class="nav-text">$MVC-DNE_{DB}$</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#MVC-DNE-EB"><span class="nav-number">2.2.</span> <span class="nav-text">$MVC-DNE_{EB}$</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">plato</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="custom_mathjax_source">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>

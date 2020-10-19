@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="爬虫," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="数据解析1. 正则表达式正则表达式教程 正则表达式30分钟入门教程  12345678910111213141516171819import reone = &apos;abc 123&apos;patter = re.compile(&apos;\d+&apos;)# match 从头匹配 匹配一次，无法匹配时将返回Noneresult = patter.match(one)# search 从任意位置 , 匹配一次result =">
+<meta name="keywords" content="爬虫">
+<meta property="og:type" content="article">
+<meta property="og:title" content="爬虫入门三">
+<meta property="og:url" content="www.platot.site/2020/10/12/爬虫入门之三/index.html">
+<meta property="og:site_name" content="心远地自偏">
+<meta property="og:description" content="数据解析1. 正则表达式正则表达式教程 正则表达式30分钟入门教程  12345678910111213141516171819import reone = &apos;abc 123&apos;patter = re.compile(&apos;\d+&apos;)# match 从头匹配 匹配一次，无法匹配时将返回Noneresult = patter.match(one)# search 从任意位置 , 匹配一次result =">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://user-images.githubusercontent.com/23336589/96330129-6a986880-1085-11eb-84e8-9150bd5d6989.png">
+<meta property="og:updated_time" content="2020-10-19T14:01:04.731Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="爬虫入门三">
+<meta name="twitter:description" content="数据解析1. 正则表达式正则表达式教程 正则表达式30分钟入门教程  12345678910111213141516171819import reone = &apos;abc 123&apos;patter = re.compile(&apos;\d+&apos;)# match 从头匹配 匹配一次，无法匹配时将返回Noneresult = patter.match(one)# search 从任意位置 , 匹配一次result =">
+<meta name="twitter:image" content="https://user-images.githubusercontent.com/23336589/96330129-6a986880-1085-11eb-84e8-9150bd5d6989.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="www.platot.site/2020/10/12/爬虫入门之三/"/>
+
+
+
+
+
+  <title>爬虫入门三 | 心远地自偏</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">心远地自偏</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="www.platot.site/2020/10/12/爬虫入门之三/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="plato">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="心远地自偏">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">爬虫入门三</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-10-12T21:54:27+08:00">
+                2020-10-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/教程/" itemprop="url" rel="index">
+                    <span itemprop="name">教程</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="数据解析"><a href="#数据解析" class="headerlink" title="数据解析"></a>数据解析</h2><h3 id="1-正则表达式"><a href="#1-正则表达式" class="headerlink" title="1. 正则表达式"></a>1. 正则表达式</h3><p><a href="https://www.cnblogs.com/huxi/archive/2010/07/04/1771073.html" target="_blank" rel="noopener">正则表达式教程</a></p>
+<p><a href="https://deerchao.cn/tutorials/regex/regex.htm" target="_blank" rel="noopener">正则表达式30分钟入门教程</a></p>
+<p><img src="https://user-images.githubusercontent.com/23336589/96330129-6a986880-1085-11eb-84e8-9150bd5d6989.png" alt="pyre_ebb9ce1c-e5e8-4219-a8ae-7ee620d5f9f1"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line">one = <span class="string">'abc 123'</span></span><br><span class="line">patter = re.compile(<span class="string">'\d+'</span>)</span><br><span class="line"><span class="comment"># match 从头匹配 匹配一次，无法匹配时将返回None</span></span><br><span class="line">result = patter.match(one)</span><br><span class="line"></span><br><span class="line"><span class="comment"># search 从任意位置 , 匹配一次</span></span><br><span class="line">result = patter.search(one)</span><br><span class="line"></span><br><span class="line"><span class="comment"># findall  查找符合正则的 内容 -- list</span></span><br><span class="line">result = patter.findall(one)</span><br><span class="line"></span><br><span class="line"><span class="comment"># sub  替换字符串</span></span><br><span class="line">result = patter.sub(<span class="string">'#'</span>,one)</span><br><span class="line"></span><br><span class="line"><span class="comment"># split  拆分</span></span><br><span class="line">patter = re.compile(<span class="string">' '</span>)</span><br><span class="line">result = patter.split(one)</span><br></pre></td></tr></table></figure>
+<h3 id="2-XPath"><a href="#2-XPath" class="headerlink" title="2. XPath"></a>2. XPath</h3><p><a href="https://zhuanlan.zhihu.com/p/29436838" target="_blank" rel="noopener">XPath教程</a></p>
+<p>XPath，全称 XML Path Language，即 XML 路径语言，它是一门在XML文档中查找信息的语言。XPath 最初设计是用来搜寻XML文档的，但是它同样适用于 HTML 文档的搜索。</p>
+<h4 id="XPath概览"><a href="#XPath概览" class="headerlink" title="XPath概览"></a>XPath概览</h4><p>XPath 的选择功能十分强大，它提供了非常简洁明了的路径选择表达式，另外它还提供了超过 100 个内建函数用于字符串、数值、时间的匹配以及节点、序列的处理等等，几乎所有我们想要定位的节点都可以用XPath来选择。</p>
+<p>XPath 于 1999 年 11 月 16 日 成为 W3C 标准，它被设计为供 XSLT、XPointer 以及其他 XML 解析软件使用，更多的文档可以访问其官方网站：<a href="https://link.zhihu.com/?target=https%3A//www.w3.org/TR/xpath/" target="_blank" rel="noopener">https://www.w3.org/TR/xpath/</a>。</p>
+<h4 id="XPath常用规则"><a href="#XPath常用规则" class="headerlink" title="XPath常用规则"></a>XPath常用规则</h4><p><code>nodename</code>选取此节点的所有子节点</p>
+<p><code>/</code>从当前节点选取直接子节点</p>
+<p><code>//</code>从当前节点选取子孙节点</p>
+<p><code>.</code>选取当前节点</p>
+<p><code>..</code>选取当前节点的父节点</p>
+<p><code>@</code>选取属性</p>
+<p>例如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">//title[@lang=<span class="string">'eng'</span>]</span><br></pre></td></tr></table></figure>
+<p>这就是一个 XPath 规则，它就代表选择所有名称为 title，同时属性 lang 的值为 eng 的节点。</p>
+<p>在后文我们会介绍 XPath 的详细用法，通过 Python 的 LXML 库利用 XPath 进行 HTML 的解析。</p>
+<h4 id="实例引入"><a href="#实例引入" class="headerlink" title="实例引入"></a>实例引入</h4><p>我们现用一个实例来感受一下使用 XPath 来对网页进行解析的过程，代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br><span class="line">text = <span class="string">'''</span></span><br><span class="line"><span class="string">&lt;div&gt;</span></span><br><span class="line"><span class="string">    &lt;ul&gt;</span></span><br><span class="line"><span class="string">         &lt;li class="item-0"&gt;&lt;a href="https://ask.hellobi.com/link1.html"&gt;first item&lt;/a&gt;&lt;/li&gt;</span></span><br><span class="line"><span class="string">         &lt;li class="item-1"&gt;&lt;a href="https://ask.hellobi.com/link2.html"&gt;second item&lt;/a&gt;&lt;/li&gt;</span></span><br><span class="line"><span class="string">         &lt;li class="item-inactive"&gt;&lt;a href="https://ask.hellobi.com/link3.html"&gt;third item&lt;/a&gt;&lt;/li&gt;</span></span><br><span class="line"><span class="string">         &lt;li class="item-1"&gt;&lt;a href="https://ask.hellobi.com/link4.html"&gt;fourth item&lt;/a&gt;&lt;/li&gt;</span></span><br><span class="line"><span class="string">         &lt;li class="item-0"&gt;&lt;a href="https://ask.hellobi.com/link5.html"&gt;fifth item&lt;/a&gt;</span></span><br><span class="line"><span class="string">     &lt;/ul&gt;</span></span><br><span class="line"><span class="string"> &lt;/div&gt;</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line">html = etree.HTML(text)</span><br><span class="line">result = etree.tostring(html)</span><br><span class="line">print(result.decode(<span class="string">'utf-8'</span>))</span><br></pre></td></tr></table></figure>
+<p>另外我们也可以直接读取文本文件进行解析，示例如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br><span class="line"></span><br><span class="line">html = etree.parse(<span class="string">'./test.html'</span>, etree.HTMLParser())</span><br><span class="line">result = etree.tostring(html)</span><br><span class="line">print(result.decode(<span class="string">'utf-8'</span>))</span><br></pre></td></tr></table></figure>
+<h4 id="所有节点"><a href="#所有节点" class="headerlink" title="所有节点"></a>所有节点</h4><p>我们一般会用 // 开头的 XPath 规则来选取所有符合要求的节点，以上文的 HTML 文本为例，如果我们要选取所有节点，可以这样实现：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br><span class="line">html = etree.parse(<span class="string">'./test.html'</span>, etree.HTMLParser())</span><br><span class="line">result = html.xpath(<span class="string">'//*'</span>)</span><br><span class="line">print(result)</span><br></pre></td></tr></table></figure>
+<p>我们在这里使用 * 代表匹配所有节点，也就是整个 HTML 文本中的所有节点都会被获取，可以看到返回形式是一个列表，每个元素是 Element 类型，其后跟了节点的名称，如 html、body、div、ul、li、a 等等，所有的节点都包含在列表中了。</p>
+<p>当然此处匹配也可以指定节点名称，如果我们想获取所有 li 节点，示例如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br><span class="line">html = etree.parse(<span class="string">'./test.html'</span>, etree.HTMLParser())</span><br><span class="line">result = html.xpath(<span class="string">'//li'</span>)</span><br><span class="line">print(result)</span><br><span class="line">print(result[<span class="number">0</span>])</span><br></pre></td></tr></table></figure>
+<p>在这里我们要选取所有<code>li</code> 节点可以使用 <code>//</code>，然后直接加上节点的名称即可，调用时直接调用 xpath() 方法即可提取。</p>
+<h4 id="子节点"><a href="#子节点" class="headerlink" title="子节点"></a>子节点</h4><p>我们通过<code>/</code>或 <code>//</code> 即可查找元素的子节点或子孙节点，加入我们现在想选择<code>li</code> 节点所有直接 <code>a</code>子节点，可以这样来实现：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br><span class="line"></span><br><span class="line">html = etree.parse(<span class="string">'./test.html'</span>, etree.HTMLParser())</span><br><span class="line">result = html.xpath(<span class="string">'//li/a'</span>)</span><br><span class="line">print(result)</span><br></pre></td></tr></table></figure>
+<p>在这里我们通过追加一个 <code>/a</code>即选择了所有<code>li</code>节点的所有直接 <code>a</code>子节点，因为<code>//li</code>是选中所有<code>li</code>节点， <code>/a</code>是选中<code>li</code>节点的所有直接子节点<code>a</code>，二者组合在一起即获取了所有<code>li</code>节点的所有直接 a 子节点。</p>
+<h4 id="父节点"><a href="#父节点" class="headerlink" title="父节点"></a>父节点</h4><p>我们知道通过连续的<code>/</code>或<code>//</code>可以查找子节点或子孙节点，那假如我们知道了子节点怎样来查找父节点呢？在这里我们可以用<code>..</code>来获取父节点。</p>
+<p>比如我们现在首先选中 href 是 link4.html 的 a 节点，然后再获取其父节点，然后再获取其 class 属性，代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br><span class="line"></span><br><span class="line">html = etree.parse(<span class="string">'./test.html'</span>, etree.HTMLParser())</span><br><span class="line">result = html.xpath(<span class="string">'//a[@href="https://ask.hellobi.com/link4.html"]/../@class'</span>)</span><br><span class="line">print(result)</span><br></pre></td></tr></table></figure>
+<p>同时我们也可以通过 parent:: 来获取父节点，代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br><span class="line"></span><br><span class="line">html = etree.parse(<span class="string">'./test.html'</span>, etree.HTMLParser())</span><br><span class="line">result = html.xpath(<span class="string">'//a[@href="https://ask.hellobi.com/link4.html"]/parent::*/@class'</span>)</span><br><span class="line">print(result)</span><br></pre></td></tr></table></figure>
+<h4 id="属性匹配"><a href="#属性匹配" class="headerlink" title="属性匹配"></a>属性匹配</h4><p>在选取的时候我们还可以用 @ 符号进行属性过滤，比如在这里如果我们要选取 class 为 item-1 的 li 节点，可以这样实现:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br><span class="line">html = etree.parse(<span class="string">'./test.html'</span>, etree.HTMLParser())</span><br><span class="line">result = html.xpath(<span class="string">'//li[@class="item-0"]'</span>)</span><br><span class="line">print(result)</span><br></pre></td></tr></table></figure>
+<p>在这里我们通过加入 [@class=”item-0”] 就限制了节点的 class 属性为 item-0，而 HTML 文本中符合条件的 li 节点有两个，所以返回结果应该返回两个匹配到的元素，结果如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[&lt;Element li at <span class="number">0x10a399288</span>&gt;, &lt;Element li at <span class="number">0x10a3992c8</span>&gt;]</span><br></pre></td></tr></table></figure>
+<h4 id="文本获取"><a href="#文本获取" class="headerlink" title="文本获取"></a>文本获取</h4><p>我们用 XPath 中的 text() 方法可以获取节点中的文本，我们接下来尝试获取一下上文 li 节点中的文本，代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br><span class="line"></span><br><span class="line">html = etree.parse(<span class="string">'./test.html'</span>, etree.HTMLParser())</span><br><span class="line">result = html.xpath(<span class="string">'//li[@class="item-0"]/text()'</span>)</span><br><span class="line">print(result)</span><br></pre></td></tr></table></figure>
+<p>运行结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[&apos;\n     &apos;]</span><br></pre></td></tr></table></figure>
+<p>很奇怪的是我们并没有获取到任何文本，而是只获取到了一个换行符，这是为什么呢？因为 XPath 中 text() 前面是 /，而此 / 的含义是选取直接子节点，而此处很明显 li 的直接子节点都是 a 节点，文本都是在 a 节点内部的，所以这里匹配到的结果就是被修正的 li 节点内部的换行符，因为自动修正的li节点的尾标签换行了。</p>
+<p>即选中的是这两个节点：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;li class=&quot;item-0&quot;&gt;&lt;a href=&quot;link1.html&quot;&gt;first item&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">&lt;li class=&quot;item-0&quot;&gt;&lt;a href=&quot;link5.html&quot;&gt;fifth item&lt;/a&gt;</span><br><span class="line">&lt;/li&gt;</span><br></pre></td></tr></table></figure>
+<p>其中一个节点因为自动修正，li 节点的尾标签添加的时候换行了，所以提取文本得到的唯一结果就是 li 节点的尾标签和 a 节点的尾标签之间的换行符。</p>
+<p>因此，如果我们想获取 li 节点内部的文本就有两种方式，一种是选取到 a 节点再获取文本，另一种就是使用 //，我们来看下二者的区别是什么。</p>
+<p>首先我们选取到 a 节点再获取文本，代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br><span class="line"></span><br><span class="line">html = etree.parse(<span class="string">'./test.html'</span>, etree.HTMLParser())</span><br><span class="line">result = html.xpath(<span class="string">'//li[@class="item-0"]/a/text()'</span>)</span><br><span class="line">print(result)</span><br></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[&apos;first item&apos;, &apos;fifth item&apos;]</span><br></pre></td></tr></table></figure>
+<p>可以看到这里返回值是两个，内容都是属性为 item-0 的 li 节点的文本，这也印证了我们上文中属性匹配的结果是正确的。</p>
+<p>在这里我们是逐层选取的，先选取了 li 节点，又利用 / 选取了其直接子节点 a，然后再选取其文本，得到的结果恰好是符合我们预期的两个结果。</p>
+<p>我们再来看下用另一种方式 // 选取的结果，代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br><span class="line"></span><br><span class="line">html = etree.parse(<span class="string">'./test.html'</span>, etree.HTMLParser())</span><br><span class="line">result = html.xpath(<span class="string">'//li[@class="item-0"]//text()'</span>)</span><br><span class="line">print(result)</span><br></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[&apos;first item&apos;, &apos;fifth item&apos;, &apos;\n     &apos;]</span><br></pre></td></tr></table></figure>
+<p>不出所料，这里返回结果是三个，可想而知这里是选取所有子孙节点的文本，其中前两个就是 li 的子节点 a 节点内部的文本，另外一个就是最后一个 li 节点内部的文本，即换行符。</p>
+<p>所以说，如果我们要想获取子孙节点内部的所有文本，可以直接用 // 加 text() 的方式获取，这样可以保证获取到最全面的文本信息，但是可能会夹杂一些换行符等特殊字符。如果我们想获取某些特定子孙节点下的所有文本，可以先选取到特定的子孙节点，然后再调用 text() 方法获取其内部文本，这样可以保证获取的结果是整洁的。</p>
+<h4 id="属性获取"><a href="#属性获取" class="headerlink" title="属性获取"></a>属性获取</h4><p>我们知道了用 text() 可以获取节点内部文本，那么节点属性该怎样获取呢？其实还是用 @ 符号就可以，例如我们想获取所有 li 节点下所有 a 节点的 href 属性，代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br><span class="line"></span><br><span class="line">html = etree.parse(<span class="string">'./test.html'</span>, etree.HTMLParser())</span><br><span class="line">result = html.xpath(<span class="string">'//li/a/@href'</span>)</span><br><span class="line">print(result)</span><br></pre></td></tr></table></figure>
+<p>在这里我们通过 @href 即可获取节点的 href 属性，注意此处和属性匹配的方法不同，属性匹配是中括号加属性名和值来限定某个属性，如 [@href=”<a href="https://link.zhihu.com/?target=https%3A//ask.hellobi.com/link1.html" target="_blank" rel="noopener">https://ask.hellobi.com/link1.html</a>“]，而此处的 @href 指的是获取节点的某个属性，二者需要做好区分。</p>
+<p>运行结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[&apos;link1.html&apos;, &apos;link2.html&apos;, &apos;link3.html&apos;, &apos;link4.html&apos;, &apos;link5.html&apos;]</span><br></pre></td></tr></table></figure>
+<p>可以看到我们成功获取了所有 li 节点下的 a 节点的 href 属性，以列表形式返回。</p>
+<h4 id="属性多值匹配"><a href="#属性多值匹配" class="headerlink" title="属性多值匹配"></a>属性多值匹配</h4><p>有时候某些节点的某个属性可能有多个值，例如下面例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">from lxml import etree</span><br><span class="line">text = &apos;&apos;&apos;</span><br><span class="line">&lt;li class=&quot;li li-first&quot;&gt;&lt;a href=&quot;https://ask.hellobi.com/link.html&quot;&gt;first item&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">&apos;&apos;&apos;</span><br><span class="line">html = etree.HTML(text)</span><br><span class="line">result = html.xpath(&apos;//li[@class=&quot;li&quot;]/a/text()&apos;)</span><br><span class="line">print(result)</span><br></pre></td></tr></table></figure>
+<p>在这里 HTML 文本中的 li 节点的 class 属性有两个值 li 和 li-first，但是此时如果我们还想用之前的属性匹配获取就无法匹配了，代码运行结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[]</span><br></pre></td></tr></table></figure>
+<p>这时如果属性有多个值就需要用 contains() 函数了，代码可以改写如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">from lxml import etree</span><br><span class="line">text = &apos;&apos;&apos;</span><br><span class="line">&lt;li class=&quot;li li-first&quot;&gt;&lt;a href=&quot;https://ask.hellobi.com/link.html&quot;&gt;first item&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">&apos;&apos;&apos;</span><br><span class="line">html = etree.HTML(text)</span><br><span class="line">result = html.xpath(&apos;//li[contains(@class, &quot;li&quot;)]/a/text()&apos;)</span><br><span class="line">print(result)</span><br></pre></td></tr></table></figure>
+<p>这样我们通过 contains() 方法，第一个参数传入属性名称，第二个参数传入属性值，这样只要此属性包含所传入的属性值就可以完成匹配了。</p>
+<p>运行结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[&apos;first item&apos;]</span><br></pre></td></tr></table></figure>
+<p>此种选择方式在某个节点的某个属性有多个值的时候经常会用到，如某个节点的 class 属性通常有多个。</p>
+<h4 id="多属性匹配"><a href="#多属性匹配" class="headerlink" title="多属性匹配"></a>多属性匹配</h4><p>另外我们可能还遇到一种情况，我们可能需要根据多个属性才能确定一个节点，这是就需要同时匹配多个属性才可以，那么这里可以使用运算符 and 来连接，示例如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">from lxml import etree</span><br><span class="line">text = &apos;&apos;&apos;</span><br><span class="line">&lt;li class=&quot;li li-first&quot; name=&quot;item&quot;&gt;&lt;a href=&quot;https://ask.hellobi.com/link.html&quot;&gt;first item&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">&apos;&apos;&apos;</span><br><span class="line">html = etree.HTML(text)</span><br><span class="line">result = html.xpath(&apos;//li[contains(@class, &quot;li&quot;) and @name=&quot;item&quot;]/a/text()&apos;)</span><br><span class="line">print(result)</span><br></pre></td></tr></table></figure>
+<p>在这里 HTML 文本的 li 节点又增加了一个属性 name，这时候我们需要同时根据 class 和 name 属性来选择，就可以 and 运算符连接两个条件，两个条件都被中括号包围，运行结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[&apos;first item&apos;]</span><br></pre></td></tr></table></figure>
+<p>这里的 and 其实是 XPath 中的运算符，另外还有很多运算符，如 or、mod 等等。</p>
+<h4 id="按序选择"><a href="#按序选择" class="headerlink" title="按序选择"></a>按序选择</h4><p>有时候我们在选择的时候可能某些属性同时匹配了多个节点，但是我们只想要其中的某个节点，如第二个节点，或者最后一个节点，这时该怎么办呢？</p>
+<p>这时可以利用中括号传入索引的方法获取特定次序的节点，示例如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br><span class="line"></span><br><span class="line">text = <span class="string">'''</span></span><br><span class="line"><span class="string">&lt;div&gt;</span></span><br><span class="line"><span class="string">    &lt;ul&gt;</span></span><br><span class="line"><span class="string">         &lt;li class="item-0"&gt;&lt;a href="https://ask.hellobi.com/link1.html"&gt;first item&lt;/a&gt;&lt;/li&gt;</span></span><br><span class="line"><span class="string">         &lt;li class="item-1"&gt;&lt;a href="https://ask.hellobi.com/link2.html"&gt;second item&lt;/a&gt;&lt;/li&gt;</span></span><br><span class="line"><span class="string">         &lt;li class="item-inactive"&gt;&lt;a href="https://ask.hellobi.com/link3.html"&gt;third item&lt;/a&gt;&lt;/li&gt;</span></span><br><span class="line"><span class="string">         &lt;li class="item-1"&gt;&lt;a href="https://ask.hellobi.com/link4.html"&gt;fourth item&lt;/a&gt;&lt;/li&gt;</span></span><br><span class="line"><span class="string">         &lt;li class="item-0"&gt;&lt;a href="https://ask.hellobi.com/link5.html"&gt;fifth item&lt;/a&gt;</span></span><br><span class="line"><span class="string">     &lt;/ul&gt;</span></span><br><span class="line"><span class="string"> &lt;/div&gt;</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line">html = etree.HTML(text)</span><br><span class="line">result = html.xpath(<span class="string">'//li[1]/a/text()'</span>)</span><br><span class="line">print(result)</span><br><span class="line">result = html.xpath(<span class="string">'//li[last()]/a/text()'</span>)</span><br><span class="line">print(result)</span><br><span class="line">result = html.xpath(<span class="string">'//li[position()&lt;3]/a/text()'</span>)</span><br><span class="line">print(result)</span><br><span class="line">result = html.xpath(<span class="string">'//li[last()-2]/a/text()'</span>)</span><br><span class="line">print(result)</span><br></pre></td></tr></table></figure>
+<p>第一次选择我们选取了第一个 li 节点，中括号中传入数字1即可，注意这里和代码中不同，序号是以 1 开头的，不是 0 开头的。</p>
+<p>第二次选择我们选取了最后一个 li 节点，中括号中传入 last() 即可，返回的便是最后一个 li 节点。</p>
+<p>第三次选择我们选取了位置小于 3 的 li 节点，也就是位置序号为 1 和 2 的节点，得到的结果就是前 2 个 li 节点。</p>
+<p>第四次选择我们选取了倒数第三个 li 节点，中括号中传入 last()-2即可，因为 last() 是最后一个，所以 last()-2 就是倒数第三个。</p>
+<p>运行结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[&apos;first item&apos;]</span><br><span class="line">[&apos;fifth item&apos;]</span><br><span class="line">[&apos;first item&apos;, &apos;second item&apos;]</span><br><span class="line">[&apos;third item&apos;]</span><br></pre></td></tr></table></figure>
+<p>在这里我们使用了 last()、position() 等函数，XPath 中提供了 100 多个函数，包括存取、数值、字符串、逻辑、节点、序列等处理功能，具体所有的函数作用可以参考：<a href="https://link.zhihu.com/?target=http%3A//www.w3school.com.cn/xpath/xpath_functions.asp" target="_blank" rel="noopener">http://www.w3school.com.cn/xpath/xpath_functions.asp</a>。</p>
+<h4 id="节点轴选择"><a href="#节点轴选择" class="headerlink" title="节点轴选择"></a>节点轴选择</h4><p>XPath 提供了很多节点轴选择方法，英文叫做 XPath Axes，包括获取子元素、兄弟元素、父元素、祖先元素等等，在一定情况下使用它可以方便地完成节点的选择，我们用一个实例来感受一下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br><span class="line"></span><br><span class="line">text = <span class="string">'''</span></span><br><span class="line"><span class="string">&lt;div&gt;</span></span><br><span class="line"><span class="string">    &lt;ul&gt;</span></span><br><span class="line"><span class="string">         &lt;li class="item-0"&gt;&lt;a href="https://ask.hellobi.com/link1.html"&gt;&lt;span&gt;first item&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;</span></span><br><span class="line"><span class="string">         &lt;li class="item-1"&gt;&lt;a href="https://ask.hellobi.com/link2.html"&gt;second item&lt;/a&gt;&lt;/li&gt;</span></span><br><span class="line"><span class="string">         &lt;li class="item-inactive"&gt;&lt;a href="https://ask.hellobi.com/link3.html"&gt;third item&lt;/a&gt;&lt;/li&gt;</span></span><br><span class="line"><span class="string">         &lt;li class="item-1"&gt;&lt;a href="https://ask.hellobi.com/link4.html"&gt;fourth item&lt;/a&gt;&lt;/li&gt;</span></span><br><span class="line"><span class="string">         &lt;li class="item-0"&gt;&lt;a href="https://ask.hellobi.com/link5.html"&gt;fifth item&lt;/a&gt;</span></span><br><span class="line"><span class="string">     &lt;/ul&gt;</span></span><br><span class="line"><span class="string"> &lt;/div&gt;</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line">html = etree.HTML(text)</span><br><span class="line">result = html.xpath(<span class="string">'//li[1]/ancestor::*'</span>)</span><br><span class="line">print(result)</span><br><span class="line">result = html.xpath(<span class="string">'//li[1]/ancestor::div'</span>)</span><br><span class="line">print(result)</span><br><span class="line">result = html.xpath(<span class="string">'//li[1]/attribute::*'</span>)</span><br><span class="line">print(result)</span><br><span class="line">result = html.xpath(<span class="string">'//li[1]/child::a[@href="https://ask.hellobi.com/link1.html"]'</span>)</span><br><span class="line">print(result)</span><br><span class="line">result = html.xpath(<span class="string">'//li[1]/descendant::span'</span>)</span><br><span class="line">print(result)</span><br><span class="line">result = html.xpath(<span class="string">'//li[1]/following::*[2]'</span>)</span><br><span class="line">print(result)</span><br><span class="line">result = html.xpath(<span class="string">'//li[1]/following-sibling::*'</span>)</span><br><span class="line">print(result)</span><br></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[&lt;Element html at 0x107941808&gt;, &lt;Element body at 0x1079418c8&gt;, &lt;Element div at 0x107941908&gt;, &lt;Element ul at 0x107941948&gt;]</span><br><span class="line">[&lt;Element div at 0x107941908&gt;]</span><br><span class="line">[&apos;item-0&apos;]</span><br><span class="line">[&lt;Element a at 0x1079418c8&gt;]</span><br><span class="line">[&lt;Element span at 0x107941948&gt;]</span><br><span class="line">[&lt;Element a at 0x1079418c8&gt;]</span><br><span class="line">[&lt;Element li at 0x107941948&gt;, &lt;Element li at 0x107941988&gt;, &lt;Element li at 0x1079419c8&gt;, &lt;Element li at 0x107941a08&gt;]</span><br></pre></td></tr></table></figure>
+<p>第一次选择我们调用了 ancestor 轴，可以获取所有祖先节点，其后需要跟两个冒号，然后是节点的选择器，这里我们直接使用了 *，表示匹配所有节点，因此返回结果是第一个 li 节点的所有祖先节点，包括 html，body，div，ul。</p>
+<p>第二次选择我们又加了限定条件，这次在冒号后面加了 div，这样得到的结果就只有 div 这个祖先节点了。</p>
+<p>第三次选择我们调用了 attribute 轴，可以获取所有属性值，其后跟的选择器还是 *，这代表获取节点的所有属性，返回值就是 li 节点的所有属性值。</p>
+<p>第四次选择我们调用了 child 轴，可以获取所有直接子节点，在这里我们又加了限定条件选取 href 属性为 link1.html 的 a 节点。</p>
+<p>第五次选择我们调用了 descendant 轴，可以获取所有子孙节点，这里我们又加了限定条件获取 span 节点，所以返回的就是只包含 span 节点而没有 a 节点。</p>
+<p>第六次选择我们调用了 following 轴，可以获取当前节点之后的所有节点，这里我们虽然使用的是 * 匹配，但又加了索引选择，所以只获取了第二个后续节点。</p>
+<p>第七次选择我们调用了 following-sibling 轴，可以获取当前节点之后的所有同级节点，这里我们使用的是 * 匹配，所以获取了所有后续同级节点。</p>
+<h3 id="3-BeautifulSoup"><a href="#3-BeautifulSoup" class="headerlink" title="3. BeautifulSoup"></a>3. BeautifulSoup</h3><p><a href="https://beautifulsoup.readthedocs.io/zh_CN/v4.4.0/" target="_blank" rel="noopener">BeautifulSoup文档</a></p>
+<h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pip install beautifulsoup4</span><br><span class="line"><span class="meta">#</span> 安装解析器</span><br><span class="line">pip install lxml</span><br></pre></td></tr></table></figure>
+<h4 id="如何使用"><a href="#如何使用" class="headerlink" title="如何使用"></a>如何使用</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># 将一段文档传入BeautifulSoup 的构造方法,就能得到一个文档的对象, 可以传入一段字符串或一个文件句柄.</span><br><span class="line">from bs4 import BeautifulSoup</span><br><span class="line"></span><br><span class="line">soup = BeautifulSoup(open(&quot;index.html&quot;))</span><br><span class="line"></span><br><span class="line">soup = BeautifulSoup(&quot;&lt;html&gt;data&lt;/html&gt;&quot;)</span><br></pre></td></tr></table></figure>
+<h4 id="对象种类"><a href="#对象种类" class="headerlink" title="对象种类"></a>对象种类</h4><ul>
+<li><p><strong>Tag</strong>。<code>Tag</code>对象与XML或HTML原生文档中的tag相同。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">soup = BeautifulSoup(<span class="string">'&lt;b class="boldest"&gt;Extremely bold&lt;/b&gt;'</span>)</span><br><span class="line">tag = soup.b</span><br><span class="line">type(tag)</span><br><span class="line"><span class="comment"># &lt;class 'bs4.element.Tag'&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>NavigableString</strong>。字符串常被包含在tag内.Beautiful Soup用 <code>NavigableString</code> 类来包装tag中的字符串。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">tag.string</span><br><span class="line"><span class="comment"># u'Extremely bold'</span></span><br><span class="line">type(tag.string)</span><br><span class="line"><span class="comment"># &lt;class 'bs4.element.NavigableString'&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li><p><strong>BeautifulSoup</strong>。<code>BeautifulSoup</code> 对象表示的是一个文档的全部内容.大部分时候,可以把它当作 <code>Tag</code> 对象,它支持 <a href="https://beautifulsoup.readthedocs.io/zh_CN/v4.4.0/#id18" target="_blank" rel="noopener">遍历文档树</a> 和 <a href="https://beautifulsoup.readthedocs.io/zh_CN/v4.4.0/#id27" target="_blank" rel="noopener">搜索文档树</a> 中描述的大部分的方法.</p>
+</li>
+<li><p><strong>Comment</strong>。<code>Comment</code>是文档的注释部分。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">markup = <span class="string">"&lt;b&gt;&lt;!--Hey, buddy. Want to buy a used parser?--&gt;&lt;/b&gt;"</span></span><br><span class="line">soup = BeautifulSoup(markup)</span><br><span class="line">comment = soup.b.string</span><br><span class="line">type(comment)</span><br><span class="line"><span class="comment"># &lt;class 'bs4.element.Comment'&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="遍历文档树"><a href="#遍历文档树" class="headerlink" title="遍历文档树"></a>遍历文档树</h4><h5 id="find-all"><a href="#find-all" class="headerlink" title="find_all()"></a>find_all()</h5><p>find_all( <a href="https://beautifulsoup.readthedocs.io/zh_CN/v4.4.0/#id35" target="_blank" rel="noopener">name</a> , <a href="https://beautifulsoup.readthedocs.io/zh_CN/v4.4.0/#css" target="_blank" rel="noopener">attrs</a> , <a href="https://beautifulsoup.readthedocs.io/zh_CN/v4.4.0/#recursive" target="_blank" rel="noopener">recursive</a> , <a href="https://beautifulsoup.readthedocs.io/zh_CN/v4.4.0/#id36" target="_blank" rel="noopener">string</a> , <a href="https://beautifulsoup.readthedocs.io/zh_CN/v4.4.0/#keyword" target="_blank" rel="noopener">**kwargs</a> )</p>
+<p><code>find_all()</code> 方法搜索当前tag的所有tag子节点,并判断是否符合过滤器的条件.这里有几个例子:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">soup.find_all(<span class="string">"title"</span>)</span><br><span class="line"><span class="comment"># [&lt;title&gt;The Dormouse's story&lt;/title&gt;]</span></span><br><span class="line"></span><br><span class="line">soup.find_all(<span class="string">"p"</span>, <span class="string">"title"</span>)</span><br><span class="line"><span class="comment"># [&lt;p class="title"&gt;&lt;b&gt;The Dormouse's story&lt;/b&gt;&lt;/p&gt;]</span></span><br><span class="line"></span><br><span class="line">soup.find_all(<span class="string">"a"</span>)</span><br><span class="line"><span class="comment"># [&lt;a class="sister" href="http://example.com/elsie" id="link1"&gt;Elsie&lt;/a&gt;,</span></span><br><span class="line"><span class="comment">#  &lt;a class="sister" href="http://example.com/lacie" id="link2"&gt;Lacie&lt;/a&gt;,</span></span><br><span class="line"><span class="comment">#  &lt;a class="sister" href="http://example.com/tillie" id="link3"&gt;Tillie&lt;/a&gt;]</span></span><br><span class="line"></span><br><span class="line">soup.find_all(id=<span class="string">"link2"</span>)</span><br><span class="line"><span class="comment"># [&lt;a class="sister" href="http://example.com/lacie" id="link2"&gt;Lacie&lt;/a&gt;]</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line">soup.find(string=re.compile(<span class="string">"sisters"</span>))</span><br><span class="line"><span class="comment"># u'Once upon a time there were three little sisters; and their names were\n'</span></span><br></pre></td></tr></table></figure>
+<h6 id="name-参数"><a href="#name-参数" class="headerlink" title="name 参数"></a>name 参数</h6><p><code>name</code> 参数可以查找所有名字为 <code>name</code> 的tag,字符串对象会被自动忽略掉.</p>
+<p>简单的用法如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">soup.find_all(&quot;title&quot;)</span><br><span class="line"># [&lt;title&gt;The Dormouse&apos;s story&lt;/title&gt;]</span><br></pre></td></tr></table></figure>
+<p>重申: 搜索 <code>name</code> 参数的值可以使任一类型的 <a href="https://beautifulsoup.readthedocs.io/zh_CN/v4.4.0/#id28" target="_blank" rel="noopener">过滤器</a> ,字符窜,正则表达式,列表,方法或是 <code>True</code> .</p>
+<h6 id="keyword-参数"><a href="#keyword-参数" class="headerlink" title="keyword 参数"></a>keyword 参数</h6><p>如果一个指定名字的参数不是搜索内置的参数名,搜索时会把该参数当作指定名字tag的属性来搜索,如果包含一个名字为 <code>id</code> 的参数,Beautiful Soup会搜索每个tag的”id”属性.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">soup.find_all(id=&apos;link2&apos;)</span><br><span class="line"># [&lt;a class=&quot;sister&quot; href=&quot;http://example.com/lacie&quot; id=&quot;link2&quot;&gt;Lacie&lt;/a&gt;]</span><br></pre></td></tr></table></figure>
+<p>如果传入 <code>href</code> 参数,Beautiful Soup会搜索每个tag的”href”属性:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">soup.find_all(href=re.compile(&quot;elsie&quot;))</span><br><span class="line"># [&lt;a class=&quot;sister&quot; href=&quot;http://example.com/elsie&quot; id=&quot;link1&quot;&gt;Elsie&lt;/a&gt;]</span><br></pre></td></tr></table></figure>
+<p>搜索指定名字的属性时可以使用的参数值包括 <a href="https://beautifulsoup.readthedocs.io/zh_CN/v4.4.0/#id30" target="_blank" rel="noopener">字符串</a> , <a href="https://beautifulsoup.readthedocs.io/zh_CN/v4.4.0/#id31" target="_blank" rel="noopener">正则表达式</a> , <a href="https://beautifulsoup.readthedocs.io/zh_CN/v4.4.0/#id32" target="_blank" rel="noopener">列表</a>, <a href="https://beautifulsoup.readthedocs.io/zh_CN/v4.4.0/#true" target="_blank" rel="noopener">True</a> .</p>
+<p>下面的例子在文档树中查找所有包含 <code>id</code> 属性的tag,无论 <code>id</code> 的值是什么:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">soup.find_all(id=True)</span><br><span class="line"># [&lt;a class=&quot;sister&quot; href=&quot;http://example.com/elsie&quot; id=&quot;link1&quot;&gt;Elsie&lt;/a&gt;,</span><br><span class="line">#  &lt;a class=&quot;sister&quot; href=&quot;http://example.com/lacie&quot; id=&quot;link2&quot;&gt;Lacie&lt;/a&gt;,</span><br><span class="line">#  &lt;a class=&quot;sister&quot; href=&quot;http://example.com/tillie&quot; id=&quot;link3&quot;&gt;Tillie&lt;/a&gt;]</span><br></pre></td></tr></table></figure>
+<p>使用多个指定名字的参数可以同时过滤tag的多个属性:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">soup.find_all(href=re.compile(&quot;elsie&quot;), id=&apos;link1&apos;)</span><br><span class="line"># [&lt;a class=&quot;sister&quot; href=&quot;http://example.com/elsie&quot; id=&quot;link1&quot;&gt;three&lt;/a&gt;]</span><br></pre></td></tr></table></figure>
+<p>有些tag属性在搜索不能使用,比如HTML5中的 data-* 属性:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">data_soup = BeautifulSoup(&apos;&lt;div data-foo=&quot;value&quot;&gt;foo!&lt;/div&gt;&apos;)</span><br><span class="line">data_soup.find_all(data-foo=&quot;value&quot;)</span><br><span class="line"># SyntaxError: keyword can&apos;t be an expression</span><br></pre></td></tr></table></figure>
+<p>但是可以通过 <code>find_all()</code> 方法的 <code>attrs</code> 参数定义一个字典参数来搜索包含特殊属性的tag:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">data_soup.find_all(attrs=&#123;&quot;data-foo&quot;: &quot;value&quot;&#125;)</span><br><span class="line"># [&lt;div data-foo=&quot;value&quot;&gt;foo!&lt;/div&gt;]</span><br></pre></td></tr></table></figure>
+<h5 id="find"><a href="#find" class="headerlink" title="find()"></a>find()</h5><p>find( <a href="https://beautifulsoup.readthedocs.io/zh_CN/v4.4.0/#id35" target="_blank" rel="noopener">name</a> , <a href="https://beautifulsoup.readthedocs.io/zh_CN/v4.4.0/#css" target="_blank" rel="noopener">attrs</a> , <a href="https://beautifulsoup.readthedocs.io/zh_CN/v4.4.0/#recursive" target="_blank" rel="noopener">recursive</a> , <a href="https://beautifulsoup.readthedocs.io/zh_CN/v4.4.0/#id36" target="_blank" rel="noopener">string</a> , <a href="https://beautifulsoup.readthedocs.io/zh_CN/v4.4.0/#keyword" target="_blank" rel="noopener">**kwargs</a> )</p>
+<p><code>find_all()</code> 方法将返回文档中符合条件的所有tag,尽管有时候我们只想得到一个结果.比如文档中只有一个<body>标签,那么使用 <code>find_all()</code> 方法来查找<body>标签就不太合适, 使用 <code>find_all</code> 方法并设置 <code>limit=1</code> 参数不如直接使用 <code>find()</code> 方法.下面两行代码是等价的:</body></body></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">soup.find_all(&apos;title&apos;, limit=1)</span><br><span class="line"># [&lt;title&gt;The Dormouse&apos;s story&lt;/title&gt;]</span><br><span class="line"></span><br><span class="line">soup.find(&apos;title&apos;)</span><br><span class="line"># &lt;title&gt;The Dormouse&apos;s story&lt;/title&gt;</span><br></pre></td></tr></table></figure>
+<p>唯一的区别是 <code>find_all()</code> 方法的返回结果是值包含一个元素的列表,而 <code>find()</code> 方法直接返回结果.</p>
+<p><code>find_all()</code> 方法没有找到目标是返回空列表, <code>find()</code> 方法找不到目标时,返回 <code>None</code> .</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">print(soup.find(&quot;nosuchtag&quot;))</span><br><span class="line"># None</span><br></pre></td></tr></table></figure>
+<p><code>soup.head.title</code> 是 <a href="https://beautifulsoup.readthedocs.io/zh_CN/v4.4.0/#id20" target="_blank" rel="noopener">tag的名字</a> 方法的简写.这个简写的原理就是多次调用当前tag的 <code>find()</code> 方法:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">soup.head.title</span><br><span class="line"># &lt;title&gt;The Dormouse&apos;s story&lt;/title&gt;</span><br><span class="line"></span><br><span class="line">soup.find(&quot;head&quot;).find(&quot;title&quot;)</span><br><span class="line"># &lt;title&gt;The Dormouse&apos;s story&lt;/title&gt;</span><br></pre></td></tr></table></figure>
+<h5 id="CSS选择器"><a href="#CSS选择器" class="headerlink" title="CSS选择器"></a>CSS选择器</h5><p>Beautiful Soup支持大部分的CSS选择器 <a href="http://www.w3.org/TR/CSS2/selector.html" target="_blank" rel="noopener">http://www.w3.org/TR/CSS2/selector.html</a> <a href="https://beautifulsoup.readthedocs.io/zh_CN/v4.4.0/#id93" target="_blank" rel="noopener">[6]</a> , 在 <code>Tag</code> 或 <code>BeautifulSoup</code> 对象的 <code>.select()</code> 方法中传入字符串参数, 即可使用CSS选择器的语法找到tag:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">soup.select(&quot;title&quot;)</span><br><span class="line"># [&lt;title&gt;The Dormouse&apos;s story&lt;/title&gt;]</span><br><span class="line"></span><br><span class="line">soup.select(&quot;p nth-of-type(3)&quot;)</span><br><span class="line"># [&lt;p class=&quot;story&quot;&gt;...&lt;/p&gt;]</span><br></pre></td></tr></table></figure>
+<p>通过tag标签逐层查找:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">soup.select(&quot;body a&quot;)</span><br><span class="line"># [&lt;a class=&quot;sister&quot; href=&quot;http://example.com/elsie&quot; id=&quot;link1&quot;&gt;Elsie&lt;/a&gt;,</span><br><span class="line">#  &lt;a class=&quot;sister&quot; href=&quot;http://example.com/lacie&quot;  id=&quot;link2&quot;&gt;Lacie&lt;/a&gt;,</span><br><span class="line">#  &lt;a class=&quot;sister&quot; href=&quot;http://example.com/tillie&quot; id=&quot;link3&quot;&gt;Tillie&lt;/a&gt;]</span><br><span class="line"></span><br><span class="line">soup.select(&quot;html head title&quot;)</span><br><span class="line"># [&lt;title&gt;The Dormouse&apos;s story&lt;/title&gt;]</span><br></pre></td></tr></table></figure>
+<p>找到某个tag标签下的直接子标签 <a href="https://beautifulsoup.readthedocs.io/zh_CN/v4.4.0/#id93" target="_blank" rel="noopener">[6]</a> :</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">soup.select(&quot;head &gt; title&quot;)</span><br><span class="line"># [&lt;title&gt;The Dormouse&apos;s story&lt;/title&gt;]</span><br><span class="line"></span><br><span class="line">soup.select(&quot;p &gt; a&quot;)</span><br><span class="line"># [&lt;a class=&quot;sister&quot; href=&quot;http://example.com/elsie&quot; id=&quot;link1&quot;&gt;Elsie&lt;/a&gt;,</span><br><span class="line">#  &lt;a class=&quot;sister&quot; href=&quot;http://example.com/lacie&quot;  id=&quot;link2&quot;&gt;Lacie&lt;/a&gt;,</span><br><span class="line">#  &lt;a class=&quot;sister&quot; href=&quot;http://example.com/tillie&quot; id=&quot;link3&quot;&gt;Tillie&lt;/a&gt;]</span><br><span class="line"></span><br><span class="line">soup.select(&quot;p &gt; a:nth-of-type(2)&quot;)</span><br><span class="line"># [&lt;a class=&quot;sister&quot; href=&quot;http://example.com/lacie&quot; id=&quot;link2&quot;&gt;Lacie&lt;/a&gt;]</span><br><span class="line"></span><br><span class="line">soup.select(&quot;p &gt; #link1&quot;)</span><br><span class="line"># [&lt;a class=&quot;sister&quot; href=&quot;http://example.com/elsie&quot; id=&quot;link1&quot;&gt;Elsie&lt;/a&gt;]</span><br><span class="line"></span><br><span class="line">soup.select(&quot;body &gt; a&quot;)</span><br><span class="line"># []</span><br></pre></td></tr></table></figure>
+<p>找到兄弟节点标签:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">soup.select(&quot;#link1 ~ .sister&quot;)</span><br><span class="line"># [&lt;a class=&quot;sister&quot; href=&quot;http://example.com/lacie&quot; id=&quot;link2&quot;&gt;Lacie&lt;/a&gt;,</span><br><span class="line">#  &lt;a class=&quot;sister&quot; href=&quot;http://example.com/tillie&quot;  id=&quot;link3&quot;&gt;Tillie&lt;/a&gt;]</span><br><span class="line"></span><br><span class="line">soup.select(&quot;#link1 + .sister&quot;)</span><br><span class="line"># [&lt;a class=&quot;sister&quot; href=&quot;http://example.com/lacie&quot; id=&quot;link2&quot;&gt;Lacie&lt;/a&gt;]</span><br></pre></td></tr></table></figure>
+<p>通过CSS的类名查找:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">soup.select(&quot;.sister&quot;)</span><br><span class="line"># [&lt;a class=&quot;sister&quot; href=&quot;http://example.com/elsie&quot; id=&quot;link1&quot;&gt;Elsie&lt;/a&gt;,</span><br><span class="line">#  &lt;a class=&quot;sister&quot; href=&quot;http://example.com/lacie&quot; id=&quot;link2&quot;&gt;Lacie&lt;/a&gt;,</span><br><span class="line">#  &lt;a class=&quot;sister&quot; href=&quot;http://example.com/tillie&quot; id=&quot;link3&quot;&gt;Tillie&lt;/a&gt;]</span><br><span class="line"></span><br><span class="line">soup.select(&quot;[class~=sister]&quot;)</span><br><span class="line"># [&lt;a class=&quot;sister&quot; href=&quot;http://example.com/elsie&quot; id=&quot;link1&quot;&gt;Elsie&lt;/a&gt;,</span><br><span class="line">#  &lt;a class=&quot;sister&quot; href=&quot;http://example.com/lacie&quot; id=&quot;link2&quot;&gt;Lacie&lt;/a&gt;,</span><br><span class="line">#  &lt;a class=&quot;sister&quot; href=&quot;http://example.com/tillie&quot; id=&quot;link3&quot;&gt;Tillie&lt;/a&gt;]</span><br></pre></td></tr></table></figure>
+<p>通过tag的id查找:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">soup.select(&quot;#link1&quot;)</span><br><span class="line"># [&lt;a class=&quot;sister&quot; href=&quot;http://example.com/elsie&quot; id=&quot;link1&quot;&gt;Elsie&lt;/a&gt;]</span><br><span class="line"></span><br><span class="line">soup.select(&quot;a#link2&quot;)</span><br><span class="line"># [&lt;a class=&quot;sister&quot; href=&quot;http://example.com/lacie&quot; id=&quot;link2&quot;&gt;Lacie&lt;/a&gt;]</span><br></pre></td></tr></table></figure>
+<p>同时用多种CSS选择器查询元素:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">soup.select(&quot;#link1,#link2&quot;)</span><br><span class="line"># [&lt;a class=&quot;sister&quot; href=&quot;http://example.com/elsie&quot; id=&quot;link1&quot;&gt;Elsie&lt;/a&gt;,</span><br><span class="line">#  &lt;a class=&quot;sister&quot; href=&quot;http://example.com/lacie&quot; id=&quot;link2&quot;&gt;Lacie&lt;/a&gt;]</span><br></pre></td></tr></table></figure>
+<p>通过是否存在某个属性来查找:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">soup.select(&apos;a[href]&apos;)</span><br><span class="line"># [&lt;a class=&quot;sister&quot; href=&quot;http://example.com/elsie&quot; id=&quot;link1&quot;&gt;Elsie&lt;/a&gt;,</span><br><span class="line">#  &lt;a class=&quot;sister&quot; href=&quot;http://example.com/lacie&quot; id=&quot;link2&quot;&gt;Lacie&lt;/a&gt;,</span><br><span class="line">#  &lt;a class=&quot;sister&quot; href=&quot;http://example.com/tillie&quot; id=&quot;link3&quot;&gt;Tillie&lt;/a&gt;]</span><br></pre></td></tr></table></figure>
+<p>通过属性的值来查找:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">soup.select(&apos;a[href=&quot;http://example.com/elsie&quot;]&apos;)</span><br><span class="line"># [&lt;a class=&quot;sister&quot; href=&quot;http://example.com/elsie&quot; id=&quot;link1&quot;&gt;Elsie&lt;/a&gt;]</span><br><span class="line"></span><br><span class="line">soup.select(&apos;a[href^=&quot;http://example.com/&quot;]&apos;)</span><br><span class="line"># [&lt;a class=&quot;sister&quot; href=&quot;http://example.com/elsie&quot; id=&quot;link1&quot;&gt;Elsie&lt;/a&gt;,</span><br><span class="line">#  &lt;a class=&quot;sister&quot; href=&quot;http://example.com/lacie&quot; id=&quot;link2&quot;&gt;Lacie&lt;/a&gt;,</span><br><span class="line">#  &lt;a class=&quot;sister&quot; href=&quot;http://example.com/tillie&quot; id=&quot;link3&quot;&gt;Tillie&lt;/a&gt;]</span><br><span class="line"></span><br><span class="line">soup.select(&apos;a[href$=&quot;tillie&quot;]&apos;)</span><br><span class="line"># [&lt;a class=&quot;sister&quot; href=&quot;http://example.com/tillie&quot; id=&quot;link3&quot;&gt;Tillie&lt;/a&gt;]</span><br><span class="line"></span><br><span class="line">soup.select(&apos;a[href*=&quot;.com/el&quot;]&apos;)</span><br><span class="line"># [&lt;a class=&quot;sister&quot; href=&quot;http://example.com/elsie&quot; id=&quot;link1&quot;&gt;Elsie&lt;/a&gt;]</span><br></pre></td></tr></table></figure>
+<p>通过语言设置来查找:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">multilingual_markup = &quot;&quot;&quot;</span><br><span class="line"> &lt;p lang=&quot;en&quot;&gt;Hello&lt;/p&gt;</span><br><span class="line"> &lt;p lang=&quot;en-us&quot;&gt;Howdy, y&apos;all&lt;/p&gt;</span><br><span class="line"> &lt;p lang=&quot;en-gb&quot;&gt;Pip-pip, old fruit&lt;/p&gt;</span><br><span class="line"> &lt;p lang=&quot;fr&quot;&gt;Bonjour mes amis&lt;/p&gt;</span><br><span class="line">&quot;&quot;&quot;</span><br><span class="line">multilingual_soup = BeautifulSoup(multilingual_markup)</span><br><span class="line">multilingual_soup.select(&apos;p[lang|=en]&apos;)</span><br><span class="line"># [&lt;p lang=&quot;en&quot;&gt;Hello&lt;/p&gt;,</span><br><span class="line">#  &lt;p lang=&quot;en-us&quot;&gt;Howdy, y&apos;all&lt;/p&gt;,</span><br><span class="line">#  &lt;p lang=&quot;en-gb&quot;&gt;Pip-pip, old fruit&lt;/p&gt;]</span><br></pre></td></tr></table></figure>
+<p>返回查找到的元素的第一个</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">soup.select_one(&quot;.sister&quot;)</span><br><span class="line"># &lt;a class=&quot;sister&quot; href=&quot;http://example.com/elsie&quot; id=&quot;link1&quot;&gt;Elsie&lt;/a&gt;</span><br></pre></td></tr></table></figure>
+<p>对于熟悉CSS选择器语法的人来说这是个非常方便的方法.Beautiful Soup也支持CSS选择器API, 如果你仅仅需要CSS选择器的功能,那么直接使用 <code>lxml</code> 也可以, 而且速度更快,支持更多的CSS选择器语法,但Beautiful Soup整合了CSS选择器的语法和自身方便使用API.</p>
+<h3 id="爬虫解析数据实例"><a href="#爬虫解析数据实例" class="headerlink" title="爬虫解析数据实例"></a>爬虫解析数据实例</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> ast <span class="keyword">import</span> parse</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup, BeautifulStoneSoup</span><br><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br><span class="line"><span class="keyword">from</span> requests.exceptions <span class="keyword">import</span> Timeout</span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BookSpider</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.rootUrl = <span class="string">'http://www.allitebooks.com/page/'</span></span><br><span class="line">        self.headers = &#123;<span class="string">'User-Agent'</span>: <span class="string">'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.75 Safari/537.36'</span>&#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">getResponse</span><span class="params">(self, url)</span>:</span></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            response = requests.get(url, headers=self.headers, timeout=<span class="number">200</span>)</span><br><span class="line">            response.raise_for_status()</span><br><span class="line">            <span class="keyword">return</span> response.content</span><br><span class="line">        <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">            print(e)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">parse_re_data</span><span class="params">(self, html)</span>:</span></span><br><span class="line">        patter1 = re.compile(<span class="string">r'&lt;h2 class="entry-title"&gt;&lt;a href="(.*?)" rel="bookmark"&gt;(.*?)&lt;/a&gt;&lt;/h2&gt;'</span>, re.I)</span><br><span class="line">        patter2 = re.compile(<span class="string">r'&lt;img width="\d*" height="\d*" src="(.*?)" class="attachment-post-thumbnail wp-post-image" alt="(.*?)" /&gt;'</span>)</span><br><span class="line">        results1 = patter1.findall(html.decode(<span class="string">'utf-8'</span>))</span><br><span class="line">        results2 = patter2.findall(html.decode(<span class="string">'utf-8'</span>))</span><br><span class="line">        book_list = []</span><br><span class="line">        <span class="keyword">for</span> i, elem <span class="keyword">in</span> enumerate(results1):</span><br><span class="line">            book_infos_dict = &#123;&#125;</span><br><span class="line">            book_infos_dict[<span class="string">'name'</span>] = elem[<span class="number">1</span>]</span><br><span class="line">            book_infos_dict[<span class="string">'url'</span>] = elem[<span class="number">0</span>]</span><br><span class="line">            book_infos_dict[<span class="string">'pic'</span>] = results2[i][<span class="number">0</span>]</span><br><span class="line">            book_list.append(book_infos_dict)</span><br><span class="line">        <span class="keyword">return</span> book_list</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">parse_xpath_data</span><span class="params">(self, html)</span>:</span></span><br><span class="line">        x_data = etree.HTML(html)</span><br><span class="line"></span><br><span class="line">        names =  x_data.xpath(<span class="string">'//div[@class="entry-thumbnail hover-thumb"]//img/@alt'</span>)</span><br><span class="line">        book_urls = x_data.xpath(<span class="string">'//div[@class="entry-thumbnail hover-thumb"]//a/@href'</span>)</span><br><span class="line">        pics = x_data.xpath(<span class="string">'//div[@class="entry-thumbnail hover-thumb"]//img/@src'</span>)</span><br><span class="line">        books_list = []</span><br><span class="line">        <span class="keyword">for</span> i, name <span class="keyword">in</span> enumerate(names):</span><br><span class="line">            book_infos_dict = &#123;&#125;</span><br><span class="line">            book_infos_dict[<span class="string">'name'</span>] = name</span><br><span class="line">            book_infos_dict[<span class="string">'url'</span>] = book_urls[i]</span><br><span class="line">            book_infos_dict[<span class="string">'pic'</span>] = pics[i]</span><br><span class="line">            books_list.append(book_infos_dict)</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> books_list</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">parse_bs4_data</span><span class="params">(self, html)</span>:</span></span><br><span class="line">        soup = BeautifulSoup(html, <span class="string">'lxml'</span>)</span><br><span class="line">        div_list = soup.find_all(<span class="string">'div'</span>, attrs=&#123;<span class="string">"class"</span>: <span class="string">"entry-thumbnail hover-thumb"</span>&#125;)</span><br><span class="line">        book_list = []</span><br><span class="line">        <span class="keyword">for</span> div <span class="keyword">in</span> div_list:</span><br><span class="line">            book_info_dict = &#123;&#125;</span><br><span class="line">            book_info_dict[<span class="string">'name'</span>] = div.img[<span class="string">'alt'</span>]</span><br><span class="line">            book_info_dict[<span class="string">'url'</span>] = div.a[<span class="string">'href'</span>]</span><br><span class="line">            book_info_dict[<span class="string">'pic'</span>] = div.img[<span class="string">'src'</span>]</span><br><span class="line">            book_list.append(book_info_dict)</span><br><span class="line">        <span class="keyword">return</span> book_list</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">parse_selecter_data</span><span class="params">(self, data)</span>:</span></span><br><span class="line"></span><br><span class="line">        bs4_data = BeautifulSoup(data, <span class="string">'lxml'</span>)</span><br><span class="line">        book_list = []</span><br><span class="line">        <span class="comment"># 1.取出所有的书</span></span><br><span class="line">        article_list = bs4_data.select(<span class="string">'article'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 2.解析出 每本书的 信息</span></span><br><span class="line">        <span class="keyword">for</span> book <span class="keyword">in</span> article_list:</span><br><span class="line">            book_dict = &#123;&#125;</span><br><span class="line">            <span class="comment"># 1.书名字</span></span><br><span class="line">            book_dict[<span class="string">'book_name'</span>] = book.select_one(<span class="string">'.entry-title'</span>).get_text()</span><br><span class="line"></span><br><span class="line">            <span class="comment"># # 2.书的图片url</span></span><br><span class="line">            book_dict[<span class="string">'book_img_url'</span>] = book.select_one(<span class="string">'.attachment-post-thumbnail'</span>).get(<span class="string">'src'</span>)</span><br><span class="line">            <span class="comment"># 3. 书的url</span></span><br><span class="line">            book_dict[<span class="string">'book_url'</span>] = book.select_one(<span class="string">'a[rel="bookmark"]'</span>).get(<span class="string">'href'</span>)</span><br><span class="line"></span><br><span class="line">            book_list.append(book_dict)</span><br><span class="line">        <span class="keyword">return</span> book_list</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">save_data</span><span class="params">(self, data, path)</span>:</span></span><br><span class="line">        json_data = json.dumps(data)</span><br><span class="line">        <span class="keyword">with</span> open(path, <span class="string">"w"</span>) <span class="keyword">as</span> f:</span><br><span class="line">            f.write(json_data)</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(self)</span>:</span></span><br><span class="line">        book_list = []</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">10</span>):</span><br><span class="line">            url = self.rootUrl + str(i) + <span class="string">'/'</span></span><br><span class="line">            print(url)</span><br><span class="line">            html = self.getResponse(url)</span><br><span class="line">            <span class="comment"># temp_list = self.parse_xpath_data(html)</span></span><br><span class="line">            <span class="comment"># temp_list = self.parse_bs4_data(html)</span></span><br><span class="line">            <span class="comment"># temp_lsit = self.parse_re_data(html)</span></span><br><span class="line">            temp_list = self.parse_selecter_data(html)</span><br><span class="line">            book_list += temp_list</span><br><span class="line">        self.save_data(book_list, <span class="string">'books.json'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    litterSpider = BookSpider()</span><br><span class="line">    litterSpider.run()</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/爬虫/" rel="tag"># 爬虫</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/10/12/Strategies For Pre-training Graph Neural Networks /" rel="next" title="Strategies For Pre-training Graph Neural Networks">
+                <i class="fa fa-chevron-left"></i> Strategies For Pre-training Graph Neural Networks
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/10/14/Deep Network Embedding on Incomplete Graphs/" rel="prev" title="Deep Network Embedding on Incomplete Graphs">
+                Deep Network Embedding on Incomplete Graphs <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">plato</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">51</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据解析"><span class="nav-number">1.</span> <span class="nav-text">数据解析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-正则表达式"><span class="nav-number">1.1.</span> <span class="nav-text">1. 正则表达式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-XPath"><span class="nav-number">1.2.</span> <span class="nav-text">2. XPath</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#XPath概览"><span class="nav-number">1.2.1.</span> <span class="nav-text">XPath概览</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#XPath常用规则"><span class="nav-number">1.2.2.</span> <span class="nav-text">XPath常用规则</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实例引入"><span class="nav-number">1.2.3.</span> <span class="nav-text">实例引入</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#所有节点"><span class="nav-number">1.2.4.</span> <span class="nav-text">所有节点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#子节点"><span class="nav-number">1.2.5.</span> <span class="nav-text">子节点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#父节点"><span class="nav-number">1.2.6.</span> <span class="nav-text">父节点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#属性匹配"><span class="nav-number">1.2.7.</span> <span class="nav-text">属性匹配</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#文本获取"><span class="nav-number">1.2.8.</span> <span class="nav-text">文本获取</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#属性获取"><span class="nav-number">1.2.9.</span> <span class="nav-text">属性获取</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#属性多值匹配"><span class="nav-number">1.2.10.</span> <span class="nav-text">属性多值匹配</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#多属性匹配"><span class="nav-number">1.2.11.</span> <span class="nav-text">多属性匹配</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#按序选择"><span class="nav-number">1.2.12.</span> <span class="nav-text">按序选择</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#节点轴选择"><span class="nav-number">1.2.13.</span> <span class="nav-text">节点轴选择</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-BeautifulSoup"><span class="nav-number">1.3.</span> <span class="nav-text">3. BeautifulSoup</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装"><span class="nav-number">1.3.1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#如何使用"><span class="nav-number">1.3.2.</span> <span class="nav-text">如何使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#对象种类"><span class="nav-number">1.3.3.</span> <span class="nav-text">对象种类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#遍历文档树"><span class="nav-number">1.3.4.</span> <span class="nav-text">遍历文档树</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#find-all"><span class="nav-number">1.3.4.1.</span> <span class="nav-text">find_all()</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#name-参数"><span class="nav-number">1.3.4.1.1.</span> <span class="nav-text">name 参数</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#keyword-参数"><span class="nav-number">1.3.4.1.2.</span> <span class="nav-text">keyword 参数</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#find"><span class="nav-number">1.3.4.2.</span> <span class="nav-text">find()</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#CSS选择器"><span class="nav-number">1.3.4.3.</span> <span class="nav-text">CSS选择器</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#爬虫解析数据实例"><span class="nav-number">1.4.</span> <span class="nav-text">爬虫解析数据实例</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">plato</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
